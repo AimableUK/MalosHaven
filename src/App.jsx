@@ -2,6 +2,7 @@ import Calendar from "./components/calendar";
 import BarChart from "./components/BarChart";
 import PieChart from "./components/PieChart";
 import LineChart from "./components/LineChart";
+import HeatMapChart from "./components/HeatMapChart";
 
 import "./App.css";
 
@@ -19,6 +20,9 @@ function App() {
 
       <p className="text-center font-bold text-xl p-5">4. LINE Chart Lesson</p>
       <LineChart />
+
+      <p className="text-center font-bold text-xl p-5">4. HEATMAP Chart Lesson</p>
+      <HeatMapChart />
 
     </div>
   );
