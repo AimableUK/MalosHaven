@@ -1,6 +1,7 @@
 import Calendar from "./components/calendar";
 import BarChart from "./components/BarChart";
 import PieChart from "./components/PieChart";
+import LineChart from "./components/LineChart";
 
 import "./App.css";
 
@@ -15,6 +16,9 @@ function App() {
 
       <p className="text-center font-bold text-xl p-5">3. PIE Chart Lesson</p>
       <PieChart />
+
+      <p className="text-center font-bold text-xl p-5">4. LINE Chart Lesson</p>
+      <LineChart />
 
     </div>
   );
