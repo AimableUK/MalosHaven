@@ -3,6 +3,8 @@ import BarChart from "./components/BarChart";
 import PieChart from "./components/PieChart";
 import LineChart from "./components/LineChart";
 import HeatMapChart from "./components/HeatMapChart";
+import RadarChart from "./components/RadarChart";
+import TreeCha
 
 import "./App.css";
 
@@ -23,6 +25,9 @@ function App() {
 
       <p className="text-center font-bold text-xl p-5">4. HEATMAP Chart Lesson</p>
       <HeatMapChart />
+
+      <p className="text-center font-bold text-xl p-5">4. RADAR Chart Lesson</p>
+      <RadarChart />
 
     </div>
   );
