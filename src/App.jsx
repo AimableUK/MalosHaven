@@ -4,7 +4,7 @@ import PieChart from "./components/PieChart";
 import LineChart from "./components/LineChart";
 import HeatMapChart from "./components/HeatMapChart";
 import RadarChart from "./components/RadarChart";
-import TreeCha
+import TreeChart from "./components/TreeChart";
 
 import "./App.css";
 
@@ -23,11 +23,14 @@ function App() {
       <p className="text-center font-bold text-xl p-5">4. LINE Chart Lesson</p>
       <LineChart />
 
-      <p className="text-center font-bold text-xl p-5">4. HEATMAP Chart Lesson</p>
+      <p className="text-center font-bold text-xl p-5">5. HEATMAP Chart Lesson</p>
       <HeatMapChart />
 
-      <p className="text-center font-bold text-xl p-5">4. RADAR Chart Lesson</p>
+      <p className="text-center font-bold text-xl p-5">6. RADAR Chart Lesson</p>
       <RadarChart />
+
+      <p className="text-center font-bold text-xl p-5">7. TREE Chart Lesson</p>
+      <TreeChart />
 
     </div>
   );
