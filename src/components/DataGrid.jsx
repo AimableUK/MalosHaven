@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-import { Box } from "@mui/material";
+import { Box, Button, Snackbar } from "@mui/material";
 import DataUserFormModal from "./DataUserFormModal";
 
 const initialRows = [
@@ -19,10 +19,26 @@ const columns = [
 const BasicDataGrid = () => {
   const [rows, setRows] = useState(initialRows);
   const [openModal, setOpenModal] = useState(false);
+  const [snackbar, setSnackbar] = useState({ open: false, message: "" });
 
   const handleAddUser = (user) => {
     setRows((prev) => [...prev, user]);
   };
+
+  const processRowUpdate = (newRow) => {
+    const updatedRows = rows.map((row) =>
+      row.id === newRow.id ? newRow : row
+    );
+    setRows(updatedRows);
+    setSnackbar({ open: true, message: `Updated user: ${newRow.name}` });
+    return newRow;
+  };
+
+
+  const handleCloseSnackbar = () => {
+    setSnackbar({ open: false, message: "" });
+  };
+
   return (
     <Box sx={{ height: 500, width: "100%", p: 2 }}>
       <Box sx={{ mb: 2, display: "flex", justifyContent: "flex-end" }}>
@@ -30,17 +46,29 @@ const BasicDataGrid = () => {
           Add User
         </Button>
       </Box>
+
       <DataGrid
         rows={rows}
         columns={columns}
         pageSize={5}
         checkboxSelection
         disableRowSelectionOnClick
+        processRowUpdate={processRowUpdate}
+        experimentalFeatures={{ newEditingApi: true }}
       />
+
       <DataUserFormModal
         open={openModal}
         onClose={() => setOpenModal(false)}
         onAddUser={handleAddUser}
+      />
+
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={2000}
+        variant="filled"
+        message={snackbar.message}
+        onClose={handleCloseSnackbar}
       />
     </Box>
   );

@@ -25,8 +25,11 @@ const DataUserFormModal = ({ open, onClose, onAddUser }) => {
   };
 
   return (
-    <Dialog open={open} onClose={onClose}>
-      <DialogTitle>Add New User</DialogTitle>
+    <Dialog
+      open={open}
+      onClose={onClose}
+    >
+      <DialogTitle sx={{ fontWeight: "bold" }}>Add New User</DialogTitle>
       <DialogContent
         sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 1 }}
       >
