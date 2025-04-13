@@ -5,6 +5,7 @@ import LineChart from "./components/LineChart";
 import HeatMapChart from "./components/HeatMapChart";
 import RadarChart from "./components/RadarChart";
 import TreeChart from "./components/TreeChart";
+import BasicDataGrid from "./components/DataGrid";
 
 import "./App.css";
 
@@ -31,6 +32,9 @@ function App() {
 
       <p className="text-center font-bold text-xl p-5">7. TREE Chart Lesson</p>
       <TreeChart />
+
+      <p className="text-center font-bold text-xl p-5">7. Data Grid Lesson</p>
+      <BasicDataGrid />
 
     </div>
   );
