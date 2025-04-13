@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { Box, Button, Snackbar } from "@mui/material";
 import DataUserFormModal from "./DataUserFormModal";
+import DeleteIcon from "@mui/icons-material/Delete";
+import IconButton from "@mui/material/IconButton";
 
 const initialRows = [
   { id: 1, name: "John Doe", email: "john@example.com", role: "Admin" },
@@ -14,6 +16,18 @@ const columns = [
   { field: "name", headerName: "Name", width: 200, editable: true },
   { field: "email", headerName: "Email", width: 250, editable: true },
   { field: "role", headerName: "Role", width: 130, editable: true },
+  {
+    field: "actions",
+    headerName: "Actions",
+    width: 100,
+    sortable: false,
+    filterable: false,
+    renderCell: (params) => (
+      <IconButton color="error" onClick={() => handleDelete(params.row.id)}>
+        <DeleteIcon />
+      </IconButton>
+    ),
+  },
 ];
 
 const BasicDataGrid = () => {
@@ -34,10 +48,15 @@ const BasicDataGrid = () => {
     return newRow;
   };
 
-
   const handleCloseSnackbar = () => {
     setSnackbar({ open: false, message: "" });
   };
+
+  const handleDelete = (id) => {
+    const updatedRows = rows.filter((row) => row.id !== id)
+    setRows(updatedRows)
+    setSnackbar({ open: true, message: `Deleted user with ID ${id}` })
+  }
 
   return (
     <Box sx={{ height: 500, width: "100%", p: 2 }}>
