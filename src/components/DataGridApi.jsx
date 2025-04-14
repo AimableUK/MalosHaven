@@ -61,7 +61,7 @@ const DataGridApi = () => {
       headerName: "Actions",
       width: 100,
       sortable: false,
-      filterable: false,
+      filterable: false, 
       renderCell: (params) => (
         <IconButton
           color="error"
