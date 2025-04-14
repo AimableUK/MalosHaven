@@ -1,16 +1,8 @@
 import React from "react";
 import useSWR from "swr";
 import axios from "axios";
-import {
-  DataGrid,
-  GridToolbar
-} from "@mui/x-data-grid";
-import {
-  Box,
-  Button,
-  Snackbar,
-  CircularProgress
-} from "@mui/material";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import { Box, Button, Snackbar, CircularProgress } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
 import DataUserFormModal from "./DataUserFormModal";
@@ -28,10 +20,11 @@ const fetcher = (url) =>
   );
 
 const DataGridApi = () => {
-  const { data: rows, error, isLoading } = useSWR(
-    "https://jsonplaceholder.typicode.com/users",
-    fetcher
-  );
+  const {
+    data: rows,
+    error,
+    isLoading,
+  } = useSWR("https://jsonplaceholder.typicode.com/users", fetcher);
 
   const [openModal, setOpenModal] = React.useState(false);
   const [snackbar, setSnackbar] = React.useState({
@@ -113,7 +106,15 @@ const DataGridApi = () => {
         disableRowSelectionOnClick
         processRowUpdate={processRowUpdate}
         experimentalFeatures={{ newEditingApi: true }}
-        components={{ Toolbar: GridToolbar }}
+        slots={{
+          toolbar: GridToolbar,
+        }}
+        slotProps={{
+          toolbar: {
+            showQuickFilter: true,
+            quickFilterProps: { debounceMs: 300 },
+          },
+        }}
       />
 
       <DataUserFormModal

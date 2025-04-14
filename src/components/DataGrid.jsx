@@ -77,6 +77,15 @@ const BasicDataGrid = () => {
         disableRowSelectionOnClick
         processRowUpdate={processRowUpdate}
         experimentalFeatures={{ newEditingApi: true }}
+        slots={{
+          toolbar: GridToolbar,
+        }}
+        slotProps={{
+          toolbar: {
+            showQuickFilter :true,
+            quickFilterProps: {debounceMs: 300}
+          }
+        }}
       />
 
       <DataUserFormModal
