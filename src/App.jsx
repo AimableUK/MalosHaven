@@ -8,6 +8,8 @@ import TreeChart from "./components/TreeChart";
 import BasicDataGrid from "./components/DataGrid";
 
 import "./App.css";
+import { DataGrid } from "@mui/x-data-grid";
+import DataGridApi from "./components/DataGridApi";
 
 function App() {
   return (
@@ -35,6 +37,9 @@ function App() {
 
       <p className="text-center font-bold text-xl p-5">7. Data Grid Lesson</p>
       <BasicDataGrid />
+
+      <p className="text-center font-bold text-xl p-5">7. Data Grid API Lesson</p>
+      <DataGridApi />
 
     </div>
   );

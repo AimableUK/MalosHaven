@@ -1,33 +1,55 @@
-import React, { useState } from "react";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-import { Box, Button, Snackbar } from "@mui/material";
-import DataUserFormModal from "./DataUserFormModal";
+import React from "react";
+import useSWR from "swr";
+import axios from "axios";
+import {
+  DataGrid,
+  GridToolbar
+} from "@mui/x-data-grid";
+import {
+  Box,
+  Button,
+  Snackbar,
+  CircularProgress
+} from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
+import DataUserFormModal from "./DataUserFormModal";
 import DataDeleteConfirm from "./DataDeleteConfirm";
 
-const initialRows = [
-  { id: 1, name: "John Doe", email: "john@example.com", role: "Admin" },
-  { id: 2, name: "Jane Smith", email: "jane@example.com", role: "User" },
-  { id: 3, name: "Mike Brown", email: "mike@example.com", role: "Editor" },
-];
+// ✅ fetcher function using axios
+const fetcher = (url) =>
+  axios.get(url).then((res) =>
+    res.data.map((user) => ({
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      role: "User", // mock role
+    }))
+  );
 
-const BasicDataGrid = () => {
-  const [rows, setRows] = useState(initialRows);
-  const [openModal, setOpenModal] = useState(false);
-  const [snackbar, setSnackbar] = useState({ open: false, message: "" });
-  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-  const [selectedUserId, setSelectedUserId] = useState(null);
+const DataGridApi = () => {
+  const { data: rows, error, isLoading } = useSWR(
+    "https://jsonplaceholder.typicode.com/users",
+    fetcher
+  );
+
+  const [openModal, setOpenModal] = React.useState(false);
+  const [snackbar, setSnackbar] = React.useState({
+    open: false,
+    message: "",
+  });
+  const [deleteDialogOpen, setDeleteDialogOpen] = React.useState(false);
+  const [selectedUserId, setSelectedUserId] = React.useState(null);
+
+  // Optional: You can locally append new users here if you want:
+  const [localRows, setLocalRows] = React.useState([]);
+  const mergedRows = rows ? [...rows, ...localRows] : [];
 
   const handleAddUser = (user) => {
-    setRows((prev) => [...prev, user]);
+    setLocalRows((prev) => [...prev, user]);
   };
 
   const processRowUpdate = (newRow) => {
-    const updatedRows = rows.map((row) =>
-      row.id === newRow.id ? newRow : row
-    );
-    setRows(updatedRows);
     setSnackbar({ open: true, message: `Updated user: ${newRow.name}` });
     return newRow;
   };
@@ -61,8 +83,22 @@ const BasicDataGrid = () => {
     },
   ];
 
+  if (isLoading)
+    return (
+      <Box p={3} textAlign="center">
+        <CircularProgress />
+      </Box>
+    );
+
+  if (error)
+    return (
+      <Box p={3} textAlign="center" color="red">
+        Failed to load data.
+      </Box>
+    );
+
   return (
-    <Box sx={{ height: 500, width: "100%", p: 2, mb: "20px"}}>
+    <Box sx={{ height: 500, width: "100%", p: 2 }}>
       <Box sx={{ mb: 2, display: "flex", justifyContent: "flex-end" }}>
         <Button variant="contained" onClick={() => setOpenModal(true)}>
           Add User
@@ -70,13 +106,14 @@ const BasicDataGrid = () => {
       </Box>
 
       <DataGrid
-        rows={rows}
+        rows={mergedRows}
         columns={columns}
         pageSize={5}
         checkboxSelection
         disableRowSelectionOnClick
         processRowUpdate={processRowUpdate}
         experimentalFeatures={{ newEditingApi: true }}
+        components={{ Toolbar: GridToolbar }}
       />
 
       <DataUserFormModal
@@ -88,13 +125,12 @@ const BasicDataGrid = () => {
       <Snackbar
         open={snackbar.open}
         autoHideDuration={2000}
-        variant="filled"
         message={snackbar.message}
         onClose={handleCloseSnackbar}
       />
 
       <DataDeleteConfirm
-        setRows={setRows}
+        setRows={setLocalRows}
         setSnackbar={setSnackbar}
         setDeleteDialogOpen={setDeleteDialogOpen}
         deleteDialogOpen={deleteDialogOpen}
@@ -105,4 +141,4 @@ const BasicDataGrid = () => {
   );
 };
 
-export default BasicDataGrid;
+export default DataGridApi;
