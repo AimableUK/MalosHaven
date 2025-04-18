@@ -25,13 +25,7 @@ const AppLayout = () => {
         toggleColorMode: colorMode.toggleColorMode,
       }}
       branding={{
-        title: (
-          <div className="flex items-center gap-2">
-            <Typography variant="h6" className="!font-bold font-sans">
-              MALOS HAVEN
-            </Typography>
-          </div>
-        ),
+        title: "MALOS HAVEN",
         logo: <img src="/logo.png" alt="logo" className="w-8 h-8" />,
       }}
       navigation={[
