@@ -1,27 +1,38 @@
 import { AppProvider } from "@toolpad/core/AppProvider";
 import { DashboardLayout } from "@toolpad/core/DashboardLayout";
-import { tokens } from "../Theme";
 import { useTheme } from "@mui/material/styles";
+import { tokens } from "../Theme";
+import { useContext } from "react";
+import { ColorModeContext } from "../Theme";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import DescriptionIcon from "@mui/icons-material/Description";
-import { Typography } from "@mui/material";
+import LightModeIcon from "@mui/icons-material/LightMode";
+import DarkModeIcon from "@mui/icons-material/DarkMode";
+import { Typography, IconButton } from "@mui/material";
 
 const AppLayout = () => {
   const theme = useTheme();
-  const colors = tokens(theme.palette.mode); // <- now properly applied if needed later
+  const colors = tokens(theme.palette.mode);
+  const colorMode = useContext(ColorModeContext);
 
   const location = useLocation();
   const navigate = useNavigate();
 
   return (
     <AppProvider
+      colorMode={{
+        mode: theme.palette.mode,
+        toggleColorMode: colorMode.toggleColorMode,
+      }}
       branding={{
         title: (
-          <Typography variant="h6" className="!font-bold font-sans">
-            MALOS HAVEN
-          </Typography>
+          <div className="flex items-center gap-2">
+            <Typography variant="h6" className="!font-bold font-sans">
+              MALOS HAVEN
+            </Typography>
+          </div>
         ),
-        logo: <img src="/logo.png" alt="logo" />,
+        logo: <img src="/logo.png" alt="logo" className="w-8 h-8" />,
       }}
       navigation={[
         {
