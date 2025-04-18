@@ -22,7 +22,10 @@ const Root = () => {
   );
 };
 
-createRoot(document.getElementById("root")).render(
+// Find the existing root and render to it
+const root = document.getElementById("root");
+const rootInstance = createRoot(root);
+rootInstance.render(
   <StrictMode>
     <Root />
   </StrictMode>
