@@ -6,9 +6,6 @@ import { useContext } from "react";
 import { ColorModeContext } from "../Theme";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import DescriptionIcon from "@mui/icons-material/Description";
-import LightModeIcon from "@mui/icons-material/LightMode";
-import DarkModeIcon from "@mui/icons-material/DarkMode";
-import { Typography, IconButton } from "@mui/material";
 
 const AppLayout = () => {
   const theme = useTheme();
