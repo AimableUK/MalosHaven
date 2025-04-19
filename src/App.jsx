@@ -4,27 +4,23 @@ import Dashboard from "./pages/Dashboard";
 import Team from "./pages/Team";
 import Invoices from "./pages/Invoices";
 import { CssBaseline, ThemeProvider } from "@mui/material";
-import { ColorModeContext, useMode } from "./Theme";
 
 import "./index.css";
 
 function App() {
-  const [theme, colorMode] = useMode();
 
   return (
-    <ColorModeContext.Provider value={colorMode}>
-      <ThemeProvider theme={theme}>
+      <ThemeProvider>
         <CssBaseline />
 
-          <Routes>
-            <Route path="/" element={<AppLayout />}>
-              <Route index element={<Dashboard />} />
-              <Route path="team" element={<Team />} />
-              <Route path="invoices" element={<Invoices />} />
-            </Route>
-          </Routes>
+        <Routes>
+          <Route path="/" element={<AppLayout />}>
+            <Route index element={<Dashboard />} />
+            <Route path="team" element={<Team />} />
+            <Route path="invoices" element={<Invoices />} />
+          </Route>
+        </Routes>
       </ThemeProvider>
-    </ColorModeContext.Provider>
   );
 }
 
