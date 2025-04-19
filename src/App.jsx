@@ -3,7 +3,7 @@ import AppLayout from "./components/AppLayout";
 import Dashboard from "./pages/Dashboard";
 import Team from "./pages/Team";
 import Invoices from "./pages/Invoices";
-import { Box, CssBaseline, ThemeProvider } from "@mui/material";
+import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "./Theme";
 
 import "./index.css";

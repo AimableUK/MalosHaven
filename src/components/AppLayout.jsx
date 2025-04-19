@@ -1,11 +1,14 @@
 import { AppProvider } from "@toolpad/core/AppProvider";
 import { DashboardLayout } from "@toolpad/core/DashboardLayout";
 import { useTheme } from "@mui/material/styles";
-import { tokens } from "../Theme";
 import { useContext } from "react";
-import { ColorModeContext } from "../Theme";
+import { ColorModeContext, tokens } from "../Theme";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import DescriptionIcon from "@mui/icons-material/Description";
+import React from "react";
+import IconButton from "@mui/material/IconButton";
+import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
+import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 
 const AppLayout = () => {
   const theme = useTheme();
@@ -24,6 +27,17 @@ const AppLayout = () => {
       branding={{
         title: "MALOS HAVEN",
         logo: <img src="/logo.png" alt="logo" className="w-8 h-8" />,
+      }}
+      slots={{
+        headerButtons: (
+          <IconButton onClick={colorMode.toggleColorMode}>
+            {theme.palette.mode === "dark" ? (
+              <DarkModeOutlinedIcon />
+            ) : (
+              <LightModeOutlinedIcon />
+            )}
+          </IconButton>
+        ),
       }}
       navigation={[
         {
