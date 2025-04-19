@@ -1,20 +1,46 @@
 import { Routes, Route } from "react-router-dom";
-import AppLayout from "./components/AppLayout";
-import Dashboard from "./pages/Dashboard";
-import Team from "./pages/Team";
-import Invoices from "./pages/Invoices";
-import "./index.css";
 
-function App() {
+// main ones
+import AppLayout from "./components/AppLayout";
+import DashboardPage from "./pages/Overview/Dashboard"
+
+// Property Management
+import PropertiesPage from "./pages/PropertyManagement/PropertiesPage";
+import RoomsPage from "./pages/PropertyManagement/RoomsPage";
+import MaintenancePage from "./pages/PropertyManagement/MaintenancePage";
+
+// Booking&TenantMaintainance
+import BookingsPage from "./pages/Booking&TenantManagement/BookingsPage";
+import TenantsPage from "./pages/Booking&TenantManagement/TenantsPage";
+import PaymentsPage from "./pages/Booking&TenantManagement/PaymentsPage";
+
+// Analytics&Reports
+import AnalyticsPage from "./pages/Analytics&Reports/AnalyticsPage";
+import ReportsPage from "./pages/Analytics&Reports/ReportsPage";
+
+// Settings&Permissions
+import SettingsPage from "./pages/Settings&Permissions/SettingsPage";
+import PermissionsPage from "./pages/Settings&Permissions/PermissionsPage";
+
+
+const AppRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<AppLayout />}>
-        <Route index element={<Dashboard />} />
-        <Route path="team" element={<Team />} />
-        <Route path="invoices" element={<Invoices />} />
+        <Route index element={<DashboardPage />} />
+        <Route path="properties" element={<PropertiesPage />} />
+        <Route path="rooms" element={<RoomsPage />} />
+        <Route path="maintenance" element={<MaintenancePage />} />
+        <Route path="bookings" element={<BookingsPage />} />
+        <Route path="tenants" element={<TenantsPage />} />
+        <Route path="payments" element={<PaymentsPage />} />
+        <Route path="analytics" element={<AnalyticsPage />} />
+        <Route path="reports" element={<ReportsPage />} />
+        <Route path="settings" element={<SettingsPage />} />
+        <Route path="permissions" element={<PermissionsPage />} />
       </Route>
     </Routes>
   );
-}
+};
 
-export default App;
+export default AppRoutes;

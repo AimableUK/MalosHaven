@@ -1,7 +1,7 @@
 import { Box, Button, Typography } from "@mui/material";
 import React from "react";
-import PieChart from "../components/PieChart";
-import LineChart from "../components/LineChart.jsx";
+import PieChart from "../../components/PieChart.jsx";
+import LineChart from "../../components/LineChart.jsx";
 import WeekendIcon from "@mui/icons-material/Weekend";
 import BarChartIcon from "@mui/icons-material/BarChart";
 import StoreIcon from "@mui/icons-material/Store";
@@ -10,9 +10,9 @@ import PlaceIcon from "@mui/icons-material/Place";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import houseImg from "../assets/house.jpg";
-import houseImg1 from "../assets/house1.jpg";
-import houseImg2 from "../assets/house2.jpg";
+import houseImg from "../../assets/house.jpg";
+import houseImg1 from "../../assets/house1.jpg";
+import houseImg2 from "../../assets/house2.jpg";
 
 
 const Dashboard = () => {
@@ -112,6 +112,7 @@ const Dashboard = () => {
         gap="10px"
         className="font-roboto"
         padding="10px"
+        marginY="10px"
       >
         <Box
           sx={{

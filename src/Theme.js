@@ -3,11 +3,11 @@ import { createTheme } from "@mui/material/styles";
 export const customTheme = createTheme({
   palette: {
     primary: {
-      main: "#1e40af",
+      main: "#fff",
     },
     background: {
       default: "linear-gradient(to right, #24243e, #302b63, #0f0c29)",
-      paper: "#1e293b",
+      paper: "#24383E",
     },
     text: {
       primary: "#ffffff",
@@ -47,7 +47,7 @@ export const customTheme = createTheme({
     MuiDrawer: {
       styleOverrides: {
         paper: {
-          backgroundColor: "#1e293b",
+          backgroundColor: "#24383E",
           color: "#ffffff",
         },
       },
@@ -55,7 +55,7 @@ export const customTheme = createTheme({
     MuiAppBar: {
       styleOverrides: {
         root: {
-          backgroundColor: "#213142",
+          backgroundColor: "#2D454D",
         },
       },
     },
