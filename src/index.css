@@ -28,25 +28,8 @@
     box-sizing: border-box;
 }
 
-
-:root {
-    --body_background: #fef6dd;
-    --body_color: black;
-    --body_primaryCard: #ffffff;
-    --body_primaryBorder: #9d8640;
-    --body_primaryDetail: #f9f6ea;
-    --body_primaryBg: #e0ce93;
-    --body_primaryText: #403d22;
-    --body_text: #1f2937;
-}
-
-[data-theme="dark"] {
-    --body_background: #1e1e1c;
-    --body_color: white;
-    --body_primaryCard: #000000;
-    --body_primaryBorder: #4b3d10;
-    --body_primaryDetail: #3b3729;
-    --body_primaryBg: #e0ce93;
-    --body_primaryText: #403d22;
-    --body_text: white;
+body {
+    margin: 0;
+    overflow-x: hidden;
+    /* stops horizontal scroll */
 }
