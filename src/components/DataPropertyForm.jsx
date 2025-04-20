@@ -26,11 +26,11 @@ const DataPropertyFormModal = ({ open, onClose, onAddProperty }) => {
   const handleSubmit = () => {
     onAddProperty({
       id: Date.now(),
-      propName: formData.name,
-      propDesc: formData.desc,
-      propUnits: Number(formData.units),
-      propLoc: formData.loc,
-      image,
+      title: formData.name,
+      description: formData.desc,
+      units: Number(formData.units),
+      location: formData.loc,
+      image: imagePreview,
     });
     onClose();
     setFormData({ name: "", desc: "", units: "", loc: "" });
@@ -49,7 +49,9 @@ const DataPropertyFormModal = ({ open, onClose, onAddProperty }) => {
   return (
     <Dialog open={open} onClose={onClose}>
       <DialogTitle sx={{ fontWeight: "bold" }}>Add New Property</DialogTitle>
-      <DialogContent sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 1 }}>
+      <DialogContent
+        sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 1 }}
+      >
         <label>Enter the Image</label>
         <input type="file" accept="image/*" onChange={handleImageChange} />
         {imagePreview && (

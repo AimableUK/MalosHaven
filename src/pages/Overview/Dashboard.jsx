@@ -9,9 +9,7 @@ import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import PlaceIcon from "@mui/icons-material/Place";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import houseImg from "../../assets/house.jpg";
-import houseImg1 from "../../assets/house1.jpg";
-import houseImg2 from "../../assets/house2.jpg";
+import MyProperties from "../../components/Properties.js";
 import FooterPage from "../Footer/FooterPage.jsx";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 
@@ -301,275 +299,93 @@ const Dashboard = () => {
         className="font-roboto"
         padding="10px"
       >
-        <Box
-          sx={{
-            gridColumn: "span 4",
-            display: "flex",
-            flexDirection: "column",
-            background: "#2D454D",
-            borderRadius: "8px",
-            justifyContent: "space-between",
-            p: 2,
-          }}
-          className="group shadow-md shadow-slate-600"
-        >
-          <Box>
-            <img
-              src={houseImg}
-              alt="house-image"
-              className="shadow-md shadow-slate-500 rounded-md transition-transform duration-300 ease-in-out group-hover:-translate-y-12 cursor-pointer z-10 relative"
-            />
+        {MyProperties.map((property) => (
+          <Box
+            key={property.id}
+            sx={{
+              gridColumn: "span 4",
+              display: "flex",
+              flexDirection: "column",
+              background: "#2D454D",
+              borderRadius: "8px",
+              justifyContent: "space-between",
+              p: 2,
+              mb: 1,
+            }}
+            className="group shadow-md shadow-slate-600"
+          >
+            <Box>
+              <img
+                src={property.image}
+                alt="house-image"
+                className="shadow-md shadow-slate-500 rounded-md transition-transform duration-300 ease-in-out group-hover:-translate-y-12 cursor-pointer z-10 relative"
+              />
 
-            <Box
-              display="flex"
-              flexDirection="row"
-              justifyContent="center"
-              gap="10px"
-              zIndex="0"
-              mt="-40px"
-            >
-              <Link to="/propertydetails">
+              <Box
+                display="flex"
+                flexDirection="row"
+                justifyContent="center"
+                gap="10px"
+                zIndex="0"
+                mt="-40px"
+              >
+                <Link to="/propertydetails">
+                  <Button
+                    variant="contained"
+                    startIcon={<VisibilityIcon />}
+                    color="info"
+                  >
+                    View
+                  </Button>
+                </Link>
+
                 <Button
                   variant="contained"
-                  startIcon={<VisibilityIcon />}
-                  color="info"
+                  startIcon={<EditIcon />}
+                  color="success"
                 >
-                  View
+                  Edit
                 </Button>
-              </Link>
-              <Button
-                variant="contained"
-                startIcon={<EditIcon />}
-                color="success"
-              >
-                Edit
-              </Button>
-              <Button
-                variant="contained"
-                startIcon={<DeleteIcon />}
-                color="error"
-              >
-                Delete
-              </Button>
+                <Button
+                  variant="contained"
+                  startIcon={<DeleteIcon />}
+                  color="error"
+                >
+                  Delete
+                </Button>
+              </Box>
             </Box>
-          </Box>
-          <Box>
-            <Typography fontWeight="bold" textAlign="center" m="15px">
-              Cozy 5 Stars Apartment
-            </Typography>
-            <Typography variant="body1" component="p">
-              The place is close to Barceloneta Beach and bus stop just 2 min by
-              walk and near to "Naviglio" where you can enjoy the main night
-              life in Barcelona.
-            </Typography>
-          </Box>
-          <Box
-            sx={{
-              height: "2px",
-              width: "100%",
-              background: "linear-gradient(to right, #2d454d, white, #2d454d)",
-              my: 3,
-              borderRadius: "999px",
-            }}
-          />{" "}
-          <Box
-            display="flex"
-            flexDirection="row"
-            justifyContent="space-between"
-          >
-            <Typography fontWeight="bold">$899/night</Typography>
-            <Typography textAlign="center">
-              <PlaceIcon />
-              Barcelona, Spain
-            </Typography>
-          </Box>
-        </Box>
-
-        <Box
-          sx={{
-            gridColumn: "span 4",
-            display: "flex",
-            flexDirection: "column",
-            background: "#2D454D",
-            borderRadius: "8px",
-            justifyContent: "space-between",
-            p: 2,
-          }}
-          className="group shadow-md shadow-slate-600"
-        >
-          <Box>
-            <img
-              src={houseImg1}
-              alt="house-image"
-              className="shadow-md shadow-slate-500 rounded-md transition-transform duration-300 ease-in-out group-hover:-translate-y-12 cursor-pointer z-10 relative"
-            />
-
+            <Box>
+              <Typography fontWeight="bold" textAlign="center" m="15px">
+                {property.title}
+              </Typography>
+              <Typography variant="body1" component="p">
+                {property.description}
+              </Typography>
+            </Box>
             <Box
-              display="flex"
-              flexDirection="row"
-              justifyContent="center"
-              gap="10px"
-              zIndex="0"
-              mt="-40px"
-            >
-              <Button
-                variant="contained"
-                startIcon={<VisibilityIcon />}
-                color="info"
-              >
-                View
-              </Button>
-              <Button
-                variant="contained"
-                startIcon={<EditIcon />}
-                color="success"
-              >
-                Edit
-              </Button>
-              <Button
-                variant="contained"
-                startIcon={<DeleteIcon />}
-                color="error"
-              >
-                Delete
-              </Button>
-            </Box>
-          </Box>
-          <Box>
-            <Typography fontWeight="bold" textAlign="center" m="15px">
-              Office Studio
-            </Typography>
-            <Typography variant="body1" component="p">
-              The place is close to Metro Station and bus stop just 2 min by
-              walk and near to "Naviglio" where you can enjoy the night life in
-              London, UK.
-            </Typography>
-          </Box>
-          <Box
-            sx={{
-              height: "2px",
-              width: "100%",
-              background: "linear-gradient(to right, #2d454d, white, #2d454d)",
-              my: 3,
-              borderRadius: "999px",
-            }}
-          />{" "}
-          <Box
-            display="flex"
-            flexDirection="row"
-            justifyContent="space-between"
-          >
-            <Typography fontWeight="bold">$1.119/night</Typography>
-            <Typography textAlign="center">
-              <PlaceIcon />
-              London, UK
-            </Typography>
-          </Box>
-        </Box>
-
-        <Box
-          sx={{
-            gridColumn: "span 4",
-            display: "flex",
-            flexDirection: "column",
-            background: "#2D454D",
-            borderRadius: "8px",
-            justifyContent: "space-between",
-            p: 2,
-          }}
-          className="group shadow-md shadow-slate-600"
-        >
-          <Box>
-            <img
-              src={houseImg2}
-              alt="house-image"
-              className="shadow-md shadow-slate-500 rounded-md transition-transform duration-300 ease-in-out group-hover:-translate-y-12 cursor-pointer z-10 relative"
-            />
-
-            <Box
-              display="flex"
-              flexDirection="row"
-              justifyContent="center"
-              gap="10px"
-              zIndex="0"
-              mt="-40px"
-            >
-              <Button
-                variant="contained"
-                startIcon={<VisibilityIcon />}
-                color="info"
-              >
-                View
-              </Button>
-              <Button
-                variant="contained"
-                startIcon={<EditIcon />}
-                color="success"
-              >
-                Edit
-              </Button>
-              <Button
-                variant="contained"
-                startIcon={<DeleteIcon />}
-                color="error"
-              >
-                Delete
-              </Button>
-            </Box>
-          </Box>
-          <Box>
-            <Typography fontWeight="bold" textAlign="center" m="15px">
-              Beautiful Castle
-            </Typography>
-            <Typography variant="body1" component="p">
-              The place is close to Metro Station and bus stop just 2 min by
-              walk and near to "Naviglio" where you can enjoy the main night
-              life in Milan.
-            </Typography>
-          </Box>
-          <Box
-            sx={{
-              height: "2px",
-              width: "100%",
-              background: "linear-gradient(to right, #2d454d, white, #2d454d)",
-              my: 3,
-              borderRadius: "999px",
-            }}
-          />{" "}
-          <Box
-            display="flex"
-            flexDirection="row"
-            justifyContent="space-between"
-          >
-            <Typography fontWeight="bold">$459/night</Typography>
-            <Typography textAlign="center">
-              <PlaceIcon />
-              Milan, Italy
-            </Typography>
-          </Box>
-        </Box>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignContent: "center",
-            height: "100%",
-            width: "100%",
-          }}
-        >
-          <Link to='/properties'>
-            <Button
-              variant="contained"
-              startIcon={<VisibilityIcon />}
-              color="info"
               sx={{
-                whiteSpace: "nowrap",
+                height: "2px",
+                width: "100%",
+                background:
+                  "linear-gradient(to right, #2d454d, white, #2d454d)",
+                my: 3,
+                borderRadius: "999px",
               }}
+            />{" "}
+            <Box
+              display="flex"
+              flexDirection="row"
+              justifyContent="space-between"
             >
-              View More
-            </Button>
-          </Link>
-        </Box>
+              <Typography fontWeight="bold">{property.units} Units</Typography>
+              <Typography textAlign="center">
+                <PlaceIcon />
+                {property.location}
+              </Typography>
+            </Box>
+          </Box>
+        ))}
       </Box>
 
       {/* footer */}

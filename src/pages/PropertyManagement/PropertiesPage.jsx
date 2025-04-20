@@ -7,14 +7,17 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import { Link } from "react-router-dom";
 import AddIcon from "@mui/icons-material/Add";
 import DataPropertyFormModal from "../../components/DataPropertyForm";
-import properties from "../../components/Properties";
+import MyProperties from "../../components/Properties";
 
 const PropertiesPage = () => {
   const [openModal, setOpenModal] = useState(false);
   const [snackbar, setSnackbar] = useState({ open: false, message: "" });
+  const [properties, setProperties] = useState(MyProperties);
 
-  const handleAddProp = (prop) => {
-    console.log("clicked", prop);
+  const handleAddProp = (newProp) => {
+    setProperties((prev) => [...prev, newProp]);
+    setSnackbar({ open: true, message: "Property added successfully!" });
+    setOpenModal(false);
   };
 
   const handleCloseSnackbar = () => {
@@ -44,13 +47,12 @@ const PropertiesPage = () => {
       <DataPropertyFormModal
         open={openModal}
         onClose={() => setOpenModal(false)}
-        onAddProp={handleAddProp}
+        onAddProperty={handleAddProp}
       />
 
       <Snackbar
         open={snackbar.open}
         autoHideDuration={2000}
-        variant="filled"
         message={snackbar.message}
         onClose={handleCloseSnackbar}
       />
@@ -74,7 +76,7 @@ const PropertiesPage = () => {
             <Box>
               <img
                 src={property.image}
-                alt="house-image"
+                alt="house"
                 className="shadow-md shadow-slate-500 rounded-md transition-transform duration-300 ease-in-out group-hover:-translate-y-12 cursor-pointer z-10 relative"
               />
 
@@ -129,7 +131,7 @@ const PropertiesPage = () => {
                 my: 3,
                 borderRadius: "999px",
               }}
-            />{" "}
+            />
             <Box
               display="flex"
               flexDirection="row"
