@@ -6,31 +6,52 @@ import {
   DialogActions,
   Button,
   TextField,
+  Snackbar
 } from "@mui/material";
 
-
 const DataUnitFormModal = ({ open, onClose, onAddUnit }) => {
-  const [formData, setFormData] = useState({ unit: "", value: ""});
+  const [formData, setFormData] = useState({ unit: "", value: "" });
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+    severity: "success",
+  });
 
   const handleChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handleSubmit = () => {
+    const { name, unit } = formData;
+    if (!name.trim() || !unit.trim()) {
+      setSnackbar({
+        open: true,
+        message: "Please fill out all fields",
+        severity: "error",
+      });
+      return;
+    }
     onAddUnit({
       id: Date.now(),
       UnitNumber: formData.unit,
       UnitValue: Number(formData.value),
     });
+
     onClose();
     setFormData({ unit: "", value: "" });
+    setSnackbar({
+      open: true,
+      message: "Property added successfully!",
+      severity: "success",
+    });
+  };
+
+  const handleCloseSnackbar = () => {
+    setSnackbar({ open: false, message: "", severity: "" });
   };
 
   return (
-    <Dialog
-      open={open}
-      onClose={onClose}
-    >
+    <Dialog open={open} onClose={onClose}>
       <DialogTitle sx={{ fontWeight: "bold" }}>Add New Unit</DialogTitle>
       <DialogContent
         sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 1 }}
@@ -59,6 +80,15 @@ const DataUnitFormModal = ({ open, onClose, onAddUnit }) => {
           Add
         </Button>
       </DialogActions>
+
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={2000}
+        variant="filled"
+        message={snackbar.message}
+        onClose={handleCloseSnackbar}
+        severity={snackbar.severity}
+      />
     </Dialog>
   );
 };

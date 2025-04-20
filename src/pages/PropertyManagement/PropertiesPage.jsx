@@ -11,17 +11,11 @@ import MyProperties from "../../components/Properties";
 
 const PropertiesPage = () => {
   const [openModal, setOpenModal] = useState(false);
-  const [snackbar, setSnackbar] = useState({ open: false, message: "" });
   const [properties, setProperties] = useState(MyProperties);
 
   const handleAddProp = (newProp) => {
     setProperties((prev) => [...prev, newProp]);
-    setSnackbar({ open: true, message: "Property added successfully!" });
     setOpenModal(false);
-  };
-
-  const handleCloseSnackbar = () => {
-    setSnackbar({ open: false, message: "" });
   };
 
   return (
@@ -48,13 +42,6 @@ const PropertiesPage = () => {
         open={openModal}
         onClose={() => setOpenModal(false)}
         onAddProperty={handleAddProp}
-      />
-
-      <Snackbar
-        open={snackbar.open}
-        autoHideDuration={2000}
-        message={snackbar.message}
-        onClose={handleCloseSnackbar}
       />
 
       <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" gap="10px">

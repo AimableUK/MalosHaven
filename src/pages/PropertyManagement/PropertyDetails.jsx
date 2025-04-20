@@ -72,7 +72,7 @@ const PropertyDetails = () => {
 
   const [rows, setRows] = useState(initialRows);
   const [openModal, setOpenModal] = useState(false);
-  const [snackbar, setSnackbar] = useState({ open: false, message: "" });
+  const [snackbar, setSnackbar] = useState({ open: false, message: "", severity: "" });
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [selectedUnitId, setSelectedUnitId] = useState(null);
 
@@ -83,7 +83,7 @@ const PropertyDetails = () => {
       row.id === newRow.id ? newRow : row
     );
     setRows(updatedRows);
-    setSnackbar({ open: true, message: `Updated unit: ${newRow.UnitNumber}` });
+    setSnackbar({ open: true, message: `Updated unit: ${newRow.UnitNumber}`, severity: "success" });
     return newRow;
   };
 
@@ -235,14 +235,6 @@ const PropertyDetails = () => {
           onAddUnit={handleAddUnit}
         />
 
-        <Snackbar
-          open={snackbar.open}
-          autoHideDuration={2000}
-          variant="filled"
-          message={snackbar.message}
-          onClose={handleCloseSnackbar}
-        />
-
         <DataDeleteConfirm
           setRows={setRows}
           setSnackbar={setSnackbar}
@@ -251,6 +243,7 @@ const PropertyDetails = () => {
           selectedUnitId={selectedUnitId}
           setSelectedUnitId={setSelectedUnitId}
         />
+        
       </Box>
     </Box>
   );

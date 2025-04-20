@@ -50,7 +50,7 @@ const DataPropertyFormModal = ({ open, onClose, onAddProperty }) => {
       id: Date.now(),
       title: formData.name,
       description: formData.desc,
-      units: Number(formData.units),
+      units: formData.units,
       location: formData.loc,
       image: imagePreview,
     });
@@ -114,13 +114,12 @@ const DataPropertyFormModal = ({ open, onClose, onAddProperty }) => {
           <TextField
             label="Property Units"
             name="units"
-            type="number"
             fullWidth
             value={formData.units}
             onChange={handleChange}
             autoComplete="off"
             required
-            helperText="Number of units/rooms"
+            helperText="Number of units eg; R234"
           />
           <TextField
             label="Property Location"
@@ -151,12 +150,6 @@ const DataPropertyFormModal = ({ open, onClose, onAddProperty }) => {
           onClose={handleCloseSnackbar}
           severity={snackbar.severity}
           variant="filled"
-          sx={{
-            ...(snackbar.severity === "success" && {
-              backgroundColor: "#4caf50",
-              color: "#fff", 
-            }),
-          }}
         >
           {snackbar.message}
         </Alert>
