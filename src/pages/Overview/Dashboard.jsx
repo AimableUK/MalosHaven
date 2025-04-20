@@ -9,11 +9,13 @@ import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import PlaceIcon from "@mui/icons-material/Place";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import FavoriteIcon from "@mui/icons-material/Favorite";
 import houseImg from "../../assets/house.jpg";
 import houseImg1 from "../../assets/house1.jpg";
 import houseImg2 from "../../assets/house2.jpg";
+import FooterPage from "../Footer/FooterPage.jsx";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 
+import { Link } from "react-router-dom";
 
 const Dashboard = () => {
   return (
@@ -326,6 +328,15 @@ const Dashboard = () => {
               zIndex="0"
               mt="-40px"
             >
+              <Link to="/propertydetails">
+                <Button
+                  variant="contained"
+                  startIcon={<VisibilityIcon />}
+                  color="info"
+                >
+                  View
+                </Button>
+              </Link>
               <Button
                 variant="contained"
                 startIcon={<EditIcon />}
@@ -403,6 +414,13 @@ const Dashboard = () => {
             >
               <Button
                 variant="contained"
+                startIcon={<VisibilityIcon />}
+                color="info"
+              >
+                View
+              </Button>
+              <Button
+                variant="contained"
                 startIcon={<EditIcon />}
                 color="success"
               >
@@ -478,6 +496,13 @@ const Dashboard = () => {
             >
               <Button
                 variant="contained"
+                startIcon={<VisibilityIcon />}
+                color="info"
+              >
+                View
+              </Button>
+              <Button
+                variant="contained"
                 startIcon={<EditIcon />}
                 color="success"
               >
@@ -523,12 +548,32 @@ const Dashboard = () => {
             </Typography>
           </Box>
         </Box>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignContent: "center",
+            height: "100%",
+            width: "100%",
+          }}
+        >
+          <Link to='/properties'>
+            <Button
+              variant="contained"
+              startIcon={<VisibilityIcon />}
+              color="info"
+              sx={{
+                whiteSpace: "nowrap",
+              }}
+            >
+              View More
+            </Button>
+          </Link>
+        </Box>
       </Box>
-      <Typography variant="body2" align="center" m="10px" sx={{ color: "#aaa" }}>
-        &copy; 2025, made with{" "}
-        <FavoriteIcon sx={{ color: "red", fontSize: "large" }}/> by{" "}
-        <a href="#"><strong>Malos Technologies</strong></a>
-      </Typography>
+
+      {/* footer */}
+      <FooterPage />
     </Box>
   );
 };

@@ -6,7 +6,7 @@ export const customTheme = createTheme({
       main: "#fff",
     },
     background: {
-      default: "linear-gradient(to right, #24243e, #302b63, #0f0c29)",
+      default: "#203040",
       paper: "#24383E",
     },
     text: {

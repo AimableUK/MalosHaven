@@ -21,6 +21,7 @@ import ReportsPage from "./pages/Analytics&Reports/ReportsPage";
 // Settings&Permissions
 import SettingsPage from "./pages/Settings&Permissions/SettingsPage";
 import PermissionsPage from "./pages/Settings&Permissions/PermissionsPage";
+import PropertyDetails from "./pages/PropertyManagement/PropertyDetails";
 
 
 const AppRoutes = () => {
@@ -29,6 +30,7 @@ const AppRoutes = () => {
       <Route path="/" element={<AppLayout />}>
         <Route index element={<DashboardPage />} />
         <Route path="properties" element={<PropertiesPage />} />
+        <Route path="propertydetails" element={<PropertyDetails />} />
         <Route path="rooms" element={<RoomsPage />} />
         <Route path="maintenance" element={<MaintenancePage />} />
         <Route path="bookings" element={<BookingsPage />} />
