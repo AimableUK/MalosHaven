@@ -6,20 +6,18 @@ import {
   DialogActions,
   Button,
   TextField,
-  MenuItem,
 } from "@mui/material";
 
-const roles = ["Admin", "Editor", "User"];
 
-const DataUserFormModal = ({ open, onClose, onAddUser }) => {
-  const [formData, setFormData] = useState({ name: "", email: "", role: "" });
+const DataUnitFormModal = ({ open, onClose, onAddUnit }) => {
+  const [formData, setFormData] = useState({ unit: "", value: ""});
 
   const handleChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handleSubmit = () => {
-    onAddUser({ ...formData, id: Date.now() });
+    onAddUnit({ ...formData, id: Date.now() });
     onClose();
     setFormData({ name: "", email: "", role: "" });
   };
@@ -29,38 +27,25 @@ const DataUserFormModal = ({ open, onClose, onAddUser }) => {
       open={open}
       onClose={onClose}
     >
-      <DialogTitle sx={{ fontWeight: "bold" }}>Add New User</DialogTitle>
+      <DialogTitle sx={{ fontWeight: "bold" }}>Add New Unit</DialogTitle>
       <DialogContent
         sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 1 }}
       >
         <TextField
-          label="Name"
-          name="name"
+          label="Unit Number"
+          name="unit"
           fullWidth
           value={formData.name}
           onChange={handleChange}
         />
         <TextField
-          label="Email"
-          name="email"
+          label="Unit Value"
+          name="value"
           fullWidth
+          type="number"
           value={formData.email}
           onChange={handleChange}
         />
-        <TextField
-          label="Role"
-          name="role"
-          select
-          fullWidth
-          value={formData.role}
-          onChange={handleChange}
-        >
-          {roles.map((role) => (
-            <MenuItem key={role} value={role}>
-              {role}
-            </MenuItem>
-          ))}
-        </TextField>
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose} color="secondary">
@@ -74,4 +59,4 @@ const DataUserFormModal = ({ open, onClose, onAddUser }) => {
   );
 };
 
-export default DataUserFormModal;
+export default DataUnitFormModal;

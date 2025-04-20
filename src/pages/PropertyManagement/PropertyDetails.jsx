@@ -4,7 +4,7 @@ import houseImg1 from "../../assets/house1.jpg";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-import DataUserFormModal from "../../components/DataUserForm";
+import DataUnitFormModal from "../../components/DataUnitForm";
 import DataDeleteConfirm from "../../components/DataDeleteConfirm";
 
 const PropertyDetails = () => {
@@ -13,11 +13,13 @@ const PropertyDetails = () => {
       field: "UnitNumber",
       headerName: "Unit Number",
       width: 150,
+      editable: true
     },
     {
       field: "UnitValue",
       headerName: "Unit Value (RWF)",
       width: 180,
+      editable: true
     },
     {
       field: "delete",
@@ -28,7 +30,7 @@ const PropertyDetails = () => {
           variant="contained"
           color="error"
           onClick={() => {
-            setSelectedUserId(params.row.id);
+            setSelectedUnitId(params.row.id);
             setDeleteDialogOpen(true);
           }}
           startIcon={<DeleteIcon />}
@@ -71,14 +73,16 @@ const PropertyDetails = () => {
   const [openModal, setOpenModal] = useState(false);
   const [snackbar, setSnackbar] = useState({ open: false, message: "" });
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-  const [selectedUserId, setSelectedUserId] = useState(null);
+  const [selectedUnitId, setSelectedUnitId] = useState(null);
+
+  const units = rows.length;
 
   const processRowUpdate = (newRow) => {
     const updatedRows = rows.map((row) =>
       row.id === newRow.id ? newRow : row
     );
     setRows(updatedRows);
-    setSnackbar({ open: true, message: `Updated user: ${newRow.name}` });
+    setSnackbar({ open: true, message: `Updated unit: ${newRow.UnitNumber}` });
     return newRow;
   };
 
@@ -86,13 +90,15 @@ const PropertyDetails = () => {
     console.log(id);
   };
 
-  const handleAddUser = (user) => {
-    setRows((prev) => [...prev, user]);
+  const handleAddUnit = (unit) => {
+    setRows((prev) => [...prev, unit]);
   };
 
   const handleCloseSnackbar = () => {
     setSnackbar({ open: false, message: "" });
   };
+
+
 
   return (
     <Box
@@ -168,19 +174,30 @@ const PropertyDetails = () => {
           <Typography fontWeight="bold">
             Number of Units:&nbsp;&nbsp;
           </Typography>
-          <Typography>29 Units</Typography>
+          <Typography>32 Units</Typography>
         </Box>
 
         <Box mt="10px" display="flex" flexDirection="row">
           <Typography fontWeight="bold">
             Units Available:&nbsp;&nbsp;
           </Typography>
-          <Typography>12 Units</Typography>
+          <Typography>{units} Units</Typography>
         </Box>
-        <Typography mt="20px" fontSize="20px" fontWeight="bold">
-          {" "}
-          AVAILABLE UNITS
-        </Typography>
+
+        <Box  mt="20px" display="flex" flexDirection="row" alignItems="center" justifyContent="space-between">
+
+          <Typography fontSize="20px" fontWeight="bold">
+            {" "}
+            AVAILABLE UNITS
+          </Typography>
+
+          <Box>
+            <Button variant="contained" onClick={() => setOpenModal(true)}>
+              Add Unit
+            </Button>
+          </Box>
+        </Box>
+
         <DataGrid
           sx={{
             height: "fit-content",
@@ -198,7 +215,6 @@ const PropertyDetails = () => {
           pageSizeOptions={[5]}
           checkboxSelection
           disableRowSelectionOnClick
-          editMode="cell"
           processRowUpdate={processRowUpdate}
           experimentalFeatures={{ newEditingApi: true }}
           slots={{
@@ -211,11 +227,11 @@ const PropertyDetails = () => {
             },
           }}
         />
-        
-        <DataUserFormModal
+
+        <DataUnitFormModal
           open={openModal}
           onClose={() => setOpenModal(false)}
-          onAddUser={handleAddUser}
+          onAddUnit={handleAddUnit}
         />
 
         <Snackbar
@@ -231,8 +247,8 @@ const PropertyDetails = () => {
           setSnackbar={setSnackbar}
           setDeleteDialogOpen={setDeleteDialogOpen}
           deleteDialogOpen={deleteDialogOpen}
-          selectedUserId={selectedUserId}
-          setSelectedUserId={setSelectedUserId}
+          selectedUnitId={selectedUnitId}
+          setSelectedUnitId={setSelectedUnitId}
         />
       </Box>
     </Box>

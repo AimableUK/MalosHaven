@@ -13,15 +13,15 @@ const DataDeleteConfirm = ({
   setSnackbar,
   setDeleteDialogOpen,
   deleteDialogOpen,
-  setSelectedUserId,
-  selectedUserId,
+  setSelectedUnitId,
+  selectedUnitId,
 }) => {
   return (
     <Dialog open={deleteDialogOpen} onClose={() => setDeleteDialogOpen(false)}>
-      <DialogTitle>Delete User</DialogTitle>
+      <DialogTitle>Delete Unit</DialogTitle>
       <DialogContent>
         <DialogContentText>
-          Are you sure you want to delete this user? This action cannot be
+          Are you sure you want to delete this unit? This action cannot be
           undone.
         </DialogContentText>
       </DialogContent>
@@ -31,10 +31,10 @@ const DataDeleteConfirm = ({
         </Button>
         <Button
           onClick={() => {
-            setRows((prev) => prev.filter((row) => row.id !== selectedUserId));
-            setSnackbar({ open: true, message: "User deleted" });
+            setRows((prev) => prev.filter((row) => row.id !== selectedUnitId));
+            setSnackbar({ open: true, message: "Unit deleted" });
             setDeleteDialogOpen(false);
-            setSelectedUserId(null);
+            setSelectedUnitId(null);
           }}
           color="error"
           variant="contained"
