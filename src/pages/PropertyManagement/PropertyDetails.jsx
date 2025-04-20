@@ -6,6 +6,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import DataUnitFormModal from "../../components/DataUnitForm";
 import DataDeleteConfirm from "../../components/DataDeleteConfirm";
+import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 
 const PropertyDetails = () => {
   const columns = [
@@ -48,7 +49,7 @@ const PropertyDetails = () => {
           variant="contained"
           color="success"
           onClick={() => handleBook(params.row.id)}
-          startIcon={<EditIcon />}
+          startIcon={<AutoStoriesIcon />}
         >
           Book
         </Button>

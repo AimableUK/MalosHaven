@@ -17,9 +17,13 @@ const DataUnitFormModal = ({ open, onClose, onAddUnit }) => {
   };
 
   const handleSubmit = () => {
-    onAddUnit({ ...formData, id: Date.now() });
+    onAddUnit({
+      id: Date.now(),
+      UnitNumber: formData.unit,
+      UnitValue: Number(formData.value),
+    });
     onClose();
-    setFormData({ name: "", email: "", role: "" });
+    setFormData({ unit: "", value: "" });
   };
 
   return (
