@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Dialog,
   DialogTitle,
@@ -10,13 +10,22 @@ import {
   Alert,
 } from "@mui/material";
 
-const DataUnitFormModal = ({ open, onClose, onAddUnit }) => {
+const EditUnitFormModal = ({ open, onClose, onEditUnit, selectedUnit }) => {
   const [formData, setFormData] = useState({ unit: "", value: "" });
   const [snackbar, setSnackbar] = useState({
     open: false,
     message: "",
     severity: "success",
   });
+
+  useEffect(() => {
+    if (selectedUnit) {
+      setFormData({
+        unit: selectedUnit.UnitNumber || "",
+        value: selectedUnit.UnitValue || "",
+      });
+    }
+  }, [selectedUnit]);
 
   const handleChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -33,17 +42,16 @@ const DataUnitFormModal = ({ open, onClose, onAddUnit }) => {
       return;
     }
 
-    onAddUnit({
-      id: Date.now(),
+    onEditUnit({
+      ...selectedUnit,
       UnitNumber: unit,
       UnitValue: Number(value),
     });
 
     onClose();
-    setFormData({ unit: "", value: "" });
     setSnackbar({
       open: true,
-      message: "Unit added successfully!",
+      message: "Updated Successfully",
       severity: "success",
     });
   };
@@ -54,36 +62,37 @@ const DataUnitFormModal = ({ open, onClose, onAddUnit }) => {
 
   return (
     <>
-    <Dialog open={open} onClose={onClose}>
-      <DialogTitle sx={{ fontWeight: "bold" }}>Add New Unit</DialogTitle>
-      <DialogContent
-        sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 1 }}
-      >
-        <TextField
-          label="Unit Number"
-          name="unit"
-          fullWidth
-          value={formData.unit}
-          onChange={handleChange}
-        />
-        <TextField
-          label="Unit Value"
-          name="value"
-          fullWidth
-          type="number"
-          value={formData.value}
-          onChange={handleChange}
-        />
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={onClose} color="secondary">
-          Cancel
-        </Button>
-        <Button onClick={handleSubmit} variant="contained">
-          Add
-        </Button>
-      </DialogActions>
-    </Dialog>
+      <Dialog open={open} onClose={onClose}>
+        <DialogTitle sx={{ fontWeight: "bold" }}>Edit Unit</DialogTitle>
+        <DialogContent
+          sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 1 }}
+        >
+          <TextField
+            label="Unit Number"
+            name="unit"
+            fullWidth
+            value={formData.unit}
+            onChange={handleChange}
+          />
+          <TextField
+            label="Unit Value"
+            name="value"
+            fullWidth
+            type="number"
+            value={formData.value}
+            onChange={handleChange}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={onClose} color="secondary">
+            Cancel
+          </Button>
+          <Button onClick={handleSubmit} variant="contained">
+            Update
+          </Button>
+        </DialogActions>
+      </Dialog>
+
       <Snackbar
         open={snackbar.open}
         autoHideDuration={2000}
@@ -102,4 +111,4 @@ const DataUnitFormModal = ({ open, onClose, onAddUnit }) => {
   );
 };
 
-export default DataUnitFormModal;
+export default EditUnitFormModal;

@@ -75,7 +75,7 @@ const PropertiesPage = () => {
                 zIndex="0"
                 mt="-40px"
               >
-                <Link to="/propertydetails">
+                <Link to={`/propertydetails/${property.id}`} key={property.id}>
                   <Button
                     variant="contained"
                     startIcon={<VisibilityIcon />}
@@ -102,9 +102,11 @@ const PropertiesPage = () => {
               </Box>
             </Box>
             <Box>
-              <Typography fontWeight="bold" textAlign="center" m="15px">
-                {property.title}
-              </Typography>
+              <Link to={`/propertydetails/${property.id}`} key={property.id}>
+                <Typography fontWeight="bold" textAlign="center" m="15px">
+                  {property.title}
+                </Typography>
+              </Link>
               <Typography variant="body1" component="p">
                 {property.description}
               </Typography>

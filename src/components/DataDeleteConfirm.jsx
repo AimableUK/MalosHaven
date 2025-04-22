@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Dialog,
   DialogTitle,
@@ -6,43 +6,72 @@ import {
   DialogContent,
   DialogContentText,
   Button,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 
 const DataDeleteConfirm = ({
   setRows,
-  setSnackbar,
-  setDeleteDialogOpen,
   deleteDialogOpen,
-  setSelectedUnitId,
+  setDeleteDialogOpen,
   selectedUnitId,
+  setSelectedUnitId,
 }) => {
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+    severity: "success",
+  });
+
+  const handleCloseSnackbar = () => {
+    setSnackbar({ open: false, message: "", severity: "" });
+  };
+
+  const handleDelete = () => {
+    setRows((prev) => prev.filter((row) => row.id !== selectedUnitId));
+    setSnackbar({
+      open: true,
+      message: "Unit deleted successfully!",
+      severity: "success",
+    });
+    setDeleteDialogOpen(false);
+    setSelectedUnitId(null);
+  };
+
   return (
-    <Dialog open={deleteDialogOpen} onClose={() => setDeleteDialogOpen(false)}>
-      <DialogTitle>Delete Unit</DialogTitle>
-      <DialogContent>
-        <DialogContentText>
-          Are you sure you want to delete this unit? This action cannot be
-          undone.
-        </DialogContentText>
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={() => setDeleteDialogOpen(false)} color="primary">
-          Cancel
-        </Button>
-        <Button
-          onClick={() => {
-            setRows((prev) => prev.filter((row) => row.id !== selectedUnitId));
-            setSnackbar({ open: true, message: "Unit deleted" });
-            setDeleteDialogOpen(false);
-            setSelectedUnitId(null);
-          }}
-          color="error"
-          variant="contained"
+    <>
+      <Dialog open={deleteDialogOpen} onClose={() => setDeleteDialogOpen(false)}>
+        <DialogTitle>Delete Unit</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Are you sure you want to delete this unit? This action cannot be undone.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setDeleteDialogOpen(false)} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={handleDelete} color="error" variant="contained">
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={3000}
+        onClose={handleCloseSnackbar}
+      >
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity={snackbar.severity}
+          variant="filled"
+          sx={{ width: "100%" }}
         >
-          Delete
-        </Button>
-      </DialogActions>
-    </Dialog>
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
+    </>
   );
 };
 
