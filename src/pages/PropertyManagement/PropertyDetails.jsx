@@ -23,7 +23,7 @@ const PropertyDetails = () => {
     { id: 9, UnitNumber: "109", UnitValue: 230000 },
     { id: 10, UnitNumber: "110", UnitValue: 175000 },
   ];
-  
+
   const [rows, setRows] = useState(initialRows);
   const [openModal, setOpenModal] = useState(false);
   const [editDialogOpen, setEditDialogOpen] = useState(false);
@@ -34,7 +34,6 @@ const PropertyDetails = () => {
     message: "",
     severity: "",
   });
-
 
   const columns = [
     {
@@ -102,11 +101,15 @@ const PropertyDetails = () => {
     },
   ];
 
-  const { id } = useParams(); 
+  const { id } = useParams();
   const property = properties.find((property) => property.id === parseInt(id));
 
   if (!property) {
-    return <Typography>Property not found</Typography>;
+    return (
+      <Box flex="flex" justifyContent="center" alignSelf="center" justifySelf="center">
+        <Typography>Property not found</Typography>
+      </Box>
+    );
   }
 
   const { units } = property;
@@ -207,9 +210,7 @@ const PropertyDetails = () => {
       <Box m="10px" mt="20px">
         <Box>
           <Typography fontWeight="bold">Property Details</Typography>
-          <Typography component="p">
-            {property.description}
-          </Typography>
+          <Typography component="p">{property.description}</Typography>
         </Box>
 
         <Box mt="10px" display="flex" flexDirection="row">
@@ -291,7 +292,7 @@ const PropertyDetails = () => {
             );
             setSnackbar({
               open: true,
-              message: `Unit updated ${updatedUnit.UnitNumber} successfully!`,
+              message: `Unit ${updatedUnit.UnitNumber} updated successfully!`,
               severity: "success",
             });
           }}

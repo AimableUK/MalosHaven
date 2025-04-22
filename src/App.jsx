@@ -6,7 +6,6 @@ import DashboardPage from "./pages/Overview/Dashboard"
 
 // Property Management
 import PropertiesPage from "./pages/PropertyManagement/PropertiesPage";
-import RoomsPage from "./pages/PropertyManagement/RoomsPage";
 import MaintenancePage from "./pages/PropertyManagement/MaintenancePage";
 
 // Booking&TenantMaintainance
@@ -31,7 +30,6 @@ const AppRoutes = () => {
         <Route index element={<DashboardPage />} />
         <Route path="properties" element={<PropertiesPage />} />
         <Route path="propertydetails/:id" element={<PropertyDetails />} />
-        <Route path="rooms" element={<RoomsPage />} />
         <Route path="maintenance" element={<MaintenancePage />} />
         <Route path="bookings" element={<BookingsPage />} />
         <Route path="tenants" element={<TenantsPage />} />

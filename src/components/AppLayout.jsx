@@ -50,11 +50,6 @@ const AppLayout = () => {
               segment: 'properties',
             },
             {
-              title: 'Rooms',
-              icon: <ApartmentIcon />,
-              segment: 'rooms',
-            },
-            {
               title: 'Maintenance Requests',
               icon: <BuildIcon />,
               segment: 'maintenance',

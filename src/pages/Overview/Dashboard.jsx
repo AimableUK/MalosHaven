@@ -299,7 +299,7 @@ const Dashboard = () => {
         className="font-roboto"
         padding="10px"
       >
-        {MyProperties.map((property) => (
+        {MyProperties.slice(0, 3).map((property) => (
           <Box
             key={property.id}
             sx={{
@@ -380,7 +380,9 @@ const Dashboard = () => {
               flexDirection="row"
               justifyContent="space-between"
             >
-              <Typography fontWeight="bold">{property.units.length} Units</Typography>
+              <Typography fontWeight="bold">
+                {property.units.length} Units
+              </Typography>
               <Typography textAlign="center">
                 <PlaceIcon />
                 {property.location}
@@ -388,6 +390,9 @@ const Dashboard = () => {
             </Box>
           </Box>
         ))}
+        <Link to="/properties">
+          <Button variant="contained" sx={{ whiteSpace: "nowrap" }} color="success">VIEW MORE</Button>
+        </Link>
       </Box>
 
       {/* footer */}
