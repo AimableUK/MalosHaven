@@ -11,17 +11,6 @@ import { useParams } from "react-router-dom";
 import properties from "../../components/Properties";
 
 const PropertyDetails = () => {
-  const [rows, setRows] = useState(initialRows);
-  const [openModal, setOpenModal] = useState(false);
-  const [editDialogOpen, setEditDialogOpen] = useState(false);
-  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-  const [selectedUnitId, setSelectedUnitId] = useState(null);
-  const [snackbar, setSnackbar] = useState({
-    open: false,
-    message: "",
-    severity: "",
-  });
-
   const initialRows = [
     { id: 1, UnitNumber: "101", UnitValue: 150000 },
     { id: 2, UnitNumber: "102", UnitValue: 200000 },
@@ -34,6 +23,18 @@ const PropertyDetails = () => {
     { id: 9, UnitNumber: "109", UnitValue: 230000 },
     { id: 10, UnitNumber: "110", UnitValue: 175000 },
   ];
+  
+  const [rows, setRows] = useState(initialRows);
+  const [openModal, setOpenModal] = useState(false);
+  const [editDialogOpen, setEditDialogOpen] = useState(false);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [selectedUnitId, setSelectedUnitId] = useState(null);
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+    severity: "",
+  });
+
 
   const columns = [
     {
