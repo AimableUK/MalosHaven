@@ -5,7 +5,7 @@ const PageTitleUpdater = () => {
   const location = useLocation();
 
   useEffect(() => {
-    let title = 'Malos Core';
+    let title = 'Malos Haven';
 
     switch (location.pathname) {
       case '/':

@@ -8,23 +8,10 @@ import DataDeleteConfirm from "../../components/DataDeleteConfirm";
 import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 import EditUnitFormModal from "../../components/EditUnitForm";
 import { useParams } from "react-router-dom";
-import properties from "../../components/Properties";
+import properties from "../../components/Properties";  // Make sure this is correctly imported
 
 const PropertyDetails = () => {
-  const initialRows = [
-    { id: 1, UnitNumber: "101", UnitValue: 150000 },
-    { id: 2, UnitNumber: "102", UnitValue: 200000 },
-    { id: 3, UnitNumber: "103", UnitValue: 180000 },
-    { id: 4, UnitNumber: "104", UnitValue: 220000 },
-    { id: 5, UnitNumber: "105", UnitValue: 170000 },
-    { id: 6, UnitNumber: "106", UnitValue: 210000 },
-    { id: 7, UnitNumber: "107", UnitValue: 160000 },
-    { id: 8, UnitNumber: "108", UnitValue: 190000 },
-    { id: 9, UnitNumber: "109", UnitValue: 230000 },
-    { id: 10, UnitNumber: "110", UnitValue: 175000 },
-  ];
-
-  const [rows, setRows] = useState(initialRows);
+  const [propertiesState, setPropertiesState] = useState(properties);  // Initialize the state properly
   const [openModal, setOpenModal] = useState(false);
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
@@ -102,26 +89,36 @@ const PropertyDetails = () => {
   ];
 
   const { id } = useParams();
-  const property = properties.find((property) => property.id === parseInt(id));
+  const property = propertiesState.find((property) => property.id === parseInt(id));
 
   if (!property) {
     return (
-      <Box flex="flex" justifyContent="center" alignSelf="center" justifySelf="center">
+      <Box
+        flex="flex"
+        justifyContent="center"
+        alignSelf="center"
+        justifySelf="center"
+      >
         <Typography>Property not found</Typography>
       </Box>
     );
   }
 
-  const { units } = property;
-
-  const selectedUnit = rows.find((row) => row.id === selectedUnitId);
+  const selectedUnit = property.units.find((unit) => unit.id === selectedUnitId);
 
   const handleBook = (id) => {
     console.log("Booked unit ID:", id);
   };
 
   const handleAddUnit = (unit) => {
-    units.push(unit);
+    setPropertiesState((prevProperties) =>
+      prevProperties.map((property) =>
+        property.id === parseInt(id)
+          ? { ...property, units: [...property.units, unit] }
+          : property
+      )
+    );
+
     setSnackbar({
       open: true,
       message: `Added new unit: ${unit.UnitNumber}`,
@@ -130,16 +127,47 @@ const PropertyDetails = () => {
   };
 
   const processRowUpdate = (newRow) => {
-    const updatedRows = rows.map((row) =>
-      row.id === newRow.id ? newRow : row
+    const updatedProperty = propertiesState.map((property) =>
+      property.id === parseInt(id)
+        ? {
+            ...property,
+            units: property.units.map((unit) =>
+              unit.id === newRow.id ? newRow : unit
+            ),
+          }
+        : property
     );
-    setRows(updatedRows);
+
+    setPropertiesState(updatedProperty);
+
     setSnackbar({
       open: true,
       message: `Unit ${newRow.UnitNumber} updated successfully!`,
       severity: "success",
     });
+
     return newRow;
+  };
+
+  const handleDeleteUnit = () => {
+    setPropertiesState((prevProperties) =>
+      prevProperties.map((property) =>
+        property.id === parseInt(id)
+          ? {
+              ...property,
+              units: property.units.filter((unit) => unit.id !== selectedUnitId),
+            }
+          : property
+      )
+    );
+
+    setSnackbar({
+      open: true,
+      message: "Unit deleted successfully!",
+      severity: "success",
+    });
+    setDeleteDialogOpen(false);
+    setSelectedUnitId(null);
   };
 
   const handleCloseSnackbar = () => {
@@ -274,12 +302,11 @@ const PropertyDetails = () => {
 
         {/* Delete Confirmation Modal */}
         <DataDeleteConfirm
-          setRows={setRows}
-          setSnackbar={setSnackbar}
-          setDeleteDialogOpen={setDeleteDialogOpen}
           deleteDialogOpen={deleteDialogOpen}
+          setDeleteDialogOpen={setDeleteDialogOpen}
           selectedUnitId={selectedUnitId}
           setSelectedUnitId={setSelectedUnitId}
+          handleDeleteUnit={handleDeleteUnit} // Pass delete function
         />
 
         {/* Edit Unit Modal */}
@@ -287,8 +314,17 @@ const PropertyDetails = () => {
           open={editDialogOpen}
           onClose={() => setEditDialogOpen(false)}
           onEditUnit={(updatedUnit) => {
-            setRows((prev) =>
-              prev.map((row) => (row.id === updatedUnit.id ? updatedUnit : row))
+            setPropertiesState((prevProperties) =>
+              prevProperties.map((property) =>
+                property.id === parseInt(id)
+                  ? {
+                      ...property,
+                      units: property.units.map((unit) =>
+                        unit.id === updatedUnit.id ? updatedUnit : unit
+                      ),
+                    }
+                  : property
+              )
             );
             setSnackbar({
               open: true,

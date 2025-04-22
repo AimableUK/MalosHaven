@@ -11,11 +11,9 @@ import {
 } from "@mui/material";
 
 const DataDeleteConfirm = ({
-  setRows,
   deleteDialogOpen,
   setDeleteDialogOpen,
-  selectedUnitId,
-  setSelectedUnitId,
+  handleDeleteUnit,
 }) => {
   const [snackbar, setSnackbar] = useState({
     open: false,
@@ -28,14 +26,7 @@ const DataDeleteConfirm = ({
   };
 
   const handleDelete = () => {
-    setRows((prev) => prev.filter((row) => row.id !== selectedUnitId));
-    setSnackbar({
-      open: true,
-      message: "Unit deleted successfully!",
-      severity: "success",
-    });
-    setDeleteDialogOpen(false);
-    setSelectedUnitId(null);
+    handleDeleteUnit(); // Call the parent handler for unit deletion
   };
 
   return (
