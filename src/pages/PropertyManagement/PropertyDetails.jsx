@@ -8,10 +8,10 @@ import DataDeleteConfirm from "../../components/DataDeleteConfirm";
 import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 import EditUnitFormModal from "../../components/EditUnitForm";
 import { useParams } from "react-router-dom";
-import properties from "../../components/Properties";  // Make sure this is correctly imported
+import properties from "../../components/Properties";
 
 const PropertyDetails = () => {
-  const [propertiesState, setPropertiesState] = useState(properties);  // Initialize the state properly
+  const [propertiesState, setPropertiesState] = useState(properties);
   const [openModal, setOpenModal] = useState(false);
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
@@ -89,7 +89,9 @@ const PropertyDetails = () => {
   ];
 
   const { id } = useParams();
-  const property = propertiesState.find((property) => property.id === parseInt(id));
+  const property = propertiesState.find(
+    (property) => property.id === parseInt(id)
+  );
 
   if (!property) {
     return (
@@ -104,7 +106,9 @@ const PropertyDetails = () => {
     );
   }
 
-  const selectedUnit = property.units.find((unit) => unit.id === selectedUnitId);
+  const selectedUnit = property.units.find(
+    (unit) => unit.id === selectedUnitId
+  );
 
   const handleBook = (id) => {
     console.log("Booked unit ID:", id);
@@ -155,7 +159,9 @@ const PropertyDetails = () => {
         property.id === parseInt(id)
           ? {
               ...property,
-              units: property.units.filter((unit) => unit.id !== selectedUnitId),
+              units: property.units.filter(
+                (unit) => unit.id !== selectedUnitId
+              ),
             }
           : property
       )

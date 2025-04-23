@@ -3,7 +3,6 @@ import { DashboardLayout } from "@toolpad/core/DashboardLayout";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import DashboardIcon from "@mui/icons-material/Dashboard"
 import HomeIcon from "@mui/icons-material/Home"
-import ApartmentIcon from "@mui/icons-material/Apartment"
 import BuildIcon from "@mui/icons-material/Build"
 import EventIcon from "@mui/icons-material/Event"
 import PeopleIcon from "@mui/icons-material/People"
@@ -14,10 +13,9 @@ import SettingsIcon from "@mui/icons-material/Settings"
 import SecurityIcon from "@mui/icons-material/Security"
 import PageTitleUpdater from "./TitleUpdater";
 import { createToolpadRouter } from "./toolpadRouter";
-
-
 import React from "react";
 import { customTheme } from "../Theme";
+import ToolbarActionsMenu from "./ToolbarActionsMenu"
 
 const AppLayout = () => {
 
@@ -25,7 +23,7 @@ const AppLayout = () => {
   const navigate = useNavigate();
 
   const router = createToolpadRouter(navigate, location);
- 
+
   return (
     <AppProvider
       theme={customTheme}
@@ -119,7 +117,11 @@ const AppLayout = () => {
         }
       }}  
     >
-      <DashboardLayout>
+      <DashboardLayout
+        slots={{
+          toolbarActions: ToolbarActionsMenu,
+        }}
+        >
         <PageTitleUpdater />
         <Outlet />
       </DashboardLayout>

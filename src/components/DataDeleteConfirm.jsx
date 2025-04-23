@@ -26,7 +26,7 @@ const DataDeleteConfirm = ({
   };
 
   const handleDelete = () => {
-    handleDeleteUnit(); // Call the parent handler for unit deletion
+    handleDeleteUnit();
   };
 
   return (
