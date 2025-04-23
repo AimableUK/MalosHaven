@@ -15,6 +15,7 @@ import Settings from "@mui/icons-material/Settings";
 import userAvatar from "../assets/userAvatar.jpg";
 import { Link } from "react-router-dom";
 
+
 const ToolbarActionsMenu = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [notificationAnchorEl, setNotificationAnchorEl] = useState(null);
@@ -28,7 +29,7 @@ const ToolbarActionsMenu = () => {
   };
 
   const handleNotificationClick = (event) => {
-    setNotificationAnchorEl(event.currentTarget); // ✅ Correct anchor set
+    setNotificationAnchorEl(event.currentTarget);
   };
 
   const handleCloseNotification = () => {
@@ -68,7 +69,7 @@ const ToolbarActionsMenu = () => {
         open={Boolean(anchorEl)}
         onClose={handleCloseMenu}
       >
-        <MenuItem onClick={handleCloseMenu}>Profile</MenuItem>
+        <Link to="/profile"><MenuItem onClick={handleCloseMenu}>Profile</MenuItem></Link>
         <MenuItem onClick={handleCloseMenu}>My account</MenuItem>
         <MenuItem onClick={handleCloseMenu}>Logout</MenuItem>
       </Menu>

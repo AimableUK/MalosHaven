@@ -1,12 +1,260 @@
-import { Box } from '@mui/material'
-import React from 'react'
+import { Avatar, Box, Button, Typography } from "@mui/material";
+import React, { useState } from "react";
+import profileCover from "../../assets/profileCover.jpg";
+import userAvatar from "../../assets/userAvatar.jpg";
+import EditIcon from "@mui/icons-material/Edit";
+import BarChartIcon from "@mui/icons-material/BarChart";
+import NotificationsIcon from "@mui/icons-material/Notifications";
+import { Link } from "react-router-dom";
+import AddIcon from "@mui/icons-material/Add";
+import DataPropertyFormModal from "../../components/DataPropertyForm";
+import MyProperties from "../../components/Properties";
+import PlaceIcon from "@mui/icons-material/Place";
+import DeleteIcon from "@mui/icons-material/Delete";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 
 const Profile = () => {
-  return (
-    <Box>
-      
-    </Box>
-  )
-}
+  const [openModal, setOpenModal] = useState(false);
+  const [properties, setProperties] = useState(MyProperties);
 
-export default Profile
+  const handleAddProp = (newProp) => {
+    setProperties((prev) => [...prev, newProp]);
+    setOpenModal(false);
+  };
+
+  return (
+    <Box m="20px">
+      <Box zIndex="0">
+        <img
+          src={profileCover}
+          alt="profile cover"
+          style={{ width: "100%", height: "250px", borderRadius: "8px" }}
+        />
+      </Box>
+
+      {/* all content */}
+      <Box
+        mx="15px"
+        sx={{
+          background: "#2D454D",
+          p: 2,
+          borderRadius: "5px",
+          mt: "-60px",
+          position: "relative",
+          zIndex: 1,
+        }}
+      >
+        {/* prof-top */}
+        <Box className="flex flex-col md:flex-row items-center justify-between">
+          <Box
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+            gap="10px"
+          >
+            <Avatar
+              src={userAvatar}
+              alt="profile picture avatar"
+              sx={{ borderRadius: "14px", width: "140px", height: "140px" }}
+            />
+            <Box display="flex" flexDirection="column" textAlign="center">
+              <Typography fontWeight="bold">John Doe</Typography>
+              <Typography>Property Owner</Typography>
+            </Box>
+          </Box>
+          <Box className="flex gap-1 flex-col md:flex-row mt-2">
+            <Link to="/analytics">
+              <Button startIcon={<BarChartIcon />} variant="outlined">
+                Analytics
+              </Button>
+            </Link>
+
+            <Link to="/editprofile">
+              <Button
+                startIcon={<EditIcon />}
+                variant="outlined"
+                sx={{ whiteSpace: "nowrap" }}
+              >
+                Edit Profile
+              </Button>
+            </Link>
+
+            <Link to="/notifications">
+              <Button startIcon={<NotificationsIcon />} variant="outlined">
+                Notifications
+              </Button>
+            </Link>
+          </Box>
+        </Box>
+
+        {/* prof-content */}
+        <Box my="20px">
+          <Box>
+            <Typography fontWeight="bold">Profile Information</Typography>
+            <Typography component="p">
+              Hi, I’m Alec Thompson, Decisions: If you can’t decide, the answer
+              is no. If two equally difficult paths, choose the one more painful
+              in the short term (pain avoidance is creating an illusion of
+              equality).
+            </Typography>
+            <Box mt="20px">
+              <Typography>
+                <span style={{ fontWeight: "bold" }}>Full Name:</span>&nbsp;John
+                Doe
+              </Typography>
+              <Typography>
+                <span style={{ fontWeight: "bold" }}>Mobile:</span>&nbsp;+250
+                783 309 468
+              </Typography>
+              <Typography>
+                <span style={{ fontWeight: "bold" }}>Email:</span>
+                &nbsp;johnDoe@example.com
+              </Typography>
+              <Typography>
+                <span style={{ fontWeight: "bold" }}>Location:</span>
+                &nbsp;karuruma, Gatsata, Gasabo, Kigali
+              </Typography>
+            </Box>
+          </Box>
+        </Box>
+
+        <Box className="font-roboto" padding="10px">
+          <Box
+            display="flex"
+            flexDirection="row"
+            justifyContent="space-between"
+            alignItems="center"
+            my="5px"
+          >
+            <Typography fontWeight="bold">PROPERTIES</Typography>
+            <Button
+              startIcon={<AddIcon />}
+              variant="contained"
+              color="info"
+              onClick={() => setOpenModal(true)}
+            >
+              ADD PROPERTY
+            </Button>
+          </Box>
+
+          <DataPropertyFormModal
+            open={openModal}
+            onClose={() => setOpenModal(false)}
+            onAddProperty={handleAddProp}
+          />
+
+          <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" gap="10px">
+            {properties.slice(0, 3).map((property) => (
+              <Box
+                key={property.id}
+                sx={{
+                  gridColumn: "span 4",
+                  display: "flex",
+                  flexDirection: "column",
+                  background: "#2D454D",
+                  borderRadius: "8px",
+                  justifyContent: "space-between",
+                  p: 2,
+                  mb: 1,
+                }}
+                className="group shadow-md shadow-slate-600"
+              >
+                <Box>
+                  <img
+                    src={property.image}
+                    alt="house"
+                    className="shadow-md shadow-slate-500 rounded-md transition-transform duration-300 ease-in-out group-hover:-translate-y-12 cursor-pointer z-10 relative"
+                  />
+
+                  <Box
+                    display="flex"
+                    flexDirection="row"
+                    justifyContent="center"
+                    gap="10px"
+                    zIndex="0"
+                    mt="-40px"
+                  >
+                    <Link
+                      to={`/propertydetails/${property.id}`}
+                      key={property.id}
+                    >
+                      <Button
+                        variant="contained"
+                        startIcon={<VisibilityIcon />}
+                        color="info"
+                      >
+                        View
+                      </Button>
+                    </Link>
+
+                    <Button
+                      variant="contained"
+                      startIcon={<EditIcon />}
+                      color="success"
+                    >
+                      Edit
+                    </Button>
+                    <Button
+                      variant="contained"
+                      startIcon={<DeleteIcon />}
+                      color="error"
+                    >
+                      Delete
+                    </Button>
+                  </Box>
+                </Box>
+                <Box>
+                  <Link
+                    to={`/propertydetails/${property.id}`}
+                    key={property.id}
+                  >
+                    <Typography fontWeight="bold" textAlign="center" m="15px">
+                      {property.title}
+                    </Typography>
+                  </Link>
+                  <Typography variant="body1" component="p">
+                    {property.description}
+                  </Typography>
+                </Box>
+                <Box
+                  sx={{
+                    height: "2px",
+                    width: "100%",
+                    background:
+                      "linear-gradient(to right, #2d454d, white, #2d454d)",
+                    my: 3,
+                    borderRadius: "999px",
+                  }}
+                />
+                <Box
+                  display="flex"
+                  flexDirection="row"
+                  justifyContent="space-between"
+                >
+                  <Typography fontWeight="bold">
+                    {property.units.length} Units
+                  </Typography>
+                  <Typography textAlign="center">
+                    <PlaceIcon />
+                    {property.location}
+                  </Typography>
+                </Box>
+              </Box>
+            ))}
+          </Box>
+          <Link to="/properties">
+            <Button
+              variant="contained"
+              sx={{ whiteSpace: "nowrap" }}
+              color="success"
+            >
+              VIEW MORE
+            </Button>
+          </Link>
+        </Box>
+      </Box>
+    </Box>
+  );
+};
+
+export default Profile;

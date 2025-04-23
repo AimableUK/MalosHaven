@@ -3,6 +3,9 @@ import { Routes, Route } from "react-router-dom";
 // main ones
 import AppLayout from "./components/AppLayout";
 import DashboardPage from "./pages/Overview/Dashboard"
+import Profile from "./pages/Overview/Profile";
+import NotificationsPage from "./pages/Overview/NotificationsPage"
+import EditProfile from "./pages/Overview/EditProfile"
 
 // Property Management
 import PropertiesPage from "./pages/PropertyManagement/PropertiesPage";
@@ -28,7 +31,10 @@ const AppRoutes = () => {
     <Routes>
       <Route path="/" element={<AppLayout />}>
         <Route index element={<DashboardPage />} />
+        <Route path="profile" element={<Profile />} />
         <Route path="properties" element={<PropertiesPage />} />
+        <Route path="notifications" element={<NotificationsPage />} />
+        <Route path="editprofile" element={<EditProfile />} />
         <Route path="propertydetails/:id" element={<PropertyDetails />} />
         <Route path="maintenance" element={<MaintenancePage />} />
         <Route path="bookings" element={<BookingsPage />} />

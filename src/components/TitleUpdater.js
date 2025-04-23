@@ -42,7 +42,7 @@ const PageTitleUpdater = () => {
         title = 'User Permissions';
         break;
       default:
-        title = 'Malos Core';
+        title = 'Malos Haven';
     }
 
     document.title = title;

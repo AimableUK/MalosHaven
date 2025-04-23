@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Button, Typography, Snackbar } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import PlaceIcon from "@mui/icons-material/Place";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
