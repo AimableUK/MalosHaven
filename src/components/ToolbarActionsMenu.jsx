@@ -16,12 +16,14 @@ import {
   Snackbar,
   Alert,
   Button,
+  Typography,
 } from "@mui/material";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import Settings from "@mui/icons-material/Settings";
 import PersonIcon from "@mui/icons-material/Person";
 import LogoutIcon from "@mui/icons-material/Logout";
 import userAvatar from "../assets/userAvatar.jpg";
+import PeopleIcon from "@mui/icons-material/People";
 import { Link } from "react-router-dom";
 
 const ToolbarActionsMenu = () => {
@@ -46,7 +48,7 @@ const ToolbarActionsMenu = () => {
     setLogOutDialog(false);
     setSnackbar({
       open: true,
-      message: "Logged out successfully",
+      message: "Signed out successfully",
       severity: "success",
     });
   };
@@ -86,11 +88,33 @@ const ToolbarActionsMenu = () => {
       </Tooltip>
 
       {/* Account menu */}
-      <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleCloseMenu}>
+      <Menu
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
+        onClose={handleCloseMenu}
+      >
+        <Box display="flex" flexDirection="row" px="15px" gap="8px">
+          <Avatar src={userAvatar} alt="profile picture avatar" />
+          <Box display="flex" flexDirection="column" textAlign="start">
+            <Typography fontWeight="bold">John Doe</Typography>
+            <Typography fontSize="12px" color="grey">
+              Property Owner
+            </Typography>
+          </Box>
+        </Box>
+        <Box
+          sx={{
+            height: "1px",
+            width: "100%",
+            background: "linear-gradient(to right, #2d454d, white, #2d454d)",
+            my: 1,
+            borderRadius: "999px",
+          }}
+        />
         <Link to="/profile">
           <MenuItem onClick={handleCloseMenu}>
             <PersonIcon sx={{ mr: 1 }} />
-            Profile
+            Profile & Account
           </MenuItem>
         </Link>
         <Link to="/settings">
@@ -99,9 +123,24 @@ const ToolbarActionsMenu = () => {
             Settings
           </MenuItem>
         </Link>
+        <Link to="/tenants">
+          <MenuItem onClick={handleCloseMenu}>
+            <PeopleIcon sx={{ mr: 1 }} />
+            Manage Tenants
+          </MenuItem>
+        </Link>
+        <Box
+          sx={{
+            height: "1px",
+            width: "100%",
+            background: "linear-gradient(to right, #2d454d, white, #2d454d)",
+            my: 1,
+            borderRadius: "999px",
+          }}
+        />
         <MenuItem onClick={handleLogOutClick}>
           <LogoutIcon sx={{ mr: 1 }} />
-          Logout
+          Sign Out
         </MenuItem>
       </Menu>
 
@@ -120,24 +159,57 @@ const ToolbarActionsMenu = () => {
         }}
       >
         <MenuItem disabled>Notifications</MenuItem>
+
         {[
-          "🔔 New tenant applied for Unit #304",
-          "🧹 Maintenance requested for Room 210",
-          "💰 Payment received from John Doe",
+          "New tenant applied for Unit #304 fgrucyttfdaewt",
+          "Maintenance requested for Room 210",
+          "Payment received from John Doe",
         ].map((notification, index) => (
           <MenuItem key={index} onClick={handleCloseNotification}>
-            <Box
-              sx={{
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                whiteSpace: "nowrap",
-                maxWidth: "240px",
-              }}
-            >
-              {notification}
+            <Box display="flex" alignItems="flex-start" width="100%" gap={1}>
+              <Avatar
+                src={userAvatar}
+                alt="profile"
+                sx={{ width: 40, height: 40 }}
+              />
+
+              <Box
+                sx={{
+                  flex: 1,
+                  minWidth: 0,
+                }}
+              >
+                <Box
+                  display="flex"
+                  justifyContent="space-between"
+                  alignItems="center"
+                >
+                  <Typography fontWeight="bold" fontSize={14} noWrap>
+                    George Fred
+                  </Typography>
+                  <Typography color="grey" fontSize={12} noWrap>
+                    12:23 AM
+                  </Typography>
+                </Box>
+
+                <Typography
+                  fontSize={12}
+                  color="grey"
+                  sx={{
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    display: "block",
+                    width: "100%",
+                  }}
+                >
+                  {notification}
+                </Typography>
+              </Box>
             </Box>
           </MenuItem>
         ))}
+
         <MenuItem
           onClick={handleCloseNotification}
           sx={{ textAlign: "center", fontWeight: "bold" }}
@@ -151,7 +223,7 @@ const ToolbarActionsMenu = () => {
         <DialogTitle>Log Out</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Are you sure you want to log out of your account?
+            Are you sure you want to Sign out of your account?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -159,7 +231,7 @@ const ToolbarActionsMenu = () => {
             Cancel
           </Button>
           <Button variant="contained" onClick={handleLogOut}>
-            Log Out
+            Sign Out
           </Button>
         </DialogActions>
       </Dialog>

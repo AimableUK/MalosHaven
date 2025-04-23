@@ -374,7 +374,7 @@ const Dashboard = () => {
                 my: 3,
                 borderRadius: "999px",
               }}
-            />{" "}
+            />
             <Box
               display="flex"
               flexDirection="row"
