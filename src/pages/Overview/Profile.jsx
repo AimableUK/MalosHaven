@@ -1,4 +1,10 @@
-import { Avatar, Box, Button, Typography } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Button,
+  Tooltip,
+  Typography,
+} from "@mui/material";
 import React, { useState } from "react";
 import profileCover from "../../assets/profileCover.jpg";
 import userAvatar from "../../assets/userAvatar.jpg";
@@ -169,7 +175,7 @@ const Profile = () => {
                   <Box
                     display="flex"
                     flexDirection="row"
-                    justifyContent="center"
+                    justifyContent="end"
                     gap="10px"
                     zIndex="0"
                     mt="-40px"
@@ -178,29 +184,39 @@ const Profile = () => {
                       to={`/propertydetails/${property.id}`}
                       key={property.id}
                     >
-                      <Button
-                        variant="contained"
-                        startIcon={<VisibilityIcon />}
-                        color="info"
-                      >
-                        View
-                      </Button>
+                      <Tooltip title="view Property">
+                        <VisibilityIcon
+                          sx={{
+                            color: "white",
+                            "&:hover": {
+                              color: "green",
+                            },
+                          }}
+                        />
+                      </Tooltip>
                     </Link>
 
-                    <Button
-                      variant="contained"
-                      startIcon={<EditIcon />}
-                      color="success"
-                    >
-                      Edit
-                    </Button>
-                    <Button
-                      variant="contained"
-                      startIcon={<DeleteIcon />}
-                      color="error"
-                    >
-                      Delete
-                    </Button>
+                    <Tooltip title="edit Property">
+                      <EditIcon
+                        sx={{
+                          color: "white",
+                          "&:hover": {
+                            color: "blueviolet",
+                          },
+                        }}
+                      />
+                    </Tooltip>
+
+                    <Tooltip title="Delete Property">
+                      <DeleteIcon
+                        sx={{
+                          color: "white",
+                          "&:hover": {
+                            color: "red",
+                          },
+                        }}
+                      />
+                    </Tooltip>
                   </Box>
                 </Box>
                 <Box>
@@ -208,7 +224,7 @@ const Profile = () => {
                     to={`/propertydetails/${property.id}`}
                     key={property.id}
                   >
-                    <Typography fontWeight="bold" textAlign="center" m="15px">
+                    <Typography fontWeight="bold" textAlign="center" my="15px" mt="25px">
                       {property.title}
                     </Typography>
                   </Link>
