@@ -1,5 +1,5 @@
 import { Box, Button, Icon, Typography } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import salesEarning from "../../assets/salesEarning.svg";
 import DownloadIcon from "@mui/icons-material/Download";
 import LocalGroceryStoreIcon from "@mui/icons-material/LocalGroceryStore";
@@ -7,12 +7,19 @@ import PaidIcon from "@mui/icons-material/Paid";
 import MovingIcon from "@mui/icons-material/Moving";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import FlareIcon from "@mui/icons-material/Flare";
-import PreviewIcon from '@mui/icons-material/Preview';
+import PreviewIcon from "@mui/icons-material/Preview";
 import FooterPage from "../Footer/FooterPage";
+import SMLineChart from "../../components/SMLineChart";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import EditIcon from "@mui/icons-material/Edit";
+import MyProperties from "../../components/Properties";
+import { Link } from "react-router-dom";
 
 const ReportsPage = () => {
+  const [properties, setProperties] = useState(MyProperties);
   return (
     <Box>
+      {/* first box */}
       <Box className="flex flex-col md:grid grid-cols-12 gap-7 p-2 font-roboto m-2">
         {/* right One */}
         <Box className="col-span-12 md:col-span-4 bg-[#2D454D] rounded shadow-md shadow-slate-600 p-4 py-10 flex flex-col justify-between items-center">
@@ -82,7 +89,7 @@ const ReportsPage = () => {
             </Box>
           </Box>
 
-          {/* Placeholder for more components */}
+          {/* other 3 */}
           <Box className="flex flex-row gap-7">
             {/* 1 */}
             <Box className="flex-1 shadow-md shadow-slate-600 bg-[#2D454D] rounded flex-col flex items-center justify-center py-5">
@@ -131,6 +138,468 @@ const ReportsPage = () => {
           </Box>
         </Box>
       </Box>
+      {/* second box */}
+      <Box className="flex flex-col md:grid grid-cols-12 gap-7 p-2 font-roboto m-2">
+        {/* properties */}
+        <Box className="col-span-12 md:col-span-7">
+          <Box className="flex flex-row justify-between items-center bg-[#2D454D] rounded shadow-md shadow-slate-600 p-2 px-3 mb-5">
+            <Typography fontWeight="bold" className="text-white mb-5">
+              Properties List
+            </Typography>
+            <Link to="/properties">
+              <Button
+                variant="contained"
+                sx={{ whiteSpace: "nowrap" }}
+                color="info"
+              >
+                VIEW ALL
+              </Button>
+            </Link>
+          </Box>
+          {properties.slice(0, 4).map((property) => (
+            <Box
+              key={property.id}
+              className="bg-[#2D454D] rounded shadow-md shadow-slate-600 p-4 py-5 flex mb-5"
+            >
+              <Box className="flex flex-row">
+                <Box className="flex flex-row items-start gap-5 w-fit">
+                  <Box className="flex-shrink-0">
+                    <img
+                      src={property.image}
+                      alt=""
+                      width="150"
+                      className="rounded-md object-cover"
+                    />
+                  </Box>
+
+                  {/* Text and buttons */}
+                  <Box className="flex flex-col justify-between max-w-[300px]">
+                    <Typography fontWeight="bold" className="text-white">
+                      {property.title}
+                    </Typography>
+                    <Typography
+                      component="p"
+                      className="text-white"
+                      sx={{
+                        whiteSpace: "nowrap",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                      }}
+                    >
+                      {property.description}
+                    </Typography>
+                    <Box display="flex" flexDirection="row" gap="5px">
+                      <Link
+                        to={`/propertydetails/${property.id}`}
+                        key={property.id}
+                      >
+                        <Button
+                          variant="contained"
+                          startIcon={<VisibilityIcon />}
+                          color="info"
+                        >
+                          View
+                        </Button>
+                      </Link>
+                      <Button
+                        variant="contained"
+                        startIcon={<EditIcon />}
+                        color="success"
+                      >
+                        Edit
+                      </Button>
+                    </Box>
+                  </Box>
+                </Box>
+              </Box>
+            </Box>
+          ))}
+        </Box>
+
+        {/* meta data */}
+        <Box className="col-span-12 md:col-span-5 bg-[#2D454D] rounded shadow-md shadow-slate-600">
+          {/* smlinechart */}
+          <Box className="bg-[#6950e8] p-3 rounded">
+            <Typography fontWeight="bold">Last Shipment</Typography>
+            <Box sx={{ minHeight: 240, width: "100%" }}>
+              <SMLineChart />
+            </Box>
+          </Box>
+
+          {/* 4 below grids */}
+          <Box className="flex flex-col gap-3 p-5 -mt-16">
+            {/* 1 with two */}
+            <Box className="flex flex-row gap-3">
+              <Box className="flex-1 shadow-md shadow-slate-600 bg-[#2D454D] rounded-lg flex-col flex justify-between p-4 border border-gray-400">
+                <Box
+                  display="flex"
+                  flexDirection="column"
+                  justifyContent="space-between"
+                >
+                  <Box
+                    display="flex"
+                    flexDirection="row"
+                    justifyContent="space-between"
+                    alignItems="center"
+                    gap="10px"
+                  >
+                    <Typography
+                      fontWeight="bold"
+                      sx={{
+                        fontSize: { xs: "1.4rem", md: "1.2rem", lg: "1.2rem" },
+                      }}
+                    >
+                      $35,800
+                    </Typography>
+                    <Typography
+                      className="rounded-2xl px-1 bg-[#2a6956] text-[#65f6ca] h-fit"
+                      sx={{ fontSize: "12px" }}
+                    >
+                      +4.67%
+                    </Typography>
+                  </Box>
+                  <Typography color="#BDBDBD" sx={{ fontSize: "15px" }}>
+                    Total Online Sales
+                  </Typography>
+                </Box>
+
+                <Box display="flex" flexDirection="column" gap="5px">
+                  <Box
+                    display="flex"
+                    flexDirection="row"
+                    justifyContent="space-between"
+                  >
+                    <Typography sx={{ fontWeight: "bold", fontSize: "13px" }}>
+                      $100K to goal
+                    </Typography>
+                    <Typography
+                      sx={{
+                        fontWeight: "bold",
+                        fontSize: "13px",
+                        color: "#BDBDBD",
+                      }}
+                    >
+                      75%
+                    </Typography>
+                  </Box>
+
+                  <Box class="w-full bg-gray-300 rounded-full">
+                    <Box class="w-[75%] h-2 bg-red-400 bg-primaryBorder rounded-full"></Box>
+                  </Box>
+                </Box>
+              </Box>
+
+              <Box
+                gap="10px"
+                className="flex-1 shadow-md shadow-slate-600 bg-[#2D454D] rounded-lg flex-col flex justify-between p-4 border border-gray-400"
+              >
+                <Box
+                  display="flex"
+                  flexDirection="column"
+                  justifyContent="space-between"
+                >
+                  <Box
+                    display="flex"
+                    flexDirection="row"
+                    justifyContent="space-between"
+                    alignItems="center"
+                  >
+                    <Typography
+                      fontWeight="bold"
+                      sx={{
+                        fontSize: { xs: "1.4rem", md: "1.2rem", lg: "1.2rem" },
+                      }}
+                    >
+                      $35,800
+                    </Typography>
+                    <Typography
+                      className="rounded-2xl px-1 bg-[#2a6956] text-[#65f6ca] h-fit"
+                      sx={{ fontSize: "12px" }}
+                    >
+                      +4.67%
+                    </Typography>
+                  </Box>
+                  <Typography color="#BDBDBD" sx={{ fontSize: "15px" }}>
+                    Total Online Sales
+                  </Typography>
+                </Box>
+
+                <Box display="flex" flexDirection="column" gap="5px">
+                  <Box
+                    display="flex"
+                    flexDirection="row"
+                    justifyContent="space-between"
+                  >
+                    <Typography sx={{ fontWeight: "bold", fontSize: "13px" }}>
+                      $100K to goal
+                    </Typography>
+                    <Typography
+                      sx={{
+                        fontWeight: "bold",
+                        fontSize: "13px",
+                        color: "#BDBDBD",
+                      }}
+                    >
+                      75%
+                    </Typography>
+                  </Box>
+
+                  <Box class="w-full bg-gray-300 rounded-full">
+                    <Box class="w-[75%] h-2 bg-red-400 bg-primaryBorder rounded-full"></Box>
+                  </Box>
+                </Box>
+              </Box>
+            </Box>
+
+            {/* 2 with two */}
+            <Box className="flex flex-row gap-3">
+              <Box className="flex-1 shadow-md shadow-slate-600 bg-[#2D454D] rounded-lg flex-col flex justify-between p-4 border border-gray-400">
+                <Box
+                  display="flex"
+                  flexDirection="column"
+                  justifyContent="space-between"
+                >
+                  <Box
+                    display="flex"
+                    flexDirection="row"
+                    justifyContent="space-between"
+                    alignItems="center"
+                    gap="10px"
+                  >
+                    <Typography
+                      fontWeight="bold"
+                      sx={{
+                        fontSize: { xs: "1.4rem", md: "1.2rem", lg: "1.2rem" },
+                      }}
+                    >
+                      $35,800
+                    </Typography>
+                    <Typography
+                      className="rounded-2xl px-1 bg-[#2a6956] text-[#65f6ca] h-fit"
+                      sx={{ fontSize: "12px" }}
+                    >
+                      +4.67%
+                    </Typography>
+                  </Box>
+                  <Typography color="#BDBDBD" sx={{ fontSize: "15px" }}>
+                    Total Online Sales
+                  </Typography>
+                </Box>
+
+                <Box display="flex" flexDirection="column" gap="5px">
+                  <Box
+                    display="flex"
+                    flexDirection="row"
+                    justifyContent="space-between"
+                  >
+                    <Typography sx={{ fontWeight: "bold", fontSize: "13px" }}>
+                      $100K to goal
+                    </Typography>
+                    <Typography
+                      sx={{
+                        fontWeight: "bold",
+                        fontSize: "13px",
+                        color: "#BDBDBD",
+                      }}
+                    >
+                      75%
+                    </Typography>
+                  </Box>
+
+                  <Box class="w-full bg-gray-300 rounded-full">
+                    <Box class="w-[75%] h-2 bg-red-400 bg-primaryBorder rounded-full"></Box>
+                  </Box>
+                </Box>
+              </Box>
+
+              <Box
+                gap="10px"
+                className="flex-1 shadow-md shadow-slate-600 bg-[#2D454D] rounded-lg flex-col flex justify-between p-4 border border-gray-400"
+              >
+                <Box
+                  display="flex"
+                  flexDirection="column"
+                  justifyContent="space-between"
+                >
+                  <Box
+                    display="flex"
+                    flexDirection="row"
+                    justifyContent="space-between"
+                    alignItems="center"
+                  >
+                    <Typography
+                      fontWeight="bold"
+                      sx={{
+                        fontSize: { xs: "1.4rem", md: "1.2rem", lg: "1.2rem" },
+                      }}
+                    >
+                      $35,800
+                    </Typography>
+                    <Typography
+                      className="rounded-2xl px-1 bg-[#2a6956] text-[#65f6ca] h-fit"
+                      sx={{ fontSize: "12px" }}
+                    >
+                      +4.67%
+                    </Typography>
+                  </Box>
+                  <Typography color="#BDBDBD" sx={{ fontSize: "15px" }}>
+                    Total Online Sales
+                  </Typography>
+                </Box>
+
+                <Box display="flex" flexDirection="column" gap="5px">
+                  <Box
+                    display="flex"
+                    flexDirection="row"
+                    justifyContent="space-between"
+                  >
+                    <Typography sx={{ fontWeight: "bold", fontSize: "13px" }}>
+                      $100K to goal
+                    </Typography>
+                    <Typography
+                      sx={{
+                        fontWeight: "bold",
+                        fontSize: "13px",
+                        color: "#BDBDBD",
+                      }}
+                    >
+                      75%
+                    </Typography>
+                  </Box>
+
+                  <Box class="w-full bg-gray-300 rounded-full">
+                    <Box class="w-[75%] h-2 bg-red-400 bg-primaryBorder rounded-full"></Box>
+                  </Box>
+                </Box>
+              </Box>
+            </Box>
+
+            {/* 3 with two */}
+            <Box className="flex flex-row gap-3">
+              <Box className="flex-1 shadow-md shadow-slate-600 bg-[#2D454D] rounded-lg flex-col flex justify-between p-4 border border-gray-400">
+                <Box
+                  display="flex"
+                  flexDirection="column"
+                  justifyContent="space-between"
+                >
+                  <Box
+                    display="flex"
+                    flexDirection="row"
+                    justifyContent="space-between"
+                    alignItems="center"
+                    gap="10px"
+                  >
+                    <Typography
+                      fontWeight="bold"
+                      sx={{
+                        fontSize: { xs: "1.4rem", md: "1.2rem", lg: "1.2rem" },
+                      }}
+                    >
+                      $35,800
+                    </Typography>
+                    <Typography
+                      className="rounded-2xl px-1 bg-[#2a6956] text-[#65f6ca] h-fit"
+                      sx={{ fontSize: "12px" }}
+                    >
+                      +4.67%
+                    </Typography>
+                  </Box>
+                  <Typography color="#BDBDBD" sx={{ fontSize: "15px" }}>
+                    Total Online Sales
+                  </Typography>
+                </Box>
+
+                <Box display="flex" flexDirection="column" gap="5px">
+                  <Box
+                    display="flex"
+                    flexDirection="row"
+                    justifyContent="space-between"
+                  >
+                    <Typography sx={{ fontWeight: "bold", fontSize: "13px" }}>
+                      $100K to goal
+                    </Typography>
+                    <Typography
+                      sx={{
+                        fontWeight: "bold",
+                        fontSize: "13px",
+                        color: "#BDBDBD",
+                      }}
+                    >
+                      75%
+                    </Typography>
+                  </Box>
+
+                  <Box class="w-full bg-gray-300 rounded-full">
+                    <Box class="w-[75%] h-2 bg-red-400 bg-primaryBorder rounded-full"></Box>
+                  </Box>
+                </Box>
+              </Box>
+
+              <Box
+                gap="10px"
+                className="flex-1 shadow-md shadow-slate-600 bg-[#2D454D] rounded-lg flex-col flex justify-between p-4 border border-gray-400"
+              >
+                <Box
+                  display="flex"
+                  flexDirection="column"
+                  justifyContent="space-between"
+                >
+                  <Box
+                    display="flex"
+                    flexDirection="row"
+                    justifyContent="space-between"
+                    alignItems="center"
+                  >
+                    <Typography
+                      fontWeight="bold"
+                      sx={{
+                        fontSize: { xs: "1.4rem", md: "1.2rem", lg: "1.2rem" },
+                      }}
+                    >
+                      $35,800
+                    </Typography>
+                    <Typography
+                      className="rounded-2xl px-1 bg-[#2a6956] text-[#65f6ca] h-fit"
+                      sx={{ fontSize: "12px" }}
+                    >
+                      +4.67%
+                    </Typography>
+                  </Box>
+                  <Typography color="#BDBDBD" sx={{ fontSize: "15px" }}>
+                    Total Online Sales
+                  </Typography>
+                </Box>
+
+                <Box display="flex" flexDirection="column" gap="5px">
+                  <Box
+                    display="flex"
+                    flexDirection="row"
+                    justifyContent="space-between"
+                  >
+                    <Typography sx={{ fontWeight: "bold", fontSize: "13px" }}>
+                      $100K to goal
+                    </Typography>
+                    <Typography
+                      sx={{
+                        fontWeight: "bold",
+                        fontSize: "13px",
+                        color: "#BDBDBD",
+                      }}
+                    >
+                      75%
+                    </Typography>
+                  </Box>
+
+                  <Box class="w-full bg-gray-300 rounded-full">
+                    <Box class="w-[75%] h-2 bg-red-400 bg-primaryBorder rounded-full"></Box>
+                  </Box>
+                </Box>
+              </Box>
+            </Box>
+          </Box>
+        </Box>
+      </Box>
+
       <FooterPage />
     </Box>
   );
