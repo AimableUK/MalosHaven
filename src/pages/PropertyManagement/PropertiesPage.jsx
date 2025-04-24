@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import AddIcon from "@mui/icons-material/Add";
 import DataPropertyFormModal from "../../components/DataPropertyForm";
 import MyProperties from "../../components/Properties";
+import FooterPage from "../Footer/FooterPage";
 
 const PropertiesPage = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -135,6 +136,7 @@ const PropertiesPage = () => {
           </Box>
         ))}
       </Box>
+      <FooterPage />
     </Box>
   );
 };

@@ -9,6 +9,7 @@ import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 import EditUnitFormModal from "../../components/EditUnitForm";
 import { useParams } from "react-router-dom";
 import properties from "../../components/Properties";
+import FooterPage from "../Footer/FooterPage";
 
 const PropertyDetails = () => {
   const [propertiesState, setPropertiesState] = useState(properties);
@@ -181,181 +182,184 @@ const PropertyDetails = () => {
   };
 
   return (
-    <Box
-      m="50px"
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        background: "#2D454D",
-        borderRadius: "8px",
-        p: 2,
-      }}
-    >
-      {/* Property Header */}
+    <Box>
       <Box
-        display="flex"
-        flexDirection="row"
-        justifyContent="space-between"
-        alignItems="center"
+        m="50px"
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          background: "#2D454D",
+          borderRadius: "8px",
+          p: 2,
+        }}
       >
-        <Box display="flex" flexDirection="row" alignItems="center" gap="5px">
-          <Box>
-            <img
-              src={property.image}
-              alt="lodge"
-              width="210px"
-              className="shadow-md shadow-slate-600 rounded-md -mt-12"
-            />
-          </Box>
-          <Box>
-            <Typography fontWeight="bold">{property.title}</Typography>
-            <Typography>Rukomo Sector</Typography>
-          </Box>
-        </Box>
-
+        {/* Property Header */}
         <Box
           display="flex"
           flexDirection="row"
-          justifyContent="center"
-          gap="10px"
-          zIndex="0"
-          mt="-40px"
-        >
-          <Button
-            sx={{ height: "fit-content" }}
-            variant="contained"
-            startIcon={<EditIcon />}
-            color="success"
-          >
-            Edit
-          </Button>
-          <Button
-            sx={{ height: "fit-content" }}
-            variant="contained"
-            startIcon={<DeleteIcon />}
-            color="error"
-          >
-            Delete
-          </Button>
-        </Box>
-      </Box>
-
-      {/* Property Info */}
-      <Box m="10px" mt="20px">
-        <Box>
-          <Typography fontWeight="bold">Property Details</Typography>
-          <Typography component="p">{property.description}</Typography>
-        </Box>
-
-        <Box mt="10px" display="flex" flexDirection="row">
-          <Typography fontWeight="bold">
-            Number of Units:&nbsp;&nbsp;
-          </Typography>
-          <Typography>{property.units.length} Units</Typography>
-        </Box>
-
-        <Box mt="10px" display="flex" flexDirection="row">
-          <Typography fontWeight="bold">
-            Units Available:&nbsp;&nbsp;
-          </Typography>
-          <Typography>{property.units.length} Units</Typography>
-        </Box>
-
-        <Box
-          mt="20px"
-          display="flex"
-          flexDirection="row"
-          alignItems="center"
           justifyContent="space-between"
+          alignItems="center"
         >
-          <Typography fontSize="20px" fontWeight="bold">
-            AVAILABLE UNITS
-          </Typography>
-          <Button variant="contained" onClick={() => setOpenModal(true)}>
-            Add Unit
-          </Button>
+          <Box display="flex" flexDirection="row" alignItems="center" gap="5px">
+            <Box>
+              <img
+                src={property.image}
+                alt="lodge"
+                width="210px"
+                className="shadow-md shadow-slate-600 rounded-md -mt-12"
+              />
+            </Box>
+            <Box>
+              <Typography fontWeight="bold">{property.title}</Typography>
+              <Typography>Rukomo Sector</Typography>
+            </Box>
+          </Box>
+
+          <Box
+            display="flex"
+            flexDirection="row"
+            justifyContent="center"
+            gap="10px"
+            zIndex="0"
+            mt="-40px"
+          >
+            <Button
+              sx={{ height: "fit-content" }}
+              variant="contained"
+              startIcon={<EditIcon />}
+              color="success"
+            >
+              Edit
+            </Button>
+            <Button
+              sx={{ height: "fit-content" }}
+              variant="contained"
+              startIcon={<DeleteIcon />}
+              color="error"
+            >
+              Delete
+            </Button>
+          </Box>
         </Box>
 
-        <DataGrid
-          sx={{ height: "fit-content", mt: 1 }}
-          rows={property.units}
-          columns={columns}
-          initialState={{
-            pagination: {
-              paginationModel: { pageSize: 5 },
-            },
-          }}
-          pageSizeOptions={[5]}
-          checkboxSelection
-          disableRowSelectionOnClick
-          processRowUpdate={processRowUpdate}
-          experimentalFeatures={{ newEditingApi: true }}
-          slots={{ toolbar: GridToolbar }}
-          slotProps={{
-            toolbar: {
-              showQuickFilter: true,
-              quickFilterProps: { debounceMs: 300 },
-            },
-          }}
-        />
+        {/* Property Info */}
+        <Box m="10px" mt="20px">
+          <Box>
+            <Typography fontWeight="bold">Property Details</Typography>
+            <Typography component="p">{property.description}</Typography>
+          </Box>
 
-        {/* Add Unit Modal */}
-        <DataUnitFormModal
-          open={openModal}
-          onClose={() => setOpenModal(false)}
-          onAddUnit={handleAddUnit}
-        />
+          <Box mt="10px" display="flex" flexDirection="row">
+            <Typography fontWeight="bold">
+              Number of Units:&nbsp;&nbsp;
+            </Typography>
+            <Typography>{property.units.length} Units</Typography>
+          </Box>
 
-        {/* Delete Confirmation Modal */}
-        <DataDeleteConfirm
-          deleteDialogOpen={deleteDialogOpen}
-          setDeleteDialogOpen={setDeleteDialogOpen}
-          selectedUnitId={selectedUnitId}
-          setSelectedUnitId={setSelectedUnitId}
-          handleDeleteUnit={handleDeleteUnit} // Pass delete function
-        />
+          <Box mt="10px" display="flex" flexDirection="row">
+            <Typography fontWeight="bold">
+              Units Available:&nbsp;&nbsp;
+            </Typography>
+            <Typography>{property.units.length} Units</Typography>
+          </Box>
 
-        {/* Edit Unit Modal */}
-        <EditUnitFormModal
-          open={editDialogOpen}
-          onClose={() => setEditDialogOpen(false)}
-          onEditUnit={(updatedUnit) => {
-            setPropertiesState((prevProperties) =>
-              prevProperties.map((property) =>
-                property.id === parseInt(id)
-                  ? {
-                      ...property,
-                      units: property.units.map((unit) =>
-                        unit.id === updatedUnit.id ? updatedUnit : unit
-                      ),
-                    }
-                  : property
-              )
-            );
-            setSnackbar({
-              open: true,
-              message: `Unit ${updatedUnit.UnitNumber} updated successfully!`,
-              severity: "success",
-            });
-          }}
-          selectedUnit={selectedUnit}
-        />
-
-        {/* Snackbar */}
-        <Snackbar
-          open={snackbar.open}
-          autoHideDuration={4000}
-          onClose={handleCloseSnackbar}
-        >
-          <Alert
-            onClose={handleCloseSnackbar}
-            severity={snackbar.severity}
-            sx={{ width: "100%" }}
+          <Box
+            mt="20px"
+            display="flex"
+            flexDirection="row"
+            alignItems="center"
+            justifyContent="space-between"
           >
-            {snackbar.message}
-          </Alert>
-        </Snackbar>
+            <Typography fontSize="20px" fontWeight="bold">
+              AVAILABLE UNITS
+            </Typography>
+            <Button variant="contained" onClick={() => setOpenModal(true)}>
+              Add Unit
+            </Button>
+          </Box>
+
+          <DataGrid
+            sx={{ height: "fit-content", mt: 1 }}
+            rows={property.units}
+            columns={columns}
+            initialState={{
+              pagination: {
+                paginationModel: { pageSize: 5 },
+              },
+            }}
+            pageSizeOptions={[5]}
+            checkboxSelection
+            disableRowSelectionOnClick
+            processRowUpdate={processRowUpdate}
+            experimentalFeatures={{ newEditingApi: true }}
+            slots={{ toolbar: GridToolbar }}
+            slotProps={{
+              toolbar: {
+                showQuickFilter: true,
+                quickFilterProps: { debounceMs: 300 },
+              },
+            }}
+          />
+
+          {/* Add Unit Modal */}
+          <DataUnitFormModal
+            open={openModal}
+            onClose={() => setOpenModal(false)}
+            onAddUnit={handleAddUnit}
+          />
+
+          {/* Delete Confirmation Modal */}
+          <DataDeleteConfirm
+            deleteDialogOpen={deleteDialogOpen}
+            setDeleteDialogOpen={setDeleteDialogOpen}
+            selectedUnitId={selectedUnitId}
+            setSelectedUnitId={setSelectedUnitId}
+            handleDeleteUnit={handleDeleteUnit} // Pass delete function
+          />
+
+          {/* Edit Unit Modal */}
+          <EditUnitFormModal
+            open={editDialogOpen}
+            onClose={() => setEditDialogOpen(false)}
+            onEditUnit={(updatedUnit) => {
+              setPropertiesState((prevProperties) =>
+                prevProperties.map((property) =>
+                  property.id === parseInt(id)
+                    ? {
+                        ...property,
+                        units: property.units.map((unit) =>
+                          unit.id === updatedUnit.id ? updatedUnit : unit
+                        ),
+                      }
+                    : property
+                )
+              );
+              setSnackbar({
+                open: true,
+                message: `Unit ${updatedUnit.UnitNumber} updated successfully!`,
+                severity: "success",
+              });
+            }}
+            selectedUnit={selectedUnit}
+          />
+
+          {/* Snackbar */}
+          <Snackbar
+            open={snackbar.open}
+            autoHideDuration={4000}
+            onClose={handleCloseSnackbar}
+          >
+            <Alert
+              onClose={handleCloseSnackbar}
+              severity={snackbar.severity}
+              sx={{ width: "100%" }}
+            >
+              {snackbar.message}
+            </Alert>
+          </Snackbar>
+        </Box>
       </Box>
+      <FooterPage />
     </Box>
   );
 };

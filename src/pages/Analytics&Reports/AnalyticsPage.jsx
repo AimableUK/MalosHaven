@@ -7,6 +7,7 @@ import { Select, MenuItem, FormControl, InputLabel } from "@mui/material";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import LineChart from "../../components/LineChart";
 import SMPieChart from "../../components/SMPieChart";
+import FooterPage from "../Footer/FooterPage";
 
 const AnalyticsPage = () => {
   const [value, setValue] = useState("monthly");
@@ -295,6 +296,7 @@ const AnalyticsPage = () => {
           </Box>
         </Box>
       </Box>
+      <FooterPage />
     </Box>
   );
 };

@@ -18,6 +18,7 @@ import MyProperties from "../../components/Properties";
 import PlaceIcon from "@mui/icons-material/Place";
 import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import FooterPage from "../Footer/FooterPage";
 
 const Profile = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -269,6 +270,7 @@ const Profile = () => {
           </Link>
         </Box>
       </Box>
+      <FooterPage />
     </Box>
   );
 };
