@@ -16,6 +16,7 @@ import { createToolpadRouter } from "./toolpadRouter";
 import React from "react";
 import { customTheme } from "../Theme";
 import ToolbarActionsMenu from "./ToolbarActionsMenu"
+import { useMediaQuery } from "@mui/material";
 
 const AppLayout = () => {
 
@@ -24,12 +25,14 @@ const AppLayout = () => {
 
   const router = createToolpadRouter(navigate, location);
 
+  const isSmallScreen = useMediaQuery("(max-width:320px)");
+
   return (
     <AppProvider
       theme={customTheme}
       router={router}
       branding={{
-        title: "MALOS HAVEN",
+        title: !isSmallScreen && "MALOS HAVEN",
         logo: <img src="/MalosHavenLogo.png" alt="logo" className="w-8 h-8" />,
       }}
       navigation={[
