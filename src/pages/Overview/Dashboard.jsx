@@ -65,6 +65,7 @@ const Dashboard = () => {
         gap="10px"
         className="font-roboto"
         padding="10px"
+        height="100%"
       >
         <Box
           sx={{

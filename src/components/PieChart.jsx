@@ -1,16 +1,19 @@
 import { ResponsivePie } from "@nivo/pie";
 import PiechartData from "../Data/PieChartData";
 import { useMediaQuery } from "@mui/material";
+import { useLocation } from "react-router-dom";
 
 const PieChart = () => {
   const isSmallScreen = useMediaQuery("(max-width:768px)");
 
+  const location = useLocation()
+  const isAnalytics = location.pathname === "/analytics"
+
   return (
     <div style={{ height: "280px", width: "100%" }}>
       <ResponsivePie
-
         data={PiechartData}
-        margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
+        margin={{ top: 10, right: 80, bottom: 70, left: 80 }}
         innerRadius={0.1}
         padAngle={0.7}
         cornerRadius={3}
@@ -20,6 +23,7 @@ const PieChart = () => {
           from: "color",
           modifiers: [["darker", 0.2]],
         }}
+        enableArcLinkLabels={!isAnalytics}
         arcLinkLabelsOffset={-11}
         arcLinkLabelsSkipAngle={10}
         arcLinkLabelsTextColor="#fff"
