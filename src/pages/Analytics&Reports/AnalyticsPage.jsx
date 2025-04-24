@@ -20,7 +20,7 @@ const AnalyticsPage = () => {
       {/* first extended row */}
       <Box className="flex flex-col md:grid grid-cols-12 gap-[10px] p-[10px] font-roboto">
         {/* boxes */}
-        <Box sx={{ gridColumn: "span 6" }} className="flex flex-col md:grid">
+        <Box sx={{ gridColumn: "span 6" }} className="flex flex-col md:grid h-full">
           {/* first 2 boxes */}
           <Box sx={{ gridColumn: "span 3" }} display="flex" flexDirection="row">
             <Box
@@ -140,14 +140,15 @@ const AnalyticsPage = () => {
           {/* third 1 box */}
           <Box sx={{ gridColumn: "span 3" }} display="flex" flexDirection="row">
             <Box
-              className="flex flex-col shadow-md shadow-slate-600"
+              className="flex flex-col shadow-md shadow-slate-600 h-full"
               sx={{
                 width: "100%",
                 display: "flex",
                 borderRadius: "8px",
                 p: "16px",
                 background: "#2D454D",
-                margin: "8px",
+                mx: "8px",
+                mt: "5px",
               }}
             >
               <Typography fontSize="14px" color="#BDBDBD">
@@ -178,10 +179,9 @@ const AnalyticsPage = () => {
             p: 2,
             background: "#2D454D",
             overflow: "hidden",
-            height: "fit-content",
-            m: 1,
+            my: "7px",
           }}
-          className="shadow-md shadow-slate-600"
+          className="shadow-md shadow-slate-600 h-full"
         >
           <Box
             display="flex"
@@ -216,14 +216,14 @@ const AnalyticsPage = () => {
               </Select>
             </FormControl>
           </Box>
-          <Box sx={{ minHeight: 320, width: "100%" }}>
+          <Box sx={{ minHeight: "340px", width: "100%" }}>
             <PieChart />
           </Box>
         </Box>
       </Box>
 
       {/* second extended row */}
-      <Box  className="flex flex-col md:grid grid-cols-12 gap-[20px] p-[10px] font-roboto mx-2">
+      <Box className="flex flex-col md:grid grid-cols-12 gap-[20px] p-[10px] font-roboto mx-2">
         {/* line chart */}
         <Box
           sx={{
@@ -234,11 +234,41 @@ const AnalyticsPage = () => {
             p: 2,
             background: "#2D454D",
             overflow: "hidden",
-            height: "fit-content",
           }}
-          className="shadow-md shadow-slate-600"
+          className="shadow-md shadow-slate-600 h-full"
         >
-          <Typography sx={{ color: "#fff", mb: 1 }}>Revenue</Typography>
+          <Box
+            display="flex"
+            flexDirection="row"
+            justifyContent="space-between"
+          >
+            <Typography sx={{ color: "#fff", mb: 1 }}>Revenue</Typography>
+            <FormControl>
+              <InputLabel id="custom-select-label">Date Range</InputLabel>
+              <Select
+                labelId="custom-select-label"
+                value={value}
+                label="Date Range"
+                onChange={handleChange}
+                IconComponent={ArrowDropDownIcon}
+                sx={{
+                  "& .MuiSelect-icon": {
+                    top: "50%",
+                    transform: "translateY(-50%)",
+                    color: "white",
+                  },
+                  width: "fit-content",
+                }}
+              >
+                <MenuItem value="weekly" defaultChecked>
+                  Weekly
+                </MenuItem>
+                <MenuItem value="monthly">Monthly</MenuItem>
+                <MenuItem value="annually">Annually</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
+
           <Box sx={{ minHeight: 240, width: "100%" }}>
             <LineChart />
           </Box>
@@ -254,16 +284,16 @@ const AnalyticsPage = () => {
             p: 2,
             background: "#2D454D",
             overflow: "hidden",
-            height: "fit-content",
           }}
-          className="shadow-md shadow-slate-600"
+          className="shadow-md shadow-slate-600 h-full"
         >
-          <Typography sx={{ color: "#fff", mb: 1, textAlign:"center" }}>Project Status</Typography>
+          <Typography sx={{ color: "#fff", mb: 1, textAlign: "center" }}>
+            Project Status
+          </Typography>
           <Box sx={{ minHeight: 240, width: "100%" }}>
             <SMPieChart />
           </Box>
         </Box>
-
       </Box>
     </Box>
   );

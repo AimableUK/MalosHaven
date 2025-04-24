@@ -11,7 +11,7 @@ const SMPieChart = () => {
       <ResponsivePie
         data={SMPieChartData}
         margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
-        innerRadius={0.75}
+        innerRadius={0.66}
         padAngle={0.7}
         cornerRadius={3}
         activeOuterRadiusOffset={8}
@@ -73,7 +73,7 @@ const SMPieChart = () => {
             justify: false,
             translateX: 0,
             translateY: 56,
-            itemsSpacing: isSmallScreen ? 3 : 0,
+            itemsSpacing: isSmallScreen ? 3 : -30,
             itemWidth: 100,
             itemHeight: 18,
             itemTextColor: "#999",
