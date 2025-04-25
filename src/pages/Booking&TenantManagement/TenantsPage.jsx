@@ -23,6 +23,7 @@ import PaidIcon from "@mui/icons-material/Paid";
 import TenantForm from "../../components/TenantForm";
 import MyProperties from "../../components/Properties";
 import DeleteIcon from "@mui/icons-material/Delete";
+import DataDeleteConfirm from "../../components/DataDeleteConfirm";
 
 const TenantsPage = () => {
   const [properties, setProperties] = useState(MyProperties);
@@ -32,14 +33,27 @@ const TenantsPage = () => {
   const [tenantDetails, setTenantDetails] = useState();
   const [openModal, setOpenModal] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [selectedTenantId, setSelectedTenantId] = useState(null);
 
-  const handleActionsClick = (event) => {
+  const handleActionsClick = (event, tenantId) => {
     setAnchorEl(event.currentTarget);
+    setSelectedTenantId(tenantId);
   };
 
   const handleCloseMenu = () => {
     setAnchorEl(null);
   };
+
+  const handleDeleteTenant = () => {
+    setTenants((prevTenants) =>
+      prevTenants.filter((tenant) => tenant.tenant_id !== selectedTenantId)
+    );
+    setDeleteDialogOpen(false);
+  };
+
+  const deleteTenant =
+    "Are you sure you want to Delete this Tenant? If you do so, it will be undone";
 
   useEffect(() => {
     const allTenants = properties.flatMap((property) =>
@@ -59,21 +73,23 @@ const TenantsPage = () => {
   };
 
   const handleAddTenant = (newTenant) => {
-    setTenants((prev) => [...prev, newTenant]);
+    const tenantId = `TNT-${Date.now()}`;
+
+    setTenants((prevTenants) => [
+      ...prevTenants,
+      { ...newTenant, tenant_id: tenantId },
+    ]);
 
     setProperties((prevProperties) =>
       prevProperties.map((property) => {
-        if (property.name === newTenant.property) {
+        if (property.title === newTenant.property) {
           return {
             ...property,
             units: property.units.map((unit) => {
-              if (unit.unit_name === newTenant.unit) {
+              if (unit.UnitNumber === newTenant.unit) {
                 return {
                   ...unit,
-                  tenant: {
-                    ...newTenant,
-                    tenant_id: Date.now(),
-                  },
+                  tenant: { ...newTenant, tenant_id: tenantId },
                 };
               }
               return unit;
@@ -83,10 +99,7 @@ const TenantsPage = () => {
         return property;
       })
     );
-
-    setOpenModal(false);
   };
-
 
   return (
     <Box m="20px" display="flex" flexDirection="column">
@@ -206,7 +219,6 @@ const TenantsPage = () => {
                   borderRadius: "999px",
                 }}
               />
-
               <Box
                 display="flex"
                 flexDirection="column"
@@ -340,11 +352,26 @@ const TenantsPage = () => {
         open={Boolean(anchorEl)}
         onClose={handleCloseMenu}
       >
-        <MenuItem onClick={handleCloseMenu}>
+        <MenuItem
+          onClose={handleCloseMenu}
+          onClick={() => {
+            // setSelectedUnitId(params.row.id);
+            setDeleteDialogOpen(true);
+          }}
+          sx={{ ":hover": { color: "#F44545" } }}
+        >
           <DeleteIcon />
           Delete
         </MenuItem>
       </Menu>
+      <DataDeleteConfirm
+        deleteDialogOpen={deleteDialogOpen}
+        setDeleteDialogOpen={setDeleteDialogOpen}
+        selectedTenantId={selectedTenantId}
+        setSelectedTenantId={setSelectedTenantId}
+        handleDeleteTenant={handleDeleteTenant}
+        deleteTenant={deleteTenant}
+      />
     </Box>
   );
 };

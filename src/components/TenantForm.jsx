@@ -154,6 +154,7 @@ const TenantForm = ({ open, onClose, onAddTenant, properties }) => {
       <Dialog open={open} onClose={onClose} sx={{ minWidth: "300px" }}>
         <DialogTitle>Add Tenant</DialogTitle>
         <DialogContent>
+          {/* Avatar and Image Upload */}
           <Box className="flex justify-center my-10 items-center relative">
             <Avatar
               src={imagePreview}
@@ -184,7 +185,9 @@ const TenantForm = ({ open, onClose, onAddTenant, properties }) => {
             />
           </Box>
 
+          {/* Form Fields */}
           <Box className="flex flex-col">
+            {/* Name, Gender, Phone, Email */}
             <Box className="flex flex-col md:flex-row gap-4 mb-4">
               <TextField
                 label="Name"
@@ -192,9 +195,7 @@ const TenantForm = ({ open, onClose, onAddTenant, properties }) => {
                 fullWidth
                 required
                 value={formData.name}
-                onChange={(e) =>
-                  setFormData({ ...formData, name: e.target.value })
-                }
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
               />
               <FormControl fullWidth>
                 <InputLabel id="select-label">Gender</InputLabel>
@@ -217,9 +218,7 @@ const TenantForm = ({ open, onClose, onAddTenant, properties }) => {
                 fullWidth
                 required
                 value={formData.phone}
-                onChange={(e) =>
-                  setFormData({ ...formData, phone: e.target.value })
-                }
+                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
               />
               <TextField
                 label="Email"
@@ -227,12 +226,11 @@ const TenantForm = ({ open, onClose, onAddTenant, properties }) => {
                 fullWidth
                 required
                 value={formData.email}
-                onChange={(e) =>
-                  setFormData({ ...formData, email: e.target.value })
-                }
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
               />
             </Box>
 
+            {/* National ID, Property */}
             <Box className="flex flex-col md:flex-row gap-4 mb-4">
               <TextField
                 label="National ID"
@@ -240,9 +238,7 @@ const TenantForm = ({ open, onClose, onAddTenant, properties }) => {
                 fullWidth
                 required
                 value={formData.national_id}
-                onChange={(e) =>
-                  setFormData({ ...formData, national_id: e.target.value })
-                }
+                onChange={(e) => setFormData({ ...formData, national_id: e.target.value })}
               />
               <FormControl fullWidth>
                 <InputLabel id="property-select-label">Property</InputLabel>
@@ -261,6 +257,7 @@ const TenantForm = ({ open, onClose, onAddTenant, properties }) => {
               </FormControl>
             </Box>
 
+            {/* Unit and Payment Status */}
             <Box className="flex flex-col md:flex-row gap-4">
               <FormControl fullWidth required>
                 <InputLabel id="unit-select-label">Unit</InputLabel>
@@ -268,9 +265,7 @@ const TenantForm = ({ open, onClose, onAddTenant, properties }) => {
                   labelId="unit-select-label"
                   value={formData.unit}
                   label="Unit"
-                  onChange={(e) =>
-                    setFormData({ ...formData, unit: e.target.value })
-                  }
+                  onChange={(e) => setFormData({ ...formData, unit: e.target.value })}
                   disabled={unitsList.length === 0}
                 >
                   {unitsList
@@ -284,9 +279,7 @@ const TenantForm = ({ open, onClose, onAddTenant, properties }) => {
               </FormControl>
 
               <FormControl fullWidth required>
-                <InputLabel id="payment-status-label">
-                  Payment Status
-                </InputLabel>
+                <InputLabel id="payment-status-label">Payment Status</InputLabel>
                 <Select
                   labelId="payment-status-label"
                   value={formData.paymentStatus}
@@ -301,6 +294,7 @@ const TenantForm = ({ open, onClose, onAddTenant, properties }) => {
             </Box>
           </Box>
         </DialogContent>
+
         <DialogActions>
           <Button onClick={onClose} color="secondary">
             Cancel
@@ -310,6 +304,8 @@ const TenantForm = ({ open, onClose, onAddTenant, properties }) => {
           </Button>
         </DialogActions>
       </Dialog>
+
+      {/* Snackbar for feedback */}
       <Snackbar
         open={snackbar.open}
         autoHideDuration={2000}
@@ -327,5 +323,6 @@ const TenantForm = ({ open, onClose, onAddTenant, properties }) => {
     </>
   );
 };
+
 
 export default TenantForm;

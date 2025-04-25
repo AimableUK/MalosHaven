@@ -168,6 +168,7 @@ const PropertyDetails = () => {
       )
     );
 
+
     setSnackbar({
       open: true,
       message: "Unit deleted successfully!",
@@ -176,6 +177,9 @@ const PropertyDetails = () => {
     setDeleteDialogOpen(false);
     setSelectedUnitId(null);
   };
+
+  const deleteUnit = "Are you sure you want to Delete this Unit? If you do so, it will be undone"
+
 
   const handleCloseSnackbar = () => {
     setSnackbar({ ...snackbar, open: false });
@@ -211,7 +215,7 @@ const PropertyDetails = () => {
             </Box>
             <Box>
               <Typography fontWeight="bold">{property.title}</Typography>
-              <Typography>Rukomo Sector</Typography>
+              <Typography>{property.location}</Typography>
             </Box>
           </Box>
 
@@ -314,7 +318,8 @@ const PropertyDetails = () => {
             setDeleteDialogOpen={setDeleteDialogOpen}
             selectedUnitId={selectedUnitId}
             setSelectedUnitId={setSelectedUnitId}
-            handleDeleteUnit={handleDeleteUnit} // Pass delete function
+            handleDeleteUnit={handleDeleteUnit} 
+            deleteUnit={deleteUnit}
           />
 
           {/* Edit Unit Modal */}

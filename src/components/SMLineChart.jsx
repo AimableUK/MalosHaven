@@ -34,6 +34,21 @@ const SMLineChart = () => {
         useMesh={true}
         legends={[]}
         motionConfig="default"
+        theme={{
+          textColor: "#ffffff",
+          grid: {
+            line: {
+              stroke: "white",
+              strokeDasharray: "4 4",
+            },
+          },
+          tooltip: {
+            container: {
+              background: "#222",
+              color: "#ffffff",
+            },
+          },
+        }}
       />
     </div>
   );

@@ -130,6 +130,14 @@ const PieChart = () => {
             ],
           },
         ]}
+        theme={{
+          tooltip: {
+            container: {
+              background: "#222",
+              color: "#ffffff",
+            },
+          },
+        }}
       />
     </div>
   );

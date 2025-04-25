@@ -14,6 +14,11 @@ const DataDeleteConfirm = ({
   deleteDialogOpen,
   setDeleteDialogOpen,
   handleDeleteUnit,
+  // selectedTenantId,
+  // setSelectedTenantId,
+  handleDeleteTenant,
+  deleteTenant,
+  deleteUnit
 }) => {
   const [snackbar, setSnackbar] = useState({
     open: false,
@@ -27,15 +32,16 @@ const DataDeleteConfirm = ({
 
   const handleDelete = () => {
     handleDeleteUnit();
+    handleDeleteTenant();
   };
 
   return (
     <>
       <Dialog open={deleteDialogOpen} onClose={() => setDeleteDialogOpen(false)}>
-        <DialogTitle>Delete Unit</DialogTitle>
+        <DialogTitle>Delete Confirmation</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Are you sure you want to delete this unit? This action cannot be undone.
+            {deleteTenant} {deleteUnit}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
