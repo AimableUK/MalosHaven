@@ -19,13 +19,15 @@ import CreditCardIcon from "@mui/icons-material/CreditCard";
 import PlaceIcon from "@mui/icons-material/Place";
 import ApartmentIcon from "@mui/icons-material/Apartment";
 import PaidIcon from "@mui/icons-material/Paid";
-import userAvatar from "../../assets/userAvatar.jpg";
+// import userAvatar from "../../assets/userAvatar.jpg";
+import TenantForm from "../../components/TenantForm";
 
 const TenantsPage = () => {
   const [tenants, setTenants] = useState(Mytenants);
   const [showClearIcon, setShowClearIcon] = useState("none");
   const [searchTerm, setSearchTerm] = useState("");
   const [tenantDetails, setTenantDetails] = useState();
+  const [openModal, setOpenModal] = useState(false);
 
   const displayTenant = (tenantID) => {
     const selectedTenant = tenants.find((t) => t.tenant_id === tenantID);
@@ -35,6 +37,11 @@ const TenantsPage = () => {
   const handleChange = (event) => {
     setSearchTerm(event.target.value);
     setShowClearIcon(event.target.value === "" ? "none" : "flex");
+  };
+
+  const handleAddTenant = (newTenant) => {
+    setTenants((prev) => [...prev, newTenant]);
+    setOpenModal(false);
   };
 
   return (
@@ -83,7 +90,7 @@ const TenantsPage = () => {
           </Box>
         </Box>
         <Box className="col-span-4 flex flex-col bg-[#2D454D] p-3 rounded-r-lg">
-          <Button variant="contained" color="info" startIcon={<AddIcon />}>
+          <Button onClick={() => setOpenModal(true)} variant="contained" color="info" startIcon={<AddIcon />}>
             Add Tenant
           </Button>
 
@@ -248,6 +255,11 @@ const TenantsPage = () => {
           )}
         </Box>
       </Box>
+      <TenantForm
+        open={openModal}
+        onClose={() => setOpenModal(false)}
+        onAddTenant={handleAddTenant}
+      />
     </Box>
   );
 };
