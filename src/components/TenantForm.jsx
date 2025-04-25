@@ -1,5 +1,5 @@
 import {
-    Alert,
+  Alert,
   Avatar,
   Box,
   Button,
@@ -34,9 +34,7 @@ const TenantForm = ({ open, onClose }) => {
     setPaymentStatus(event.target.value);
   };
 
-  const handleSubmit = () => {
-    
-  };
+  const handleSubmit = () => {};
 
   const handleCloseSnackbar = () => {
     setSnackbar({ open: false, message: "", severity: "" });

@@ -6,10 +6,9 @@ import {
   Typography,
   Skeleton,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import SearchBar from "../../components/SearchBar";
 import EditIcon from "@mui/icons-material/Edit";
-import Mytenants from "../../components/TenantsList";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import AddIcon from "@mui/icons-material/Add";
 import PersonIcon from "@mui/icons-material/Person";
@@ -19,15 +18,25 @@ import CreditCardIcon from "@mui/icons-material/CreditCard";
 import PlaceIcon from "@mui/icons-material/Place";
 import ApartmentIcon from "@mui/icons-material/Apartment";
 import PaidIcon from "@mui/icons-material/Paid";
-// import userAvatar from "../../assets/userAvatar.jpg";
 import TenantForm from "../../components/TenantForm";
+import MyProperties from "../../components/Properties";
+import CameraAltIcon from '@mui/icons-material/CameraAlt';
 
 const TenantsPage = () => {
-  const [tenants, setTenants] = useState(Mytenants);
+  const [properties, setProperties] = useState(MyProperties);
+  const [tenants, setTenants] = useState([]);
   const [showClearIcon, setShowClearIcon] = useState("none");
   const [searchTerm, setSearchTerm] = useState("");
   const [tenantDetails, setTenantDetails] = useState();
   const [openModal, setOpenModal] = useState(false);
+
+  // Fetch tenants from all units and properties
+  useEffect(() => {
+    const allTenants = properties.flatMap((property) =>
+      property.units.map((unit) => unit.tenant).filter((tenant) => tenant)
+    );
+    setTenants(allTenants);
+  }, [properties]);
 
   const displayTenant = (tenantID) => {
     const selectedTenant = tenants.find((t) => t.tenant_id === tenantID);
@@ -72,25 +81,44 @@ const TenantsPage = () => {
 
           {/* Tenants */}
           <Box className="flex flex-wrap">
-            {tenants.map((tenant) => (
-              <Box
-                key={tenant.tenant_id}
-                className="flex flex-col md:flex-row gap-3 border rounded p-3 m-1 shadow-sm w-[calc(30%-1rem)] min-w-[230px] max-w-[300px] cursor-pointer hover:shadow-lg hover:shadow-[#182427] transition duration-50 ease-in-out active:scale-95"
-                onClick={() => displayTenant(tenant.tenant_id)}
-              >
-                <Avatar src={tenant.image} />
-                <Box className="flex flex-col">
-                  <Typography fontWeight="bold">{tenant.name}</Typography>
-                  <Typography sx={{ fontSize: "14px", color: "#D0D0D0" }}>
-                    {tenant.phone}
-                  </Typography>
+            {tenants
+              .filter(
+                (tenant) =>
+                  tenant.name
+                    .toLowerCase()
+                    .includes(searchTerm.toLowerCase()) ||
+                  tenant.phone.includes(searchTerm) ||
+                  tenant.paymentStatus
+                    .toLowerCase()
+                    .includes(searchTerm.toLowerCase()) ||
+                  tenant.property
+                    .toLowerCase()
+                    .includes(searchTerm.toLowerCase())
+              )
+              .map((tenant) => (
+                <Box
+                  key={tenant.tenant_id}
+                  className="flex flex-col md:flex-row gap-3 border rounded p-3 m-1 shadow-sm w-[calc(30%-1rem)] min-w-[230px] max-w-[300px] cursor-pointer hover:shadow-lg hover:shadow-[#182427] transition duration-50 ease-in-out active:scale-95"
+                  onClick={() => displayTenant(tenant.tenant_id)}
+                >
+                  <Avatar src={tenant.image} />
+                  <Box className="flex flex-col">
+                    <Typography fontWeight="bold">{tenant.name}</Typography>
+                    <Typography sx={{ fontSize: "14px", color: "#D0D0D0" }}>
+                      {tenant.phone}
+                    </Typography>
+                  </Box>
                 </Box>
-              </Box>
-            ))}
+              ))}
           </Box>
         </Box>
         <Box className="col-span-4 flex flex-col bg-[#2D454D] p-3 rounded-r-lg">
-          <Button onClick={() => setOpenModal(true)} variant="contained" color="info" startIcon={<AddIcon />}>
+          <Button
+            onClick={() => setOpenModal(true)}
+            variant="contained"
+            color="info"
+            startIcon={<AddIcon />}
+          >
             Add Tenant
           </Button>
 
@@ -178,15 +206,31 @@ const TenantsPage = () => {
                   display="flex"
                   flexDirection="row"
                   justifyContent="space-between"
+                  alignItems="center"
                 >
                   <Typography>
                     <PaidIcon />
                     &nbsp;&nbsp;STATUS
                   </Typography>
-                  <Typography className="border px-3 rounded-md bg-green-900">
-                    PAID
+                  <Typography
+                    className={(() => {
+                      switch (tenantDetails.paymentStatus) {
+                        case "Paid":
+                          return "border px-3 py-1 rounded-md bg-green-500";
+                        case "Not Yet":
+                          return "border px-3 py-1 rounded-md bg-red-500";
+                        case "Partially":
+                          return "border px-3 py-1 rounded-md bg-yellow-700";
+                        default:
+                          return "";
+                      }
+                    })()}
+                    color="white"
+                  >
+                    {tenantDetails.paymentStatus}
                   </Typography>
                 </Box>
+                {/* </Box> */}
                 <Button variant="contained" color="success">
                   Full Payment Status
                 </Button>
@@ -194,7 +238,7 @@ const TenantsPage = () => {
             </Box>
           ) : (
             <Box>
-              {/* Action buttons */}
+              {/* Skeleton UI for loading state */}
               <Box
                 display="flex"
                 flexDirection="row"
@@ -205,7 +249,6 @@ const TenantsPage = () => {
                 <Skeleton variant="circular" width={40} height={40} />
               </Box>
 
-              {/* Avatar + name */}
               <Box
                 display="flex"
                 flexDirection="column"
@@ -217,7 +260,6 @@ const TenantsPage = () => {
                 <Skeleton width="60%" height={30} sx={{ mt: 2 }} />
               </Box>
 
-              {/* Divider */}
               <Box
                 sx={{
                   height: "1px",
@@ -229,7 +271,6 @@ const TenantsPage = () => {
                 }}
               />
 
-              {/* Detail lines */}
               <Box display="flex" flexDirection="column" gap="15px">
                 <Skeleton height={24} width="80%" />
                 <Skeleton height={24} width="80%" />
@@ -238,13 +279,11 @@ const TenantsPage = () => {
                 <Skeleton height={24} width="80%" />
                 <Skeleton height={24} width="80%" />
 
-                {/* Status row */}
                 <Box display="flex" justifyContent="space-between">
                   <Skeleton height={24} width="30%" />
                   <Skeleton height={30} width="60px" />
                 </Box>
 
-                {/* Button */}
                 <Skeleton
                   height={36}
                   width="100%"
