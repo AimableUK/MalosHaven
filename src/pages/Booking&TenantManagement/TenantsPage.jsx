@@ -1,12 +1,36 @@
-import { Avatar, Box, Button, Divider, Typography } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Button,
+  IconButton,
+  Typography,
+  Skeleton,
+} from "@mui/material";
 import React, { useState } from "react";
 import SearchBar from "../../components/SearchBar";
+import EditIcon from "@mui/icons-material/Edit";
+import Mytenants from "../../components/TenantsList";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import AddIcon from "@mui/icons-material/Add";
+import PersonIcon from "@mui/icons-material/Person";
+import PhoneIcon from "@mui/icons-material/Phone";
+import EmailIcon from "@mui/icons-material/Email";
+import CreditCardIcon from "@mui/icons-material/CreditCard";
+import PlaceIcon from "@mui/icons-material/Place";
+import ApartmentIcon from "@mui/icons-material/Apartment";
+import PaidIcon from "@mui/icons-material/Paid";
 import userAvatar from "../../assets/userAvatar.jpg";
-import tenants from "../../components/TenantsList";
 
 const TenantsPage = () => {
+  const [tenants, setTenants] = useState(Mytenants);
   const [showClearIcon, setShowClearIcon] = useState("none");
   const [searchTerm, setSearchTerm] = useState("");
+  const [tenantDetails, setTenantDetails] = useState();
+
+  const displayTenant = (tenantID) => {
+    const selectedTenant = tenants.find((t) => t.tenant_id === tenantID);
+    setTenantDetails(selectedTenant);
+  };
 
   const handleChange = (event) => {
     setSearchTerm(event.target.value);
@@ -15,8 +39,8 @@ const TenantsPage = () => {
 
   return (
     <Box m="20px" display="flex" flexDirection="column">
-      <Box className="flex flex-col md:grid grid-cols-12">
-        <Box className="bg-[#2D454D] col-span-8 rounded-md p-5">
+      <Box className="flex flex-col md:grid grid-cols-12 gap-4">
+        <Box className="bg-[#2D454D] col-span-8 rounded-l-lg p-5">
           {/* tenants header */}
           <Box className="flex flex-col md:flex-row justify-between">
             <Typography fontWeight="bold">Tenants List</Typography>
@@ -27,6 +51,7 @@ const TenantsPage = () => {
             />
           </Box>
 
+          {/* divider */}
           <Box
             sx={{
               height: "1px",
@@ -37,10 +62,15 @@ const TenantsPage = () => {
               borderRadius: "999px",
             }}
           />
+
           {/* Tenants */}
           <Box className="flex flex-wrap">
             {tenants.map((tenant) => (
-              <Box key={tenant.tenant_id} className="flex flex-col md:flex-row gap-3 border rounded p-3 m-1 shadow-sm w-[calc(30%-1rem)] min-w-[230px] max-w-[300px]">
+              <Box
+                key={tenant.tenant_id}
+                className="flex flex-col md:flex-row gap-3 border rounded p-3 m-1 shadow-sm w-[calc(30%-1rem)] min-w-[230px] max-w-[300px] cursor-pointer hover:shadow-lg hover:shadow-[#182427] transition duration-50 ease-in-out active:scale-95"
+                onClick={() => displayTenant(tenant.tenant_id)}
+              >
                 <Avatar src={tenant.image} />
                 <Box className="flex flex-col">
                   <Typography fontWeight="bold">{tenant.name}</Typography>
@@ -52,8 +82,170 @@ const TenantsPage = () => {
             ))}
           </Box>
         </Box>
-        <Box className="col-span-4">
-          <Button>Add User</Button>
+        <Box className="col-span-4 flex flex-col bg-[#2D454D] p-3 rounded-r-lg">
+          <Button variant="contained" color="info" startIcon={<AddIcon />}>
+            Add Tenant
+          </Button>
+
+          {/* action buttons */}
+          {tenantDetails ? (
+            <Box key={tenantDetails.tenant_id}>
+              <Box
+                display="flex"
+                flexDirection="row"
+                justifyContent="space-between"
+                sx={{ mt: 3 }}
+              >
+                <IconButton>
+                  <EditIcon sx={{ color: "white" }} />
+                </IconButton>
+                <IconButton>
+                  <MoreHorizIcon sx={{ color: "white" }} />
+                </IconButton>
+              </Box>
+
+              <Box
+                display="flex"
+                flexDirection="column"
+                justifyContent="center"
+                alignItems="center"
+              >
+                <Avatar
+                  src={tenantDetails.image}
+                  sx={{ width: "100px", height: "100px" }}
+                />
+                <Typography
+                  sx={{
+                    fontWeight: "bold",
+                    fontSize: "20px",
+                    m: 1,
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  {tenantDetails.name}
+                </Typography>
+              </Box>
+
+              <Box
+                sx={{
+                  height: "1px",
+                  width: "100%",
+                  background:
+                    "linear-gradient(to right, #2d454d, #ABADAE, #2d454d)",
+                  my: 1,
+                  borderRadius: "999px",
+                }}
+              />
+
+              <Box
+                display="flex"
+                flexDirection="column"
+                color="#D4D4D4"
+                gap="15px"
+              >
+                <Typography>
+                  <PersonIcon />
+                  &nbsp;&nbsp;{tenantDetails.gender}
+                </Typography>
+                <Typography>
+                  <PhoneIcon />
+                  &nbsp;&nbsp;{tenantDetails.phone}
+                </Typography>
+                <Typography>
+                  <EmailIcon />
+                  &nbsp;&nbsp;{tenantDetails.email}
+                </Typography>
+                <Typography>
+                  <CreditCardIcon />
+                  &nbsp;&nbsp;{tenantDetails.national_id}
+                </Typography>
+                <Typography>
+                  <ApartmentIcon />
+                  &nbsp;&nbsp;{tenantDetails.property}
+                </Typography>
+                <Typography>
+                  <PlaceIcon />
+                  &nbsp;&nbsp;{tenantDetails.unit}
+                </Typography>
+                <Box
+                  display="flex"
+                  flexDirection="row"
+                  justifyContent="space-between"
+                >
+                  <Typography>
+                    <PaidIcon />
+                    &nbsp;&nbsp;STATUS
+                  </Typography>
+                  <Typography className="border px-3 rounded-md bg-green-900">
+                    PAID
+                  </Typography>
+                </Box>
+                <Button variant="contained" color="success">
+                  Full Payment Status
+                </Button>
+              </Box>
+            </Box>
+          ) : (
+            <Box>
+              {/* Action buttons */}
+              <Box
+                display="flex"
+                flexDirection="row"
+                justifyContent="space-between"
+                sx={{ mt: 3 }}
+              >
+                <Skeleton variant="circular" width={40} height={40} />
+                <Skeleton variant="circular" width={40} height={40} />
+              </Box>
+
+              {/* Avatar + name */}
+              <Box
+                display="flex"
+                flexDirection="column"
+                justifyContent="center"
+                alignItems="center"
+                mt={2}
+              >
+                <Skeleton variant="circular" width={100} height={100} />
+                <Skeleton width="60%" height={30} sx={{ mt: 2 }} />
+              </Box>
+
+              {/* Divider */}
+              <Box
+                sx={{
+                  height: "1px",
+                  width: "100%",
+                  background:
+                    "linear-gradient(to right, #2d454d, #ABADAE, #2d454d)",
+                  my: 2,
+                  borderRadius: "999px",
+                }}
+              />
+
+              {/* Detail lines */}
+              <Box display="flex" flexDirection="column" gap="15px">
+                <Skeleton height={24} width="80%" />
+                <Skeleton height={24} width="80%" />
+                <Skeleton height={24} width="80%" />
+                <Skeleton height={24} width="80%" />
+                <Skeleton height={24} width="80%" />
+                <Skeleton height={24} width="80%" />
+
+                {/* Status row */}
+                <Box display="flex" justifyContent="space-between">
+                  <Skeleton height={24} width="30%" />
+                  <Skeleton height={30} width="60px" />
+                </Box>
+
+                {/* Button */}
+                <Skeleton
+                  height={36}
+                  width="100%"
+                  sx={{ borderRadius: "6px" }}
+                />
+              </Box>
+            </Box>
+          )}
         </Box>
       </Box>
     </Box>
