@@ -5,6 +5,8 @@ import {
   IconButton,
   Typography,
   Skeleton,
+  Menu,
+  MenuItem,
 } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import SearchBar from "../../components/SearchBar";
@@ -20,7 +22,7 @@ import ApartmentIcon from "@mui/icons-material/Apartment";
 import PaidIcon from "@mui/icons-material/Paid";
 import TenantForm from "../../components/TenantForm";
 import MyProperties from "../../components/Properties";
-import CameraAltIcon from '@mui/icons-material/CameraAlt';
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const TenantsPage = () => {
   const [properties, setProperties] = useState(MyProperties);
@@ -29,8 +31,16 @@ const TenantsPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [tenantDetails, setTenantDetails] = useState();
   const [openModal, setOpenModal] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
 
-  // Fetch tenants from all units and properties
+  const handleActionsClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleCloseMenu = () => {
+    setAnchorEl(null);
+  };
+
   useEffect(() => {
     const allTenants = properties.flatMap((property) =>
       property.units.map((unit) => unit.tenant).filter((tenant) => tenant)
@@ -50,8 +60,33 @@ const TenantsPage = () => {
 
   const handleAddTenant = (newTenant) => {
     setTenants((prev) => [...prev, newTenant]);
+
+    setProperties((prevProperties) =>
+      prevProperties.map((property) => {
+        if (property.name === newTenant.property) {
+          return {
+            ...property,
+            units: property.units.map((unit) => {
+              if (unit.unit_name === newTenant.unit) {
+                return {
+                  ...unit,
+                  tenant: {
+                    ...newTenant,
+                    tenant_id: Date.now(),
+                  },
+                };
+              }
+              return unit;
+            }),
+          };
+        }
+        return property;
+      })
+    );
+
     setOpenModal(false);
   };
+
 
   return (
     <Box m="20px" display="flex" flexDirection="column">
@@ -131,10 +166,10 @@ const TenantsPage = () => {
                 justifyContent="space-between"
                 sx={{ mt: 3 }}
               >
-                <IconButton>
+                <IconButton onClick={() => setOpenModal(true)}>
                   <EditIcon sx={{ color: "white" }} />
                 </IconButton>
-                <IconButton>
+                <IconButton onClick={handleActionsClick}>
                   <MoreHorizIcon sx={{ color: "white" }} />
                 </IconButton>
               </Box>
@@ -298,7 +333,18 @@ const TenantsPage = () => {
         open={openModal}
         onClose={() => setOpenModal(false)}
         onAddTenant={handleAddTenant}
+        properties={properties}
       />
+      <Menu
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
+        onClose={handleCloseMenu}
+      >
+        <MenuItem onClick={handleCloseMenu}>
+          <DeleteIcon />
+          Delete
+        </MenuItem>
+      </Menu>
     </Box>
   );
 };

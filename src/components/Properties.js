@@ -15,18 +15,7 @@ const properties = [
         id: 1, 
         UnitNumber: "101", 
         UnitValue: 1200000,
-        tenant: {
-          tenant_id: "TNT-001",
-          name: "Laurie Flores",
-          email: "laurie.flores@gmail.com",
-          phone: "001-394-589-1643",
-          national_id: "1299003155395965",
-          property: "Luxury Waterfront Villa",
-          unit: "101",
-          image: "https://randomuser.me/api/portraits/women/34.jpg",
-          gender: "Female",
-          paymentStatus: "Paid"
-        }
+        tenant: null
       },
       { 
         id: 2, 
@@ -49,18 +38,7 @@ const properties = [
         id: 3, 
         UnitNumber: "103", 
         UnitValue: 1300000,
-        tenant: {
-          tenant_id: "TNT-003",
-          name: "Jessica Nguyen",
-          email: "jessica.nguyen@gmail.com",
-          phone: "001-456-789-1542",
-          national_id: "2345001234567891",
-          property: "Luxury Waterfront Villa",
-          unit: "103",
-          image: "https://randomuser.me/api/portraits/women/22.jpg",
-          gender: "Female",
-          paymentStatus: "Partially"
-        }
+        tenant: null
       },
       { 
         id: 4, 
@@ -195,18 +173,7 @@ const properties = [
         id: 3, 
         UnitNumber: "203", 
         UnitValue: 950000,
-        tenant: {
-          tenant_id: "TNT-011",
-          name: "Chloe Evans",
-          email: "chloe.evans@gmail.com",
-          phone: "001-345-876-6543",
-          national_id: "2233445566778899",
-          property: "Modern Loft in the City Center",
-          unit: "203",
-          image: "https://randomuser.me/api/portraits/women/53.jpg",
-          gender: "Female",
-          paymentStatus: "Partially"
-        }
+        tenant: null
       },
       { 
         id: 4, 
