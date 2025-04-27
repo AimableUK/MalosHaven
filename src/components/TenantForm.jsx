@@ -39,7 +39,6 @@ const TenantForm = ({ open, onClose, onAddTenant, properties }) => {
   });
 
   useEffect(() => {
-    // Reset form when properties change
     setFormData({
       name: "",
       email: "",

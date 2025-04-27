@@ -21,6 +21,7 @@ import PlaceIcon from "@mui/icons-material/Place";
 import ApartmentIcon from "@mui/icons-material/Apartment";
 import PaidIcon from "@mui/icons-material/Paid";
 import TenantForm from "../../components/TenantForm";
+import TenantUpdateForm from "../../components/TenantUpdateForm";
 import MyProperties from "../../components/Properties";
 import DeleteIcon from "@mui/icons-material/Delete";
 import DataDeleteConfirm from "../../components/DataDeleteConfirm";
@@ -31,7 +32,8 @@ const TenantsPage = () => {
   const [showClearIcon, setShowClearIcon] = useState("none");
   const [searchTerm, setSearchTerm] = useState("");
   const [tenantDetails, setTenantDetails] = useState();
-  const [openModal, setOpenModal] = useState(false);
+  const [addTenantOpenModal, setAddTenantOpenModal] = useState(false);
+  const [updateTenantOpenModal, setUpdateTenantOpenModal] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [selectedTenantId, setSelectedTenantId] = useState(null);
@@ -40,8 +42,9 @@ const TenantsPage = () => {
   const deleteTenant =
   "Are you sure you want to Delete this Tenant? If you do so, it will be undone";
 
-  const handleEditClick = (tenant) => {
-    setOpenModal(true)
+  const handleUpdateClick = (tenant) => {
+    setUpdateTenantOpenModal(true)
+    console.log(tenant)
   }
 
   const handleActionsClick = (event, tenantId) => {
@@ -168,7 +171,7 @@ const TenantsPage = () => {
         </Box>
         <Box className="col-span-4 flex flex-col bg-[#2D454D] p-3 rounded-r-lg">
           <Button
-            onClick={() => setOpenModal(true)}
+            onClick={() => setAddTenantOpenModal(true)}
             variant="contained"
             color="info"
             startIcon={<AddIcon />}
@@ -185,7 +188,7 @@ const TenantsPage = () => {
                 justifyContent="space-between"
                 sx={{ mt: 3 }}
               >
-                <IconButton onClick={() => handleEditClick(tenantDetails)}>
+                <IconButton onClick={() => handleUpdateClick(tenantDetails)}>
                   <EditIcon sx={{ color: "white" }} />
                 </IconButton>
                 <IconButton onClick={(event) => handleActionsClick(event, tenantDetails.tenant_id)}>
@@ -354,8 +357,14 @@ const TenantsPage = () => {
         </Box>
       </Box>
       <TenantForm
-        open={openModal}
-        onClose={() => setOpenModal(false)}
+        open={addTenantOpenModal}
+        onClose={() => setAddTenantOpenModal(false)}
+        onAddTenant={handleAddTenant}
+        properties={properties}
+      />
+      <TenantUpdateForm
+        open={updateTenantOpenModal}
+        onClose={() => setUpdateTenantOpenModal(false)}
         onAddTenant={handleAddTenant}
         properties={properties}
       />
@@ -385,6 +394,7 @@ const TenantsPage = () => {
         deleteTenant={deleteTenant}
         deleteType="tenant"
       />
+      
     </Box>
   );
 };
