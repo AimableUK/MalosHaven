@@ -35,6 +35,12 @@ const TenantsPage = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [selectedTenantId, setSelectedTenantId] = useState(null);
+  const [deleteType, setDeleteType] = useState("tenant")
+
+  const deleteTenant =
+  "Are you sure you want to Delete this Tenant? If you do so, it will be undone";
+
+
 
   const handleActionsClick = (event, tenantId) => {
     setAnchorEl(event.currentTarget);
@@ -52,8 +58,6 @@ const TenantsPage = () => {
     setDeleteDialogOpen(false);
   };
 
-  const deleteTenant =
-    "Are you sure you want to Delete this Tenant? If you do so, it will be undone";
 
   useEffect(() => {
     const allTenants = properties.flatMap((property) =>
@@ -182,7 +186,7 @@ const TenantsPage = () => {
                 <IconButton onClick={() => setOpenModal(true)}>
                   <EditIcon sx={{ color: "white" }} />
                 </IconButton>
-                <IconButton onClick={handleActionsClick}>
+                <IconButton onClick={(event) => handleActionsClick(event, tenantDetails.tenant_id)}>
                   <MoreHorizIcon sx={{ color: "white" }} />
                 </IconButton>
               </Box>
@@ -361,7 +365,6 @@ const TenantsPage = () => {
         <MenuItem
           onClose={handleCloseMenu}
           onClick={() => {
-            // setSelectedUnitId(params.row.id);
             setDeleteDialogOpen(true);
           }}
           sx={{ ":hover": { color: "#F44545" } }}
@@ -370,6 +373,7 @@ const TenantsPage = () => {
           Delete
         </MenuItem>
       </Menu>
+
       <DataDeleteConfirm
         deleteDialogOpen={deleteDialogOpen}
         setDeleteDialogOpen={setDeleteDialogOpen}
@@ -377,6 +381,7 @@ const TenantsPage = () => {
         setSelectedTenantId={setSelectedTenantId}
         handleDeleteTenant={handleDeleteTenant}
         deleteTenant={deleteTenant}
+        deleteType="tenant"
       />
     </Box>
   );

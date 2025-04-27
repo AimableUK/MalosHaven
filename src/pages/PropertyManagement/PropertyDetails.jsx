@@ -17,6 +17,8 @@ const PropertyDetails = () => {
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [selectedUnitId, setSelectedUnitId] = useState(null);
+  const [deleteType, setDeleteType] = useState("unit");
+
   const [snackbar, setSnackbar] = useState({
     open: false,
     message: "",
@@ -320,6 +322,7 @@ const PropertyDetails = () => {
             setSelectedUnitId={setSelectedUnitId}
             handleDeleteUnit={handleDeleteUnit} 
             deleteUnit={deleteUnit}
+            deleteType="unit"
           />
 
           {/* Edit Unit Modal */}

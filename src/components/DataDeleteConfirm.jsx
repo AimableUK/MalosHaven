@@ -14,11 +14,10 @@ const DataDeleteConfirm = ({
   deleteDialogOpen,
   setDeleteDialogOpen,
   handleDeleteUnit,
-  // selectedTenantId,
-  // setSelectedTenantId,
   handleDeleteTenant,
   deleteTenant,
-  deleteUnit
+  deleteUnit,
+  deleteType
 }) => {
   const [snackbar, setSnackbar] = useState({
     open: false,
@@ -31,9 +30,13 @@ const DataDeleteConfirm = ({
   };
 
   const handleDelete = () => {
-    handleDeleteUnit();
-    handleDeleteTenant();
+    if (deleteType === "unit") {
+      handleDeleteUnit();
+    } else if (deleteType === "tenant") {
+      handleDeleteTenant();
+    }
   };
+
 
   return (
     <>
