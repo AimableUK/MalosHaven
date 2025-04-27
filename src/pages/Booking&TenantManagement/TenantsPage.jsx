@@ -43,8 +43,8 @@ const TenantsPage = () => {
   "Are you sure you want to Delete this Tenant? If you do so, it will be undone";
 
   const handleUpdateClick = (tenant) => {
+    setSelectedTenantId(tenant)
     setUpdateTenantOpenModal(true)
-    console.log(tenant)
   }
 
   const handleActionsClick = (event, tenantId) => {
@@ -57,6 +57,7 @@ const TenantsPage = () => {
   };
 
   const handleDeleteTenant = () => {
+
     setTenants((prevTenants) =>
       prevTenants.filter((tenant) => tenant.tenant_id !== selectedTenantId)
     );
@@ -109,6 +110,36 @@ const TenantsPage = () => {
       })
     );
   };
+
+  const handleUpdateTenant = (updatedTenant) => {
+    // Update properties
+    setProperties((prev) =>
+      prev.map(property => {
+        if (property.title !== updatedTenant.property) return property;
+  
+        return {
+          ...property,
+          units: property.units.map(unit => {
+            if (unit.UnitNumber === updatedTenant.unit) {
+              return { ...unit, tenant: updatedTenant };
+            }
+            return unit;
+          }),
+        };
+      })
+    );
+  
+    // Update tenants
+    setTenants((prev) =>
+      prev.map(tenant => 
+        tenant.tenant_id === updatedTenant.tenant_id ? updatedTenant : tenant
+      )
+    );
+  };
+  
+  
+  
+
 
   return (
     <Box m="20px" display="flex" flexDirection="column">
@@ -365,8 +396,9 @@ const TenantsPage = () => {
       <TenantUpdateForm
         open={updateTenantOpenModal}
         onClose={() => setUpdateTenantOpenModal(false)}
-        onAddTenant={handleAddTenant}
+        onUpdateTenant={handleUpdateTenant}
         properties={properties}
+        selectedTenantId={selectedTenantId}
       />
       <Menu
         anchorEl={anchorEl}
