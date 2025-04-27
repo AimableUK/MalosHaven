@@ -15,7 +15,7 @@ import {
   Snackbar,
   TextField,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
 
 const TenantForm = ({ open, onClose, onAddTenant, properties }) => {
@@ -37,6 +37,22 @@ const TenantForm = ({ open, onClose, onAddTenant, properties }) => {
     gender: "",
     paymentStatus: "",
   });
+
+  useEffect(() => {
+    // Reset form when properties change
+    setFormData({
+      name: "",
+      email: "",
+      phone: "",
+      national_id: "",
+      property: "",
+      unit: "",
+      gender: "",
+      paymentStatus: "",
+    });
+    setImage(null);
+    setImagePreview(null);
+  }, [properties]);
 
   const handleGenderChange = (event) => {
     setFormData((prev) => ({ ...prev, gender: event.target.value }));
@@ -63,7 +79,6 @@ const TenantForm = ({ open, onClose, onAddTenant, properties }) => {
     setUnitsList(selectedProperty?.units || []);
   };
 
-
   const handleSubmit = () => {
     const {
       name,
@@ -85,7 +100,7 @@ const TenantForm = ({ open, onClose, onAddTenant, properties }) => {
       !unit.trim() ||
       !gender.trim() ||
       !paymentStatus.trim() ||
-      !image
+      (!image && !imagePreview) // <<< fixed here
     ) {
       setSnackbar({
         open: true,
@@ -95,6 +110,7 @@ const TenantForm = ({ open, onClose, onAddTenant, properties }) => {
       return;
     }
 
+    // Add new tenant
     onAddTenant({
       tenant_id: `TNT-${Date.now()}`,
       name,
@@ -106,6 +122,12 @@ const TenantForm = ({ open, onClose, onAddTenant, properties }) => {
       gender,
       paymentStatus,
       image: imagePreview,
+    });
+
+    setSnackbar({
+      open: true,
+      message: "Tenant added successfully!",
+      severity: "success",
     });
 
     onClose();
@@ -121,11 +143,6 @@ const TenantForm = ({ open, onClose, onAddTenant, properties }) => {
     });
     setImage(null);
     setImagePreview(null);
-    setSnackbar({
-      open: true,
-      message: "Tenant added successfully!",
-      severity: "success",
-    });
   };
 
   const handleCloseSnackbar = () => {
@@ -188,7 +205,6 @@ const TenantForm = ({ open, onClose, onAddTenant, properties }) => {
 
           {/* Form Fields */}
           <Box className="flex flex-col">
-            {/* Name, Gender, Phone, Email */}
             <Box className="flex flex-col md:flex-row gap-4 mb-4">
               <TextField
                 label="Name"
@@ -237,7 +253,6 @@ const TenantForm = ({ open, onClose, onAddTenant, properties }) => {
               />
             </Box>
 
-            {/* National ID, Property */}
             <Box className="flex flex-col md:flex-row gap-4 mb-4">
               <TextField
                 label="National ID"
@@ -266,7 +281,6 @@ const TenantForm = ({ open, onClose, onAddTenant, properties }) => {
               </FormControl>
             </Box>
 
-            {/* Unit and Payment Status */}
             <Box className="flex flex-col md:flex-row gap-4">
               <FormControl fullWidth required>
                 <InputLabel id="unit-select-label">Unit</InputLabel>
@@ -318,7 +332,6 @@ const TenantForm = ({ open, onClose, onAddTenant, properties }) => {
         </DialogActions>
       </Dialog>
 
-      {/* Snackbar for feedback */}
       <Snackbar
         open={snackbar.open}
         autoHideDuration={2000}

@@ -40,7 +40,9 @@ const TenantsPage = () => {
   const deleteTenant =
   "Are you sure you want to Delete this Tenant? If you do so, it will be undone";
 
-
+  const handleEditClick = (tenant) => {
+    setOpenModal(true)
+  }
 
   const handleActionsClick = (event, tenantId) => {
     setAnchorEl(event.currentTarget);
@@ -183,7 +185,7 @@ const TenantsPage = () => {
                 justifyContent="space-between"
                 sx={{ mt: 3 }}
               >
-                <IconButton onClick={() => setOpenModal(true)}>
+                <IconButton onClick={() => handleEditClick(tenantDetails)}>
                   <EditIcon sx={{ color: "white" }} />
                 </IconButton>
                 <IconButton onClick={(event) => handleActionsClick(event, tenantDetails.tenant_id)}>

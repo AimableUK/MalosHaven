@@ -128,7 +128,7 @@ const PropertiesPage = () => {
               justifyContent="space-between"
             >
               <Typography fontWeight="bold">
-                {property.units.filter((unit) => unit.tenant == null).length}{" "}
+                {property.units.filter((unit) => unit.tenant == null).length}
                 Units
               </Typography>
               <Typography textAlign="center">
