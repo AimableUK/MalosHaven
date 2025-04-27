@@ -63,6 +63,7 @@ const TenantForm = ({ open, onClose, onAddTenant, properties }) => {
     setUnitsList(selectedProperty?.units || []);
   };
 
+
   const handleSubmit = () => {
     const {
       name,
@@ -195,7 +196,9 @@ const TenantForm = ({ open, onClose, onAddTenant, properties }) => {
                 fullWidth
                 required
                 value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, name: e.target.value })
+                }
               />
               <FormControl fullWidth>
                 <InputLabel id="select-label">Gender</InputLabel>
@@ -218,7 +221,9 @@ const TenantForm = ({ open, onClose, onAddTenant, properties }) => {
                 fullWidth
                 required
                 value={formData.phone}
-                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, phone: e.target.value })
+                }
               />
               <TextField
                 label="Email"
@@ -226,7 +231,9 @@ const TenantForm = ({ open, onClose, onAddTenant, properties }) => {
                 fullWidth
                 required
                 value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, email: e.target.value })
+                }
               />
             </Box>
 
@@ -238,7 +245,9 @@ const TenantForm = ({ open, onClose, onAddTenant, properties }) => {
                 fullWidth
                 required
                 value={formData.national_id}
-                onChange={(e) => setFormData({ ...formData, national_id: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, national_id: e.target.value })
+                }
               />
               <FormControl fullWidth>
                 <InputLabel id="property-select-label">Property</InputLabel>
@@ -265,7 +274,9 @@ const TenantForm = ({ open, onClose, onAddTenant, properties }) => {
                   labelId="unit-select-label"
                   value={formData.unit}
                   label="Unit"
-                  onChange={(e) => setFormData({ ...formData, unit: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, unit: e.target.value })
+                  }
                   disabled={unitsList.length === 0}
                 >
                   {unitsList
@@ -279,7 +290,9 @@ const TenantForm = ({ open, onClose, onAddTenant, properties }) => {
               </FormControl>
 
               <FormControl fullWidth required>
-                <InputLabel id="payment-status-label">Payment Status</InputLabel>
+                <InputLabel id="payment-status-label">
+                  Payment Status
+                </InputLabel>
                 <Select
                   labelId="payment-status-label"
                   value={formData.paymentStatus}
@@ -323,6 +336,5 @@ const TenantForm = ({ open, onClose, onAddTenant, properties }) => {
     </>
   );
 };
-
 
 export default TenantForm;

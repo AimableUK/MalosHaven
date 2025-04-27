@@ -127,7 +127,7 @@ const PropertiesPage = () => {
               flexDirection="row"
               justifyContent="space-between"
             >
-              <Typography fontWeight="bold">{property.units.length} Units</Typography>
+              <Typography fontWeight="bold">{property.units.filter((unit) => unit.tenant == null).length} Units</Typography>
               <Typography textAlign="center">
                 <PlaceIcon />
                 {property.location}

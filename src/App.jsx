@@ -25,6 +25,7 @@ import SettingsPage from "./pages/Settings&Permissions/SettingsPage";
 import PermissionsPage from "./pages/Settings&Permissions/PermissionsPage";
 import PropertyDetails from "./pages/PropertyManagement/PropertyDetails";
 
+import MonthlyTimeRange from "./components/mychart";
 
 const AppRoutes = () => {
   return (
@@ -44,6 +45,7 @@ const AppRoutes = () => {
         <Route path="reports" element={<ReportsPage />} />
         <Route path="settings" element={<SettingsPage />} />
         <Route path="permissions" element={<PermissionsPage />} />
+        <Route path="month" element={<MonthlyTimeRange />} />
       </Route>
     </Routes>
   );

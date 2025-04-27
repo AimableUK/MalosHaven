@@ -264,7 +264,7 @@ const PropertyDetails = () => {
             <Typography fontWeight="bold">
               Units Available:&nbsp;&nbsp;
             </Typography>
-            <Typography>{property.units.length} Units</Typography>
+            <Typography>{property.units.filter((unit) => unit.tenant == null).length} Units</Typography>
           </Box>
 
           <Box
@@ -284,7 +284,7 @@ const PropertyDetails = () => {
 
           <DataGrid
             sx={{ height: "fit-content", mt: 1 }}
-            rows={property.units}
+            rows={property.units.filter((unit) => unit.tenant == null)}
             columns={columns}
             initialState={{
               pagination: {

@@ -12,7 +12,6 @@ import EditIcon from "@mui/icons-material/Edit";
 import MyProperties from "../../components/Properties.js";
 import FooterPage from "../Footer/FooterPage.jsx";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-
 import { Link } from "react-router-dom";
 
 const Dashboard = () => {
@@ -382,7 +381,7 @@ const Dashboard = () => {
               justifyContent="space-between"
             >
               <Typography fontWeight="bold">
-                {property.units.length} Units
+              {property.units.filter((unit) => unit.tenant == null).length} Units
               </Typography>
               <Typography textAlign="center">
                 <PlaceIcon />
