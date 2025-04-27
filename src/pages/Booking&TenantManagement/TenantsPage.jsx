@@ -260,19 +260,25 @@ const TenantsPage = () => {
                     &nbsp;&nbsp;STATUS
                   </Typography>
                   <Typography
-                    className={(() => {
-                      switch (tenantDetails.paymentStatus) {
-                        case "Paid":
-                          return "border px-3 py-1 rounded-md bg-green-500";
-                        case "Not Yet":
-                          return "border px-3 py-1 rounded-md bg-red-500";
-                        case "Partially":
-                          return "border px-3 py-1 rounded-md bg-yellow-700";
-                        default:
-                          return "";
-                      }
-                    })()}
-                    color="white"
+                    sx={{
+                      border: "1px solid",
+                      px: 2,
+                      py: "4px",
+                      borderRadius: "8px",
+                      backgroundColor: (() => {
+                        switch (tenantDetails.paymentStatus) {
+                          case "Paid":
+                            return "#089846";
+                          case "Not Yet":
+                            return "#8D071E";
+                          case "Partially":
+                            return "#9D861C";
+                          default:
+                            return "grey";
+                        }
+                      })(),
+                      color: "white",
+                    }}
                   >
                     {tenantDetails.paymentStatus}
                   </Typography>

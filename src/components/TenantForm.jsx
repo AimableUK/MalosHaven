@@ -299,9 +299,9 @@ const TenantForm = ({ open, onClose, onAddTenant, properties }) => {
                   label="Payment Status"
                   onChange={handlePaymentStatusChange}
                 >
-                  <MenuItem value="PAID">PAID</MenuItem>
-                  <MenuItem value="NOT YET">NOT YET</MenuItem>
-                  <MenuItem value="PARTIALLY">PARTIALLY</MenuItem>
+                  <MenuItem value="Paid">PAID</MenuItem>
+                  <MenuItem value="Not Yet">NOT YET</MenuItem>
+                  <MenuItem value="Partially">PARTIALLY</MenuItem>
                 </Select>
               </FormControl>
             </Box>
