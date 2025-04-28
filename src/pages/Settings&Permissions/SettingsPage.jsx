@@ -21,7 +21,7 @@ const SettingsPage = () => {
         {/* settings body */}
         <Box className="flex flex-col md:grid grid-cols-12 gap-x-[10px] p-[10px]">
           {/* boxes */}
-          <Box className="flex flex-row p-3 bg-[#24383E] mt-3 rounded-md border-t-2 col-span-6 items-center">
+          <Box className="flex flex-row p-3 bg-[#24383E] mt-3 rounded-md border-t-2 col-span-6 items-center cursor-pointer hover:translate-y-1 transition-transform duration-100 ease-in-out active:translate-y-2">
             <Person2OutlinedIcon sx={{fontSize: "45px", marginRight: "8px", borderRadius: "4px"}}/>
             <Box className="flex flex-col">
               <Typography fontWeight="bold">Profile Info</Typography>
@@ -31,7 +31,7 @@ const SettingsPage = () => {
             </Box>
           </Box>
 
-          <Box className="flex flex-row p-3 bg-[#24383E] mt-3 rounded-md border-t-2 col-span-6 items-center">
+          <Box className="flex flex-row p-3 bg-[#24383E] mt-3 rounded-md border-t-2 col-span-6 items-center cursor-pointer hover:translate-y-1 transition-transform duration-100 ease-in-out active:translate-y-2">
             <HealthAndSafetyOutlinedIcon sx={{fontSize: "45px",marginRight: "8px"}}/>
             <Box className="flex flex-col">
               <Typography fontWeight="bold">Privacy Settings</Typography>
@@ -41,7 +41,7 @@ const SettingsPage = () => {
             </Box>
           </Box>
 
-          <Box className="flex flex-row p-3 bg-[#24383E] mt-3 rounded-md border-t-2 col-span-6 items-center">
+          <Box className="flex flex-row p-3 bg-[#24383E] mt-3 rounded-md border-t-2 col-span-6 items-center cursor-pointer hover:translate-y-1 transition-transform duration-100 ease-in-out active:translate-y-2">
             <NotificationsOutlinedIcon sx={{fontSize: "45px",marginRight: "8px"}}/>
             <Box className="flex flex-col">
               <Typography fontWeight="bold">Notification Settings</Typography>
@@ -51,7 +51,7 @@ const SettingsPage = () => {
             </Box>
           </Box>
 
-          <Box className="flex flex-row p-3 bg-[#24383E] mt-3 rounded-md border-t-2 col-span-6 items-center">
+          <Box className="flex flex-row p-3 bg-[#24383E] mt-3 rounded-md border-t-2 col-span-6 items-center cursor-pointer hover:translate-y-1 transition-transform duration-100 ease-in-out active:translate-y-2">
             <PaymentsOutlinedIcon sx={{fontSize: "45px",marginRight: "8px"}}/>
             <Box className="flex flex-col">
               <Typography fontWeight="bold">Billing & Payments</Typography>
@@ -61,7 +61,7 @@ const SettingsPage = () => {
             </Box>
           </Box>
 
-          <Box className="flex flex-row p-3 bg-[#24383E] mt-3 rounded-md border-t-2 col-span-6 items-center">
+          <Box className="flex flex-row p-3 bg-[#24383E] mt-3 rounded-md border-t-2 col-span-6 items-center cursor-pointer hover:translate-y-1 transition-transform duration-100 ease-in-out active:translate-y-2">
             <LockOutlinedIcon sx={{fontSize: "45px",marginRight: "8px"}}/>
             <Box className="flex flex-col">
               <Typography fontWeight="bold">Security</Typography>
@@ -71,7 +71,7 @@ const SettingsPage = () => {
             </Box>
           </Box>
 
-          <Box className="flex flex-row p-3 bg-[#24383E] mt-3 rounded-md border-t-2 col-span-6 items-center">
+          <Box className="flex flex-row p-3 bg-[#24383E] mt-3 rounded-md border-t-2 col-span-6 items-center cursor-pointer hover:translate-y-1 transition-transform duration-100 ease-in-out active:translate-y-2">
             <PsychologyOutlinedIcon sx={{fontSize: "45px",marginRight: "8px"}}/>
             <Box className="flex flex-col">
               <Typography fontWeight="bold">Preferences</Typography>
@@ -81,7 +81,7 @@ const SettingsPage = () => {
             </Box>
           </Box>
 
-          <Box className="flex flex-row p-3 bg-[#24383E] mt-3 rounded-md border-t-2 col-span-6 items-center">
+          <Box className="flex flex-row p-3 bg-[#24383E] mt-3 rounded-md border-t-2 col-span-6 items-center cursor-pointer hover:translate-y-1 transition-transform duration-100 ease-in-out active:translate-y-2">
             <HelpOutlineOutlinedIcon sx={{fontSize: "45px",marginRight: "8px"}}/>
             <Box className="flex flex-col">
               <Typography fontWeight="bold">Help & Support</Typography>
@@ -91,7 +91,7 @@ const SettingsPage = () => {
             </Box>
           </Box>
 
-          <Box className="flex flex-row p-3 bg-[#24383E] mt-3 rounded-md border-t-2 col-span-6 items-center">
+          <Box className="flex flex-row p-3 bg-[#24383E] mt-3 rounded-md border-t-2 col-span-6 items-center cursor-pointer hover:translate-y-1 transition-transform duration-100 ease-in-out active:translate-y-2">
             <LogoutIcon sx={{fontSize: "45px",marginRight: "8px"}}/>
             <Box className="flex flex-col">
               <Typography fontWeight="bold">Log Out</Typography>
