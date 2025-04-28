@@ -6,7 +6,7 @@ import HomeIcon from "@mui/icons-material/Home"
 import BuildIcon from "@mui/icons-material/Build"
 import EventIcon from "@mui/icons-material/Event"
 import PeopleIcon from "@mui/icons-material/People"
-import PaymentIcon from "@mui/icons-material/payment"
+import PaymentOutlinedIcon from '@mui/icons-material/PaymentOutlined';
 import BarChartIcon from "@mui/icons-material/BarChart"
 import InsertChartIcon from "@mui/icons-material/InsertChart"
 import SettingsIcon from "@mui/icons-material/Settings"
@@ -73,7 +73,7 @@ const AppLayout = () => {
             },
             {
               title: 'Invoices & Payments',
-              icon: <PaymentIcon />,
+              icon: <PaymentOutlinedIcon />,
               segment: 'payments',
             },
           ],
