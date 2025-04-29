@@ -17,7 +17,6 @@ import React from "react";
 import { customTheme } from "../Theme";
 import ToolbarActionsMenu from "./ToolbarActionsMenu"
 import { useMediaQuery } from "@mui/material";
-import { Analytics } from "@vercel/analytics/react"
 
 const AppLayout = () => {
 
@@ -127,7 +126,6 @@ const AppLayout = () => {
         }}
         >
         <PageTitleUpdater />
-        <Analytics />
         <Outlet />
       </DashboardLayout>
     </AppProvider>
