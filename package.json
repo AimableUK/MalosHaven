@@ -31,6 +31,7 @@
     "@nivo/radar": "^0.88.0",
     "@nivo/tree": "^0.88.0",
     "@toolpad/core": "^0.14.0",
+    "@vercel/analytics": "^1.5.0",
     "axios": "^1.8.4",
     "d3-format": "^3.1.0",
     "d3-scale": "^4.0.2",
