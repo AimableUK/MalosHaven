@@ -47,8 +47,15 @@ const AddInvoiceForm = ({ open, onClose, onAddInvoice, propertiesState }) => {
 
   const handleSubmit = () => {
     const { tenant, amount, reason, paymentStatus } = formData;
-  
-    if (!tenant || !amount || !reason || !paymentStatus || !selectedIssueDate || !selectedDueDate) {
+
+    if (
+      !tenant ||
+      !amount ||
+      !reason ||
+      !paymentStatus ||
+      !selectedIssueDate ||
+      !selectedDueDate
+    ) {
       setSnackbar({
         open: true,
         message: "Please fill out all fields",
@@ -56,7 +63,7 @@ const AddInvoiceForm = ({ open, onClose, onAddInvoice, propertiesState }) => {
       });
       return;
     }
-  
+
     onAddInvoice({
       id: Date.now(),
       tenantName: tenant,
@@ -66,7 +73,7 @@ const AddInvoiceForm = ({ open, onClose, onAddInvoice, propertiesState }) => {
       dateIssued: selectedIssueDate.format("YYYY-MM-DD"),
       dueDate: selectedDueDate.format("YYYY-MM-DD"),
     });
-  
+
     onClose();
     setFormData({
       tenant: "",
@@ -74,18 +81,17 @@ const AddInvoiceForm = ({ open, onClose, onAddInvoice, propertiesState }) => {
       issueDate: "",
       dueDate: "",
       paymentStatus: "",
-      reason: ""
+      reason: "",
     });
     setSelectedIssueDate(null);
     setSelectedDueDate(null);
-  
+
     setSnackbar({
       open: true,
       message: "Invoice added successfully!",
       severity: "success",
     });
   };
-  
 
   const handleCloseSnackbar = () => {
     setSnackbar({ open: false, message: "", severity: "" });
@@ -138,7 +144,14 @@ const AddInvoiceForm = ({ open, onClose, onAddInvoice, propertiesState }) => {
             </FormControl>
           </Box>
 
-          <TextField label="Amount" type="number" />
+          <TextField
+            label="Amount"
+            type="number"
+            name="amount"
+            value={formData.amount}
+            onChange={handleChange}
+          />
+
           {/* dates */}
           <Box className="flex flex-col md:flex-row gap-3">
             <LocalizationProvider dateAdapter={AdapterDayjs}>
