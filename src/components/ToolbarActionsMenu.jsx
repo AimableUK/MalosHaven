@@ -210,12 +210,15 @@ const ToolbarActionsMenu = () => {
           </MenuItem>
         ))}
 
+        <Link to='/notifications'>
         <MenuItem
           onClick={handleCloseNotification}
           sx={{ textAlign: "center", fontWeight: "bold" }}
         >
           View All
         </MenuItem>
+        </Link>
+        
       </Menu>
 
       {/* Logout confirmation dialog */}

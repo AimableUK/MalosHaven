@@ -19,12 +19,13 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import Properties from "../../components/Properties";
 import AddIcon from "@mui/icons-material/Add";
+import EditInvoiceForm from "../../components/EditInvoiceForm.jsx";
 
 const PaymentsPage = () => {
   const [propertiesState, setPropertiesState] = useState(Properties);
   const [invoicesState, setInvoicesState] = useState(invoices);
-  const [openModal, setOpenModal] = useState(false);
-  const [editDialogOpen, setEditDialogOpen] = useState(false);
+  const [openAddModal, setOpenAddModal] = useState(false);
+  const [openEditModal, setOpenEditModal] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [selectedInvoiceId, setSelectedInvoiceId] = useState(null);
   const [deleteType, setDeleteType] = useState("unit");
@@ -104,7 +105,7 @@ const PaymentsPage = () => {
     },
     {
       field: "actions",
-      headerName: "Edit",
+      headerName: "More",
       width: 80,
       sortable: false,
       renderCell: () => (
@@ -174,7 +175,7 @@ const PaymentsPage = () => {
           <Button
             variant="contained"
             color="info"
-            onClick={() => setOpenModal(true)}
+            onClick={() => setOpenAddModal(true)}
             startIcon={<AddIcon />}
           >
             Add New Invoice
@@ -221,8 +222,15 @@ const PaymentsPage = () => {
 
           {/* Add Unit Modal */}
           <AddInvoiceForm
-            open={openModal}
-            onClose={() => setOpenModal(false)}
+            open={openAddModal}
+            onClose={() => setOpenAddModal(false)}
+            onAddInvoice={handleAddInvoice}
+            propertiesState={propertiesState}
+          />
+
+          <EditInvoiceForm
+            open={openEditModal}
+            onClose={() => setOpenEditModal(false)}
             onAddInvoice={handleAddInvoice}
             propertiesState={propertiesState}
           />
@@ -260,7 +268,10 @@ const PaymentsPage = () => {
             onClose={handleCloseMenu}
           >
             <MenuItem
-              onClick={handleCloseMenu}
+              onClick={() => {
+                setOpenEditModal(true);
+                handleCloseMenu()
+              }}
               onClose={handleCloseMenu}
               sx={{ ":hover": { color: "#10b981" } }}
             >
