@@ -10,6 +10,8 @@ import EditUnitFormModal from "../../components/EditUnitForm";
 import { useParams } from "react-router-dom";
 import properties from "../../components/Properties";
 import FooterPage from "../Footer/FooterPage";
+import AddIcon from "@mui/icons-material/Add";
+
 
 const PropertyDetails = () => {
   const [propertiesState, setPropertiesState] = useState(properties);
@@ -279,26 +281,42 @@ const PropertyDetails = () => {
             <Typography fontSize="20px" fontWeight="bold">
               AVAILABLE UNITS
             </Typography>
-            <Button variant="contained" onClick={() => setOpenModal(true)}>
-              Add Unit
+            <Button variant="contained" color="info" onClick={() => setOpenModal(true)}>
+              <AddIcon />Add Unit
             </Button>
           </Box>
 
           <DataGrid
-            sx={{ height: "fit-content", mt: 1 }}
             rows={property.units.filter((unit) => unit.tenant == null)}
             columns={columns}
+            showToolbar
             initialState={{
               pagination: {
-                paginationModel: { pageSize: 5 },
+                paginationModel: { pageSize: 10 },
               },
             }}
-            pageSizeOptions={[5]}
+            sx={{
+              height: "fit-content",
+              mt: 1,
+              backgroundColor: "inherit",
+              color: "#FFFFFF",
+              "& .MuiDataGrid-footerContainer": {
+                backgroundColor: "#203040",
+                color: "#FFFFFF",
+              },
+              "& .MuiDataGrid-toolbarContainer": {
+                backgroundColor: "#203040",
+                color: "#FFFFFF",
+              },
+              "& .MuiSvgIcon-root": {
+                color: "#FFFFFF",
+              },
+            }}
+            processRowUpdate={processRowUpdate}
+            pageSizeOptions={[10]}
             checkboxSelection
             disableRowSelectionOnClick
-            processRowUpdate={processRowUpdate}
             experimentalFeatures={{ newEditingApi: true }}
-            slots={{ toolbar: GridToolbar }}
             slotProps={{
               toolbar: {
                 showQuickFilter: true,

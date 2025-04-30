@@ -409,6 +409,7 @@ const TenantsPage = () => {
           onClose={handleCloseMenu}
           onClick={() => {
             setDeleteDialogOpen(true);
+            setAnchorEl(null)
           }}
           sx={{ ":hover": { color: "#F44545" } }}
         >
