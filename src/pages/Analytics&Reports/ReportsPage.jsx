@@ -20,7 +20,7 @@ const ReportsPage = () => {
   return (
     <Box>
       {/* first box */}
-      <Box className="flex flex-col md:grid grid-cols-12 gap-7 p-2 font-roboto m-2">
+      <Box className="flex flex-col md:grid grid-cols-12 gap-3 md:gap-4 p-2 font-roboto m-2">
         {/* right One */}
         <Box className="col-span-12 md:col-span-4 bg-[#2D454D] rounded shadow-md shadow-slate-600 p-4 py-10 flex flex-col justify-between items-center">
           <Typography fontWeight="bold">Total Payments</Typography>
@@ -62,7 +62,7 @@ const ReportsPage = () => {
         </Box>
 
         {/* second row Box */}
-        <Box className="col-span-12 md:col-span-8 flex flex-col gap-7">
+        <Box className="col-span-12 md:col-span-8 flex flex-col gap-3 md:gap-4">
           {/* Revenue Box */}
           <Box className="flex flex-row justify-between items-center shadow-md shadow-slate-600 bg-[#2D454D] rounded p-4 col-span-8">
             <Box className="flex flex-col">
@@ -90,7 +90,7 @@ const ReportsPage = () => {
           </Box>
 
           {/* other 3 */}
-          <Box className="flex flex-row gap-7">
+          <Box className="flex flex-col md:flex-row gap-3 md:gap-4 text-center">
             {/* 1 */}
             <Box className="flex-1 shadow-md shadow-slate-600 bg-[#2D454D] rounded flex-col flex items-center justify-center py-5">
               <LocalGroceryStoreIcon
@@ -162,18 +162,17 @@ const ReportsPage = () => {
               className="bg-[#2D454D] rounded shadow-md shadow-slate-600 p-4 py-5 flex mb-5"
             >
               <Box className="flex flex-row">
-                <Box className="flex flex-row items-start gap-5 w-fit">
+                <Box className="flex flex-col md:flex-row items-start gap-5 w-fit">
                   <Box className="flex-shrink-0">
                     <img
                       src={property.image}
-                      alt=""
-                      width="150"
-                      className="rounded-md object-cover"
+                      alt={property.title}
+                      className="rounded-md object-cover md:w-36"
                     />
                   </Box>
 
                   {/* Text and buttons */}
-                  <Box className="flex flex-col justify-between max-w-[300px]">
+                  <Box className="flex flex-col justify-between max-w-[250px] md:max-w-[300px]">
                     <Typography fontWeight="bold" className="text-white">
                       {property.title}
                     </Typography>
@@ -184,6 +183,7 @@ const ReportsPage = () => {
                         whiteSpace: "nowrap",
                         overflow: "hidden",
                         textOverflow: "ellipsis",
+                        width: "250px"
                       }}
                     >
                       {property.description}
@@ -229,8 +229,8 @@ const ReportsPage = () => {
           {/* 4 below grids */}
           <Box className="flex flex-col gap-3 p-5 -mt-16">
             {/* 1 with two */}
-            <Box className="flex flex-row gap-3">
-              <Box className="flex-1 shadow-md shadow-slate-600 bg-[#2D454D] rounded-lg flex-col flex justify-between p-4 border border-gray-400">
+            <Box className="flex flex-col md:flex-row gap-3">
+              <Box className="flex-1 shadow-md shadow-slate-600 bg-[#2D454D] rounded-lg flex-col flex justify-between p-4 border border-gray-400 gap-3">
                 <Box
                   display="flex"
                   flexDirection="column"
@@ -263,7 +263,7 @@ const ReportsPage = () => {
                   </Typography>
                 </Box>
 
-                <Box display="flex" flexDirection="column" gap="5px">
+                <Box display="flex" flexDirection="column">
                   <Box
                     display="flex"
                     flexDirection="row"
@@ -352,8 +352,8 @@ const ReportsPage = () => {
             </Box>
 
             {/* 2 with two */}
-            <Box className="flex flex-row gap-3">
-              <Box className="flex-1 shadow-md shadow-slate-600 bg-[#2D454D] rounded-lg flex-col flex justify-between p-4 border border-gray-400">
+            <Box className="flex flex-col md:flex-row gap-3">
+              <Box className="flex-1 shadow-md shadow-slate-600 bg-[#2D454D] rounded-lg flex-col flex justify-between p-4 border border-gray-400 gap-3">
                 <Box
                   display="flex"
                   flexDirection="column"
@@ -475,8 +475,8 @@ const ReportsPage = () => {
             </Box>
 
             {/* 3 with two */}
-            <Box className="flex flex-row gap-3">
-              <Box className="flex-1 shadow-md shadow-slate-600 bg-[#2D454D] rounded-lg flex-col flex justify-between p-4 border border-gray-400">
+            <Box className="flex flex-col md:flex-row gap-3">
+              <Box className="flex-1 shadow-md shadow-slate-600 bg-[#2D454D] rounded-lg flex-col flex justify-between p-4 border border-gray-400 gap-3">
                 <Box
                   display="flex"
                   flexDirection="column"
