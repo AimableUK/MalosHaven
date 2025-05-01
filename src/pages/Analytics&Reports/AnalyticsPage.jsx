@@ -8,6 +8,7 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import LineChart from "../../components/DataCharts/LineChart";
 import SMPieChart from "../../components/DataCharts/SMPieChart";
 import FooterPage from "../Footer/FooterPage";
+import { useMediaQuery } from "@mui/material";
 
 const AnalyticsPage = () => {
   const [value, setValue] = useState("monthly");
@@ -16,12 +17,17 @@ const AnalyticsPage = () => {
     setValue(event.target.value);
   };
 
+  const isTablet = useMediaQuery("(max-width:768px)");
+
   return (
     <Box>
       {/* first extended row */}
       <Box className="flex flex-col md:grid grid-cols-12 gap-[10px] p-[10px] font-roboto">
         {/* boxes */}
-        <Box sx={{ gridColumn: "span 6" }} className="flex flex-col md:grid h-full">
+        <Box
+          sx={{ gridColumn: "span 6" }}
+          className="flex flex-col md:grid h-full"
+        >
           {/* first 2 boxes */}
           <Box sx={{ gridColumn: "span 3" }} display="flex" flexDirection="row">
             <Box
@@ -224,7 +230,7 @@ const AnalyticsPage = () => {
       </Box>
 
       {/* second extended row */}
-      <Box className="flex flex-col md:grid grid-cols-12 gap-[20px] p-[10px] font-roboto mx-2">
+      <Box className={!isTablet && "flex flex-col md:grid grid-cols-12 gap-[20px] p-[10px] font-roboto mx-2"}>
         {/* line chart */}
         <Box
           sx={{
@@ -235,6 +241,8 @@ const AnalyticsPage = () => {
             p: 2,
             background: "#2D454D",
             overflow: "hidden",
+            m:1,
+            mx:2
           }}
           className="shadow-md shadow-slate-600 h-full"
         >
@@ -285,6 +293,8 @@ const AnalyticsPage = () => {
             p: 2,
             background: "#2D454D",
             overflow: "hidden",
+            m:1,
+            mx: 2
           }}
           className="shadow-md shadow-slate-600 h-full"
         >
