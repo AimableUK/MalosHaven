@@ -9,7 +9,7 @@ import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import FlareIcon from "@mui/icons-material/Flare";
 import PreviewIcon from "@mui/icons-material/Preview";
 import FooterPage from "../Footer/FooterPage";
-import SMLineChart from "../../components/SMLineChart";
+import SMLineChart from "../../components/DataCharts/SMLineChart";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import EditIcon from "@mui/icons-material/Edit";
 import MyProperties from "../../components/Properties";
@@ -156,7 +156,7 @@ const ReportsPage = () => {
               </Button>
             </Link>
           </Box>
-          {properties.slice(0, 4).map((property) => (
+          {properties.slice(0, 5).map((property) => (
             <Box
               key={property.id}
               className="bg-[#2D454D] rounded shadow-md shadow-slate-600 p-4 py-5 flex mb-5"
@@ -529,8 +529,8 @@ const ReportsPage = () => {
                     </Typography>
                   </Box>
 
-                  <Box class="w-full bg-gray-300 rounded-full">
-                    <Box class="w-[75%] h-2 bg-red-400 bg-primaryBorder rounded-full"></Box>
+                  <Box className="w-full bg-gray-300 rounded-full">
+                    <Box className="w-[75%] h-2 bg-red-400 bg-primaryBorder rounded-full"></Box>
                   </Box>
                 </Box>
               </Box>
@@ -590,8 +590,8 @@ const ReportsPage = () => {
                     </Typography>
                   </Box>
 
-                  <Box class="w-full bg-gray-300 rounded-full">
-                    <Box class="w-[75%] h-2 bg-red-400 bg-primaryBorder rounded-full"></Box>
+                  <Box className="w-full bg-gray-300 rounded-full">
+                    <Box className="w-[75%] h-2 bg-red-400 bg-primaryBorder rounded-full"></Box>
                   </Box>
                 </Box>
               </Box>

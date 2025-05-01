@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { Box, Button, Typography } from "@mui/material";
 import MovingTwoToneIcon from "@mui/icons-material/MovingTwoTone";
-import PieChart from "../../components/PieChart";
+import PieChart from "../../components/DataCharts/PieChart";
 import TrendingDownRoundedIcon from "@mui/icons-material/TrendingDownRounded";
 import { Select, MenuItem, FormControl, InputLabel } from "@mui/material";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import LineChart from "../../components/LineChart";
-import SMPieChart from "../../components/SMPieChart";
+import LineChart from "../../components/DataCharts/LineChart";
+import SMPieChart from "../../components/DataCharts/SMPieChart";
 import FooterPage from "../Footer/FooterPage";
 
 const AnalyticsPage = () => {

@@ -9,6 +9,7 @@ import AddIcon from "@mui/icons-material/Add";
 import DataPropertyFormModal from "../../components/DataPropertyForm";
 import MyProperties from "../../components/Properties";
 import FooterPage from "../Footer/FooterPage";
+import { useMediaQuery } from "@mui/material";
 
 const PropertiesPage = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -19,14 +20,12 @@ const PropertiesPage = () => {
     setOpenModal(false);
   };
 
+  const isSmallScreen = useMediaQuery("(max-width:1024px)");
+
   return (
     <Box m="10px" className="font-roboto" padding="10px">
       <Box
-        display="flex"
-        flexDirection="row"
-        justifyContent="space-between"
-        alignItems="center"
-        my="5px"
+        className="flex flex-col md:flex-row justify-between items-center my-1"
       >
         <Typography fontWeight="bold">PROPERTIES</Typography>
         <Button
@@ -34,6 +33,7 @@ const PropertiesPage = () => {
           variant="contained"
           color="info"
           onClick={() => setOpenModal(true)}
+          sx={{whiteSpace: "nowrap"}}
         >
           ADD PROPERTY
         </Button>
@@ -45,7 +45,7 @@ const PropertiesPage = () => {
         onAddProperty={handleAddProp}
       />
 
-      <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" gap="10px">
+      <Box className="flex flex-col md:grid grid-cols-12 gap-[10px] p-[10px] font-roboto">
         {properties.map((property) => (
           <Box
             key={property.id}
@@ -72,33 +72,31 @@ const PropertiesPage = () => {
                 display="flex"
                 flexDirection="row"
                 justifyContent="center"
-                gap="10px"
+                gap="5px"
                 zIndex="0"
                 mt="-40px"
               >
                 <Link to={`/propertydetails/${property.id}`} key={property.id}>
                   <Button
-                    variant="contained"
-                    startIcon={<VisibilityIcon />}
-                    color="info"
-                  >
-                    View
+                  variant={isSmallScreen ? "text" : "contained"}
+                  color="info"
+                  startIcon={<VisibilityIcon />}
+                  >{!isSmallScreen && "Edit" }
                   </Button>
                 </Link>
 
                 <Button
-                  variant="contained"
+                  variant={isSmallScreen ? "text" : "contained"}
                   startIcon={<EditIcon />}
                   color="success"
-                >
-                  Edit
+                >{!isSmallScreen && "Edit" }
                 </Button>
                 <Button
-                  variant="contained"
+                  variant={isSmallScreen ? "text" : "contained"}
                   startIcon={<DeleteIcon />}
-                  color="error"
+                  color= "error"
                 >
-                  Delete
+                  {!isSmallScreen && "Delete" }
                 </Button>
               </Box>
             </Box>
@@ -129,7 +127,7 @@ const PropertiesPage = () => {
             >
               <Typography fontWeight="bold">
                 {property.units.filter((unit) => unit.tenant == null).length}
-                Units
+                &nbsp;Units
               </Typography>
               <Typography textAlign="center">
                 <PlaceIcon />

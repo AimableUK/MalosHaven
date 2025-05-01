@@ -1,5 +1,5 @@
 import React from "react";
-import SMLineChartData from "../Data/SMLineChartData";
+import SMLineChartData from "../../Data/ChartsJS/SMLineChartData";
 import { ResponsiveLine } from "@nivo/line";
 
 const SMLineChart = () => {

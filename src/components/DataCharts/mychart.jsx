@@ -1,18 +1,17 @@
-import { ResponsiveTimeRange } from '@nivo/calendar'; // Make sure this is correct, since you're using @nivo/calendar, not @nivo/time-range
-import timedata from "../components/data"; // Your data file
+import { ResponsiveTimeRange } from '@nivo/calendar';
+import timedata from "../../Data/ChartsJS/data";
 
-// Convert the timedata to the correct format for ResponsiveTimeRange
 const formattedData = timedata.map(item => ({
-  day: item.day, // Make sure the day is in 'YYYY-MM-DD' format
-  value: item.value, // Value representing the metric for that day
+  day: item.day,
+  value: item.value,
 }));
 
 const MyResponsiveTimeRange = () => (
   <div style={{ height: '500px' }}>
     <ResponsiveTimeRange
-      data={formattedData} // Pass the formatted data
-      from="2018-04-01" // Start date
-      to="2018-08-12" // End date
+      data={formattedData}
+      from="2018-04-01"
+      to="2018-08-12"
       emptyColor="#eeeeee"
       colors={['#61cdbb', '#97e3d5', '#e8c1a0', '#f47560']}
       margin={{ top: 40, right: 40, bottom: 100, left: 40 }}

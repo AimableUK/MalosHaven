@@ -25,7 +25,7 @@ import SettingsPage from "./pages/Settings&Permissions/SettingsPage";
 import PermissionsPage from "./pages/Settings&Permissions/PermissionsPage";
 import PropertyDetails from "./pages/PropertyManagement/PropertyDetails";
 
-import MonthlyTimeRange from "./components/mychart";
+import MonthlyTimeRange from "./components/DataCharts/mychart";
 
 const AppRoutes = () => {
   return (

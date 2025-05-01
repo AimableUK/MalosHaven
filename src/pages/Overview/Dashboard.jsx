@@ -1,7 +1,7 @@
 import { Box, Button, Typography } from "@mui/material";
 import React from "react";
-import PieChart from "../../components/PieChart.jsx";
-import LineChart from "../../components/LineChart.jsx";
+import PieChart from "../../components/DataCharts/PieChart.jsx";
+import LineChart from "../../components/DataCharts/LineChart.jsx";
 import WeekendIcon from "@mui/icons-material/Weekend";
 import BarChartIcon from "@mui/icons-material/BarChart";
 import StoreIcon from "@mui/icons-material/Store";
@@ -13,17 +13,15 @@ import MyProperties from "../../components/Properties.js";
 import FooterPage from "../Footer/FooterPage.jsx";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { Link } from "react-router-dom";
+import { useMediaQuery } from "@mui/material";
 
 const Dashboard = () => {
+  const isSmallScreen = useMediaQuery("(max-width:1024px)");
+
   return (
     <Box display="flex" flexDirection="column">
       {/* Top Grid - 3 Cards */}
-      <Box
-        display="grid"
-        gridTemplateColumns="repeat(12, 1fr)"
-        gap="10px"
-        className="font-roboto"
-        padding="10px"
+      <Box className="flex flex-col md:grid grid-cols-12 gap-[10px] p-[10px] font-roboto"
       >
         {[1, 2, 3].map((_, index) => (
           <Box
@@ -59,12 +57,7 @@ const Dashboard = () => {
 
       {/* Second Grid - Pie + Line Chart */}
       <Box
-        display="grid"
-        gridTemplateColumns="repeat(12, 1fr)"
-        gap="10px"
-        className="font-roboto"
-        padding="10px"
-        height="100%"
+        className="flex flex-col md:grid grid-cols-12 gap-[10px] p-[10px] font-roboto"
       >
         <Box
           sx={{
@@ -107,12 +100,7 @@ const Dashboard = () => {
 
       {/* Third Grid - Bookings */}
       <Box
-        display="grid"
-        gridTemplateColumns="repeat(12, 1fr)"
-        gap="10px"
-        className="font-roboto"
-        padding="10px"
-        marginY="10px"
+        className="flex flex-col md:grid grid-cols-12 gap-[10px] p-[10px] font-roboto my-2"
       >
         <Box
           sx={{
@@ -292,13 +280,7 @@ const Dashboard = () => {
       </Box>
 
       {/* Fouth Grid */}
-      <Box
-        display="grid"
-        gridTemplateColumns="repeat(12, 1fr)"
-        gap="10px"
-        className="font-roboto"
-        padding="10px"
-      >
+      <Box className="flex flex-col md:grid grid-cols-12 gap-[10px] p-[10px] font-roboto">
         {MyProperties.slice(0, 3).map((property) => (
           <Box
             key={property.id}
@@ -331,27 +313,25 @@ const Dashboard = () => {
               >
                 <Link to={`/propertydetails/${property.id}`} key={property.id}>
                   <Button
-                    variant="contained"
-                    startIcon={<VisibilityIcon />}
-                    color="info"
-                  >
-                    View
+                  variant={isSmallScreen ? "text" : "contained"}
+                  color="info"
+                  startIcon={<VisibilityIcon />}
+                  >{!isSmallScreen && "Edit" }
                   </Button>
                 </Link>
 
                 <Button
-                  variant="contained"
+                  variant={isSmallScreen ? "text" : "contained"}
                   startIcon={<EditIcon />}
                   color="success"
-                >
-                  Edit
+                >{!isSmallScreen && "Edit" }
                 </Button>
                 <Button
-                  variant="contained"
+                  variant={isSmallScreen ? "text" : "contained"}
                   startIcon={<DeleteIcon />}
-                  color="error"
+                  color= "error"
                 >
-                  Delete
+                  {!isSmallScreen && "Delete" }
                 </Button>
               </Box>
             </Box>
@@ -381,7 +361,8 @@ const Dashboard = () => {
               justifyContent="space-between"
             >
               <Typography fontWeight="bold">
-              {property.units.filter((unit) => unit.tenant == null).length} Units
+                {property.units.filter((unit) => unit.tenant == null).length}{" "}
+                Units
               </Typography>
               <Typography textAlign="center">
                 <PlaceIcon />
@@ -391,7 +372,13 @@ const Dashboard = () => {
           </Box>
         ))}
         <Link to="/properties">
-          <Button variant="contained" sx={{ whiteSpace: "nowrap" }} color="success">VIEW MORE</Button>
+          <Button
+            variant="contained"
+            sx={{ whiteSpace: "nowrap" }}
+            color="success"
+          >
+            VIEW MORE
+          </Button>
         </Link>
       </Box>
 
