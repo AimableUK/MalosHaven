@@ -37,15 +37,15 @@ const TenantsPage = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [selectedTenantId, setSelectedTenantId] = useState(null);
-  const [deleteType, setDeleteType] = useState("tenant")
+  const [deleteType, setDeleteType] = useState("tenant");
 
   const deleteTenant =
-  "Are you sure you want to Delete this Tenant? If you do so, it will be undone";
+    "Are you sure you want to Delete this Tenant? If you do so, it will be undone";
 
   const handleUpdateClick = (tenant) => {
-    setSelectedTenantId(tenant)
-    setUpdateTenantOpenModal(true)
-  }
+    setSelectedTenantId(tenant);
+    setUpdateTenantOpenModal(true);
+  };
 
   const handleActionsClick = (event, tenantId) => {
     setAnchorEl(event.currentTarget);
@@ -57,13 +57,11 @@ const TenantsPage = () => {
   };
 
   const handleDeleteTenant = () => {
-
     setTenants((prevTenants) =>
       prevTenants.filter((tenant) => tenant.tenant_id !== selectedTenantId)
     );
     setDeleteDialogOpen(false);
   };
-
 
   useEffect(() => {
     const allTenants = properties.flatMap((property) =>
@@ -114,12 +112,12 @@ const TenantsPage = () => {
   const handleUpdateTenant = (updatedTenant) => {
     // Update properties
     setProperties((prev) =>
-      prev.map(property => {
+      prev.map((property) => {
         if (property.title !== updatedTenant.property) return property;
-  
+
         return {
           ...property,
-          units: property.units.map(unit => {
+          units: property.units.map((unit) => {
             if (unit.UnitNumber === updatedTenant.unit) {
               return { ...unit, tenant: updatedTenant };
             }
@@ -128,18 +126,14 @@ const TenantsPage = () => {
         };
       })
     );
-  
+
     // Update tenants
     setTenants((prev) =>
-      prev.map(tenant => 
+      prev.map((tenant) =>
         tenant.tenant_id === updatedTenant.tenant_id ? updatedTenant : tenant
       )
     );
   };
-  
-  
-  
-
 
   return (
     <Box m="20px" display="flex" flexDirection="column">
@@ -222,7 +216,11 @@ const TenantsPage = () => {
                 <IconButton onClick={() => handleUpdateClick(tenantDetails)}>
                   <EditIcon sx={{ color: "white" }} />
                 </IconButton>
-                <IconButton onClick={(event) => handleActionsClick(event, tenantDetails.tenant_id)}>
+                <IconButton
+                  onClick={(event) =>
+                    handleActionsClick(event, tenantDetails.tenant_id)
+                  }
+                >
                   <MoreHorizIcon sx={{ color: "white" }} />
                 </IconButton>
               </Box>
@@ -241,8 +239,7 @@ const TenantsPage = () => {
                   sx={{
                     fontWeight: "bold",
                     fontSize: "20px",
-                    m: 1,
-                    whiteSpace: "nowrap",
+                    m: 1
                   }}
                 >
                   {tenantDetails.name}
@@ -409,7 +406,7 @@ const TenantsPage = () => {
           onClose={handleCloseMenu}
           onClick={() => {
             setDeleteDialogOpen(true);
-            setAnchorEl(null)
+            setAnchorEl(null);
           }}
           sx={{ ":hover": { color: "#F44545" } }}
         >
@@ -427,7 +424,6 @@ const TenantsPage = () => {
         deleteTenant={deleteTenant}
         deleteType="tenant"
       />
-      
     </Box>
   );
 };

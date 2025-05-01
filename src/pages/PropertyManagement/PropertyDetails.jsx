@@ -11,6 +11,8 @@ import { useParams } from "react-router-dom";
 import properties from "../../components/Properties";
 import FooterPage from "../Footer/FooterPage";
 import AddIcon from "@mui/icons-material/Add";
+import PlaceIcon from "@mui/icons-material/Place";
+
 
 
 const PropertyDetails = () => {
@@ -192,7 +194,6 @@ const PropertyDetails = () => {
   return (
     <Box>
       <Box
-        m="50px"
         sx={{
           display: "flex",
           flexDirection: "column",
@@ -200,37 +201,26 @@ const PropertyDetails = () => {
           borderRadius: "8px",
           p: 2,
         }}
+        className="m-5 md:m-12"
       >
         {/* Property Header */}
-        <Box
-          display="flex"
-          flexDirection="row"
-          justifyContent="space-between"
-          alignItems="center"
+        <Box className="flex flex-col md:flex-row justify-between md:items-center"
         >
-          <Box display="flex" flexDirection="row" alignItems="center" gap="5px">
+          <Box className="flex flex-col md:flex-row items-center gap-1">
             <Box>
               <img
                 src={property.image}
                 alt="lodge"
-                width="210px"
-                className="shadow-md shadow-slate-600 rounded-md -mt-12"
+                className="shadow-md shadow-slate-600 rounded-md md:-mt-12 w-fit md:w-52"
               />
             </Box>
-            <Box>
+            <Box textAlign="center">
               <Typography fontWeight="bold">{property.title}</Typography>
-              <Typography>{property.location}</Typography>
+              <Typography><PlaceIcon />{property.location}</Typography>
             </Box>
           </Box>
 
-          <Box
-            display="flex"
-            flexDirection="row"
-            justifyContent="center"
-            gap="10px"
-            zIndex="0"
-            mt="-40px"
-          >
+          <Box className="flex flex-row justify-center gap-[10px] mt-1 md:mt-10 z-0">
             <Button
               sx={{ height: "fit-content" }}
               variant="contained"
@@ -271,17 +261,11 @@ const PropertyDetails = () => {
             <Typography>{property.units.filter((unit) => unit.tenant == null).length} Units</Typography>
           </Box>
 
-          <Box
-            mt="20px"
-            display="flex"
-            flexDirection="row"
-            alignItems="center"
-            justifyContent="space-between"
-          >
+          <Box className="flex flex-col md:flex-row items-center justify-between mt-5">
             <Typography fontSize="20px" fontWeight="bold">
               AVAILABLE UNITS
             </Typography>
-            <Button variant="contained" color="info" onClick={() => setOpenModal(true)}>
+            <Button sx={{ whiteSpace: "nowrap" }} variant="contained" color="info" onClick={() => setOpenModal(true)}>
               <AddIcon />Add Unit
             </Button>
           </Box>
