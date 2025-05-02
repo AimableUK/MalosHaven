@@ -22,9 +22,9 @@ const ReportsPage = () => {
   const isTablet = useMediaQuery("(max-width:768px)");
 
   return (
-    <Box className="custom-grid">
+    <Box>
       {/* first box */}
-      <Box className="flex flex-col md:grid grid-cols-12 gap-3 md:gap-4 p-2 font-roboto m-2">
+      <Box className={`${isTablet && "flex-col"} flex flex-col md:grid grid-cols-12 gap-3 md:gap-4 p-2 font-roboto m-2`}>
         {/* right One */}
         <Box className="col-span-12 md:col-span-4 bg-[#2D454D] rounded shadow-md shadow-slate-600 p-4 py-10 flex flex-col justify-between items-center">
           <Typography fontWeight="bold">Total Payments</Typography>
@@ -94,7 +94,7 @@ const ReportsPage = () => {
           </Box>
 
           {/* other 3 */}
-          <Box className="flex flex-col md:flex-row gap-3 md:gap-4 text-center">
+          <Box className="flex flex-col md:flex-row gap-3 md:gap-4 text-center h-full">
             {/* 1 */}
             <Box className="flex-1 shadow-md shadow-slate-600 bg-[#2D454D] rounded flex-col flex items-center justify-center py-5">
               <LocalGroceryStoreIcon
