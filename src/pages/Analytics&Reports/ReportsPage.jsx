@@ -14,11 +14,15 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import EditIcon from "@mui/icons-material/Edit";
 import MyProperties from "../../components/Properties";
 import { Link } from "react-router-dom";
+import { useMediaQuery } from "@mui/material";
 
 const ReportsPage = () => {
   const [properties, setProperties] = useState(MyProperties);
+
+  const isTablet = useMediaQuery("(max-width:768px)");
+
   return (
-    <Box>
+    <Box className="custom-grid">
       {/* first box */}
       <Box className="flex flex-col md:grid grid-cols-12 gap-3 md:gap-4 p-2 font-roboto m-2">
         {/* right One */}
@@ -138,86 +142,11 @@ const ReportsPage = () => {
           </Box>
         </Box>
       </Box>
+
       {/* second box */}
-      <Box className="flex flex-col md:grid grid-cols-12 gap-7 p-2 font-roboto m-2">
-        {/* properties */}
-        <Box className="col-span-12 md:col-span-7">
-          <Box className="flex flex-row justify-between items-center bg-[#2D454D] rounded shadow-md shadow-slate-600 p-2 px-3 mb-5">
-            <Typography fontWeight="bold" className="text-white mb-5">
-              Properties List
-            </Typography>
-            <Link to="/properties">
-              <Button
-                variant="contained"
-                sx={{ whiteSpace: "nowrap" }}
-                color="info"
-              >
-                VIEW ALL
-              </Button>
-            </Link>
-          </Box>
-          {properties.slice(0, 5).map((property) => (
-            <Box
-              key={property.id}
-              className="bg-[#2D454D] rounded shadow-md shadow-slate-600 p-4 py-5 flex mb-5"
-            >
-              <Box className="flex flex-row">
-                <Box className="flex flex-col md:flex-row items-start gap-5 w-fit">
-                  <Box className="flex-shrink-0">
-                    <img
-                      src={property.image}
-                      alt={property.title}
-                      className="rounded-md object-cover md:w-36"
-                    />
-                  </Box>
-
-                  {/* Text and buttons */}
-                  <Box className="flex flex-col justify-between max-w-[250px] md:max-w-[300px]">
-                    <Typography fontWeight="bold" className="text-white">
-                      {property.title}
-                    </Typography>
-                    <Typography
-                      component="p"
-                      className="text-white"
-                      sx={{
-                        whiteSpace: "nowrap",
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                        width: "250px"
-                      }}
-                    >
-                      {property.description}
-                    </Typography>
-                    <Box display="flex" flexDirection="row" gap="5px">
-                      <Link
-                        to={`/propertydetails/${property.id}`}
-                        key={property.id}
-                      >
-                        <Button
-                          variant="contained"
-                          startIcon={<VisibilityIcon />}
-                          color="info"
-                        >
-                          View
-                        </Button>
-                      </Link>
-                      <Button
-                        variant="contained"
-                        startIcon={<EditIcon />}
-                        color="success"
-                      >
-                        Edit
-                      </Button>
-                    </Box>
-                  </Box>
-                </Box>
-              </Box>
-            </Box>
-          ))}
-        </Box>
-
+      <Box className="flex flex-col md:grid grid-cols-1 p-2 font-roboto m-2">
         {/* meta data */}
-        <Box className="col-span-12 md:col-span-5 bg-[#2D454D] rounded shadow-md shadow-slate-600">
+        <Box className="bg-[#2D454D] rounded shadow-md shadow-slate-600">
           {/* smlinechart */}
           <Box className="bg-[#6950e8] p-3 rounded">
             <Typography fontWeight="bold">Last Shipment</Typography>
