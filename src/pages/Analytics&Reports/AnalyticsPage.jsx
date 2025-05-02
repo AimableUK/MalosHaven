@@ -20,9 +20,9 @@ const AnalyticsPage = () => {
   const isTablet = useMediaQuery("(max-width:768px)");
 
   return (
-    <Box>
+    <Box m="20px">
       {/* first extended row */}
-      <Box className="flex flex-col md:grid grid-cols-12 gap-[10px] p-[10px] font-roboto">
+      <Box className="flex flex-col md:grid grid-cols-12 gap-[2px] font-roboto">
         {/* boxes */}
         <Box
           sx={{ gridColumn: "span 6" }}
@@ -38,7 +38,7 @@ const AnalyticsPage = () => {
                 borderRadius: "8px",
                 p: "16px",
                 background: "#2D454D",
-                margin: "8px",
+                margin: "5px",
                 overflow: "hidden",
               }}
             >
@@ -64,7 +64,7 @@ const AnalyticsPage = () => {
                 borderRadius: "8px",
                 p: "16px",
                 background: "#2D454D",
-                margin: "8px",
+                margin: "5px",
                 overflow: "hidden",
               }}
             >
@@ -96,7 +96,7 @@ const AnalyticsPage = () => {
                 borderRadius: "8px",
                 p: "16px",
                 background: "#2D454D",
-                margin: "8px",
+                m: "5px",
               }}
             >
               <Typography fontSize="14px" color="#BDBDBD">
@@ -123,7 +123,7 @@ const AnalyticsPage = () => {
                 p: "16px",
                 background: "#2D454D",
                 width: "100%",
-                margin: "8px",
+                margin: "5px",
               }}
             >
               <Typography fontSize="14px" color="#BDBDBD">
@@ -154,7 +154,8 @@ const AnalyticsPage = () => {
                 borderRadius: "8px",
                 p: "16px",
                 background: "#2D454D",
-                mx: "8px",
+                m: "5px",
+                ml: "8px",
                 mt: "5px",
               }}
             >
@@ -187,6 +188,7 @@ const AnalyticsPage = () => {
             background: "#2D454D",
             overflow: "hidden",
             my: "7px",
+            ml: 1
           }}
           className="shadow-md shadow-slate-600 h-full"
         >
@@ -230,19 +232,17 @@ const AnalyticsPage = () => {
       </Box>
 
       {/* second extended row */}
-      <Box className={!isTablet && "flex flex-col md:grid grid-cols-12 gap-[20px] p-[10px] font-roboto mx-2"}>
+      <Box className="flex flex-col md:grid grid-cols-12 mt-2 md:mt-5 mb-5 gap-3 ml-2 font-roboto">
         {/* line chart */}
         <Box
           sx={{
-            gridColumn: "span 8",
+            gridColumn: isTablet ? "span 12" : "span 8",
             display: "flex",
             flexDirection: "column",
             borderRadius: "8px",
             p: 2,
             background: "#2D454D",
             overflow: "hidden",
-            m:1,
-            mx:2
           }}
           className="shadow-md shadow-slate-600 h-full"
         >
@@ -286,15 +286,13 @@ const AnalyticsPage = () => {
         {/* small pie chart */}
         <Box
           sx={{
-            gridColumn: "span 4",
+            gridColumn: isTablet ? "span 12" : "span 4",
             display: "flex",
             flexDirection: "column",
             borderRadius: "8px",
             p: 2,
             background: "#2D454D",
             overflow: "hidden",
-            m:1,
-            mx: 2
           }}
           className="shadow-md shadow-slate-600 h-full"
         >
