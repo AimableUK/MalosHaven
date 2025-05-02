@@ -1,10 +1,4 @@
-import {
-  Avatar,
-  Box,
-  Button,
-  Tooltip,
-  Typography,
-} from "@mui/material";
+import { Avatar, Box, Button, Tooltip, Typography } from "@mui/material";
 import React, { useState } from "react";
 import profileCover from "../../assets/profileCover.jpg";
 import userAvatar from "../../assets/userAvatar.jpg";
@@ -19,6 +13,7 @@ import PlaceIcon from "@mui/icons-material/Place";
 import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import FooterPage from "../Footer/FooterPage";
+import { useMediaQuery } from "@mui/material";
 
 const Profile = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -28,9 +23,10 @@ const Profile = () => {
     setProperties((prev) => [...prev, newProp]);
     setOpenModal(false);
   };
+  const isSmallScreen = useMediaQuery("(max-width:768px)");
 
   return (
-    <Box m="20px">
+    <Box className={`${isSmallScreen ? "m-[10px]" : "m-5"}`}>
       <Box zIndex="0">
         <img
           src={profileCover}
@@ -41,7 +37,7 @@ const Profile = () => {
 
       {/* all content */}
       <Box
-        mx="15px"
+        // mx= {isSmallScreen ?"15px" : "5px" }
         sx={{
           background: "#2D454D",
           p: 2,
@@ -50,6 +46,7 @@ const Profile = () => {
           position: "relative",
           zIndex: 1,
         }}
+        className={`${isSmallScreen ? "m-[2px]" :"m-3"}`}
       >
         {/* prof-top */}
         <Box className="flex flex-col md:flex-row items-center justify-between">
@@ -126,13 +123,7 @@ const Profile = () => {
         </Box>
 
         <Box className="font-roboto" padding="10px">
-          <Box
-            display="flex"
-            flexDirection="row"
-            justifyContent="space-between"
-            alignItems="center"
-            my="5px"
-          >
+          <Box className="flex flex-col md:flex-row justify-between my-1 items-center">
             <Typography fontWeight="bold">PROPERTIES</Typography>
             <Button
               startIcon={<AddIcon />}
@@ -150,7 +141,7 @@ const Profile = () => {
             onAddProperty={handleAddProp}
           />
 
-          <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" gap="10px">
+          <Box className="flex flex-col md:grid grid-cols-12 gap-2">
             {properties.slice(0, 3).map((property) => (
               <Box
                 key={property.id}
@@ -176,8 +167,7 @@ const Profile = () => {
                   <Box
                     display="flex"
                     flexDirection="row"
-                    justifyContent="end"
-                    gap="10px"
+                    gap= {isSmallScreen ? "": "10px"}
                     zIndex="0"
                     mt="-40px"
                   >
@@ -185,39 +175,29 @@ const Profile = () => {
                       to={`/propertydetails/${property.id}`}
                       key={property.id}
                     >
-                      <Tooltip title="view Property">
-                        <VisibilityIcon
-                          sx={{
-                            color: "white",
-                            "&:hover": {
-                              color: "green",
-                            },
-                          }}
-                        />
-                      </Tooltip>
+                      <Button
+                        variant={isSmallScreen ? "text" : "contained"}
+                        color="info"
+                        startIcon={<VisibilityIcon />}
+                      >
+                        {!isSmallScreen && "Edit"}
+                      </Button>
                     </Link>
 
-                    <Tooltip title="edit Property">
-                      <EditIcon
-                        sx={{
-                          color: "white",
-                          "&:hover": {
-                            color: "blueviolet",
-                          },
-                        }}
-                      />
-                    </Tooltip>
-
-                    <Tooltip title="Delete Property">
-                      <DeleteIcon
-                        sx={{
-                          color: "white",
-                          "&:hover": {
-                            color: "red",
-                          },
-                        }}
-                      />
-                    </Tooltip>
+                    <Button
+                      variant={isSmallScreen ? "text" : "contained"}
+                      startIcon={<EditIcon />}
+                      color="success"
+                    >
+                      {!isSmallScreen && "Edit"}
+                    </Button>
+                    <Button
+                      variant={isSmallScreen ? "text" : "contained"}
+                      startIcon={<DeleteIcon />}
+                      color="error"
+                    >
+                      {!isSmallScreen && "Delete"}
+                    </Button>
                   </Box>
                 </Box>
                 <Box>
@@ -225,7 +205,12 @@ const Profile = () => {
                     to={`/propertydetails/${property.id}`}
                     key={property.id}
                   >
-                    <Typography fontWeight="bold" textAlign="center" my="15px" mt="25px">
+                    <Typography
+                      fontWeight="bold"
+                      textAlign="center"
+                      my="15px"
+                      mt="25px"
+                    >
                       {property.title}
                     </Typography>
                   </Link>

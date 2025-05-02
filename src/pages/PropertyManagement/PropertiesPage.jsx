@@ -19,11 +19,11 @@ const PropertiesPage = () => {
     setProperties((prev) => [...prev, newProp]);
     setOpenModal(false);
   };
-
-  const isSmallScreen = useMediaQuery("(max-width:1024px)");
+  const isSmallScreen = useMediaQuery("(max-width:768px)")
+  const isTablet = useMediaQuery("(max-width:1024px)");
 
   return (
-    <Box m="10px" className="font-roboto" padding="10px">
+    <Box className={`${isSmallScreen ? "" : "m-[10px]"}`} padding="10px">
       <Box
         className="flex flex-col md:flex-row justify-between items-center my-1"
       >
@@ -72,31 +72,30 @@ const PropertiesPage = () => {
                 display="flex"
                 flexDirection="row"
                 justifyContent="center"
-                gap="5px"
                 zIndex="0"
                 mt="-40px"
               >
                 <Link to={`/propertydetails/${property.id}`} key={property.id}>
                   <Button
-                  variant={isSmallScreen ? "text" : "contained"}
+                  variant={isTablet ? "text" : "contained"}
                   color="info"
                   startIcon={<VisibilityIcon />}
-                  >{!isSmallScreen && "Edit" }
+                  >{!isTablet && "Edit" }
                   </Button>
                 </Link>
 
                 <Button
-                  variant={isSmallScreen ? "text" : "contained"}
+                  variant={isTablet ? "text" : "contained"}
                   startIcon={<EditIcon />}
                   color="success"
-                >{!isSmallScreen && "Edit" }
+                >{!isTablet && "Edit" }
                 </Button>
                 <Button
-                  variant={isSmallScreen ? "text" : "contained"}
+                  variant={isTablet ? "text" : "contained"}
                   startIcon={<DeleteIcon />}
                   color= "error"
                 >
-                  {!isSmallScreen && "Delete" }
+                  {!isTablet && "Delete" }
                 </Button>
               </Box>
             </Box>
