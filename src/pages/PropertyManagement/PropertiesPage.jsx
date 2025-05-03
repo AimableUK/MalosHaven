@@ -74,6 +74,7 @@ const PropertiesPage = () => {
                 justifyContent="center"
                 zIndex="0"
                 mt="-40px"
+                gap="5px"
               >
                 <Link to={`/propertydetails/${property.id}`} key={property.id}>
                   <Button
