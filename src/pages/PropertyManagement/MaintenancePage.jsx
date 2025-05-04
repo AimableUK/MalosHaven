@@ -18,12 +18,12 @@ import ArticleIcon from "@mui/icons-material/Article";
 import properties from "../../components/Properties";
 
 const MaintenancePage = () => {
-  const [tenantDetails, setTenantDetails] = useState(null);
+  const [expandedRequestId, setExpandedRequestId] = useState(null);
   const [maintenanceRequests, setMaintenanceRequests] = useState([]);
   const [filterView, setFilterView] = useState("all"); // "all", "pending", or "done"
 
-  const seeTenantDetails = (event) => {
-    setTenantDetails((prev) => !prev);
+  const toggleTenantDetails = (requestId) => {
+    setExpandedRequestId((prevId) => (prevId === requestId ? null : requestId));
   };
 
   useEffect(() => {
@@ -169,7 +169,7 @@ const MaintenancePage = () => {
             </Box>
           </Box>
           {/* Down One */}
-          <Box className="mx-4 mb-4 flex flex-col md:grid grid-cols-12 col-span-12 gap-5 -mt-10">
+          <Box className="mx-4 mb-4 flex flex-col lg:grid grid-cols-12 col-span-12 gap-5 -mt-10">
             {/* Boxes */}
             <Box className="col-span-7">
               {/* 1 row 2 box */}
@@ -231,11 +231,11 @@ const MaintenancePage = () => {
               </Box>
 
               <Box className="flex flex-col gap-5 mb-5 w-full bg-[#2D454D] rounded shadow-md p-5 border-t-2">
-                <Box className="flex flex-col md:flex-row justify-between">
+                <Box className="flex flex-col">
                   <Typography fontWeight="bold">
                     Mainteinance Requests
                   </Typography>
-                  <Box className="flex flex-row gap-2">
+                  <Box className="flex flex-col md:flex-row gap-2">
                     <Button
                       variant="contained"
                       color="primary"
@@ -246,7 +246,7 @@ const MaintenancePage = () => {
                     <Button
                       variant="contained"
                       color="secondary"
-                      onClick={pendingMaintenanceStatus}
+                      onClick={doneMaintenanceStatus}
                     >
                       <HourglassBottomIcon />
                       &nbsp;Pending
@@ -254,7 +254,7 @@ const MaintenancePage = () => {
                     <Button
                       variant="contained"
                       color="success"
-                      onClick={doneMaintenanceStatus}
+                      onClick={pendingMaintenanceStatus}
                     >
                       <DoneAllIcon />
                       &nbsp;Done
@@ -263,99 +263,116 @@ const MaintenancePage = () => {
                 </Box>
                 {/* maintenainces */}
                 <Box className="flex flex-col">
-                  {maintenanceRequests.length > 0 ? (
-                    maintenanceRequests.map((request) => (
-                      <Box
-                        key={request.requestId}
-                        className="flex flex-col bg-[#22363d] p-3 rounded border-l-2 mb-3"
-                      >
-                        <Box className="flex flex-row justify-between">
-                          <Box className="flex flex-row items-center gap-1">
-                            <Avatar
-                              src={request.tenantImage}
-                              alt="user profile pic"
-                            />
-                            <Typography fontWeight="bold">
-                              {request.tenantName}
-                            </Typography>
-                            <Tooltip
-                              title="See Tenant Details"
-                              onClick={seeTenantDetails}
-                            >
-                              <IconButton
-                                sx={{
-                                  "& .MuiSvgIcon-root": {
-                                    color: "#FFFFFF",
-                                  },
-                                }}
+                  {maintenanceRequests.length > 0
+                    ? maintenanceRequests.map((request) => (
+                        <Box
+                          key={request.requestId}
+                          className="flex flex-col bg-[#22363d] p-3 rounded border-l-2 mb-3"
+                        >
+                          <Box className="flex flex-col md:flex-row md:items-center justify-between">
+                            <Box className="flex flex-row items-center gap-1">
+                              <Avatar
+                                src={request.tenantImage}
+                                alt="user profile pic"
+                              />
+                              <Typography fontWeight="bold">
+                                {request.tenantName}
+                              </Typography>
+                              <Tooltip
+                                title="See Tenant Details"
+                                onClick={() =>
+                                  toggleTenantDetails(request.requestId)
+                                }
                               >
-                                <ArticleIcon />
-                              </IconButton>
-                            </Tooltip>
-                            <Tooltip
-                              title={
-                                request.status === "done"
-                                  ? "Mark As Done"
-                                  : "Request Done"
-                              }
-                            >
-                              <IconButton
-                                sx={{
-                                  background:
-                                    request.status === "done"
-                                      ? "purple"
-                                      : "green",
-                                  "& .MuiSvgIcon-root": {
-                                    color: "#FFFFFF",
-                                  },
-                                }}
-                                onClick={() => markAsDone(request)}
+                                <IconButton
+                                  sx={{
+                                    "& .MuiSvgIcon-root": {
+                                      color: "#FFFFFF",
+                                    },
+                                  }}
+                                >
+                                  <ArticleIcon />
+                                </IconButton>
+                              </Tooltip>
+                              <Tooltip
+                                title={
+                                  request.status === "done"
+                                    ? "Mark As Done"
+                                    : "Request Done"
+                                }
                               >
-                                <DoneAllIcon />
-                              </IconButton>
-                            </Tooltip>
-                          </Box>
-                          <Typography
-                            color="#BDBDBD"
-                            fontSize="14px"
-                            fontWeight="bold"
-                          >
-                            {request.dateSubmitted}
-                          </Typography>
-                        </Box>
-                        {tenantDetails && (
-                          <Box className="bg-[#2D454D] border-l-2 p-1 my-2 rounded-r">
-                            <Typography>
-                              <span className="font-bold">Phone:</span>&nbsp;
-                              {request.tenantPhone}
-                            </Typography>
-                            <Typography>
-                              <span className="font-bold">Property:</span>
-                              &nbsp;{request.propertyTitle}
-                            </Typography>
-                            <Typography>
-                              <span className="font-bold">Unit:</span>&nbsp;
-                              {request.unit}
+                                <IconButton
+                                  sx={{
+                                    background:
+                                      request.status === "done"
+                                        ? "purple"
+                                        : "green",
+                                    "& .MuiSvgIcon-root": {
+                                      color: "#FFFFFF",
+                                    },
+                                  }}
+                                  onClick={() => markAsDone(request)}
+                                >
+                                  <DoneAllIcon />
+                                </IconButton>
+                              </Tooltip>
+                            </Box>
+                            <Typography
+                              color="#BDBDBD"
+                              fontSize="14px"
+                              fontWeight="bold"
+                              className="pt-2 md:pt-0"
+                            >
+                              {new Date(
+                                request.dateSubmitted
+                              ).toLocaleDateString()}
                             </Typography>
                           </Box>
-                        )}
-                        <Box mt="5px">
-                          {request?.message && (
-                            <Typography component="p">
-                              {request.message}
-                            </Typography>
+                          {expandedRequestId === request.requestId && (
+                            <Box className="bg-[#2D454D] border-l-2 p-1 my-2 rounded-r">
+                              <Typography>
+                                <span className="font-bold">Phone:</span>&nbsp;
+                                {request.tenantPhone}
+                              </Typography>
+                              <Typography>
+                                <span className="font-bold">Property:</span>
+                                &nbsp;{request.propertyTitle}
+                              </Typography>
+                              <Typography>
+                                <span className="font-bold">Unit:</span>&nbsp;
+                                {request.unit}
+                              </Typography>
+                            </Box>
                           )}
+                          <Box mt="5px">
+                            {request?.message && (
+                              <Typography component="p">
+                                {request.message}
+                              </Typography>
+                            )}
+                          </Box>
                         </Box>
-                      </Box>
-                    ))
-                  ) : (
-                    <Typography>NO Maintainances Requests available</Typography>
-                  )}
+                      ))
+                    : (filterView === "all" && (
+                        <Typography alignSelf="center">
+                          No Maintainance Request Available
+                        </Typography>
+                      )) ||
+                      (filterView === "pending" && (
+                        <Typography alignSelf="center">
+                          No Maintainance Request Done Yet
+                        </Typography>
+                      )) ||
+                      (filterView === "done" && (
+                        <Typography alignSelf="center">
+                          No Pending Maintainance Request Available
+                        </Typography>
+                      ))}
                 </Box>
               </Box>
             </Box>
 
-            <Box className="bg-[#2D454D] col-span-5 rounded p-3 border-t-2 h-fit">
+            <Box className="bg-[#2D454D] -mt-4 lg:mt-0 col-span-5 rounded p-3 border-t-2 h-fit">
               <Typography>Traffic Sources</Typography>
               <Box sx={{ minHeight: 240, width: "100%" }}>
                 <SMPieChart />
