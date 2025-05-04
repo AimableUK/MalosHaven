@@ -23,12 +23,26 @@ const MaintenancePage = () => {
   const [expandedRequestId, setExpandedRequestId] = useState(null);
   const [maintenanceRequests, setMaintenanceRequests] = useState([]);
   const [filterView, setFilterView] = useState("all");
-  const [snackbar, setSnackbar] = useState({
-    open: false,
-    message: "",
-    severity: "success",
-  });
+  const [snackbarQueue, setSnackbarQueue] = useState([]);
+  const [activeSnackbar, setActiveSnackbar] = useState(null);
 
+  // snackbar 
+  const enqueueSnackbar = (message, severity) => {
+    setSnackbarQueue((prevQueue) => [...prevQueue, { message, severity }]);
+  };
+
+  useEffect(() => {
+    if (!activeSnackbar && snackbarQueue.length > 0) {
+      setActiveSnackbar(snackbarQueue[0]);
+      setSnackbarQueue((prevQueue) => prevQueue.slice(1));
+    }
+  }, [snackbarQueue, activeSnackbar]);
+
+  const handleCloseSnackbar = () => {
+    setActiveSnackbar(null);
+  };
+
+  // show tenant details 
   const toggleTenantDetails = (requestId) => {
     setExpandedRequestId((prevId) => (prevId === requestId ? null : requestId));
   };
@@ -144,6 +158,12 @@ const MaintenancePage = () => {
           tenant.maintenanceRequests.forEach((req) => {
             if (req.requestId === request.requestId) {
               req.status = req.status === "done" ? "pending" : "done";
+
+              if (req.status === "pending") {
+                enqueueSnackbar(`${tenant.name}'s Request Done`, "success");
+              } else {
+                enqueueSnackbar(`${tenant.name}'s Request UnDone`, "error");
+              }
             }
           });
         }
@@ -160,10 +180,6 @@ const MaintenancePage = () => {
       default:
         AllMaintenanceStatus();
     }
-  };
-
-  const handleCloseSnackbar = () => {
-    setSnackbar({ open: false, message: "", severity: "" });
   };
 
   return (
@@ -392,18 +408,18 @@ const MaintenancePage = () => {
           </Box>
         </Box>
         <Snackbar
-          open={snackbar.open}
-          autoHideDuration={2000}
+          open={!!activeSnackbar}
+          autoHideDuration={3000}
           onClose={handleCloseSnackbar}
         >
-          <Alert
-            onClose={handleCloseSnackbar}
-            severity={snackbar.severity}
-            variant="filled"
-            sx={{ width: "100%" }}
-          >
-            {snackbar.message}
-          </Alert>
+          {activeSnackbar && (
+            <Alert
+              severity={activeSnackbar.severity}
+              onClose={handleCloseSnackbar}
+            >
+              {activeSnackbar.message}
+            </Alert>
+          )}
         </Snackbar>
       </Box>
     </Box>
