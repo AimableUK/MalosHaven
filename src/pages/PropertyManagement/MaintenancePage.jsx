@@ -1,8 +1,10 @@
 import {
+  Alert,
   Avatar,
   Box,
   Button,
   IconButton,
+  Snackbar,
   Tooltip,
   Typography,
 } from "@mui/material";
@@ -20,7 +22,12 @@ import properties from "../../components/Properties";
 const MaintenancePage = () => {
   const [expandedRequestId, setExpandedRequestId] = useState(null);
   const [maintenanceRequests, setMaintenanceRequests] = useState([]);
-  const [filterView, setFilterView] = useState("all"); // "all", "pending", or "done"
+  const [filterView, setFilterView] = useState("all");
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+    severity: "success",
+  });
 
   const toggleTenantDetails = (requestId) => {
     setExpandedRequestId((prevId) => (prevId === requestId ? null : requestId));
@@ -155,6 +162,10 @@ const MaintenancePage = () => {
     }
   };
 
+  const handleCloseSnackbar = () => {
+    setSnackbar({ open: false, message: "", severity: "" });
+  };
+
   return (
     <Box>
       <Box classname="">
@@ -272,7 +283,7 @@ const MaintenancePage = () => {
                           <Box className="flex flex-col md:flex-row md:items-center justify-between">
                             <Box className="flex flex-row items-center gap-1">
                               <Avatar
-                                src={request.tenantImage}
+                                src={request.tenantImage || userAvatar}
                                 alt="user profile pic"
                               />
                               <Typography fontWeight="bold">
@@ -380,6 +391,20 @@ const MaintenancePage = () => {
             </Box>
           </Box>
         </Box>
+        <Snackbar
+          open={snackbar.open}
+          autoHideDuration={2000}
+          onClose={handleCloseSnackbar}
+        >
+          <Alert
+            onClose={handleCloseSnackbar}
+            severity={snackbar.severity}
+            variant="filled"
+            sx={{ width: "100%" }}
+          >
+            {snackbar.message}
+          </Alert>
+        </Snackbar>
       </Box>
     </Box>
   );

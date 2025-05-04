@@ -20,6 +20,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import Properties from "../../components/Properties";
 import AddIcon from "@mui/icons-material/Add";
 import EditInvoiceForm from "../../components/EditInvoiceForm.jsx";
+import userAvatar from "../../assets/userAvatar.jpg"
 
 const PaymentsPage = () => {
   const [propertiesState, setPropertiesState] = useState(Properties);
@@ -44,7 +45,7 @@ const PaymentsPage = () => {
       renderCell: (params) => (
         <Box className="flex items-center gap-2">
           <img
-            src={params.row.avatar}
+            src={params.row.avatar || userAvatar}
             alt={params.value}
             className="w-8 h-8 rounded-full"
           />

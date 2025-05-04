@@ -25,6 +25,7 @@ import TenantUpdateForm from "../../components/TenantUpdateForm";
 import MyProperties from "../../components/Properties";
 import DeleteIcon from "@mui/icons-material/Delete";
 import DataDeleteConfirm from "../../components/DataDeleteConfirm";
+import userAvatar from "../../assets/userAvatar.jpg"
 
 const TenantsPage = () => {
   const [properties, setProperties] = useState(MyProperties);
@@ -183,7 +184,7 @@ const TenantsPage = () => {
                   className="flex flex-col md:flex-row gap-3 border rounded p-3 m-1 shadow-sm w-[calc(30%-1rem)] min-w-[230px] max-w-[300px] cursor-pointer hover:shadow-lg hover:shadow-[#182427] transition duration-50 ease-in-out active:scale-95"
                   onClick={() => displayTenant(tenant.tenant_id)}
                 >
-                  <Avatar src={tenant.image} />
+                  <Avatar src={tenant.image || userAvatar} />
                   <Box className="flex flex-col">
                     <Typography fontWeight="bold">{tenant.name}</Typography>
                     <Typography sx={{ fontSize: "14px", color: "#D0D0D0" }}>
