@@ -26,7 +26,7 @@ const MaintenancePage = () => {
   const [snackbarQueue, setSnackbarQueue] = useState([]);
   const [activeSnackbar, setActiveSnackbar] = useState(null);
 
-  // snackbar 
+  // snackbar
   const enqueueSnackbar = (message, severity) => {
     setSnackbarQueue((prevQueue) => [...prevQueue, { message, severity }]);
   };
@@ -42,7 +42,7 @@ const MaintenancePage = () => {
     setActiveSnackbar(null);
   };
 
-  // show tenant details 
+  // show tenant details
   const toggleTenantDetails = (requestId) => {
     setExpandedRequestId((prevId) => (prevId === requestId ? null : requestId));
   };
@@ -162,7 +162,7 @@ const MaintenancePage = () => {
               if (req.status === "pending") {
                 enqueueSnackbar(`${tenant.name}'s Request Done`, "success");
               } else {
-                enqueueSnackbar(`${tenant.name}'s Request UnDone`, "error");
+                enqueueSnackbar(`${tenant.name}'s Request UnDone`, "warning");
               }
             }
           });
