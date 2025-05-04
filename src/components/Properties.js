@@ -8,18 +8,18 @@ const properties = [
     image: houseImg,
     title: "Luxury Waterfront Villa",
     description:
-      'Located right by the beach, this luxurious waterfront villa offers breathtaking views of the ocean and serene surroundings.',
+      "Located right by the beach, this luxurious waterfront villa offers breathtaking views of the ocean and serene surroundings.",
     location: "Miami, USA",
     units: [
-      { 
-        id: 1, 
-        UnitNumber: "101", 
+      {
+        id: 1,
+        UnitNumber: "101",
         UnitValue: 1200000,
-        tenant: null
+        tenant: null,
       },
-      { 
-        id: 2, 
-        UnitNumber: "102", 
+      {
+        id: 2,
+        UnitNumber: "102",
         UnitValue: 1500000,
         tenant: {
           tenant_id: "TNT-002",
@@ -31,18 +31,27 @@ const properties = [
           unit: "102",
           image: "https://randomuser.me/api/portraits/men/45.jpg",
           gender: "Male",
-          paymentStatus: "Not Yet"
-        }
+          paymentStatus: "Not Yet",
+          maintenanceRequests: [
+            {
+              requestId: "MR-001",
+              message:
+                "The kitchen sink is leaking and causing water to pool under the cabinet.",
+              status: "pending",
+              dateSubmitted: "2025-04-30T09:15:00Z",
+            },
+          ],
+        },
       },
-      { 
-        id: 3, 
-        UnitNumber: "103", 
+      {
+        id: 3,
+        UnitNumber: "103",
         UnitValue: 1300000,
-        tenant: null
+        tenant: null,
       },
-      { 
-        id: 4, 
-        UnitNumber: "104", 
+      {
+        id: 4,
+        UnitNumber: "104",
         UnitValue: 1400000,
         tenant: {
           tenant_id: "TNT-004",
@@ -54,12 +63,13 @@ const properties = [
           unit: "104",
           image: "https://randomuser.me/api/portraits/men/64.jpg",
           gender: "Male",
-          paymentStatus: "Paid"
-        }
+          paymentStatus: "Paid",
+          maintenanceRequests: null,
+        },
       },
-      { 
-        id: 5, 
-        UnitNumber: "105", 
+      {
+        id: 5,
+        UnitNumber: "105",
         UnitValue: 1250000,
         tenant: {
           tenant_id: "TNT-005",
@@ -71,12 +81,20 @@ const properties = [
           unit: "105",
           image: "https://randomuser.me/api/portraits/women/56.jpg",
           gender: "Female",
-          paymentStatus: "Paid"
-        }
+          paymentStatus: "Paid",
+          maintenanceRequests: [
+            {
+              requestId: "MR-002",
+              message: "The heater is not working properly in the bedroom.",
+              status: "done",
+              dateSubmitted: "2025-04-28T14:20:00Z",
+            },
+          ],
+        },
       },
-      { 
-        id: 6, 
-        UnitNumber: "106", 
+      {
+        id: 6,
+        UnitNumber: "106",
         UnitValue: 1550000,
         tenant: {
           tenant_id: "TNT-006",
@@ -88,12 +106,13 @@ const properties = [
           unit: "106",
           image: "https://randomuser.me/api/portraits/men/15.jpg",
           gender: "Male",
-          paymentStatus: "Not Yet"
-        }
+          paymentStatus: "Not Yet",
+          maintenanceRequests: null,
+        },
       },
-      { 
-        id: 7, 
-        UnitNumber: "107", 
+      {
+        id: 7,
+        UnitNumber: "107",
         UnitValue: 1450000,
         tenant: {
           tenant_id: "TNT-007",
@@ -105,12 +124,13 @@ const properties = [
           unit: "107",
           image: "https://randomuser.me/api/portraits/women/18.jpg",
           gender: "Female",
-          paymentStatus: "Partially"
-        }
+          paymentStatus: "Partially",
+          maintenanceRequests: null,
+        },
       },
-      { 
-        id: 8, 
-        UnitNumber: "108", 
+      {
+        id: 8,
+        UnitNumber: "108",
         UnitValue: 1350000,
         tenant: {
           tenant_id: "TNT-008",
@@ -122,22 +142,23 @@ const properties = [
           unit: "108",
           image: "https://randomuser.me/api/portraits/men/35.jpg",
           gender: "Male",
-          paymentStatus: "Paid"
-        }
-      }
-    ]
+          paymentStatus: "Paid",
+          maintenanceRequests: null,
+        },
+      },
+    ],
   },
   {
     id: 2,
     image: houseImg1,
     title: "Modern Loft in the City Center",
     description:
-      'A stylish loft situated in the heart of the city with easy access to cafes, shopping, and entertainment.',
+      "A stylish loft situated in the heart of the city with easy access to cafes, shopping, and entertainment.",
     location: "New York, USA",
     units: [
-      { 
-        id: 1, 
-        UnitNumber: "201", 
+      {
+        id: 1,
+        UnitNumber: "201",
         UnitValue: 850000,
         tenant: {
           tenant_id: "TNT-009",
@@ -149,12 +170,13 @@ const properties = [
           unit: "201",
           image: "https://randomuser.me/api/portraits/men/12.jpg",
           gender: "Male",
-          paymentStatus: "Paid"
-        }
+          paymentStatus: "Paid",
+          maintenanceRequests: null,
+        },
       },
-      { 
-        id: 2, 
-        UnitNumber: "202", 
+      {
+        id: 2,
+        UnitNumber: "202",
         UnitValue: 900000,
         tenant: {
           tenant_id: "TNT-010",
@@ -166,18 +188,19 @@ const properties = [
           unit: "202",
           image: "https://randomuser.me/api/portraits/women/29.jpg",
           gender: "Female",
-          paymentStatus: "Not Yet"
-        }
+          paymentStatus: "Not Yet",
+          maintenanceRequests: null,
+        },
       },
-      { 
-        id: 3, 
-        UnitNumber: "203", 
+      {
+        id: 3,
+        UnitNumber: "203",
         UnitValue: 950000,
-        tenant: null
+        tenant: null,
       },
-      { 
-        id: 4, 
-        UnitNumber: "204", 
+      {
+        id: 4,
+        UnitNumber: "204",
         UnitValue: 970000,
         tenant: {
           tenant_id: "TNT-012",
@@ -189,12 +212,13 @@ const properties = [
           unit: "204",
           image: "https://randomuser.me/api/portraits/men/22.jpg",
           gender: "Male",
-          paymentStatus: "Paid"
-        }
+          paymentStatus: "Paid",
+          maintenanceRequests: null,
+        },
       },
-      { 
-        id: 5, 
-        UnitNumber: "205", 
+      {
+        id: 5,
+        UnitNumber: "205",
         UnitValue: 980000,
         tenant: {
           tenant_id: "TNT-013",
@@ -206,12 +230,20 @@ const properties = [
           unit: "205",
           image: "https://randomuser.me/api/portraits/women/62.jpg",
           gender: "Female",
-          paymentStatus: "Not Yet"
-        }
+          paymentStatus: "Not Yet",
+          maintenanceRequests: [
+            {
+              requestId: "MR-003",
+              message: "There’s mold forming on the bathroom ceiling.",
+              status: "pending",
+              dateSubmitted: "2025-04-29T11:45:00Z",
+            },
+          ],
+        },
       },
-      { 
-        id: 6, 
-        UnitNumber: "206", 
+      {
+        id: 6,
+        UnitNumber: "206",
         UnitValue: 990000,
         tenant: {
           tenant_id: "TNT-014",
@@ -223,12 +255,13 @@ const properties = [
           unit: "206",
           image: "https://randomuser.me/api/portraits/men/33.jpg",
           gender: "Male",
-          paymentStatus: "Paid"
-        }
+          paymentStatus: "Paid",
+          maintenanceRequests: null,
+        },
       },
-      { 
-        id: 7, 
-        UnitNumber: "207", 
+      {
+        id: 7,
+        UnitNumber: "207",
         UnitValue: 960000,
         tenant: {
           tenant_id: "TNT-015",
@@ -240,12 +273,20 @@ const properties = [
           unit: "207",
           image: "https://randomuser.me/api/portraits/women/25.jpg",
           gender: "Female",
-          paymentStatus: "Paid"
-        }
+          paymentStatus: "Paid",
+          maintenanceRequests: [
+            {
+              requestId: "MR-004",
+              message: "The living room light switch sparks when used.",
+              status: "pending",
+              dateSubmitted: "2025-04-27T17:10:00Z",
+            },
+          ],
+        },
       },
-      { 
-        id: 8, 
-        UnitNumber: "208", 
+      {
+        id: 8,
+        UnitNumber: "208",
         UnitValue: 940000,
         tenant: {
           tenant_id: "TNT-016",
@@ -257,22 +298,23 @@ const properties = [
           unit: "208",
           image: "https://randomuser.me/api/portraits/men/21.jpg",
           gender: "Male",
-          paymentStatus: "Not Yet"
-        }
-      }
-    ]
+          paymentStatus: "Not Yet",
+          maintenanceRequests: null,
+        },
+      },
+    ],
   },
   {
     id: 3,
     image: houseImg2,
     title: "Cozy Mountain Retreat",
     description:
-      'Escape to this peaceful mountain cabin, offering a cozy retreat with panoramic views of the surrounding peaks.',
+      "Escape to this peaceful mountain cabin, offering a cozy retreat with panoramic views of the surrounding peaks.",
     location: "Aspen, USA",
     units: [
-      { 
-        id: 1, 
-        UnitNumber: "301", 
+      {
+        id: 1,
+        UnitNumber: "301",
         UnitValue: 450000,
         tenant: {
           tenant_id: "TNT-017",
@@ -284,12 +326,13 @@ const properties = [
           unit: "301",
           image: "https://randomuser.me/api/portraits/women/19.jpg",
           gender: "Female",
-          paymentStatus: "Paid"
-        }
+          paymentStatus: "Paid",
+          maintenanceRequests: null,
+        },
       },
-      { 
-        id: 2, 
-        UnitNumber: "302", 
+      {
+        id: 2,
+        UnitNumber: "302",
         UnitValue: 500000,
         tenant: {
           tenant_id: "TNT-018",
@@ -301,12 +344,13 @@ const properties = [
           unit: "302",
           image: "https://randomuser.me/api/portraits/men/50.jpg",
           gender: "Male",
-          paymentStatus: "Not Yet"
-        }
+          paymentStatus: "Not Yet",
+          maintenanceRequests: null,
+        },
       },
-      { 
-        id: 3, 
-        UnitNumber: "303", 
+      {
+        id: 3,
+        UnitNumber: "303",
         UnitValue: 480000,
         tenant: {
           tenant_id: "TNT-019",
@@ -318,11 +362,19 @@ const properties = [
           unit: "303",
           image: "https://randomuser.me/api/portraits/women/24.jpg",
           gender: "Female",
-          paymentStatus: "Paid"
-        }
-      }
-    ]
-  }
+          paymentStatus: "Paid",
+          maintenanceRequests: [
+            {
+              requestId: "MR-005",
+              message: "The balcony door doesn't lock properly.",
+              status: "done",
+              dateSubmitted: "2025-04-26T08:30:00Z",
+            },
+          ],
+        },
+      },
+    ],
+  },
 ];
 
 export default properties;

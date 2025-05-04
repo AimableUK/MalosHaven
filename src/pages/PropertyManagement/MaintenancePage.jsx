@@ -1,5 +1,12 @@
-import { Avatar, Box, Button, IconButton, Tooltip, Typography } from "@mui/material";
-import React from "react";
+import {
+  Avatar,
+  Box,
+  Button,
+  IconButton,
+  Tooltip,
+  Typography,
+} from "@mui/material";
+import React, { useState } from "react";
 import SMLineChart from "../../components/DataCharts/SMLineChart";
 import SMPieChart from "../../components/DataCharts/SMPieChart";
 import PeopleIcon from "@mui/icons-material/People";
@@ -8,8 +15,38 @@ import userAvatar from "../../assets/userAvatar.jpg";
 import DoneAllIcon from "@mui/icons-material/DoneAll";
 import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
 import ArticleIcon from "@mui/icons-material/Article";
+import MyProperties from "../../components/Properties";
+import properties from "../../components/Properties";
 
 const MaintenancePage = () => {
+  const [tenantDetails, setTenantDetails] = useState(null);
+
+  const seeTenantDetails = (event) => {
+    setTenantDetails((showDetails) => {
+      event === !showDetails;
+    });
+  };
+
+  const allMaintenanceRequests = [];
+
+  properties.forEach((property) => {
+    property.units.forEach((unit) => {
+      const tenant = unit.tenant;
+      if (tenant && tenant.maintenanceRequests) {
+        tenant.maintenanceRequests.forEach((request) => {
+          allMaintenanceRequests.push({
+            ...request,
+            tenantName: tenant.name,
+            tenantPhone: tenant.phone,
+            tenantImage: tenant.image,
+            propertyTitle: property.title,
+            unit: unit.Unit,
+          });
+        });
+      }
+    });
+  });
+
   return (
     <Box>
       <Box classname="">
@@ -91,56 +128,99 @@ const MaintenancePage = () => {
                     Mainteinance Requests
                   </Typography>
                   <Box className="flex flex-row gap-2">
+                    <Button variant="contained" color="primary">
+                      All
+                    </Button>
+                    <Button variant="contained" color="secondary">
+                      <HourglassBottomIcon />
+                      &nbsp;Pending
+                    </Button>
                     <Button variant="contained" color="success">
                       <DoneAllIcon />
-                      Done
-                    </Button>
-                    <Button variant="contained" sx={{ background: "#E0E94A" }}>
-                      <HourglassBottomIcon />
-                      Pending
+                      &nbsp;Done
                     </Button>
                   </Box>
                 </Box>
                 {/* maintenainces */}
-                <Box>
-                  {/* 1 */}
-                  <Box className="flex flex-col bg-[#22363d] p-3 rounded border-l-2">
-                    <Box className="flex flex-row justify-between">
-                      <Box className="flex flex-row items-center gap-1">
-                        <Avatar src={userAvatar} alt="user profile pic" />
-                        <Typography fontWeight="bold">John Fred</Typography>
-                        <Tooltip title="See Tenant Details">
-                          <IconButton
-                          sx={{
-                            "& .MuiSvgIcon-root": {
-                              color: "#FFFFFF",
-                            },
-                          }}
-                        >
-                          <ArticleIcon />
-                        </IconButton>
-                        </Tooltip>
-                        
-                      </Box>
-                      <Typography
-                        color="#BDBDBD"
-                        fontSize="14px"
-                        fontWeight="bold"
+                <Box className="flex flex-col">
+                  {allMaintenanceRequests.length > 0 ? (
+                    allMaintenanceRequests.map((request) => (
+                      <Box
+                        key={request.requestId}
+                        className="flex flex-col bg-[#22363d] p-3 rounded border-l-2 mb-3"
                       >
-                        12:13 PM
-                      </Typography>
-                    </Box>
-                    <Box className="bg-[#2D454D] border-l-2 p-1 my-2 rounded-r">
-                      <Typography><span className="font-bold">Phone:</span>&nbsp;+250 783309468</Typography>
-                      <Typography><span className="font-bold">Property:</span>&nbsp;Luxury 43</Typography>
-                      <Typography><span className="font-bold">Unit:</span>&nbsp;R483</Typography>
-                    </Box>
-                    <Box mt="5px">
-                      I have an issue related to the bulb be'se its
-                      malfunctioning hf vdfbj hfg sfgsegf sefg esfh sfh sfh
-                      sfuky
-                    </Box>
-                  </Box>
+                        <Box className="flex flex-row justify-between">
+                          <Box className="flex flex-row items-center gap-1">
+                            <Avatar
+                              src={request.tenantImage}
+                              alt="user profile pic"
+                            />
+                            <Typography fontWeight="bold">
+                              {request.tenantName}
+                            </Typography>
+                            <Tooltip
+                              title="See Tenant Details"
+                              onClick={seeTenantDetails}
+                            >
+                              <IconButton
+                                sx={{
+                                  "& .MuiSvgIcon-root": {
+                                    color: "#FFFFFF",
+                                  },
+                                }}
+                              >
+                                <ArticleIcon />
+                              </IconButton>
+                            </Tooltip>
+                            <Tooltip title="Mark As Done">
+                              <IconButton
+                                sx={{
+                                  background: "green",
+                                  "& .MuiSvgIcon-root": {
+                                    color: "#FFFFFF",
+                                  },
+                                }}
+                              >
+                                <DoneAllIcon />
+                              </IconButton>
+                            </Tooltip>
+                          </Box>
+                          <Typography
+                            color="#BDBDBD"
+                            fontSize="14px"
+                            fontWeight="bold"
+                          >
+                            {request.dateSubmitted}
+                          </Typography>
+                        </Box>
+                        {tenantDetails && (
+                          <Box className="bg-[#2D454D] border-l-2 p-1 my-2 rounded-r">
+                            <Typography>
+                              <span className="font-bold">Phone:</span>&nbsp;
+                              {request.tenantPhone}
+                            </Typography>
+                            <Typography>
+                              <span className="font-bold">Property:</span>
+                              &nbsp;{request.propertyTitle}
+                            </Typography>
+                            <Typography>
+                              <span className="font-bold">Unit:</span>&nbsp;
+                              {request.unit}
+                            </Typography>
+                          </Box>
+                        )}
+                        <Box mt="5px">
+                          {request?.message && (
+                            <Typography component="p">
+                              {request.message}
+                            </Typography>
+                          )}
+                        </Box>
+                      </Box>
+                    ))
+                  ) : (
+                    <Typography>NO Maintainances Requests available</Typography>
+                  )}
                 </Box>
               </Box>
             </Box>
