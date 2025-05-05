@@ -201,7 +201,7 @@ const PropertyDetails = () => {
           borderRadius: "8px",
           p: 2,
         }}
-        className="m-5 md:m-12"
+        className="m-5 md:m-12 border-t-2 border-t-slate-300"
       >
         {/* Property Header */}
         <Box className="flex flex-col md:flex-row justify-between md:items-center"
@@ -211,7 +211,7 @@ const PropertyDetails = () => {
               <img
                 src={property.image}
                 alt="lodge"
-                className="shadow-md shadow-slate-600 rounded-md md:-mt-12 w-fit md:w-52"
+                className="shadow-md shadow-slate-900 rounded-md md:-mt-12 w-fit md:w-52"
               />
             </Box>
             <Box className="text-center md:text-start ml-2 md:ml-0">
