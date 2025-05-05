@@ -14,51 +14,157 @@ import FooterPage from "../Footer/FooterPage.jsx";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { Link } from "react-router-dom";
 import { useMediaQuery } from "@mui/material";
+import ApartmentIcon from "@mui/icons-material/Apartment";
+import HomeIcon from "@mui/icons-material/Home";
+import Groups2Icon from "@mui/icons-material/Groups2";
+import PersonIcon from "@mui/icons-material/Person";
 
 const Dashboard = () => {
   const isSmallScreen = useMediaQuery("(max-width:1024px)");
 
   return (
     <Box display="flex" flexDirection="column">
-      {/* Top Grid - 3 Cards */}
-      <Box className="flex flex-col md:grid grid-cols-12 gap-[10px] p-[10px] font-roboto"
-      >
-        {[1, 2, 3].map((_, index) => (
+      {/* Top Grid - 4 Cards */}
+      <Box className="flex flex-col lg:flex-row gap-[10px] p-[10px] font-roboto">
+        <Box className="flex flex-col md:flex-row gap-3 w-full">
+          {/* total owners */}
           <Box
-            key={index}
-            className="flex flex-row justify-between shadow-md shadow-slate-600"
+            className="flex flex-row justify-between shadow-md shadow-slate-600 w-full"
             sx={{
-              gridColumn: "span 4",
+              gridColumn: "span 3",
               display: "flex",
               borderRadius: "8px",
               p: "10px",
               background: "#2D454D",
             }}
           >
-            <Box className="flex flex-col">
-              <Typography sx={{ fontWeight: "bold", color: "#fff" }}>
-                Properties
-              </Typography>
-              <Typography
-                sx={{ fontWeight: "bold", fontSize: "25px", color: "#fff" }}
-              >
-                14
-              </Typography>
-              <Typography sx={{ color: "#B3B3B3" }}>
-                <span className="text-[#4caf50]">+55%</span> since last month
-              </Typography>
-            </Box>
-            <Box>
-              <Typography sx={{ color: "#B3B3B3" }}>Real Time</Typography>
+            <Box className="flex flex-row items-center gap-3">
+              <PersonIcon
+                sx={{ fontSize: "40px" }}
+                className="rounded-md bg-[#22363d] p-1"
+              />
+              <Box className="flex flex-col">
+                <Typography
+                  sx={{ fontWeight: "bold", fontSize: "30px", color: "#fff" }}
+                >
+                  1
+                </Typography>
+                <Typography sx={{ fontWeight: "bold", color: "#fff" }}>
+                  Total Owners
+                </Typography>
+
+                <Typography sx={{ color: "#B3B3B3" }}>
+                  <span className="text-[#4caf50]">+55%</span> since last month
+                </Typography>
+              </Box>
             </Box>
           </Box>
-        ))}
+
+          {/* Total properties */}
+          <Box
+            className="flex flex-row justify-between shadow-md shadow-slate-600 w-full"
+            sx={{
+              gridColumn: "span 3",
+              display: "flex",
+              borderRadius: "8px",
+              p: "10px",
+              background: "#2D454D",
+            }}
+          >
+            <Box className="flex flex-row items-center gap-3">
+              <ApartmentIcon
+                sx={{ fontSize: "40px" }}
+                className="rounded-md bg-[#22363d] p-1"
+              />
+              <Box className="flex flex-col">
+                <Typography
+                  sx={{ fontWeight: "bold", fontSize: "30px", color: "#fff" }}
+                >
+                  8
+                </Typography>
+                <Typography sx={{ fontWeight: "bold", color: "#fff" }}>
+                  Properties
+                </Typography>
+
+                <Typography sx={{ color: "#B3B3B3" }}>
+                  <span className="text-[#4caf50]">+55%</span> since last month
+                </Typography>
+              </Box>
+            </Box>
+          </Box>
+        </Box>
+
+        <Box className="flex flex-col md:flex-row gap-3 w-full">
+          {/* total units */}
+          <Box
+            className="flex flex-row justify-between shadow-md shadow-slate-600 w-full"
+            sx={{
+              gridColumn: "span 3",
+              display: "flex",
+              borderRadius: "8px",
+              p: "10px",
+              background: "#2D454D",
+            }}
+          >
+            <Box className="flex flex-row items-center gap-3">
+              <HomeIcon
+                sx={{ fontSize: "40px" }}
+                className="rounded-md bg-[#22363d] p-1"
+              />
+              <Box className="flex flex-col">
+                <Typography
+                  sx={{ fontWeight: "bold", fontSize: "30px", color: "#fff" }}
+                >
+                  49
+                </Typography>
+                <Typography sx={{ fontWeight: "bold", color: "#fff" }}>
+                  Units
+                </Typography>
+
+                <Typography sx={{ color: "#B3B3B3" }}>
+                  <span className="text-[#4caf50]">+55%</span> since last month
+                </Typography>
+              </Box>
+            </Box>
+          </Box>
+
+          {/* total tenants */}
+          <Box
+            className="flex flex-row justify-between shadow-md shadow-slate-600 w-full"
+            sx={{
+              gridColumn: "span 3",
+              display: "flex",
+              borderRadius: "8px",
+              p: "10px",
+              background: "#2D454D",
+            }}
+          >
+            <Box className="flex flex-row items-center gap-3">
+              <Groups2Icon
+                sx={{ fontSize: "40px" }}
+                className="rounded-md bg-[#22363d] p-1"
+              />
+              <Box className="flex flex-col">
+                <Typography
+                  sx={{ fontWeight: "bold", fontSize: "30px", color: "#fff" }}
+                >
+                  42
+                </Typography>
+                <Typography sx={{ fontWeight: "bold", color: "#fff" }}>
+                  Tenants
+                </Typography>
+
+                <Typography sx={{ color: "#B3B3B3" }}>
+                  <span className="text-[#4caf50]">+55%</span> since last month
+                </Typography>
+              </Box>
+            </Box>
+          </Box>
+        </Box>
       </Box>
 
       {/* Second Grid - Pie + Line Chart */}
-      <Box
-        className="flex flex-col md:grid grid-cols-12 gap-[10px] p-[10px] font-roboto"
-      >
+      <Box className="flex flex-col lg:grid grid-cols-12 gap-[10px] p-[10px] font-roboto">
         <Box
           sx={{
             gridColumn: "span 5",
@@ -89,7 +195,7 @@ const Dashboard = () => {
             overflow: "hidden",
             height: "fit-content",
           }}
-          className="shadow-md shadow-slate-600"
+          className="shadow-md shadow-slate-600 mt-2 lg:mt-0"
         >
           <Typography sx={{ color: "#fff", mb: 1 }}>Revenue</Typography>
           <Box sx={{ minHeight: 240, width: "100%" }}>
@@ -99,188 +205,190 @@ const Dashboard = () => {
       </Box>
 
       {/* Third Grid - Bookings */}
-      <Box
-        className="flex flex-col md:grid grid-cols-12 gap-[10px] p-[10px] font-roboto my-2"
-      >
-        <Box
-          sx={{
-            gridColumn: "span 3",
-            display: "flex",
-            flexDirection: "column",
-            background: "#2D454D",
-            borderRadius: "8px",
-            p: 2,
-          }}
-          className="shadow-md shadow-slate-600"
-        >
+      <Box className="flex flex-col grid-cols-12 gap-[10px] p-[10px] font-roboto my-2">
+        <Box className="flex flex-col md:flex-row gap-3 mb-2 lg:mb-3">
           <Box
-            display="flex"
-            flexDirection="row"
-            justifyContent="space-between"
+            sx={{
+              gridColumn: "span 3",
+              display: "flex",
+              flexDirection: "column",
+              background: "#2D454D",
+              borderRadius: "8px",
+              p: 2,
+            }}
+            className="shadow-md shadow-slate-600 w-full"
           >
             <Box
-              sx={{
-                background: "linear-gradient(to right, #232526, #414345)",
-                height: "fit-content",
-                padding: "10px",
-                borderRadius: "5px",
-                marginTop: "-28px",
-              }}
+              display="flex"
+              flexDirection="row"
+              justifyContent="space-between"
             >
-              <WeekendIcon fontSize="large" />
-            </Box>
-            <Box>
-              <Typography sx={{ color: "#fff" }}>Bookings</Typography>
-              <Typography
-                sx={{ color: "#fff", fontSize: "24px", fontWeight: "bold" }}
+              <Box
+                sx={{
+                  background: "linear-gradient(to right, #232526, #414345)",
+                  height: "fit-content",
+                  padding: "10px",
+                  borderRadius: "5px",
+                  marginTop: "-28px",
+                }}
               >
-                281
+                <WeekendIcon fontSize="large" />
+              </Box>
+              <Box>
+                <Typography sx={{ color: "#fff" }}>Bookings</Typography>
+                <Typography
+                  sx={{ color: "#fff", fontSize: "24px", fontWeight: "bold" }}
+                >
+                  281
+                </Typography>
+              </Box>
+            </Box>
+
+            <Box>
+              <Typography sx={{ color: "#B3B3B3" }}>
+                <span className="text-[#4caf50]">+55%</span> since last month
               </Typography>
             </Box>
           </Box>
 
-          <Box>
-            <Typography sx={{ color: "#B3B3B3" }}>
-              <span className="text-[#4caf50]">+55%</span> since last month
-            </Typography>
+          <Box
+            sx={{
+              gridColumn: "span 3",
+              display: "flex",
+              flexDirection: "column",
+              background: "#2D454D",
+              borderRadius: "8px",
+              p: 2,
+            }}
+            className="shadow-md shadow-slate-600 w-full"
+          >
+            <Box
+              display="flex"
+              flexDirection="row"
+              justifyContent="space-between"
+            >
+              <Box
+                sx={{
+                  background: "linear-gradient(to right, #2c3e50, #3498db)",
+                  height: "fit-content",
+                  padding: "10px",
+                  borderRadius: "5px",
+                  marginTop: "-28px",
+                }}
+              >
+                <BarChartIcon fontSize="large" />
+              </Box>
+              <Box>
+                <Typography sx={{ color: "#fff" }}>Bookings</Typography>
+                <Typography
+                  sx={{ color: "#fff", fontSize: "24px", fontWeight: "bold" }}
+                >
+                  281
+                </Typography>
+              </Box>
+            </Box>
+
+            <Box>
+              <Typography sx={{ color: "#B3B3B3" }}>
+                <span className="text-[#4caf50]">+55%</span> since last month
+              </Typography>
+            </Box>
           </Box>
         </Box>
 
-        <Box
-          sx={{
-            gridColumn: "span 3",
-            display: "flex",
-            flexDirection: "column",
-            background: "#2D454D",
-            borderRadius: "8px",
-            p: 2,
-          }}
-          className="shadow-md shadow-slate-600"
-        >
+        <Box className="flex flex-col md:flex-row gap-3">
           <Box
-            display="flex"
-            flexDirection="row"
-            justifyContent="space-between"
+            sx={{
+              gridColumn: "span 3",
+              display: "flex",
+              flexDirection: "column",
+              background: "#2D454D",
+              borderRadius: "8px",
+              p: 2,
+            }}
+            className="shadow-md shadow-slate-600 w-full"
           >
             <Box
-              sx={{
-                background: "linear-gradient(to right, #2c3e50, #3498db)",
-                height: "fit-content",
-                padding: "10px",
-                borderRadius: "5px",
-                marginTop: "-28px",
-              }}
+              display="flex"
+              flexDirection="row"
+              justifyContent="space-between"
             >
-              <BarChartIcon fontSize="large" />
-            </Box>
-            <Box>
-              <Typography sx={{ color: "#fff" }}>Bookings</Typography>
-              <Typography
-                sx={{ color: "#fff", fontSize: "24px", fontWeight: "bold" }}
+              <Box
+                sx={{
+                  background: "linear-gradient(to right, #34e89e, #0f3443)",
+                  height: "fit-content",
+                  padding: "10px",
+                  borderRadius: "5px",
+                  marginTop: "-28px",
+                }}
               >
-                281
+                <StoreIcon fontSize="large" />
+              </Box>
+              <Box>
+                <Typography sx={{ color: "#fff" }}>Bookings</Typography>
+                <Typography
+                  sx={{ color: "#fff", fontSize: "24px", fontWeight: "bold" }}
+                >
+                  281
+                </Typography>
+              </Box>
+            </Box>
+
+            <Box>
+              <Typography sx={{ color: "#B3B3B3" }}>
+                <span className="text-[#4caf50]">+55%</span> since last month
               </Typography>
             </Box>
           </Box>
 
-          <Box>
-            <Typography sx={{ color: "#B3B3B3" }}>
-              <span className="text-[#4caf50]">+55%</span> since last month
-            </Typography>
-          </Box>
-        </Box>
-
-        <Box
-          sx={{
-            gridColumn: "span 3",
-            display: "flex",
-            flexDirection: "column",
-            background: "#2D454D",
-            borderRadius: "8px",
-            p: 2,
-          }}
-          className="shadow-md shadow-slate-600"
-        >
           <Box
-            display="flex"
-            flexDirection="row"
-            justifyContent="space-between"
+            sx={{
+              gridColumn: "span 3",
+              display: "flex",
+              flexDirection: "column",
+              background: "#2D454D",
+              borderRadius: "8px",
+              p: 2,
+            }}
+            className="shadow-md shadow-slate-600 w-full"
           >
             <Box
-              sx={{
-                background: "linear-gradient(to right, #34e89e, #0f3443)",
-                height: "fit-content",
-                padding: "10px",
-                borderRadius: "5px",
-                marginTop: "-28px",
-              }}
+              display="flex"
+              flexDirection="row"
+              justifyContent="space-between"
             >
-              <StoreIcon fontSize="large" />
-            </Box>
-            <Box>
-              <Typography sx={{ color: "#fff" }}>Bookings</Typography>
-              <Typography
-                sx={{ color: "#fff", fontSize: "24px", fontWeight: "bold" }}
+              <Box
+                sx={{
+                  background: "linear-gradient(to right, #ad5389, #3c1053)",
+                  height: "fit-content",
+                  padding: "10px",
+                  borderRadius: "5px",
+                  marginTop: "-28px",
+                }}
               >
-                281
+                <PersonAddIcon fontSize="large" />
+              </Box>
+              <Box>
+                <Typography sx={{ color: "#fff" }}>Bookings</Typography>
+                <Typography
+                  sx={{ color: "#fff", fontSize: "24px", fontWeight: "bold" }}
+                >
+                  281
+                </Typography>
+              </Box>
+            </Box>
+
+            <Box>
+              <Typography sx={{ color: "#B3B3B3" }}>
+                <span className="text-[#4caf50]">+55%</span> since last month
               </Typography>
             </Box>
-          </Box>
-
-          <Box>
-            <Typography sx={{ color: "#B3B3B3" }}>
-              <span className="text-[#4caf50]">+55%</span> since last month
-            </Typography>
-          </Box>
-        </Box>
-
-        <Box
-          sx={{
-            gridColumn: "span 3",
-            display: "flex",
-            flexDirection: "column",
-            background: "#2D454D",
-            borderRadius: "8px",
-            p: 2,
-          }}
-          className="shadow-md shadow-slate-600"
-        >
-          <Box
-            display="flex"
-            flexDirection="row"
-            justifyContent="space-between"
-          >
-            <Box
-              sx={{
-                background: "linear-gradient(to right, #ad5389, #3c1053)",
-                height: "fit-content",
-                padding: "10px",
-                borderRadius: "5px",
-                marginTop: "-28px",
-              }}
-            >
-              <PersonAddIcon fontSize="large" />
-            </Box>
-            <Box>
-              <Typography sx={{ color: "#fff" }}>Bookings</Typography>
-              <Typography
-                sx={{ color: "#fff", fontSize: "24px", fontWeight: "bold" }}
-              >
-                281
-              </Typography>
-            </Box>
-          </Box>
-
-          <Box>
-            <Typography sx={{ color: "#B3B3B3" }}>
-              <span className="text-[#4caf50]">+55%</span> since last month
-            </Typography>
           </Box>
         </Box>
       </Box>
 
       {/* Fouth Grid */}
-      <Box className="flex flex-col md:grid grid-cols-12 gap-[10px] p-[10px] font-roboto">
+      <Box className="flex flex-col lg:grid grid-cols-12 gap-[10px] p-[10px] font-roboto">
         {MyProperties.slice(0, 3).map((property) => (
           <Box
             key={property.id}
@@ -313,10 +421,11 @@ const Dashboard = () => {
               >
                 <Link to={`/propertydetails/${property.id}`} key={property.id}>
                   <Button
-                  variant={isSmallScreen ? "text" : "contained"}
-                  color="info"
-                  startIcon={<VisibilityIcon />}
-                  >{!isSmallScreen && "Edit" }
+                    variant={isSmallScreen ? "text" : "contained"}
+                    color="info"
+                    startIcon={<VisibilityIcon />}
+                  >
+                    {!isSmallScreen && "Edit"}
                   </Button>
                 </Link>
 
@@ -324,14 +433,15 @@ const Dashboard = () => {
                   variant={isSmallScreen ? "text" : "contained"}
                   startIcon={<EditIcon />}
                   color="success"
-                >{!isSmallScreen && "Edit" }
+                >
+                  {!isSmallScreen && "Edit"}
                 </Button>
                 <Button
                   variant={isSmallScreen ? "text" : "contained"}
                   startIcon={<DeleteIcon />}
-                  color= "error"
+                  color="error"
                 >
-                  {!isSmallScreen && "Delete" }
+                  {!isSmallScreen && "Delete"}
                 </Button>
               </Box>
             </Box>
