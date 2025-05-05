@@ -18,6 +18,10 @@ import DoneAllIcon from "@mui/icons-material/DoneAll";
 import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
 import ArticleIcon from "@mui/icons-material/Article";
 import properties from "../../components/Properties";
+import FooterPage from "../Footer/FooterPage";
+import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
+import ClearAllIcon from '@mui/icons-material/ClearAll';
+import ChecklistIcon from '@mui/icons-material/Checklist';
 
 const MaintenancePage = () => {
   const [expandedRequestId, setExpandedRequestId] = useState(null);
@@ -202,58 +206,58 @@ const MaintenancePage = () => {
               {/* 1 row 2 box */}
               <Box className="flex flex-col md:flex-row gap-5 mb-5">
                 <Box className="w-full flex flex-row justify-between bg-[#2D454D] rounded shadow-md p-5 border-t-2">
-                  <Box className="flex flex-row items-center gap-2">
-                    <PeopleIcon sx={{ fontSize: "50px", color: "#705add" }} />
+                  <Box className="flex flex-row items-center gap-3">
+                    <ClearAllIcon sx={{ fontSize: "40px", color: "#705add" }} />
                     <Box className="flex flex-col font-bold">
-                      <Typography fontWeight="bold">New Leads</Typography>
-                      <Typography fontWeight="bold" color="#8979d8">
-                        3050
+                      <Typography fontWeight="bold">All Maintenances</Typography>
+                      <Typography fontWeight="bold" color="#8979d8" fontSize="23px">
+                        37
                       </Typography>
                     </Box>
                   </Box>
-                  <ArrowRightAltIcon sx={{ color: "#9c8de6" }} />
+                  <ArrowCircleRightIcon sx={{ color: "#9c8de6" }} />
                 </Box>
 
                 <Box className="w-full flex flex-row justify-between bg-[#2D454D] rounded shadow-md p-5 border-t-2">
-                  <Box className="flex flex-row items-center gap-2">
-                    <PeopleIcon sx={{ fontSize: "50px", color: "#705add" }} />
+                  <Box className="flex flex-row items-center gap-3">
+                    <ChecklistIcon sx={{ fontSize: "40px", color: "#705add" }} />
                     <Box className="flex flex-col font-bold">
-                      <Typography fontWeight="bold">New Leads</Typography>
-                      <Typography fontWeight="bold" color="#8979d8">
-                        3050
+                      <Typography fontWeight="bold">Solved Maintenances</Typography>
+                      <Typography fontWeight="bold" color="#8979d8" fontSize="23px">
+                        27
                       </Typography>
                     </Box>
                   </Box>
-                  <ArrowRightAltIcon sx={{ color: "#9c8de6" }} />
+                  <ArrowCircleRightIcon sx={{ color: "#9c8de6" }} />
                 </Box>
               </Box>
 
               {/* 2 row 2 box */}
               <Box className="flex flex-col md:flex-row gap-5 mb-5">
                 <Box className="w-full flex flex-row justify-between bg-[#2D454D] rounded shadow-md p-5 border-t-2">
-                  <Box className="flex flex-row items-center gap-2">
-                    <PeopleIcon sx={{ fontSize: "50px", color: "#705add" }} />
+                  <Box className="flex flex-row items-center gap-3">
+                    <HourglassBottomIcon sx={{ fontSize: "40px", color: "#705add" }} />
                     <Box className="flex flex-col font-bold">
-                      <Typography fontWeight="bold">New Leads</Typography>
-                      <Typography fontWeight="bold" color="#8979d8">
-                        3050
+                      <Typography fontWeight="bold">Pending Maintenances</Typography>
+                      <Typography fontWeight="bold" color="#8979d8" fontSize="23px">
+                        10
                       </Typography>
                     </Box>
                   </Box>
-                  <ArrowRightAltIcon sx={{ color: "#9c8de6" }} />
+                  <ArrowCircleRightIcon sx={{ color: "#9c8de6" }} />
                 </Box>
 
                 <Box className="w-full flex flex-row justify-between bg-[#2D454D] rounded shadow-md p-5 border-t-2">
-                  <Box className="flex flex-row items-center gap-2">
+                  <Box className="flex flex-row items-center gap-3">
                     <PeopleIcon sx={{ fontSize: "50px", color: "#705add" }} />
                     <Box className="flex flex-col font-bold">
-                      <Typography fontWeight="bold">New Leads</Typography>
-                      <Typography fontWeight="bold" color="#8979d8">
-                        3050
+                      <Typography fontWeight="bold">Proprties</Typography>
+                      <Typography fontWeight="bold" color="#8979d8" fontSize="23px">
+                        3
                       </Typography>
                     </Box>
                   </Box>
-                  <ArrowRightAltIcon sx={{ color: "#9c8de6" }} />
+                  <ArrowCircleRightIcon sx={{ color: "#9c8de6" }} />
                 </Box>
               </Box>
 
@@ -422,6 +426,7 @@ const MaintenancePage = () => {
           )}
         </Snackbar>
       </Box>
+      <FooterPage />
     </Box>
   );
 };
