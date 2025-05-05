@@ -113,6 +113,7 @@ const SettingsPage = () => {
                 color="inherit"
                 href="/settings"
                 onClick={() => setActiveSetting("")}
+                className="hover:text-slate-200"
               >
                 Settings
               </Link>

@@ -155,7 +155,7 @@ const Profile = () => {
                   p: 2,
                   mb: 1,
                 }}
-                className="group shadow-md shadow-slate-600"
+                className="group border-t-2 border-t-slate-300 shadow-md shadow-slate-800"
               >
                 <Box>
                   <img

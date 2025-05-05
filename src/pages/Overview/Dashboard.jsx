@@ -52,10 +52,6 @@ const Dashboard = () => {
                 <Typography sx={{ fontWeight: "bold", color: "#fff" }}>
                   Total Owners
                 </Typography>
-
-                <Typography sx={{ color: "#B3B3B3" }}>
-                  <span className="text-[#4caf50]">+55%</span> since last month
-                </Typography>
               </Box>
             </Box>
           </Box>
@@ -83,11 +79,7 @@ const Dashboard = () => {
                   8
                 </Typography>
                 <Typography sx={{ fontWeight: "bold", color: "#fff" }}>
-                  Properties
-                </Typography>
-
-                <Typography sx={{ color: "#B3B3B3" }}>
-                  <span className="text-[#4caf50]">+55%</span> since last month
+                  Total Properties
                 </Typography>
               </Box>
             </Box>
@@ -118,11 +110,7 @@ const Dashboard = () => {
                   49
                 </Typography>
                 <Typography sx={{ fontWeight: "bold", color: "#fff" }}>
-                  Units
-                </Typography>
-
-                <Typography sx={{ color: "#B3B3B3" }}>
-                  <span className="text-[#4caf50]">+55%</span> since last month
+                  Total Units
                 </Typography>
               </Box>
             </Box>
@@ -151,11 +139,7 @@ const Dashboard = () => {
                   42
                 </Typography>
                 <Typography sx={{ fontWeight: "bold", color: "#fff" }}>
-                  Tenants
-                </Typography>
-
-                <Typography sx={{ color: "#B3B3B3" }}>
-                  <span className="text-[#4caf50]">+55%</span> since last month
+                  Toatal Tenants
                 </Typography>
               </Box>
             </Box>

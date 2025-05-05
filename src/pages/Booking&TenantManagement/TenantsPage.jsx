@@ -181,7 +181,7 @@ const TenantsPage = () => {
               .map((tenant) => (
                 <Box
                   key={tenant.tenant_id}
-                  className="flex flex-col md:flex-row gap-3 border rounded p-3 m-1 shadow-sm w-[calc(30%-1rem)] min-w-[230px] max-w-[300px] cursor-pointer hover:shadow-lg hover:shadow-[#182427] transition duration-50 ease-in-out active:scale-95"
+                  className="flex flex-col md:flex-row gap-3 rounded-b border-t-2 border-t-slate-300 p-3 m-1 shadow-sm shadow-slate-900 w-[calc(30%-1rem)] min-w-[230px] max-w-[300px] cursor-pointer transition duration-50 ease-in-out active:scale-95"
                   onClick={() => displayTenant(tenant.tenant_id)}
                 >
                   <Avatar src={tenant.image || userAvatar} />

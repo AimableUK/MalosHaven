@@ -31,7 +31,7 @@ const AnalyticsPage = () => {
           {/* first 2 boxes */}
           <Box sx={{ gridColumn: "span 3" }} display="flex" flexDirection="row">
             <Box
-              className="flex flex-col border-t-2 border-t-slate-300 gap-y-1"
+              className="flex flex-col border-t-2 border-t-slate-300 gap-y-1 justify-center"
               sx={{
                 width: "100%",
                 display: "flex",
@@ -51,13 +51,9 @@ const AnalyticsPage = () => {
               >
                 $35,800
               </Typography>
-              <Typography color="#11b886">
-                <MovingTwoToneIcon />
-                &nbsp;+10.23%
-              </Typography>
             </Box>
             <Box
-              className="flex flex-col border-t-2 border-t-slate-300 gap-y-1"
+              className="flex flex-col border-t-2 border-t-slate-300 gap-y-1 justify-center"
               sx={{
                 width: "100%",
                 display: "flex",
@@ -79,17 +75,13 @@ const AnalyticsPage = () => {
               >
                 $12,900
               </Typography>
-              <Typography color="#11b886">
-                <MovingTwoToneIcon />
-                &nbsp;+20.4%
-              </Typography>
             </Box>
           </Box>
 
           {/* second 2 boxes */}
           <Box sx={{ gridColumn: "span 3" }} display="flex" flexDirection="row">
             <Box
-              className="flex flex-col border-t-2 border-t-slate-300"
+              className="flex flex-col border-t-2 border-t-slate-300 justify-center"
               sx={{
                 width: "100%",
                 display: "flex",
@@ -110,13 +102,9 @@ const AnalyticsPage = () => {
               >
                 $1,000
               </Typography>
-              <Typography color="#ef4770">
-                <TrendingDownRoundedIcon />
-                &nbsp;-10.23%
-              </Typography>
             </Box>
             <Box
-              className="flex flex-col border-t-2 border-t-slate-300"
+              className="flex flex-col border-t-2 border-t-slate-300 justify-center"
               sx={{
                 display: "flex",
                 borderRadius: "8px",
@@ -137,17 +125,13 @@ const AnalyticsPage = () => {
               >
                 $143
               </Typography>
-              <Typography color="#ef4770">
-                <TrendingDownRoundedIcon />
-                &nbsp;-10.23%
-              </Typography>
             </Box>
           </Box>
 
           {/* third 1 box */}
           <Box sx={{ gridColumn: "span 3" }} display="flex" flexDirection="row">
             <Box
-              className="flex flex-col border-t-2 border-t-slate-300 h-full"
+              className="flex flex-col border-t-2 border-t-slate-300 h-full justify-center"
               sx={{
                 width: "100%",
                 display: "flex",
@@ -170,10 +154,6 @@ const AnalyticsPage = () => {
               >
                 $1,000
               </Typography>
-              <Typography color="#ef4770">
-                <TrendingDownRoundedIcon />
-                &nbsp;-10.23%
-              </Typography>
             </Box>
           </Box>
         </Box>
@@ -188,7 +168,7 @@ const AnalyticsPage = () => {
             background: "#2D454D",
             overflow: "hidden",
             my: "7px",
-            ml: 1
+            ml: 1,
           }}
           className="border-t-2 border-t-slate-300 h-full"
         >
@@ -251,7 +231,9 @@ const AnalyticsPage = () => {
             flexDirection="row"
             justifyContent="space-between"
           >
-            <Typography sx={{ color: "#fff", mb: 1 }} fontWeight="bold">Revenue</Typography>
+            <Typography sx={{ color: "#fff", mb: 1 }} fontWeight="bold">
+              Revenue
+            </Typography>
             <FormControl>
               <InputLabel id="custom-select-label">Date Range</InputLabel>
               <Select
