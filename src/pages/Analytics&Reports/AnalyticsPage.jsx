@@ -31,7 +31,7 @@ const AnalyticsPage = () => {
           {/* first 2 boxes */}
           <Box sx={{ gridColumn: "span 3" }} display="flex" flexDirection="row">
             <Box
-              className="flex flex-col shadow-md shadow-slate-600 gap-y-1"
+              className="flex flex-col border-t-2 border-t-slate-300 gap-y-1"
               sx={{
                 width: "100%",
                 display: "flex",
@@ -57,7 +57,7 @@ const AnalyticsPage = () => {
               </Typography>
             </Box>
             <Box
-              className="flex flex-col shadow-md shadow-slate-600 gap-y-1"
+              className="flex flex-col border-t-2 border-t-slate-300 gap-y-1"
               sx={{
                 width: "100%",
                 display: "flex",
@@ -89,7 +89,7 @@ const AnalyticsPage = () => {
           {/* second 2 boxes */}
           <Box sx={{ gridColumn: "span 3" }} display="flex" flexDirection="row">
             <Box
-              className="flex flex-col shadow-md shadow-slate-600"
+              className="flex flex-col border-t-2 border-t-slate-300"
               sx={{
                 width: "100%",
                 display: "flex",
@@ -116,7 +116,7 @@ const AnalyticsPage = () => {
               </Typography>
             </Box>
             <Box
-              className="flex flex-col shadow-md shadow-slate-600"
+              className="flex flex-col border-t-2 border-t-slate-300"
               sx={{
                 display: "flex",
                 borderRadius: "8px",
@@ -147,7 +147,7 @@ const AnalyticsPage = () => {
           {/* third 1 box */}
           <Box sx={{ gridColumn: "span 3" }} display="flex" flexDirection="row">
             <Box
-              className="flex flex-col shadow-md shadow-slate-600 h-full"
+              className="flex flex-col border-t-2 border-t-slate-300 h-full"
               sx={{
                 width: "100%",
                 display: "flex",
@@ -190,7 +190,7 @@ const AnalyticsPage = () => {
             my: "7px",
             ml: 1
           }}
-          className="shadow-md shadow-slate-600 h-full"
+          className="border-t-2 border-t-slate-300 h-full"
         >
           <Box
             display="flex"
@@ -244,14 +244,14 @@ const AnalyticsPage = () => {
             background: "#2D454D",
             overflow: "hidden",
           }}
-          className="shadow-md shadow-slate-600 h-full"
+          className="border-t-2 border-t-slate-300 h-full"
         >
           <Box
             display="flex"
             flexDirection="row"
             justifyContent="space-between"
           >
-            <Typography sx={{ color: "#fff", mb: 1 }}>Revenue</Typography>
+            <Typography sx={{ color: "#fff", mb: 1 }} fontWeight="bold">Revenue</Typography>
             <FormControl>
               <InputLabel id="custom-select-label">Date Range</InputLabel>
               <Select
@@ -294,7 +294,7 @@ const AnalyticsPage = () => {
             background: "#2D454D",
             overflow: "hidden",
           }}
-          className="shadow-md shadow-slate-600 h-full"
+          className="border-t-2 border-t-slate-300 h-full"
         >
           <Typography sx={{ color: "#fff", mb: 1, textAlign: "center" }}>
             Project Status
