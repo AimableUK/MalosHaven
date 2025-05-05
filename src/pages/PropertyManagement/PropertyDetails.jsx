@@ -214,7 +214,7 @@ const PropertyDetails = () => {
                 className="shadow-md shadow-slate-600 rounded-md md:-mt-12 w-fit md:w-52"
               />
             </Box>
-            <Box textAlign="center">
+            <Box className="text-center md:text-start ml-2 md:ml-0">
               <Typography fontWeight="bold">{property.title}</Typography>
               <Typography><PlaceIcon />{property.location}</Typography>
             </Box>

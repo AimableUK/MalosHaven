@@ -29,7 +29,7 @@ const Dashboard = () => {
         <Box className="flex flex-col md:flex-row gap-3 w-full">
           {/* total owners */}
           <Box
-            className="flex flex-row justify-between shadow-md shadow-slate-600 w-full"
+            className="flex flex-row justify-between w-full border-t-2 border-t-slate-300"
             sx={{
               gridColumn: "span 3",
               display: "flex",
@@ -62,7 +62,7 @@ const Dashboard = () => {
 
           {/* Total properties */}
           <Box
-            className="flex flex-row justify-between shadow-md shadow-slate-600 w-full"
+            className="flex flex-row justify-between w-full border-t-2 border-t-slate-300"
             sx={{
               gridColumn: "span 3",
               display: "flex",
@@ -97,7 +97,7 @@ const Dashboard = () => {
         <Box className="flex flex-col md:flex-row gap-3 w-full">
           {/* total units */}
           <Box
-            className="flex flex-row justify-between shadow-md shadow-slate-600 w-full"
+            className="flex flex-row justify-between w-full border-t-2 border-t-slate-300"
             sx={{
               gridColumn: "span 3",
               display: "flex",
@@ -130,7 +130,7 @@ const Dashboard = () => {
 
           {/* total tenants */}
           <Box
-            className="flex flex-row justify-between shadow-md shadow-slate-600 w-full"
+            className="flex flex-row justify-between w-full border-t-2 border-t-slate-300"
             sx={{
               gridColumn: "span 3",
               display: "flex",
@@ -164,7 +164,7 @@ const Dashboard = () => {
       </Box>
 
       {/* Second Grid - Pie + Line Chart */}
-      <Box className="flex flex-col lg:grid grid-cols-12 gap-[10px] p-[10px] font-roboto">
+      <Box className="flex flex-col lg:grid grid-cols-12 gap-[10px] p-[10px]">
         <Box
           sx={{
             gridColumn: "span 5",
@@ -176,9 +176,9 @@ const Dashboard = () => {
             overflow: "hidden",
             height: "fit-content",
           }}
-          className="shadow-md shadow-slate-600"
+          className="border-t-2 border-t-slate-300"
         >
-          <Typography sx={{ color: "#fff", mb: 1 }}>Channels</Typography>
+          <Typography sx={{ color: "#fff", mb: 1 }} fontWeight="bold">Channels</Typography>
           <Box sx={{ minHeight: 240, width: "100%" }}>
             <PieChart />
           </Box>
@@ -195,9 +195,9 @@ const Dashboard = () => {
             overflow: "hidden",
             height: "fit-content",
           }}
-          className="shadow-md shadow-slate-600 mt-2 lg:mt-0"
+          className="mt-2 lg:mt-0 border-t-2 border-t-slate-300"
         >
-          <Typography sx={{ color: "#fff", mb: 1 }}>Revenue</Typography>
+          <Typography sx={{ color: "#fff", mb: 1 }} fontWeight="bold">Revenue</Typography>
           <Box sx={{ minHeight: 240, width: "100%" }}>
             <LineChart />
           </Box>
@@ -205,8 +205,8 @@ const Dashboard = () => {
       </Box>
 
       {/* Third Grid - Bookings */}
-      <Box className="flex flex-col grid-cols-12 gap-[10px] p-[10px] font-roboto my-2">
-        <Box className="flex flex-col md:flex-row gap-3 mb-2 lg:mb-3">
+      <Box className="flex flex-col md:flex-row gap-[10px] p-[10px] font-roboto">
+        <Box className="flex flex-col md:flex-row gap-3 w-full">
           <Box
             sx={{
               gridColumn: "span 3",
@@ -216,7 +216,7 @@ const Dashboard = () => {
               borderRadius: "8px",
               p: 2,
             }}
-            className="shadow-md shadow-slate-600 w-full"
+            className="w-full my-1 border-t-2 border-t-slate-300"
           >
             <Box
               display="flex"
@@ -260,7 +260,7 @@ const Dashboard = () => {
               borderRadius: "8px",
               p: 2,
             }}
-            className="shadow-md shadow-slate-600 w-full"
+            className="w-full my-1 border-t-2 border-t-slate-300"
           >
             <Box
               display="flex"
@@ -296,7 +296,7 @@ const Dashboard = () => {
           </Box>
         </Box>
 
-        <Box className="flex flex-col md:flex-row gap-3">
+        <Box className="flex flex-col md:flex-row gap-3 w-full">
           <Box
             sx={{
               gridColumn: "span 3",
@@ -306,7 +306,7 @@ const Dashboard = () => {
               borderRadius: "8px",
               p: 2,
             }}
-            className="shadow-md shadow-slate-600 w-full"
+            className="w-full my-1 border-t-2 border-t-slate-300"
           >
             <Box
               display="flex"
@@ -350,7 +350,7 @@ const Dashboard = () => {
               borderRadius: "8px",
               p: 2,
             }}
-            className="shadow-md shadow-slate-600 w-full"
+            className="w-full my-1 border-t-2 border-t-slate-300"
           >
             <Box
               display="flex"
@@ -402,7 +402,7 @@ const Dashboard = () => {
               p: 2,
               mb: 1,
             }}
-            className="group shadow-md shadow-slate-600"
+            className="group border-t-2 border-t-slate-300"
           >
             <Box>
               <img
