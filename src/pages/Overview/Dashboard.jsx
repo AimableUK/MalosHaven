@@ -372,36 +372,33 @@ const Dashboard = () => {
       </Box>
 
       {/* Fouth Grid */}
-      <Box className="flex flex-col lg:grid grid-cols-12 gap-[10px] p-[10px] font-roboto">
-        {MyProperties.slice(0, 3).map((property) => (
+      <Box className="flex flex-col grid-cols-12 gap-[10px] p-[10px] font-roboto">
+        {MyProperties.map((property) => (
           <Box
             key={property.id}
             sx={{
-              gridColumn: "span 4",
-              display: "flex",
-              flexDirection: "column",
               background: "#2D454D",
               borderRadius: "8px",
               justifyContent: "space-between",
               p: 2,
               mb: 1,
             }}
-            className="group border-t-2 border-t-slate-300"
+            className="group gap-4 lg:max-w-full flex flex-col lg:flex-row border-l-2 border-t-slate-300"
           >
             <Box>
               <img
                 src={property.image}
-                alt="house-image"
-                className="shadow-md shadow-slate-500 rounded-md transition-transform duration-300 ease-in-out group-hover:-translate-y-12 cursor-pointer z-10 relative"
+                alt="house"
+                className="md:w-[300px] rounded-md transition-transform duration-300 ease-in-out group-hover:-translate-y-12 cursor-pointer z-10 relative"
               />
 
               <Box
                 display="flex"
                 flexDirection="row"
-                justifyContent="center"
-                gap="10px"
                 zIndex="0"
                 mt="-40px"
+                gap="5px"
+                className="justify-start lg:justify-center"
               >
                 <Link to={`/propertydetails/${property.id}`} key={property.id}>
                   <Button
@@ -409,7 +406,7 @@ const Dashboard = () => {
                     color="info"
                     startIcon={<VisibilityIcon />}
                   >
-                    {!isSmallScreen && "Edit"}
+                    {!isSmallScreen && "View"}
                   </Button>
                 </Link>
 
@@ -429,51 +426,50 @@ const Dashboard = () => {
                 </Button>
               </Box>
             </Box>
-            <Box>
-              <Link to={`/propertydetails/${property.id}`} key={property.id}>
-                <Typography fontWeight="bold" textAlign="center" m="15px">
-                  {property.title}
+            <Box className="flex flex-col justify-between w-full">
+              <Box>
+                <Link to={`/propertydetails/${property.id}`} key={property.id}>
+                  <Typography fontWeight="bold" m="5px">
+                    {property.title}
+                  </Typography>
+                </Link>
+                <Typography variant="body1" component="p">
+                  {property.description}
                 </Typography>
-              </Link>
-              <Typography variant="body1" component="p">
-                {property.description}
-              </Typography>
-            </Box>
-            <Box
-              sx={{
-                height: "2px",
-                width: "100%",
-                background:
-                  "linear-gradient(to right, #2d454d, white, #2d454d)",
-                my: 3,
-                borderRadius: "999px",
-              }}
-            />
-            <Box
-              display="flex"
-              flexDirection="row"
-              justifyContent="space-between"
-            >
-              <Typography fontWeight="bold">
-                {property.units.filter((unit) => unit.tenant == null).length}{" "}
-                Units
-              </Typography>
-              <Typography textAlign="center">
-                <PlaceIcon />
-                {property.location}
-              </Typography>
+              </Box>
+              <Box>
+                <Box
+                  sx={{
+                    height: "2px",
+                    width: "100%",
+                    background:
+                      "linear-gradient(to right, #2d454d, white, #2d454d)",
+                    my: 1,
+                    borderRadius: "999px",
+                  }}
+                />
+                <Box
+                  display="flex"
+                  flexDirection="row"
+                  justifyContent="space-between"
+                  mx="10px"
+                >
+                  <Typography fontWeight="bold">
+                    {
+                      property.units.filter((unit) => unit.tenant == null)
+                        .length
+                    }
+                    &nbsp;Units
+                  </Typography>
+                  <Typography textAlign="center">
+                    <PlaceIcon />
+                    {property.location}
+                  </Typography>
+                </Box>
+              </Box>
             </Box>
           </Box>
         ))}
-        <Link to="/properties">
-          <Button
-            variant="contained"
-            sx={{ whiteSpace: "nowrap" }}
-            color="success"
-          >
-            VIEW MORE
-          </Button>
-        </Link>
       </Box>
 
       {/* footer */}

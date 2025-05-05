@@ -53,7 +53,7 @@ const PropertiesPage = () => {
               p: 2,
               mb: 1,
             }}
-            className="group gap-3 lg:max-w-full flex flex-col lg:flex-row border-l-2 border-t-slate-300"
+            className="group lg:max-w-full gap-4 flex flex-col lg:flex-row border-l-2 border-t-slate-300"
           >
             <Box>
               <img
@@ -96,7 +96,7 @@ const PropertiesPage = () => {
                 </Button>
               </Box>
             </Box>
-            <Box className="flex flex-col justify-between">
+            <Box className="flex flex-col justify-between w-full">
               <Box>
                 <Link to={`/propertydetails/${property.id}`} key={property.id}>
                   <Typography fontWeight="bold" m="5px">

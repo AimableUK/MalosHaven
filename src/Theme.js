@@ -2,6 +2,7 @@ import { createTheme } from "@mui/material/styles";
 
 export const customTheme = createTheme({
   palette: {
+    // mode: "dark",
     primary: {
       main: "#fff",
     },
@@ -69,6 +70,13 @@ export const customTheme = createTheme({
           "&:hover": {
             backgroundColor: "#475569",
           },
+        },
+      },
+    },
+    MuiSvgIcon: {
+      styleOverrides: {
+        root: {
+          color: "#ffffff",
         },
       },
     },
