@@ -193,7 +193,7 @@ const AppLayout = () => {
           ],
         },
         {
-          title: "Settings & Permissions",
+          title: "Settings",
           icon: (
             <SettingsIcon
               sx={{
@@ -204,36 +204,7 @@ const AppLayout = () => {
               }}
             />
           ),
-          children: [
-            {
-              title: "Settings",
-              icon: (
-                <SettingsIcon
-                  sx={{
-                    color: "#E2E2E2 !important",
-                    "& path": {
-                      fill: "#E2E2E2 !important",
-                    },
-                  }}
-                />
-              ),
-              segment: "settings",
-            },
-            {
-              title: "User Permissions",
-              icon: (
-                <SecurityIcon
-                  sx={{
-                    color: "#E2E2E2 !important",
-                    "& path": {
-                      fill: "#E2E2E2 !important",
-                    },
-                  }}
-                />
-              ),
-              segment: "permissions",
-            },
-          ],
+          segment: "settings"
         },
       ]}
       currentPathname={location.pathname}

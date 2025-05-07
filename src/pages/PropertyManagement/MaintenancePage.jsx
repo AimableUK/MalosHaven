@@ -18,9 +18,11 @@ import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
 import ArticleIcon from "@mui/icons-material/Article";
 import properties from "../../components/Properties";
 import FooterPage from "../Footer/FooterPage";
-import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
-import ClearAllIcon from '@mui/icons-material/ClearAll';
-import ChecklistIcon from '@mui/icons-material/Checklist';
+import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
+import ClearAllIcon from "@mui/icons-material/ClearAll";
+import ChecklistIcon from "@mui/icons-material/Checklist";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const MaintenancePage = () => {
   const [expandedRequestId, setExpandedRequestId] = useState(null);
@@ -208,8 +210,14 @@ const MaintenancePage = () => {
                   <Box className="flex flex-row items-center gap-3">
                     <ClearAllIcon sx={{ fontSize: "40px", color: "#705add" }} />
                     <Box className="flex flex-col font-bold">
-                      <Typography fontWeight="bold">All Maintenances</Typography>
-                      <Typography fontWeight="bold" color="#8979d8" fontSize="23px">
+                      <Typography fontWeight="bold">
+                        All Maintenances
+                      </Typography>
+                      <Typography
+                        fontWeight="bold"
+                        color="#8979d8"
+                        fontSize="23px"
+                      >
                         37
                       </Typography>
                     </Box>
@@ -219,10 +227,18 @@ const MaintenancePage = () => {
 
                 <Box className="w-full flex flex-row justify-between bg-[#2D454D] rounded shadow-md p-5 border-t-2">
                   <Box className="flex flex-row items-center gap-3">
-                    <ChecklistIcon sx={{ fontSize: "40px", color: "#705add" }} />
+                    <ChecklistIcon
+                      sx={{ fontSize: "40px", color: "#705add" }}
+                    />
                     <Box className="flex flex-col font-bold">
-                      <Typography fontWeight="bold">Solved Maintenances</Typography>
-                      <Typography fontWeight="bold" color="#8979d8" fontSize="23px">
+                      <Typography fontWeight="bold">
+                        Solved Maintenances
+                      </Typography>
+                      <Typography
+                        fontWeight="bold"
+                        color="#8979d8"
+                        fontSize="23px"
+                      >
                         27
                       </Typography>
                     </Box>
@@ -235,10 +251,18 @@ const MaintenancePage = () => {
               <Box className="flex flex-col md:flex-row gap-5 mb-5">
                 <Box className="w-full flex flex-row justify-between bg-[#2D454D] rounded shadow-md p-5 border-t-2">
                   <Box className="flex flex-row items-center gap-3">
-                    <HourglassBottomIcon sx={{ fontSize: "40px", color: "#705add" }} />
+                    <HourglassBottomIcon
+                      sx={{ fontSize: "40px", color: "#705add" }}
+                    />
                     <Box className="flex flex-col font-bold">
-                      <Typography fontWeight="bold">Pending Maintenances</Typography>
-                      <Typography fontWeight="bold" color="#8979d8" fontSize="23px">
+                      <Typography fontWeight="bold">
+                        Pending Maintenances
+                      </Typography>
+                      <Typography
+                        fontWeight="bold"
+                        color="#8979d8"
+                        fontSize="23px"
+                      >
                         10
                       </Typography>
                     </Box>
@@ -251,7 +275,11 @@ const MaintenancePage = () => {
                     <PeopleIcon sx={{ fontSize: "50px", color: "#705add" }} />
                     <Box className="flex flex-col font-bold">
                       <Typography fontWeight="bold">Properties</Typography>
-                      <Typography fontWeight="bold" color="#8979d8" fontSize="23px">
+                      <Typography
+                        fontWeight="bold"
+                        color="#8979d8"
+                        fontSize="23px"
+                      >
                         3
                       </Typography>
                     </Box>
@@ -263,9 +291,9 @@ const MaintenancePage = () => {
               <Box className="flex flex-col gap-5 mb-5 w-full bg-[#2D454D] rounded shadow-md p-5 border-t-2">
                 <Box className="flex flex-col">
                   <Typography fontWeight="bold">
-                    Mainteinance Requests
+                    Maintenance Requests
                   </Typography>
-                  <Box className="flex flex-col md:flex-row gap-2">
+                  <Box className="flex flex-col md:flex-row gap-2 mt-2">
                     <Button
                       variant="contained"
                       color="primary"
@@ -402,10 +430,131 @@ const MaintenancePage = () => {
               </Box>
             </Box>
 
-            <Box className="bg-[#2D454D] -mt-4 lg:mt-0 col-span-5 rounded p-3 border-t-2 h-fit">
-              <Typography>Traffic Sources</Typography>
-              <Box sx={{ minHeight: 240, width: "100%" }}>
-                <SMPieChart />
+            <Box className="col-span-5 flex flex-col gap-3">
+              {/* smpie chart */}
+              <Box className="bg-[#2D454D] -mt-4 lg:mt-0 rounded p-3 border-t-2 h-fit">
+                <Typography fontWeight="bold">Traffic Sources</Typography>
+                <Box sx={{ minHeight: 240, width: "100%" }}>
+                  <SMPieChart />
+                </Box>
+              </Box>
+              {/* Companies and employees */}
+              <Box className="bg-[#2D454D] lg:mt-0 rounded p-3 border-t-2 h-fit mt-2">
+                <Box className="flex flex-col md:flex-row items-center justify-start md:justify-between mb-3">
+                  <Typography fontWeight="bold" mb="5px">
+                    Assistants
+                  </Typography>
+                  <Button color="info" variant="contained">
+                    Add assistant
+                  </Button>
+                </Box>
+                <Box className="flex flex-col gap-3">
+                  <Box className="bg-[#22363d] p-3 rounded border-l-2 flex flex-col lg:flex-row justify-between">
+                    <Box>
+                      <Typography fontWeight="bold">
+                        Munyabugingo Isaac
+                      </Typography>
+                      <Typography fontSize="15px">+250 7830298923</Typography>
+                      <Typography color="#BDBDBD">Electricity</Typography>
+                    </Box>
+                    <Box className="flex flex-row gap-2 justify-end">
+                      <Tooltip title="Edit Assistant">
+                        <IconButton>
+                          <EditIcon />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip title="Delete Assistant">
+                        <IconButton>
+                          <DeleteIcon />
+                        </IconButton>
+                      </Tooltip>
+                    </Box>
+                  </Box>
+                  <Box className="bg-[#22363d] p-3 rounded border-l-2 flex flex-col lg:flex-row justify-between">
+                    <Box>
+                      <Typography fontWeight="bold">
+                        Munyabugingo Isaac
+                      </Typography>
+                      <Typography fontSize="15px">+250 7830298923</Typography>
+                      <Typography color="#BDBDBD">Electricity</Typography>
+                    </Box>
+                    <Box className="flex flex-row gap-2 justify-end">
+                      <Tooltip title="Edit Assistant">
+                        <IconButton>
+                          <EditIcon />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip title="Delete Assistant">
+                        <IconButton>
+                          <DeleteIcon />
+                        </IconButton>
+                      </Tooltip>
+                    </Box>
+                  </Box>
+                  <Box className="bg-[#22363d] p-3 rounded border-l-2 flex flex-col lg:flex-row justify-between">
+                    <Box>
+                      <Typography fontWeight="bold">
+                        Munyabugingo Isaac
+                      </Typography>
+                      <Typography fontSize="15px">+250 7830298923</Typography>
+                      <Typography color="#BDBDBD">Electricity</Typography>
+                    </Box>
+                    <Box className="flex flex-row gap-2 justify-end">
+                      <Tooltip title="Edit Assistant">
+                        <IconButton>
+                          <EditIcon />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip title="Delete Assistant">
+                        <IconButton>
+                          <DeleteIcon />
+                        </IconButton>
+                      </Tooltip>
+                    </Box>
+                  </Box>
+                  <Box className="bg-[#22363d] p-3 rounded border-l-2 flex flex-col lg:flex-row justify-between">
+                    <Box>
+                      <Typography fontWeight="bold">
+                        Munyabugingo Isaac
+                      </Typography>
+                      <Typography fontSize="15px">+250 7830298923</Typography>
+                      <Typography color="#BDBDBD">Electricity</Typography>
+                    </Box>
+                    <Box className="flex flex-row gap-2 justify-end">
+                      <Tooltip title="Edit Assistant">
+                        <IconButton>
+                          <EditIcon />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip title="Delete Assistant">
+                        <IconButton>
+                          <DeleteIcon />
+                        </IconButton>
+                      </Tooltip>
+                    </Box>
+                  </Box>
+                  <Box className="bg-[#22363d] p-3 rounded border-l-2 flex flex-col lg:flex-row justify-between">
+                    <Box>
+                      <Typography fontWeight="bold">
+                        Munyabugingo Isaac
+                      </Typography>
+                      <Typography fontSize="15px">+250 7830298923</Typography>
+                      <Typography color="#BDBDBD">Electricity</Typography>
+                    </Box>
+                    <Box className="flex flex-row gap-2 justify-end">
+                      <Tooltip title="Edit Assistant">
+                        <IconButton>
+                          <EditIcon />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip title="Delete Assistant">
+                        <IconButton>
+                          <DeleteIcon />
+                        </IconButton>
+                      </Tooltip>
+                    </Box>
+                  </Box>
+                </Box>
               </Box>
             </Box>
           </Box>
