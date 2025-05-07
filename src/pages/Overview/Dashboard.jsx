@@ -2,10 +2,6 @@ import { Box, Button, Typography } from "@mui/material";
 import React from "react";
 import PieChart from "../../components/DataCharts/PieChart.jsx";
 import LineChart from "../../components/DataCharts/LineChart.jsx";
-import WeekendIcon from "@mui/icons-material/Weekend";
-import BarChartIcon from "@mui/icons-material/BarChart";
-import StoreIcon from "@mui/icons-material/Store";
-import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import PlaceIcon from "@mui/icons-material/Place";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
@@ -18,6 +14,10 @@ import ApartmentIcon from "@mui/icons-material/Apartment";
 import HomeIcon from "@mui/icons-material/Home";
 import Groups2Icon from "@mui/icons-material/Groups2";
 import PersonIcon from "@mui/icons-material/Person";
+import ClearAllIcon from "@mui/icons-material/ClearAll";
+import ChecklistIcon from "@mui/icons-material/Checklist";
+import PeopleIcon from "@mui/icons-material/People";
+import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
 
 const Dashboard = () => {
   const isSmallScreen = useMediaQuery("(max-width:1024px)");
@@ -162,7 +162,9 @@ const Dashboard = () => {
           }}
           className="border-t-2 border-t-slate-300"
         >
-          <Typography sx={{ color: "#fff", mb: 1 }} fontWeight="bold">Channels</Typography>
+          <Typography sx={{ color: "#fff", mb: 1 }} fontWeight="bold">
+            Channels
+          </Typography>
           <Box sx={{ minHeight: 240, width: "100%" }}>
             <PieChart />
           </Box>
@@ -181,7 +183,9 @@ const Dashboard = () => {
           }}
           className="mt-2 lg:mt-0 border-t-2 border-t-slate-300"
         >
-          <Typography sx={{ color: "#fff", mb: 1 }} fontWeight="bold">Revenue</Typography>
+          <Typography sx={{ color: "#fff", mb: 1 }} fontWeight="bold">
+            Revenue
+          </Typography>
           <Box sx={{ minHeight: 240, width: "100%" }}>
             <LineChart />
           </Box>
@@ -216,22 +220,16 @@ const Dashboard = () => {
                   marginTop: "-28px",
                 }}
               >
-                <WeekendIcon fontSize="large" />
+                <ClearAllIcon fontSize="large" />
               </Box>
               <Box>
-                <Typography sx={{ color: "#fff" }}>Bookings</Typography>
+                <Typography sx={{ color: "#fff" }}>All Maintenances</Typography>
                 <Typography
                   sx={{ color: "#fff", fontSize: "24px", fontWeight: "bold" }}
                 >
-                  281
+                  37
                 </Typography>
               </Box>
-            </Box>
-
-            <Box>
-              <Typography sx={{ color: "#B3B3B3" }}>
-                <span className="text-[#4caf50]">+55%</span> since last month
-              </Typography>
             </Box>
           </Box>
 
@@ -260,22 +258,18 @@ const Dashboard = () => {
                   marginTop: "-28px",
                 }}
               >
-                <BarChartIcon fontSize="large" />
+                <ChecklistIcon fontSize="large" />
               </Box>
               <Box>
-                <Typography sx={{ color: "#fff" }}>Bookings</Typography>
+                <Typography sx={{ color: "#fff" }}>
+                  Solved Maintainences
+                </Typography>
                 <Typography
                   sx={{ color: "#fff", fontSize: "24px", fontWeight: "bold" }}
                 >
-                  281
+                  17
                 </Typography>
               </Box>
-            </Box>
-
-            <Box>
-              <Typography sx={{ color: "#B3B3B3" }}>
-                <span className="text-[#4caf50]">+55%</span> since last month
-              </Typography>
             </Box>
           </Box>
         </Box>
@@ -306,21 +300,17 @@ const Dashboard = () => {
                   marginTop: "-28px",
                 }}
               >
-                <StoreIcon fontSize="large" />
-              </Box>
-              <Box>
-                <Typography sx={{ color: "#fff" }}>Bookings</Typography>
-                <Typography
-                  sx={{ color: "#fff", fontSize: "24px", fontWeight: "bold" }}
-                >
-                  281
-                </Typography>
+                <HourglassBottomIcon fontSize="large" />
               </Box>
             </Box>
-
             <Box>
-              <Typography sx={{ color: "#B3B3B3" }}>
-                <span className="text-[#4caf50]">+55%</span> since last month
+              <Typography sx={{ color: "#fff" }}>
+                Solved Maintainences
+              </Typography>
+              <Typography
+                sx={{ color: "#fff", fontSize: "24px", fontWeight: "bold" }}
+              >
+                17
               </Typography>
             </Box>
           </Box>
@@ -350,22 +340,16 @@ const Dashboard = () => {
                   marginTop: "-28px",
                 }}
               >
-                <PersonAddIcon fontSize="large" />
+                <PeopleIcon fontSize="large" />
               </Box>
               <Box>
-                <Typography sx={{ color: "#fff" }}>Bookings</Typography>
+                <Typography sx={{ color: "#fff" }}>Properties</Typography>
                 <Typography
                   sx={{ color: "#fff", fontSize: "24px", fontWeight: "bold" }}
                 >
-                  281
+                  3
                 </Typography>
               </Box>
-            </Box>
-
-            <Box>
-              <Typography sx={{ color: "#B3B3B3" }}>
-                <span className="text-[#4caf50]">+55%</span> since last month
-              </Typography>
             </Box>
           </Box>
         </Box>

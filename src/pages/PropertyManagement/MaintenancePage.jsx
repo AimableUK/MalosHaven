@@ -12,7 +12,6 @@ import React, { useEffect, useState } from "react";
 import SMLineChart from "../../components/DataCharts/SMLineChart";
 import SMPieChart from "../../components/DataCharts/SMPieChart";
 import PeopleIcon from "@mui/icons-material/People";
-import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import userAvatar from "../../assets/userAvatar.jpg";
 import DoneAllIcon from "@mui/icons-material/DoneAll";
 import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
@@ -251,7 +250,7 @@ const MaintenancePage = () => {
                   <Box className="flex flex-row items-center gap-3">
                     <PeopleIcon sx={{ fontSize: "50px", color: "#705add" }} />
                     <Box className="flex flex-col font-bold">
-                      <Typography fontWeight="bold">Proprties</Typography>
+                      <Typography fontWeight="bold">Properties</Typography>
                       <Typography fontWeight="bold" color="#8979d8" fontSize="23px">
                         3
                       </Typography>
