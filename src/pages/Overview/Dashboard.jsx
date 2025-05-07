@@ -148,7 +148,7 @@ const Dashboard = () => {
       </Box>
 
       {/* Second Grid - Pie + Line Chart */}
-      <Box className="flex flex-col lg:grid grid-cols-12 gap-[10px] p-[10px]">
+      <Box className="flex flex-col lg:grid grid-cols-12 gap-[10px] px-[10px] pb-[10px]">
         <Box
           sx={{
             gridColumn: "span 5",
@@ -193,7 +193,7 @@ const Dashboard = () => {
       </Box>
 
       {/* Third Grid - Bookings */}
-      <Box className="flex flex-col md:flex-row gap-[10px] p-[10px] font-roboto">
+      <Box className="flex flex-col lg:flex-row gap-[10px] px-[10px] font-roboto">
         <Box className="flex flex-col md:flex-row gap-3 w-full">
           <Box
             sx={{
@@ -208,7 +208,7 @@ const Dashboard = () => {
           >
             <Box
               display="flex"
-              flexDirection="row"
+              flexDirection="column"
               justifyContent="space-between"
             >
               <Box
@@ -218,17 +218,18 @@ const Dashboard = () => {
                   padding: "10px",
                   borderRadius: "5px",
                   marginTop: "-28px",
+                  width: "fit-content",
                 }}
               >
                 <ClearAllIcon fontSize="large" />
               </Box>
-              <Box>
-                <Typography sx={{ color: "#fff" }}>All Maintenances</Typography>
+              <Box className="flex flex-col items-end -mt-8">
                 <Typography
                   sx={{ color: "#fff", fontSize: "24px", fontWeight: "bold" }}
                 >
                   37
                 </Typography>
+                <Typography sx={{ color: "#fff" }}>All Maintenances</Typography>
               </Box>
             </Box>
           </Box>
@@ -246,7 +247,7 @@ const Dashboard = () => {
           >
             <Box
               display="flex"
-              flexDirection="row"
+              flexDirection="column"
               justifyContent="space-between"
             >
               <Box
@@ -256,18 +257,19 @@ const Dashboard = () => {
                   padding: "10px",
                   borderRadius: "5px",
                   marginTop: "-28px",
+                  width: "fit-content",
                 }}
               >
                 <ChecklistIcon fontSize="large" />
               </Box>
-              <Box>
-                <Typography sx={{ color: "#fff" }}>
-                  Solved Maintainences
-                </Typography>
+              <Box className="flex flex-col items-end -mt-8">
                 <Typography
                   sx={{ color: "#fff", fontSize: "24px", fontWeight: "bold" }}
                 >
-                  17
+                  20
+                </Typography>
+                <Typography sx={{ color: "#fff" }}>
+                  Pending Maintenances
                 </Typography>
               </Box>
             </Box>
@@ -288,7 +290,7 @@ const Dashboard = () => {
           >
             <Box
               display="flex"
-              flexDirection="row"
+              flexDirection="column"
               justifyContent="space-between"
             >
               <Box
@@ -298,19 +300,20 @@ const Dashboard = () => {
                   padding: "10px",
                   borderRadius: "5px",
                   marginTop: "-28px",
+                  width: "fit-content",
                 }}
               >
                 <HourglassBottomIcon fontSize="large" />
               </Box>
             </Box>
-            <Box>
-              <Typography sx={{ color: "#fff" }}>
-                Solved Maintainences
-              </Typography>
+            <Box className="flex flex-col items-end -mt-8">
               <Typography
                 sx={{ color: "#fff", fontSize: "24px", fontWeight: "bold" }}
               >
                 17
+              </Typography>
+              <Typography sx={{ color: "#fff" }}>
+                Solved Maintenances
               </Typography>
             </Box>
           </Box>
@@ -328,7 +331,7 @@ const Dashboard = () => {
           >
             <Box
               display="flex"
-              flexDirection="row"
+              flexDirection="column"
               justifyContent="space-between"
             >
               <Box
@@ -338,17 +341,18 @@ const Dashboard = () => {
                   padding: "10px",
                   borderRadius: "5px",
                   marginTop: "-28px",
+                  width: "fit-content",
                 }}
               >
                 <PeopleIcon fontSize="large" />
               </Box>
-              <Box>
-                <Typography sx={{ color: "#fff" }}>Properties</Typography>
+              <Box className="flex flex-col items-end -mt-8">
                 <Typography
                   sx={{ color: "#fff", fontSize: "24px", fontWeight: "bold" }}
                 >
                   3
                 </Typography>
+                <Typography sx={{ color: "#fff" }}>Properties</Typography>
               </Box>
             </Box>
           </Box>
@@ -357,6 +361,14 @@ const Dashboard = () => {
 
       {/* Fouth Grid */}
       <Box className="flex flex-col grid-cols-12 gap-[10px] p-[10px] font-roboto">
+        <Box className="flex flex-col md:flex-row items-center justify-center md:justify-between bg-[#2D454D] p-2 px-2 rounded-md border-t-2 border-t-slate-300">
+          <Typography fontWeight="bold">Properties</Typography>
+          <Link to="/properties">
+            <Button color="info" variant="contained">
+              View More
+            </Button>
+          </Link>
+        </Box>
         {MyProperties.map((property) => (
           <Box
             key={property.id}
