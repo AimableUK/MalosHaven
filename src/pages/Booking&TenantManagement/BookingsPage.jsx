@@ -1,33 +1,34 @@
-import { Box, Card, CardContent, CardMedia, Typography } from "@mui/material";
+import { Box, Button, Card, CardContent, CardMedia, Typography } from "@mui/material";
 import React, { useState } from "react";
 import FooterPage from "../Footer/FooterPage";
-import flat1 from "../../assets/flat1.png";
 import lodges from "../../components/Lodges";
+import AddIcon from "@mui/icons-material/Add";
 
 const BookingsPage = () => {
-  const [hovered, setHovered] = useState(false);
+  const [hoveredId, setHoveredId] = useState(null);
   const [lodgesList, setLoadgesList] = useState(lodges);
 
-  // const onCardHover = (event,x) => {
-  //   // setHovered((prev) => {
+  const onCardHover = (lodgeId) => {
+    setHoveredId(lodgeId);
+  };
 
-  //   // })
-  //   console.log("hi",event, x)
-  // }
+  const onCardLeave = () => {
+    setHoveredId(null);
+  };
 
   return (
     <Box>
       <Box m="20px">
-        <Box>
+        <Box className="flex flex-col md:flex-row justify-between items-center my-3">
           <Typography
             sx={{
               fontWeight: "bold",
               fontSize: { md: "25px", lg: "28px" },
-              textAlign: "center",
             }}
           >
             BOOKINGS AND RESERVATION
           </Typography>
+          <Button startIcon={<AddIcon />} variant="contained" color="info">Add Lodge</Button>
         </Box>
         {/* lodges */}
         <Box className="flex flex-col md:grid grid-cols-12 gap-2">
@@ -35,9 +36,9 @@ const BookingsPage = () => {
             lodgesList.map((lodge) => (
               <Card
                 key={lodge.name}
-                className="bg-[#2D454D] col-span-3 p-4 cursor-pointer"
-                onMouseEnter={() => setHovered(true)}
-                onMouseLeave={() => setHovered(false)}
+                className="bg-[#2D454D] col-span-3 p-4 cursor-pointer active:scale-95 transition-transform duration-150 ease-in-out"
+                onMouseEnter={() => onCardHover(lodge.id)}
+                onMouseLeave={onCardLeave}
               >
                 <CardMedia
                   component="img"
@@ -45,9 +46,10 @@ const BookingsPage = () => {
                   image={lodge.image}
                   className="transition-all duration-500"
                   style={{
-                    borderRadius: hovered
-                      ? "83% 17% 97% 3% / 12% 88% 12% 88%"
-                      : "10% 64% 7% 7% / 10% 47% 9% 8%",
+                    borderRadius:
+                      hoveredId === lodge.id
+                        ? "83% 17% 97% 3% / 12% 88% 12% 88%"
+                        : "10% 64% 7% 7% / 10% 47% 9% 8%",
                   }}
                 />
                 <CardContent>
