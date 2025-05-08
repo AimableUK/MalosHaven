@@ -9,7 +9,7 @@ import {
   MenuItem,
 } from "@mui/material";
 import React, { useState, useEffect } from "react";
-import SearchBar from "../../components/SearchBar";
+import SearchBar from "../../components/SearchBar/SearchBar";
 import EditIcon from "@mui/icons-material/Edit";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import AddIcon from "@mui/icons-material/Add";
@@ -20,11 +20,11 @@ import CreditCardIcon from "@mui/icons-material/CreditCard";
 import PlaceIcon from "@mui/icons-material/Place";
 import ApartmentIcon from "@mui/icons-material/Apartment";
 import PaidIcon from "@mui/icons-material/Paid";
-import TenantForm from "../../components/TenantForm";
-import TenantUpdateForm from "../../components/TenantUpdateForm";
-import MyProperties from "../../components/Properties";
+import TenantForm from "../../components/TenantFormComponent/TenantForm";
+import TenantUpdateForm from "../../components/TenantFormComponent/TenantUpdateForm";
+import MyProperties from "../../Data/SiteDataComponent/Properties";
 import DeleteIcon from "@mui/icons-material/Delete";
-import DataDeleteConfirm from "../../components/DataDeleteConfirm";
+import DataDeleteConfirm from "../../components/DeleteConfirmComponent/DataDeleteConfirm";
 import userAvatar from "../../assets/userAvatar.jpg"
 
 const TenantsPage = () => {

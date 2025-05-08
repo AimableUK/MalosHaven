@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 
 // main ones
-import AppLayout from "./components/AppLayout";
+import AppLayout from "./components/Main/AppLayout";
 import DashboardPage from "./pages/Overview/Dashboard"
 import Profile from "./pages/Overview/Profile";
 import NotificationsPage from "./pages/Overview/NotificationsPage"

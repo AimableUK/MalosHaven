@@ -5,7 +5,7 @@ import LineChart from "../../components/DataCharts/LineChart.jsx";
 import PlaceIcon from "@mui/icons-material/Place";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import MyProperties from "../../components/Properties.js";
+import MyProperties from "../../Data/SiteDataComponent/Properties.js";
 import FooterPage from "../Footer/FooterPage.jsx";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { Link } from "react-router-dom";

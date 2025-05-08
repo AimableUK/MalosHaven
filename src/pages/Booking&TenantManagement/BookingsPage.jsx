@@ -1,7 +1,7 @@
 import { Box, Button, Card, CardContent, CardMedia, Typography } from "@mui/material";
 import React, { useState } from "react";
 import FooterPage from "../Footer/FooterPage";
-import lodges from "../../components/Lodges";
+import lodges from "../../Data/SiteDataComponent/Lodges";
 import AddIcon from "@mui/icons-material/Add";
 
 const BookingsPage = () => {

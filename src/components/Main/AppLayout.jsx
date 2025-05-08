@@ -10,11 +10,10 @@ import PaymentOutlinedIcon from "@mui/icons-material/PaymentOutlined";
 import BarChartIcon from "@mui/icons-material/BarChart";
 import InsertChartIcon from "@mui/icons-material/InsertChart";
 import SettingsIcon from "@mui/icons-material/Settings";
-import SecurityIcon from "@mui/icons-material/Security";
 import PageTitleUpdater from "./TitleUpdater";
 import { createToolpadRouter } from "./toolpadRouter";
 import React from "react";
-import { customTheme } from "../Theme";
+import { customTheme } from "../../Theme";
 import ToolbarActionsMenu from "./ToolbarActionsMenu";
 import { useMediaQuery } from "@mui/material";
 

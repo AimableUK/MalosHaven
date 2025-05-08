@@ -10,16 +10,16 @@ import {
 import React, { useState } from "react";
 import ReceiptIcon from "@mui/icons-material/Receipt";
 import { GridToolbar } from "@mui/x-data-grid/internals";
-import invoices from "../../components/Invoices";
+import invoices from "../../Data/SiteDataComponent/Invoices.js";
 import { DataGrid } from "@mui/x-data-grid";
-import AddInvoiceForm from "../../components/AddInvoiceForm";
-import DataDeleteConfirm from "../../components/DataDeleteConfirm";
+import AddInvoiceForm from "../../components/InvoiceComponent/AddInvoiceForm.jsx";
+import DataDeleteConfirm from "../../components/DeleteConfirmComponent/DataDeleteConfirm.jsx";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import Properties from "../../components/Properties";
+import Properties from "../../Data/SiteDataComponent/Properties.js";
 import AddIcon from "@mui/icons-material/Add";
-import EditInvoiceForm from "../../components/EditInvoiceForm.jsx";
+import EditInvoiceForm from "../../components/InvoiceComponent/EditInvoiceForm.jsx";
 import userAvatar from "../../assets/userAvatar.jpg"
 
 const PaymentsPage = () => {

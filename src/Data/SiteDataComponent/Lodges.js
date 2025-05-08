@@ -1,6 +1,6 @@
-import houseImg from "../assets/house.jpg";
-import houseImg1 from "../assets/house1.jpg";
-import houseImg2 from "../assets/house2.jpg";
+import houseImg from "../../assets/house.jpg";
+import houseImg1 from "../../assets/house1.jpg";
+import houseImg2 from "../../assets/house2.jpg";
 
 const lodges = [
   {

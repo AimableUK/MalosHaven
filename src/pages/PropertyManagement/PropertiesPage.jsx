@@ -6,8 +6,8 @@ import EditIcon from "@mui/icons-material/Edit";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { Link } from "react-router-dom";
 import AddIcon from "@mui/icons-material/Add";
-import DataPropertyFormModal from "../../components/DataPropertyForm";
-import MyProperties from "../../components/Properties";
+import DataPropertyFormModal from "../../components/PropertyFormComponent/DataPropertyForm";
+import MyProperties from "../../Data/SiteDataComponent/Properties";
 import FooterPage from "../Footer/FooterPage";
 import { useMediaQuery } from "@mui/material";
 

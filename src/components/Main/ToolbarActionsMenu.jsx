@@ -22,7 +22,7 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import Settings from "@mui/icons-material/Settings";
 import PersonIcon from "@mui/icons-material/Person";
 import LogoutIcon from "@mui/icons-material/Logout";
-import userAvatar from "../assets/userAvatar.jpg";
+import userAvatar from "../../assets/userAvatar.jpg";
 import PeopleIcon from "@mui/icons-material/People";
 import { Link } from "react-router-dom";
 
