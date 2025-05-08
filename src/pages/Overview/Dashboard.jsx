@@ -350,9 +350,9 @@ const Dashboard = () => {
                 <Typography
                   sx={{ color: "#fff", fontSize: "24px", fontWeight: "bold" }}
                 >
-                  3
+                  7
                 </Typography>
-                <Typography sx={{ color: "#fff" }}>Properties</Typography>
+                <Typography sx={{ color: "#fff" }}>Assistants</Typography>
               </Box>
             </Box>
           </Box>
