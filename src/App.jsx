@@ -24,7 +24,6 @@ import ReportsPage from "./pages/Analytics&Reports/ReportsPage";
 import SettingsPage from "./pages/Settings&Permissions/SettingsPage";
 import PropertyDetails from "./pages/PropertyManagement/PropertyDetails";
 
-import MonthlyTimeRange from "./components/DataCharts/mychart";
 
 const AppRoutes = () => {
   return (
@@ -43,7 +42,6 @@ const AppRoutes = () => {
         <Route path="analytics" element={<AnalyticsPage />} />
         <Route path="reports" element={<ReportsPage />} />
         <Route path="settings" element={<SettingsPage />} />
-        <Route path="month" element={<MonthlyTimeRange />} />
       </Route>
     </Routes>
   );

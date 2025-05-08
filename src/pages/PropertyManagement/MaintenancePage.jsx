@@ -16,7 +16,7 @@ import userAvatar from "../../assets/userAvatar.jpg";
 import DoneAllIcon from "@mui/icons-material/DoneAll";
 import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
 import ArticleIcon from "@mui/icons-material/Article";
-import properties from "../../components/Properties";
+import properties from "../../Data/SiteDataComponent/Properties";
 import FooterPage from "../Footer/FooterPage";
 import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
 import ClearAllIcon from "@mui/icons-material/ClearAll";

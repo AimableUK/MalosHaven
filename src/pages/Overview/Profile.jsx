@@ -1,4 +1,4 @@
-import { Avatar, Box, Button, Tooltip, Typography } from "@mui/material";
+import { Avatar, Box, Button, Typography } from "@mui/material";
 import React, { useState } from "react";
 import profileCover from "../../assets/profileCover.jpg";
 import userAvatar from "../../assets/userAvatar.jpg";
@@ -7,8 +7,8 @@ import BarChartIcon from "@mui/icons-material/BarChart";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import { Link } from "react-router-dom";
 import AddIcon from "@mui/icons-material/Add";
-import DataPropertyFormModal from "../../components/DataPropertyForm";
-import MyProperties from "../../components/Properties";
+import DataPropertyFormModal from "../../components/PropertyFormComponent/DataPropertyForm";
+import MyProperties from "../../Data/SiteDataComponent/Properties";
 import PlaceIcon from "@mui/icons-material/Place";
 import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from "@mui/icons-material/Visibility";

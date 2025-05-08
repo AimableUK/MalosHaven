@@ -10,10 +10,7 @@ import FlareIcon from "@mui/icons-material/Flare";
 import PreviewIcon from "@mui/icons-material/Preview";
 import FooterPage from "../Footer/FooterPage";
 import SMLineChart from "../../components/DataCharts/SMLineChart";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import EditIcon from "@mui/icons-material/Edit";
-import MyProperties from "../../components/Properties";
-import { Link } from "react-router-dom";
+import MyProperties from "../../Data/SiteDataComponent/Properties";
 import { useMediaQuery } from "@mui/material";
 
 const ReportsPage = () => {
@@ -212,8 +209,8 @@ const ReportsPage = () => {
                     </Typography>
                   </Box>
 
-                  <Box class="w-full bg-gray-300 rounded-full">
-                    <Box class="w-[75%] h-2 bg-red-400 bg-primaryBorder rounded-full"></Box>
+                  <Box className="w-full bg-gray-300 rounded-full">
+                    <Box className="w-[75%] h-2 bg-red-400 bg-primaryBorder rounded-full"></Box>
                   </Box>
                 </Box>
               </Box>
@@ -273,8 +270,8 @@ const ReportsPage = () => {
                     </Typography>
                   </Box>
 
-                  <Box class="w-full bg-gray-300 rounded-full">
-                    <Box class="w-[75%] h-2 bg-red-400 bg-primaryBorder rounded-full"></Box>
+                  <Box className="w-full bg-gray-300 rounded-full">
+                    <Box className="w-[75%] h-2 bg-red-400 bg-primaryBorder rounded-full"></Box>
                   </Box>
                 </Box>
               </Box>
@@ -335,8 +332,8 @@ const ReportsPage = () => {
                     </Typography>
                   </Box>
 
-                  <Box class="w-full bg-gray-300 rounded-full">
-                    <Box class="w-[75%] h-2 bg-red-400 bg-primaryBorder rounded-full"></Box>
+                  <Box className="w-full bg-gray-300 rounded-full">
+                    <Box className="w-[75%] h-2 bg-red-400 bg-primaryBorder rounded-full"></Box>
                   </Box>
                 </Box>
               </Box>
@@ -396,8 +393,8 @@ const ReportsPage = () => {
                     </Typography>
                   </Box>
 
-                  <Box class="w-full bg-gray-300 rounded-full">
-                    <Box class="w-[75%] h-2 bg-red-400 bg-primaryBorder rounded-full"></Box>
+                  <Box className="w-full bg-gray-300 rounded-full">
+                    <Box className="w-[75%] h-2 bg-red-400 bg-primaryBorder rounded-full"></Box>
                   </Box>
                 </Box>
               </Box>
