@@ -25,6 +25,7 @@ const NotificationsPage = () => {
   const [selectedNotificationId, setSelectedNotificationId] = useState(null);
   const [deleteType, setDeleteType] = useState("notification");
   const [filterView, setFilterView] = useState("all");
+  const [readState, setReadState] = useState()
 
   const handleCloseMenu = () => {
     setAnchorEl(null);
@@ -58,9 +59,10 @@ const NotificationsPage = () => {
     setDeleteDialogOpen(false);
   };
 
-  const handleActionsClick = (event, notificationId) => {
+  const handleActionsClick = (event, notification) => {
+    setReadState(!notification.isRead)
     setAnchorEl(event.currentTarget);
-    setSelectedNotificationId(notificationId);
+    setSelectedNotificationId(notification.id);
   };
 
   const handleMarkAsRead = () => {
@@ -70,9 +72,8 @@ const NotificationsPage = () => {
       n.id === selectedNotificationId ? { ...n, isRead: true } : n
     );
 
-    setNotificationsData(updated); // main source of truth
+    setNotificationsData(updated);
 
-    // Apply filter again based on updated data
     switch (filterView) {
       case "unread":
         setNotificationsList(updated.filter((n) => !n.isRead));
@@ -145,47 +146,68 @@ const NotificationsPage = () => {
       </Box>
       <Box className="flex flex-col gap-2 bg-[#22363d] border-t-2 border-t-slate-300 p-3">
         {/* bg-[#2a444d] */}
-        {notificationsList.map((notification) => (
-          <Box
-            key={notification.id}
-            className={`flex items-start w-full gap-2 ${notification.isRead === true ? "bg-[#1C292D]" : "bg-[#2a444d]"}  p-3 border-l-2 border-t-slate-300 rounded-r-md`}
-          >
-            <Avatar
-              src={notification.tenant.image || userAvatar}
-              alt="profile"
-              sx={{ width: 40, height: 40 }}
-            />
-            <Box
-              sx={{
-                flex: 1,
-                minWidth: "150px",
-              }}
-              className="flex flex-row justify-between"
-            >
-              <Box className="mr-2">
-                <Typography fontWeight="bold" fontSize={14} noWrap>
-                  {notification.tenant.name}
-                </Typography>
-
-                <Typography fontSize={12} color="#BDBDBD">
-                  {notification.tenant.maintenanceRequests[0]?.message}
-                </Typography>
-              </Box>
-              <Box className="flex flex-col">
-                <Typography color="#BDBDBD" fontSize={12} noWrap>
-                  {getRelativeTime(notification.timeStamp)}
-                </Typography>
-                <IconButton
-                  onClick={(event) => {
-                    handleActionsClick(event, notification.id);
+        {notificationsList.length > 0
+          ? notificationsList.map((notification) => (
+              <Box
+                key={notification.id}
+                className={`flex items-start w-full gap-2 ${notification.isRead === true ? "bg-[#1C292D]" : "bg-[#2a444d]"}  p-3 border-l-2 border-t-slate-300 rounded-r-md`}
+              >
+                <Avatar
+                  src={notification.tenant.image || userAvatar}
+                  alt="profile"
+                  sx={{ width: 40, height: 40 }}
+                />
+                <Box
+                  sx={{
+                    flex: 1,
+                    minWidth: "150px",
                   }}
+                  className="flex flex-row justify-between"
                 >
-                  <MoreHorizIcon />
-                </IconButton>
+                  <Box className="mr-2">
+                    <Typography fontWeight="bold" fontSize={14} noWrap>
+                      {notification.tenant.name}
+                    </Typography>
+
+                    <Typography fontSize={12} color="#BDBDBD">
+                      {notification.tenant.maintenanceRequests[0]?.message}
+                    </Typography>
+                  </Box>
+                  <Box className="flex flex-col">
+                    <Typography color="#BDBDBD" fontSize={12} noWrap>
+                      {getRelativeTime(notification.timeStamp)}
+                    </Typography>
+                    <IconButton
+                      onClick={(event) => {
+                        handleActionsClick(event, notification);
+                      }}
+                    >
+                      <MoreHorizIcon />
+                    </IconButton>
+                  </Box>
+                </Box>
               </Box>
-            </Box>
-          </Box>
-        ))}
+            ))
+          : (filterView === "all" && (
+              <Typography alignSelf="center">
+                No Notifications Available yet.
+              </Typography>
+            )) ||
+            (filterView === "maintenance" && (
+              <Typography alignSelf="center">
+                No Maintainance Notifications Available.
+              </Typography>
+            )) ||
+            (filterView === "payment" && (
+              <Typography alignSelf="center">
+                No Payments Notifications Available.
+              </Typography>
+            )) ||
+            (filterView === "unread" && (
+              <Typography alignSelf="center">
+                No Unread Notifications Available.
+              </Typography>
+            ))}
       </Box>
       <Menu
         anchorEl={anchorEl}
@@ -202,13 +224,13 @@ const NotificationsPage = () => {
           <DeleteIcon className="group-hover:text-red-500" />
           &nbsp; Delete
         </MenuItem>
-        <MenuItem
+        {readState && <MenuItem
           onClick={handleMarkAsRead}
           className="hover:text-green-500 group"
         >
           <DoneAllIcon className="group-hover:text-green-500" />
           &nbsp; Mark As Read
-        </MenuItem>
+        </MenuItem>}
       </Menu>
 
       <DataDeleteConfirm
