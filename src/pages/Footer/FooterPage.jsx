@@ -11,8 +11,8 @@ const FooterPage = () => {
         m="10px"
         sx={{ color: "#aaa" }}
       >
-        &copy; 2025, made with{" "}
-        <FavoriteIcon sx={{ color: "red", fontSize: "large" }} /> by{" "}
+        &copy; 2025, made with
+        <FavoriteIcon sx={{ color: "red", fontSize: "large" }} /> by&nbsp;
         <a href="#">
           <strong>Malos Technologies</strong>
         </a>
