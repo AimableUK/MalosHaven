@@ -15,8 +15,10 @@ const DataDeleteConfirm = ({
   setDeleteDialogOpen,
   handleDeleteUnit,
   handleDeleteTenant,
+  handleDeleteNotification,
   deleteTenant,
   deleteUnit,
+  deleteNotification,
   deleteType
 }) => {
   const [snackbar, setSnackbar] = useState({
@@ -34,6 +36,8 @@ const DataDeleteConfirm = ({
       handleDeleteUnit();
     } else if (deleteType === "tenant") {
       handleDeleteTenant();
+    } else if (deleteType === "notification") {
+      handleDeleteNotification()
     }
   };
 
@@ -44,7 +48,7 @@ const DataDeleteConfirm = ({
         <DialogTitle>Delete Confirmation</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            {deleteTenant} {deleteUnit}
+            {deleteTenant} {deleteUnit} {deleteNotification}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
