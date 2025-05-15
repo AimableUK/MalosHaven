@@ -23,6 +23,8 @@ import ChecklistIcon from "@mui/icons-material/Checklist";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Collapse from "@mui/material/Collapse";
+import assistantsList from "../../Data/SiteDataComponent/Assistants";
+import DataDeleteConfirm from "../../components/DeleteConfirmComponent/DataDeleteConfirm";
 
 const MaintenancePage = () => {
   const [expandedRequestId, setExpandedRequestId] = useState(null);
@@ -30,10 +32,17 @@ const MaintenancePage = () => {
   const [snackbarQueue, setSnackbarQueue] = useState([]);
   const [activeSnackbar, setActiveSnackbar] = useState(null);
   const [properties, setProperties] = useState(propertiesList);
+  const [assistants, setAssistants] = useState(assistantsList);
 
   const [requests, setRequests] = useState([]);
   const [pendingRequests, setPendingRequests] = useState([]);
   const [solvedRequests, setSolvedRequests] = useState([]);
+
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [selectedAssistantId, setSelectedAssistantId] = useState(null);
+
+  const deleteAssistant =
+    "Are you sure you want to Delete this Assistant? If you do so, it will be undone";
 
   const displayedRequests =
     filterView === "all"
@@ -153,6 +162,17 @@ const MaintenancePage = () => {
     },
   ];
 
+  const handleDeleteDialogOpen = (assistantId) => {
+    setDeleteDialogOpen(true);
+    setSelectedAssistantId(assistantId);
+  };
+
+  const handleDeleteAssistant = () => {
+    setAssistants((prevAssistants) =>
+      prevAssistants.filter((assistant) => assistant.id !== selectedAssistantId)
+    );
+    setDeleteDialogOpen(false);
+  };
   return (
     <Box>
       <Box classname="">
@@ -418,111 +438,44 @@ const MaintenancePage = () => {
                   </Button>
                 </Box>
                 <Box className="flex flex-col gap-3">
-                  <Box className="bg-[#22363d] p-3 rounded border-l-2 flex flex-col lg:flex-row justify-between">
-                    <Box>
-                      <Typography fontWeight="bold">
-                        Munyabugingo Isaac
-                      </Typography>
-                      <Typography fontSize="15px">+250 7830298923</Typography>
-                      <Typography color="#BDBDBD">Electricity</Typography>
-                    </Box>
-                    <Box className="flex flex-row gap-2 justify-end">
-                      <Tooltip title="Edit Assistant">
-                        <IconButton>
-                          <EditIcon />
-                        </IconButton>
-                      </Tooltip>
-                      <Tooltip title="Delete Assistant">
-                        <IconButton>
-                          <DeleteIcon />
-                        </IconButton>
-                      </Tooltip>
-                    </Box>
-                  </Box>
-                  <Box className="bg-[#22363d] p-3 rounded border-l-2 flex flex-col lg:flex-row justify-between">
-                    <Box>
-                      <Typography fontWeight="bold">
-                        Munyabugingo Isaac
-                      </Typography>
-                      <Typography fontSize="15px">+250 7830298923</Typography>
-                      <Typography color="#BDBDBD">Electricity</Typography>
-                    </Box>
-                    <Box className="flex flex-row gap-2 justify-end">
-                      <Tooltip title="Edit Assistant">
-                        <IconButton>
-                          <EditIcon />
-                        </IconButton>
-                      </Tooltip>
-                      <Tooltip title="Delete Assistant">
-                        <IconButton>
-                          <DeleteIcon />
-                        </IconButton>
-                      </Tooltip>
-                    </Box>
-                  </Box>
-                  <Box className="bg-[#22363d] p-3 rounded border-l-2 flex flex-col lg:flex-row justify-between">
-                    <Box>
-                      <Typography fontWeight="bold">
-                        Munyabugingo Isaac
-                      </Typography>
-                      <Typography fontSize="15px">+250 7830298923</Typography>
-                      <Typography color="#BDBDBD">Electricity</Typography>
-                    </Box>
-                    <Box className="flex flex-row gap-2 justify-end">
-                      <Tooltip title="Edit Assistant">
-                        <IconButton>
-                          <EditIcon />
-                        </IconButton>
-                      </Tooltip>
-                      <Tooltip title="Delete Assistant">
-                        <IconButton>
-                          <DeleteIcon />
-                        </IconButton>
-                      </Tooltip>
-                    </Box>
-                  </Box>
-                  <Box className="bg-[#22363d] p-3 rounded border-l-2 flex flex-col lg:flex-row justify-between">
-                    <Box>
-                      <Typography fontWeight="bold">
-                        Munyabugingo Isaac
-                      </Typography>
-                      <Typography fontSize="15px">+250 7830298923</Typography>
-                      <Typography color="#BDBDBD">Electricity</Typography>
-                    </Box>
-                    <Box className="flex flex-row gap-2 justify-end">
-                      <Tooltip title="Edit Assistant">
-                        <IconButton>
-                          <EditIcon />
-                        </IconButton>
-                      </Tooltip>
-                      <Tooltip title="Delete Assistant">
-                        <IconButton>
-                          <DeleteIcon />
-                        </IconButton>
-                      </Tooltip>
-                    </Box>
-                  </Box>
-                  <Box className="bg-[#22363d] p-3 rounded border-l-2 flex flex-col lg:flex-row justify-between">
-                    <Box>
-                      <Typography fontWeight="bold">
-                        Munyabugingo Isaac
-                      </Typography>
-                      <Typography fontSize="15px">+250 7830298923</Typography>
-                      <Typography color="#BDBDBD">Electricity</Typography>
-                    </Box>
-                    <Box className="flex flex-row gap-2 justify-end">
-                      <Tooltip title="Edit Assistant">
-                        <IconButton>
-                          <EditIcon />
-                        </IconButton>
-                      </Tooltip>
-                      <Tooltip title="Delete Assistant">
-                        <IconButton>
-                          <DeleteIcon />
-                        </IconButton>
-                      </Tooltip>
-                    </Box>
-                  </Box>
+                  {assistants.length > 0 ? (
+                    assistants.map((assistant) => (
+                      <Box
+                        key={assistant.id}
+                        className="bg-[#22363d] p-3 rounded border-l-2 flex flex-col lg:flex-row justify-between"
+                      >
+                        <Box>
+                          <Typography fontWeight="bold">
+                            {assistant.name}
+                          </Typography>
+                          <Typography fontSize="15px">
+                            {assistant.phone}
+                          </Typography>
+                          <Typography color="#BDBDBD">
+                            {assistant.workType}
+                          </Typography>
+                        </Box>
+                        <Box className="flex flex-row gap-2 justify-end">
+                          <Tooltip title="Edit Assistant">
+                            <IconButton>
+                              <EditIcon />
+                            </IconButton>
+                          </Tooltip>
+                          <Tooltip title="Delete Assistant">
+                            <IconButton
+                              onClick={() =>
+                                handleDeleteDialogOpen(assistant.id)
+                              }
+                            >
+                              <DeleteIcon />
+                            </IconButton>
+                          </Tooltip>
+                        </Box>
+                      </Box>
+                    ))
+                  ) : (
+                    <Typography>No Assistant Available</Typography>
+                  )}
                 </Box>
               </Box>
             </Box>
@@ -543,6 +496,15 @@ const MaintenancePage = () => {
           )}
         </Snackbar>
       </Box>
+      <DataDeleteConfirm
+        deleteDialogOpen={deleteDialogOpen}
+        setDeleteDialogOpen={setDeleteDialogOpen}
+        selectedAssistantId={selectedAssistantId}
+        setSelectedAssistantId={setSelectedAssistantId}
+        handleDeleteAssistant={handleDeleteAssistant}
+        deleteAssistant={deleteAssistant}
+        deleteType="assistant"
+      />
       <FooterPage />
     </Box>
   );

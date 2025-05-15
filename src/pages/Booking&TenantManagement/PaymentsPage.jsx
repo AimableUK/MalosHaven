@@ -29,13 +29,16 @@ const PaymentsPage = () => {
   const [openEditModal, setOpenEditModal] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [selectedInvoiceId, setSelectedInvoiceId] = useState(null);
-  const [deleteType, setDeleteType] = useState("unit");
+  const [deleteType, setDeleteType] = useState("invoice");
   const [anchorEl, setAnchorEl] = useState(null);
   const [snackbar, setSnackbar] = useState({
     open: false,
     message: "",
     severity: "",
   });
+
+  const deleteInvoice =
+    "Are you sure you want to Delete this Assistant? If you do so, it will be undone";
 
   const columns = [
     {
@@ -243,7 +246,7 @@ const PaymentsPage = () => {
             selectedInvoiceId={selectedInvoiceId}
             setSelectedInvoiceId={setSelectedInvoiceId}
             // handleDeleteUnit={handleDeleteUnit}
-            deleteUnit={deleteUnit}
+            deleteInvoice={deleteInvoice}
             deleteType="unit"
           />
 
