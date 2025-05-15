@@ -173,6 +173,9 @@ const MaintenancePage = () => {
     );
     setDeleteDialogOpen(false);
   };
+
+  // snackbar
+
   return (
     <Box>
       <Box classname="">
