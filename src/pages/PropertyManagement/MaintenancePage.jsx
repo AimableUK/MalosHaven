@@ -9,7 +9,6 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import SMLineChart from "../../components/DataCharts/SMLineChart";
 import SMPieChart from "../../components/DataCharts/SMPieChart";
 import PeopleIcon from "@mui/icons-material/People";
 import userAvatar from "../../assets/userAvatar.jpg";
@@ -27,7 +26,6 @@ import Collapse from "@mui/material/Collapse";
 
 const MaintenancePage = () => {
   const [expandedRequestId, setExpandedRequestId] = useState(null);
-  const [maintenanceRequests, setMaintenanceRequests] = useState([]);
   const [filterView, setFilterView] = useState("all");
   const [snackbarQueue, setSnackbarQueue] = useState([]);
   const [activeSnackbar, setActiveSnackbar] = useState(null);
@@ -134,7 +132,7 @@ const MaintenancePage = () => {
     setProperties(updatedProperties);
   };
 
-  const data = [
+  const MaintenencesChart = [
     {
       id: "All",
       label: "All",
@@ -160,16 +158,16 @@ const MaintenancePage = () => {
       <Box classname="">
         <Box className="">
           {/* charts */}
-          <Box className="bg-[#6950e8] p-3">
-            <Typography fontWeight="bold">
-              Last 2 Months Maintainence Requests
+          <Box className="bg-[#6950e8] p-3 pb-7 flex justify-center md:justify-start">
+            <Typography
+              fontWeight="bold"
+              sx={{ fontSize: { sm: "18px", md: "20px", lg: "28px" } }}
+            >
+              Maintenance Issues Panel
             </Typography>
-            <Box sx={{ minHeight: 240, width: "100%" }}>
-              <SMLineChart />
-            </Box>
           </Box>
           {/* Down One */}
-          <Box className="mx-4 mb-4 flex flex-col lg:grid grid-cols-12 col-span-12 gap-5 -mt-10">
+          <Box className="mx-4 mb-4 flex flex-col lg:grid grid-cols-12 col-span-12 gap-5 -mt-6">
             {/* Boxes */}
             <Box className="col-span-7">
               {/* 1 row 2 box */}
@@ -406,7 +404,7 @@ const MaintenancePage = () => {
               <Box className="bg-[#2D454D] -mt-4 lg:mt-0 rounded p-3 border-t-2 h-fit">
                 <Typography fontWeight="bold">Maintenance Overview</Typography>
                 <Box sx={{ minHeight: 240, width: "100%" }}>
-                  <SMPieChart data={data} />
+                  <SMPieChart data={MaintenencesChart} />
                 </Box>
               </Box>
               {/* Companies and employees */}
