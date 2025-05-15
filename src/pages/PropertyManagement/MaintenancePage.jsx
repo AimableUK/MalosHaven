@@ -16,7 +16,7 @@ import userAvatar from "../../assets/userAvatar.jpg";
 import DoneAllIcon from "@mui/icons-material/DoneAll";
 import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
 import ArticleIcon from "@mui/icons-material/Article";
-import properties from "../../Data/SiteDataComponent/Properties";
+import propertiesList from "../../Data/SiteDataComponent/Properties";
 import FooterPage from "../Footer/FooterPage";
 import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
 import ClearAllIcon from "@mui/icons-material/ClearAll";
@@ -30,8 +30,19 @@ const MaintenancePage = () => {
   const [filterView, setFilterView] = useState("all");
   const [snackbarQueue, setSnackbarQueue] = useState([]);
   const [activeSnackbar, setActiveSnackbar] = useState(null);
+  const [properties, setProperties] = useState(propertiesList);
 
-  // snackbar
+  const [requests, setRequests] = useState([]);
+  const [pendingRequests, setPendingRequests] = useState([]);
+  const [solvedRequests, setSolvedRequests] = useState([]);
+
+  const displayedRequests =
+    filterView === "all"
+      ? requests
+      : filterView === "pending"
+        ? pendingRequests
+        : solvedRequests;
+
   const enqueueSnackbar = (message, severity) => {
     setSnackbarQueue((prevQueue) => [...prevQueue, { message, severity }]);
   };
@@ -47,7 +58,6 @@ const MaintenancePage = () => {
     setActiveSnackbar(null);
   };
 
-  // show tenant details
   const toggleTenantDetails = (requestId) => {
     setExpandedRequestId((prevId) => (prevId === requestId ? null : requestId));
   };
@@ -58,7 +68,7 @@ const MaintenancePage = () => {
     properties.forEach((property) => {
       property.units.forEach((unit) => {
         const tenant = unit.tenant;
-        if (tenant && tenant.maintenanceRequests) {
+        if (tenant?.maintenanceRequests?.length > 0) {
           tenant.maintenanceRequests.forEach((request) => {
             allRequests.push({
               ...request,
@@ -73,118 +83,54 @@ const MaintenancePage = () => {
       });
     });
 
-    setMaintenanceRequests(allRequests);
-  }, []);
+    setRequests(allRequests);
+    setPendingRequests(allRequests.filter((r) => r.status === "pending"));
+    setSolvedRequests(allRequests.filter((r) => r.status === "done"));
+  }, [properties]);
 
+  // Filter handlers
   const AllMaintenanceStatus = () => {
-    const allRequests = [];
-
-    properties.forEach((property) => {
-      property.units.forEach((unit) => {
-        const tenant = unit.tenant;
-        if (tenant && tenant.maintenanceRequests) {
-          tenant.maintenanceRequests.forEach((request) => {
-            allRequests.push({
-              ...request,
-              tenantName: tenant.name,
-              tenantPhone: tenant.phone,
-              tenantImage: tenant.image,
-              propertyTitle: property.title,
-              unit: unit.Unit,
-            });
-          });
-        }
-      });
-    });
-
-    setMaintenanceRequests(allRequests);
     setFilterView("all");
   };
 
   const doneMaintenanceStatus = () => {
-    const doneRequests = [];
-
-    properties.forEach((property) => {
-      property.units.forEach((unit) => {
-        const tenant = unit.tenant;
-        if (tenant && tenant.maintenanceRequests) {
-          tenant.maintenanceRequests
-            .filter((request) => request.status === "done")
-            .forEach((request) => {
-              doneRequests.push({
-                ...request,
-                tenantName: tenant.name,
-                tenantPhone: tenant.phone,
-                tenantImage: tenant.image,
-                propertyTitle: property.title,
-                unit: unit.Unit,
-              });
-            });
-        }
-      });
-    });
-
-    setMaintenanceRequests(doneRequests);
     setFilterView("done");
   };
 
   const pendingMaintenanceStatus = () => {
-    const pendingRequests = [];
-
-    properties.forEach((property) => {
-      property.units.forEach((unit) => {
-        const tenant = unit.tenant;
-        if (tenant && tenant.maintenanceRequests) {
-          tenant.maintenanceRequests
-            .filter((request) => request.status === "pending")
-            .forEach((request) => {
-              pendingRequests.push({
-                ...request,
-                tenantName: tenant.name,
-                tenantPhone: tenant.phone,
-                tenantImage: tenant.image,
-                propertyTitle: property.title,
-                unit: unit.Unit,
-              });
-            });
-        }
-      });
-    });
-
-    setMaintenanceRequests(pendingRequests);
     setFilterView("pending");
   };
 
+  // Mark request as done/pending
   const markAsDone = (request) => {
-    properties.forEach((property) => {
-      property.units.forEach((unit) => {
-        const tenant = unit.tenant;
-        if (tenant && tenant.maintenanceRequests) {
-          tenant.maintenanceRequests.forEach((req) => {
-            if (req.requestId === request.requestId) {
-              req.status = req.status === "done" ? "pending" : "done";
+    const updatedProperties = properties.map((property) => ({
+      ...property,
+      units: property.units.map((unit) => {
+        if (!unit.tenant?.maintenanceRequests) return unit;
 
-              if (req.status === "pending") {
-                enqueueSnackbar(`${tenant.name}'s Request Done`, "success");
-              } else {
-                enqueueSnackbar(`${tenant.name}'s Request UnDone`, "warning");
-              }
-            }
-          });
-        }
-      });
-    });
+        const updatedRequests = unit.tenant.maintenanceRequests.map((req) => {
+          if (req.requestId === request.requestId) {
+            const newStatus = req.status === "done" ? "pending" : "done";
+            enqueueSnackbar(
+              `${unit.tenant.name}'s Request marked as ${newStatus}`,
+              newStatus === "done" ? "success" : "warning"
+            );
+            return { ...req, status: newStatus };
+          }
+          return req;
+        });
 
-    switch (filterView) {
-      case "done":
-        doneMaintenanceStatus();
-        break;
-      case "pending":
-        pendingMaintenanceStatus();
-        break;
-      default:
-        AllMaintenanceStatus();
-    }
+        return {
+          ...unit,
+          tenant: {
+            ...unit.tenant,
+            maintenanceRequests: updatedRequests,
+          },
+        };
+      }),
+    }));
+
+    setProperties(updatedProperties);
   };
 
   return (
@@ -218,7 +164,7 @@ const MaintenancePage = () => {
                         color="#8979d8"
                         fontSize="23px"
                       >
-                        37
+                        {requests?.length}
                       </Typography>
                     </Box>
                   </Box>
@@ -239,7 +185,7 @@ const MaintenancePage = () => {
                         color="#8979d8"
                         fontSize="23px"
                       >
-                        27
+                        {pendingRequests?.length}
                       </Typography>
                     </Box>
                   </Box>
@@ -263,7 +209,7 @@ const MaintenancePage = () => {
                         color="#8979d8"
                         fontSize="23px"
                       >
-                        10
+                        {solvedRequests?.length}
                       </Typography>
                     </Box>
                   </Box>
@@ -280,7 +226,7 @@ const MaintenancePage = () => {
                         color="#8979d8"
                         fontSize="23px"
                       >
-                        3
+                        {properties?.length}
                       </Typography>
                     </Box>
                   </Box>
@@ -321,8 +267,8 @@ const MaintenancePage = () => {
                 </Box>
                 {/* maintenainces */}
                 <Box className="flex flex-col">
-                  {maintenanceRequests.length > 0
-                    ? maintenanceRequests.map((request) => (
+                  {displayedRequests.length > 0
+                    ? displayedRequests.map((request) => (
                         <Box
                           key={request.requestId}
                           className="flex flex-col bg-[#22363d] p-3 rounded border-l-2 mb-3"
@@ -348,6 +294,7 @@ const MaintenancePage = () => {
                                       color: "#FFFFFF",
                                     },
                                   }}
+                                  className="group"
                                 >
                                   <ArticleIcon />
                                 </IconButton>
