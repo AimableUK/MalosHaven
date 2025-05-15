@@ -1,15 +1,14 @@
 import React from "react";
 import { ResponsivePie } from "@nivo/pie";
-import SMPieChartData from "../../Data/ChartsJS/SMPieChartData";
 import { useMediaQuery } from "@mui/material";
 
-const SMPieChart = () => {
+const SMPieChart = ({data}) => {
   const isSmallScreen = useMediaQuery("(max-width:768px)");
 
   return (
     <div style={{ height: "280px", width: "100%" }}>
       <ResponsivePie
-        data={SMPieChartData}
+        data={data}
         margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
         innerRadius={0.66}
         padAngle={0.7}
@@ -55,13 +54,13 @@ const SMPieChart = () => {
         fill={[
           {
             match: {
-              id: "elixir",
+              id: "Pending",
             },
             id: "lines",
           },
           {
             match: {
-              id: "javascript",
+              id: "Solved",
             },
             id: "lines",
           },

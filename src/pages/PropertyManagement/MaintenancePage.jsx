@@ -134,6 +134,27 @@ const MaintenancePage = () => {
     setProperties(updatedProperties);
   };
 
+  const data = [
+    {
+      id: "All",
+      label: "All",
+      value: requests?.length,
+      color: "hsl(53, 70%, 50%)",
+    },
+    {
+      id: "Pending",
+      label: "Pending",
+      value: pendingRequests?.length,
+      color: "hsl(285, 70%, 50%)",
+    },
+    {
+      id: "Solved",
+      label: "Solved",
+      value: solvedRequests?.length,
+      color: "hsl(75, 70%, 50%)",
+    },
+  ];
+
   return (
     <Box>
       <Box classname="">
@@ -383,9 +404,9 @@ const MaintenancePage = () => {
             <Box className="col-span-5 flex flex-col gap-3">
               {/* smpie chart */}
               <Box className="bg-[#2D454D] -mt-4 lg:mt-0 rounded p-3 border-t-2 h-fit">
-                <Typography fontWeight="bold">Traffic Sources</Typography>
+                <Typography fontWeight="bold">Maintenance Overview</Typography>
                 <Box sx={{ minHeight: 240, width: "100%" }}>
-                  <SMPieChart />
+                  <SMPieChart data={data} />
                 </Box>
               </Box>
               {/* Companies and employees */}
