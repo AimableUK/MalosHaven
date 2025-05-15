@@ -23,6 +23,7 @@ import ClearAllIcon from "@mui/icons-material/ClearAll";
 import ChecklistIcon from "@mui/icons-material/Checklist";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import Collapse from "@mui/material/Collapse";
 
 const MaintenancePage = () => {
   const [expandedRequestId, setExpandedRequestId] = useState(null);
@@ -76,7 +77,7 @@ const MaintenancePage = () => {
               tenantPhone: tenant.phone,
               tenantImage: tenant.image,
               propertyTitle: property.title,
-              unit: unit.Unit,
+              unit: unit.UnitNumber,
             });
           });
         }
@@ -283,7 +284,7 @@ const MaintenancePage = () => {
                                 {request.tenantName}
                               </Typography>
                               <Tooltip
-                                title="See Tenant Details"
+                                title={`See ${request.tenantName} Details`}
                                 onClick={() =>
                                   toggleTenantDetails(request.requestId)
                                 }
@@ -294,7 +295,6 @@ const MaintenancePage = () => {
                                       color: "#FFFFFF",
                                     },
                                   }}
-                                  className="group"
                                 >
                                   <ArticleIcon />
                                 </IconButton>
@@ -333,7 +333,9 @@ const MaintenancePage = () => {
                               ).toLocaleDateString()}
                             </Typography>
                           </Box>
-                          {expandedRequestId === request.requestId && (
+                          <Collapse
+                            in={expandedRequestId === request.requestId}
+                          >
                             <Box className="bg-[#2D454D] border-l-2 p-1 my-2 rounded-r">
                               <Typography>
                                 <span className="font-bold">Phone:</span>&nbsp;
@@ -341,14 +343,15 @@ const MaintenancePage = () => {
                               </Typography>
                               <Typography>
                                 <span className="font-bold">Property:</span>
-                                &nbsp;{request.propertyTitle}
+                                &nbsp;
+                                {request.propertyTitle}
                               </Typography>
                               <Typography>
                                 <span className="font-bold">Unit:</span>&nbsp;
                                 {request.unit}
                               </Typography>
                             </Box>
-                          )}
+                          </Collapse>
                           <Box mt="5px">
                             {request?.message && (
                               <Typography component="p">
