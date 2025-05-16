@@ -47,7 +47,7 @@ const DataPropertyFormModal = ({ open, onClose, onAddProperty }) => {
       return;
     }
     onAddProperty({
-      id: Date.now(),
+      id: `PRP-${Date.now()}`,
       title: formData.name,
       description: formData.desc,
       units: formData.units,
@@ -83,15 +83,17 @@ const DataPropertyFormModal = ({ open, onClose, onAddProperty }) => {
       <Dialog open={open} onClose={onClose}>
         <DialogTitle sx={{ fontWeight: "bold" }}>Add New Property</DialogTitle>
         <DialogContent
-          sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 1 }}
+          sx={{gap: 2, mt:1 }}
         >
-          <label>Enter the Image</label>
-          <input type="file" accept="image/*" onChange={handleImageChange} />
-          {imagePreview && (
-            <Box mt={2}>
-              <img src={imagePreview} alt="Preview" width="50%" />
-            </Box>
-          )}
+          <Box className="flex flex-col mb-2 w-fit">
+            <label htmlFor="propertyImage">Select the Image</label>
+            <input id="propertyImage" type="file" accept="image/*" onChange={handleImageChange} />
+            {imagePreview && (
+              <Box mt={2}>
+                <img src={imagePreview} alt="Preview" width="50%" />
+              </Box>
+            )}
+          </Box>
 
           <TextField
             label="Property Name"
@@ -101,6 +103,7 @@ const DataPropertyFormModal = ({ open, onClose, onAddProperty }) => {
             onChange={handleChange}
             autoComplete="off"
             required
+            sx={{ my: 1}}
           />
           <TextField
             label="Property Description"
@@ -110,6 +113,7 @@ const DataPropertyFormModal = ({ open, onClose, onAddProperty }) => {
             onChange={handleChange}
             autoComplete="off"
             required
+            sx={{ my: 1}}
           />
           <TextField
             label="Property Units"
@@ -120,6 +124,7 @@ const DataPropertyFormModal = ({ open, onClose, onAddProperty }) => {
             autoComplete="off"
             required
             helperText="Number of units eg; R234"
+            sx={{ my: 1}}
           />
           <TextField
             label="Property Location"
@@ -129,6 +134,7 @@ const DataPropertyFormModal = ({ open, onClose, onAddProperty }) => {
             onChange={handleChange}
             autoComplete="off"
             required
+            sx={{ mb: 1}}
           />
         </DialogContent>
         <DialogActions>

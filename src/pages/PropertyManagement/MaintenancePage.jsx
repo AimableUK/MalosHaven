@@ -29,12 +29,15 @@ import WaterRepair from "../../assets/WaterRepair.gif";
 import ACInstallation from "../../assets/ACInstallation.gif";
 import Painting from "../../assets/Painting.gif";
 import ElectricianWorking from "../../assets/ElectricianWorking.gif";
+import AddAssistantForm from "../../components/AssistantComponent/AddAssistantForm";
 
 const MaintenancePage = () => {
   const [expandedRequestId, setExpandedRequestId] = useState(null);
   const [filterView, setFilterView] = useState("all");
+
   const [snackbarQueue, setSnackbarQueue] = useState([]);
   const [activeSnackbar, setActiveSnackbar] = useState(null);
+
   const [properties, setProperties] = useState(propertiesList);
   const [assistants, setAssistants] = useState(assistantsList);
 
@@ -43,10 +46,12 @@ const MaintenancePage = () => {
   const [solvedRequests, setSolvedRequests] = useState([]);
 
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-  const [selectedAssistantId, setSelectedAssistantId] = useState(null);
+  const [selectedAssistant, setSelectedAssistant] = useState(null);
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [fade, setFade] = useState(true);
+
+  const [addOpenModal, setAddOpenModal] = useState(false)
 
   const deleteAssistant =
     "Are you sure you want to Delete this Assistant? If you do so, it will be undone";
@@ -169,16 +174,19 @@ const MaintenancePage = () => {
     },
   ];
 
-  const handleDeleteDialogOpen = (assistantId) => {
+  const handleDeleteDialogOpen = (assistant) => {
     setDeleteDialogOpen(true);
-    setSelectedAssistantId(assistantId);
+    setSelectedAssistant(assistant);
   };
 
   const handleDeleteAssistant = () => {
     setAssistants((prevAssistants) =>
-      prevAssistants.filter((assistant) => assistant.id !== selectedAssistantId)
+      prevAssistants.filter(
+        (assistant) => assistant.id !== selectedAssistant.id
+      )
     );
     setDeleteDialogOpen(false);
+    enqueueSnackbar(`${selectedAssistant.name} deleted successful`, "success");
   };
 
   // snackbar
@@ -208,8 +216,8 @@ const MaintenancePage = () => {
       setTimeout(() => {
         setCurrentIndex((prevIndex) => (prevIndex + 1) % MaintainSVG.length);
         setFade(true);
-      }, 750);
-    }, 4000);
+      }, 650);
+    }, 6000);
 
     return () => clearInterval(Interval);
   });
@@ -489,7 +497,7 @@ const MaintenancePage = () => {
                   <Typography fontWeight="bold" mb="5px">
                     Assistants
                   </Typography>
-                  <Button color="info" variant="contained">
+                  <Button color="info" variant="contained" onClick={() => setAddOpenModal(true)}>
                     Add assistant
                   </Button>
                 </Box>
@@ -519,9 +527,7 @@ const MaintenancePage = () => {
                           </Tooltip>
                           <Tooltip title="Delete Assistant">
                             <IconButton
-                              onClick={() =>
-                                handleDeleteDialogOpen(assistant.id)
-                              }
+                              onClick={() => handleDeleteDialogOpen(assistant)}
                             >
                               <DeleteIcon />
                             </IconButton>
@@ -537,30 +543,34 @@ const MaintenancePage = () => {
             </Box>
           </Box>
         </Box>
-        <Snackbar
-          open={!!activeSnackbar}
-          autoHideDuration={3000}
-          onClose={handleCloseSnackbar}
-        >
-          {activeSnackbar && (
-            <Alert
-              severity={activeSnackbar.severity}
-              onClose={handleCloseSnackbar}
-            >
-              {activeSnackbar.message}
-            </Alert>
-          )}
-        </Snackbar>
       </Box>
+      <Snackbar
+        open={!!activeSnackbar}
+        autoHideDuration={3000}
+        onClose={handleCloseSnackbar}
+      >
+        {activeSnackbar && (
+          <Alert
+            severity={activeSnackbar.severity}
+            onClose={handleCloseSnackbar}
+          >
+            {activeSnackbar.message}
+          </Alert>
+        )}
+      </Snackbar>
+
       <DataDeleteConfirm
         deleteDialogOpen={deleteDialogOpen}
         setDeleteDialogOpen={setDeleteDialogOpen}
-        selectedAssistantId={selectedAssistantId}
-        setSelectedAssistantId={setSelectedAssistantId}
         handleDeleteAssistant={handleDeleteAssistant}
         deleteAssistant={deleteAssistant}
         deleteType="assistant"
       />
+      <AddAssistantForm 
+        open={addOpenModal} 
+        onClose={() => setAddOpenModal(false)}
+      />
+      
       <FooterPage />
     </Box>
   );
