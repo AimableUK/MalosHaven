@@ -11,24 +11,20 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 
-const AddAssistantForm = ({ open, onClose, onAddAssistant }) => {
+const AddAssistantForm = ({ open, onClose, onAddAssistant, setSnackbar }) => {
   const [formData, setFormData] = useState({
     assistantName: "",
     phoneNumber: "",
     workType: "",
   });
-  const [snackbar, setSnackbar] = useState({
-    open: false,
-    message: "",
-    severity: "success",
-  });
+  // const [snackbar, setSnackbar] = useState({
+  //   open: false,
+  //   message: "",
+  //   severity: "success",
+  // });
 
   const handleChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  };
-
-  const handleCloseSnackbar = () => {
-    setSnackbar({ open: false, message: "", severity: "" });
   };
 
   const handleSubmit = () => {
@@ -49,13 +45,13 @@ const AddAssistantForm = ({ open, onClose, onAddAssistant }) => {
       workType: formData.workType,
     });
 
-    onClose();
     setFormData({ assistantName: "", phoneNumber: "", workType: "" });
     setSnackbar({
       open: true,
       message: "Assistant Added Successfully",
       severity: "success",
     });
+    onClose();
   };
 
   return (
@@ -103,20 +99,6 @@ const AddAssistantForm = ({ open, onClose, onAddAssistant }) => {
           Add Assistant
         </Button>
       </DialogActions>
-
-      <Snackbar
-        open={snackbar.open}
-        autoHideDuration={3000}
-        onClose={handleCloseSnackbar}
-      >
-        <Alert
-          onClose={handleCloseSnackbar}
-          severity={snackbar.severity}
-          variant="filled"
-        >
-          {snackbar.message}
-        </Alert>
-      </Snackbar>
     </Dialog>
   );
 };

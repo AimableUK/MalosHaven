@@ -35,8 +35,11 @@ const MaintenancePage = () => {
   const [expandedRequestId, setExpandedRequestId] = useState(null);
   const [filterView, setFilterView] = useState("all");
 
-  const [snackbarQueue, setSnackbarQueue] = useState([]);
-  const [activeSnackbar, setActiveSnackbar] = useState(null);
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+    severity: "",
+  });
 
   const [properties, setProperties] = useState(propertiesList);
   const [assistants, setAssistants] = useState(assistantsList);
@@ -63,19 +66,9 @@ const MaintenancePage = () => {
         ? pendingRequests
         : solvedRequests;
 
-  const enqueueSnackbar = (message, severity) => {
-    setSnackbarQueue((prevQueue) => [...prevQueue, { message, severity }]);
-  };
-
-  useEffect(() => {
-    if (!activeSnackbar && snackbarQueue.length > 0) {
-      setActiveSnackbar(snackbarQueue[0]);
-      setSnackbarQueue((prevQueue) => prevQueue.slice(1));
-    }
-  }, [snackbarQueue, activeSnackbar]);
-
   const handleCloseSnackbar = () => {
-    setActiveSnackbar(null);
+    setSnackbar(null);
+    setSnackbar({ open: false, message: "", severity: "" });
   };
 
   const toggleTenantDetails = (requestId) => {
@@ -131,10 +124,11 @@ const MaintenancePage = () => {
         const updatedRequests = unit.tenant.maintenanceRequests.map((req) => {
           if (req.requestId === request.requestId) {
             const newStatus = req.status === "done" ? "pending" : "done";
-            enqueueSnackbar(
-              `${unit.tenant.name}'s Request marked as ${newStatus}`,
-              newStatus === "done" ? "success" : "warning"
-            );
+            setSnackbar({
+              open: true,
+              message: `${unit.tenant.name}'s Request Marked as ${newStatus === "done" ? "Pending" : "Done"}`,
+              severity: `${newStatus === "done" ? "warning" : "success"}`,
+            });
             return { ...req, status: newStatus };
           }
           return req;
@@ -186,7 +180,11 @@ const MaintenancePage = () => {
       )
     );
     setDeleteDialogOpen(false);
-    enqueueSnackbar(`${selectedAssistant.assistantName} deleted successful`, "success");
+    setSnackbar({
+      open: true,
+      message: `${selectedAssistant.assistantName} deleted successfully`,
+      severity: "success",
+    });
   };
 
   // snackbar
@@ -553,20 +551,19 @@ const MaintenancePage = () => {
           </Box>
         </Box>
       </Box>
-      <Snackbar
-        open={!!activeSnackbar}
+      {/* <Snackbar
+        open={snackbar.open}
         autoHideDuration={3000}
         onClose={handleCloseSnackbar}
       >
-        {activeSnackbar && (
-          <Alert
-            severity={activeSnackbar.severity}
-            onClose={handleCloseSnackbar}
-          >
-            {activeSnackbar.message}
-          </Alert>
-        )}
-      </Snackbar>
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity={snackbar.severity}
+          variant="filled"
+        >
+          {snackbar.message}
+        </Alert>
+      </Snackbar> */}
 
       <DataDeleteConfirm
         deleteDialogOpen={deleteDialogOpen}
@@ -579,7 +576,22 @@ const MaintenancePage = () => {
         open={addOpenModal}
         onClose={() => setAddOpenModal(false)}
         onAddAssistant={handleAddAssistant}
+        setSnackbar={setSnackbar}
       />
+
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={3000}
+        onClose={handleCloseSnackbar}
+      >
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity={snackbar.severity}
+          variant="filled"
+        >
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
 
       <FooterPage />
     </Box>
