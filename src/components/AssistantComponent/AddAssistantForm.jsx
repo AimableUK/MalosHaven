@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 
-const AddAssistantForm = ({ open, onClose }) => {
+const AddAssistantForm = ({ open, onClose, onAddAssistant }) => {
   const [formData, setFormData] = useState({
     assistantName: "",
     phoneNumber: "",
@@ -42,7 +42,20 @@ const AddAssistantForm = ({ open, onClose }) => {
       });
       return;
     }
-    
+    onAddAssistant({
+      id: `ASS-${Date.now()}`,
+      assistantName: formData.assistantName,
+      phoneNumber: formData.phoneNumber,
+      workType: formData.workType,
+    });
+
+    onClose();
+    setFormData({ assistantName: "", phoneNumber: "", workType: "" });
+    setSnackbar({
+      open: true,
+      message: "Assistant Added Successfully",
+      severity: "success",
+    });
   };
 
   return (

@@ -51,7 +51,7 @@ const MaintenancePage = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [fade, setFade] = useState(true);
 
-  const [addOpenModal, setAddOpenModal] = useState(false)
+  const [addOpenModal, setAddOpenModal] = useState(false);
 
   const deleteAssistant =
     "Are you sure you want to Delete this Assistant? If you do so, it will be undone";
@@ -186,7 +186,7 @@ const MaintenancePage = () => {
       )
     );
     setDeleteDialogOpen(false);
-    enqueueSnackbar(`${selectedAssistant.name} deleted successful`, "success");
+    enqueueSnackbar(`${selectedAssistant.assistantName} deleted successful`, "success");
   };
 
   // snackbar
@@ -222,6 +222,11 @@ const MaintenancePage = () => {
     return () => clearInterval(Interval);
   });
   const currentImage = MaintainSVG[currentIndex];
+
+  const handleAddAssistant = (newAssistant) => {
+    setAssistants((prev) => [...prev, newAssistant]);
+    setAddOpenModal(false);
+  };
 
   return (
     <Box>
@@ -497,7 +502,11 @@ const MaintenancePage = () => {
                   <Typography fontWeight="bold" mb="5px">
                     Assistants
                   </Typography>
-                  <Button color="info" variant="contained" onClick={() => setAddOpenModal(true)}>
+                  <Button
+                    color="info"
+                    variant="contained"
+                    onClick={() => setAddOpenModal(true)}
+                  >
                     Add assistant
                   </Button>
                 </Box>
@@ -510,10 +519,10 @@ const MaintenancePage = () => {
                       >
                         <Box>
                           <Typography fontWeight="bold">
-                            {assistant.name}
+                            {assistant.assistantName}
                           </Typography>
                           <Typography fontSize="15px">
-                            {assistant.phone}
+                            {assistant.phoneNumber}
                           </Typography>
                           <Typography color="#BDBDBD">
                             {assistant.workType}
@@ -566,11 +575,12 @@ const MaintenancePage = () => {
         deleteAssistant={deleteAssistant}
         deleteType="assistant"
       />
-      <AddAssistantForm 
-        open={addOpenModal} 
+      <AddAssistantForm
+        open={addOpenModal}
         onClose={() => setAddOpenModal(false)}
+        onAddAssistant={handleAddAssistant}
       />
-      
+
       <FooterPage />
     </Box>
   );
