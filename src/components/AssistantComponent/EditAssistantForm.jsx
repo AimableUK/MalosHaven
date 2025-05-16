@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 
-const AddAssistantForm = ({ open, onClose, onAddAssistant, showSnackbar }) => {
+const EditAssistantForm = ({ open, onClose, onEditAssistant, showSnackbar }) => {
   const [formData, setFormData] = useState({
     assistantName: "",
     phoneNumber: "",
@@ -29,8 +29,7 @@ const AddAssistantForm = ({ open, onClose, onAddAssistant, showSnackbar }) => {
       showSnackbar("Please Fill out all fields", "error");
       return;
     }
-    onAddAssistant({
-      id: `ASS-${Date.now()}`,
+    onEditAssistant({
       assistantName: formData.assistantName,
       phoneNumber: formData.phoneNumber,
       workType: formData.workType,
@@ -89,4 +88,4 @@ const AddAssistantForm = ({ open, onClose, onAddAssistant, showSnackbar }) => {
   );
 };
 
-export default AddAssistantForm;
+export default EditAssistantForm;

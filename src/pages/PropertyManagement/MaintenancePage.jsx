@@ -30,6 +30,7 @@ import ACInstallation from "../../assets/ACInstallation.gif";
 import Painting from "../../assets/Painting.gif";
 import ElectricianWorking from "../../assets/ElectricianWorking.gif";
 import AddAssistantForm from "../../components/AssistantComponent/AddAssistantForm";
+import EditAssistantForm from "../../components/AssistantComponent/EditAssistantForm";
 
 const MaintenancePage = () => {
   const [expandedRequestId, setExpandedRequestId] = useState(null);
@@ -48,6 +49,7 @@ const MaintenancePage = () => {
   const [pendingRequests, setPendingRequests] = useState([]);
   const [solvedRequests, setSolvedRequests] = useState([]);
 
+  const [editDialogOpen, setEditDialogOpen] = useState(false)
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [selectedAssistant, setSelectedAssistant] = useState(null);
 
@@ -55,6 +57,7 @@ const MaintenancePage = () => {
   const [fade, setFade] = useState(true);
 
   const [addOpenModal, setAddOpenModal] = useState(false);
+  const [editOpenModal, setEditOpenModal] = useState(false);
 
   const deleteAssistant =
     "Are you sure you want to Delete this Assistant? If you do so, it will be undone";
@@ -65,6 +68,17 @@ const MaintenancePage = () => {
       : filterView === "pending"
         ? pendingRequests
         : solvedRequests;
+
+  const showSnackbar = (message, severity = "success") => {
+    setSnackbar((prev) => ({ ...prev, open: false }));
+    setTimeout(() => {
+      setSnackbar({
+        open: true,
+        message,
+        severity,
+      });
+    }, 100); // Delay can be short like 100ms
+  };
 
   const handleCloseSnackbar = () => {
     setSnackbar(null);
@@ -124,11 +138,12 @@ const MaintenancePage = () => {
         const updatedRequests = unit.tenant.maintenanceRequests.map((req) => {
           if (req.requestId === request.requestId) {
             const newStatus = req.status === "done" ? "pending" : "done";
-            setSnackbar({
-              open: true,
-              message: `${unit.tenant.name}'s Request Marked as ${newStatus === "done" ? "Pending" : "Done"}`,
-              severity: `${newStatus === "done" ? "warning" : "success"}`,
-            });
+            showSnackbar(
+              `${unit.tenant.name}'s Request Marked as ${
+                newStatus === "done" ? "Done" : "Pending"
+              }`,
+              newStatus === "done" ? "success" : "warning"
+            );
             return { ...req, status: newStatus };
           }
           return req;
@@ -180,11 +195,10 @@ const MaintenancePage = () => {
       )
     );
     setDeleteDialogOpen(false);
-    setSnackbar({
-      open: true,
-      message: `${selectedAssistant.assistantName} deleted successfully`,
-      severity: "success",
-    });
+    showSnackbar(
+      `${selectedAssistant.assistantName} deleted successfully`,
+      "success"
+    );
   };
 
   // snackbar
@@ -224,6 +238,18 @@ const MaintenancePage = () => {
   const handleAddAssistant = (newAssistant) => {
     setAssistants((prev) => [...prev, newAssistant]);
     setAddOpenModal(false);
+    showSnackbar(`${newAssistant.assistantName} added Successfully`, "success");
+  };
+
+  const handleEditDialogOpen = (newAssistant) => {
+    setEditDialogOpen(true) 
+    setSelectedAssistant(newAssistant)
+  };
+
+  const handleEditAssistant = (newAssistant) => {
+    setAssistants((prev) => [...prev, newAssistant]);
+    setAddOpenModal(false);
+    showSnackbar(`${newAssistant.assistantName} added Successfully`, "success");
   };
 
   return (
@@ -528,7 +554,7 @@ const MaintenancePage = () => {
                         </Box>
                         <Box className="flex flex-row gap-2 justify-end">
                           <Tooltip title="Edit Assistant">
-                            <IconButton>
+                            <IconButton onClick={() => handleEditDialogOpen(assistant)}>
                               <EditIcon />
                             </IconButton>
                           </Tooltip>
@@ -551,19 +577,6 @@ const MaintenancePage = () => {
           </Box>
         </Box>
       </Box>
-      {/* <Snackbar
-        open={snackbar.open}
-        autoHideDuration={3000}
-        onClose={handleCloseSnackbar}
-      >
-        <Alert
-          onClose={handleCloseSnackbar}
-          severity={snackbar.severity}
-          variant="filled"
-        >
-          {snackbar.message}
-        </Alert>
-      </Snackbar> */}
 
       <DataDeleteConfirm
         deleteDialogOpen={deleteDialogOpen}
@@ -572,11 +585,21 @@ const MaintenancePage = () => {
         deleteAssistant={deleteAssistant}
         deleteType="assistant"
       />
+
       <AddAssistantForm
         open={addOpenModal}
         onClose={() => setAddOpenModal(false)}
         onAddAssistant={handleAddAssistant}
         setSnackbar={setSnackbar}
+        showSnackbar={showSnackbar}
+      />
+
+      <EditAssistantForm
+        open={editOpenModal}
+        onClose={() => setEditOpenModal(false)}
+        onEditAssistant={handleEditAssistant}
+        setSnackbar={setSnackbar}
+        showSnackbar={showSnackbar}
       />
 
       <Snackbar
