@@ -216,8 +216,8 @@ const MaintenancePage = () => {
       setTimeout(() => {
         setCurrentIndex((prevIndex) => (prevIndex + 1) % MaintainSVG.length);
         setFade(true);
-      }, 650);
-    }, 6000);
+      }, 800);
+    }, 5000);
 
     return () => clearInterval(Interval);
   });
