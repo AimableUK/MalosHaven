@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Button, Typography } from "@mui/material";
 import MovingTwoToneIcon from "@mui/icons-material/MovingTwoTone";
 import PieChart from "../../components/DataCharts/PieChart";
@@ -9,15 +9,68 @@ import LineChart from "../../components/DataCharts/LineChart";
 import SMPieChart from "../../components/DataCharts/SMPieChart";
 import FooterPage from "../Footer/FooterPage";
 import { useMediaQuery } from "@mui/material";
+import propertiesList from "../../Data/SiteDataComponent/Properties";
 
 const AnalyticsPage = () => {
   const [value, setValue] = useState("monthly");
+  const [properties, setProperties] = useState(propertiesList);
+
+  const [requests, setRequests] = useState([]);
+  const [pendingRequests, setPendingRequests] = useState([]);
+  const [solvedRequests, setSolvedRequests] = useState([]);
 
   const handleChange = (event) => {
     setValue(event.target.value);
   };
 
   const isTablet = useMediaQuery("(max-width:768px)");
+
+  useEffect(() => {
+    const allRequests = [];
+
+    properties.forEach((property) => {
+      property.units.forEach((unit) => {
+        const tenant = unit.tenant;
+        if (tenant?.maintenanceRequests?.length > 0) {
+          tenant.maintenanceRequests.forEach((request) => {
+            allRequests.push({
+              ...request,
+              tenantName: tenant.name,
+              tenantPhone: tenant.phone,
+              tenantImage: tenant.image,
+              propertyTitle: property.title,
+              unit: unit.UnitNumber,
+            });
+          });
+        }
+      });
+    });
+
+    setRequests(allRequests);
+    setPendingRequests(allRequests.filter((r) => r.status === "pending"));
+    setSolvedRequests(allRequests.filter((r) => r.status === "done"));
+  }, [properties]);
+
+  const MaintenancesChart = [
+    {
+      id: "All",
+      label: "All",
+      value: requests?.length,
+      color: "hsl(53, 70%, 50%)",
+    },
+    {
+      id: "Pending",
+      label: "Pending",
+      value: pendingRequests?.length,
+      color: "hsl(285, 70%, 50%)",
+    },
+    {
+      id: "Solved",
+      label: "Solved",
+      value: solvedRequests?.length,
+      color: "hsl(75, 70%, 50%)",
+    },
+  ];
 
   return (
     <Box m="20px">
@@ -278,11 +331,11 @@ const AnalyticsPage = () => {
           }}
           className="border-t-2 border-t-slate-300 h-full"
         >
-          <Typography sx={{ color: "#fff", mb: 1, textAlign: "center" }}>
-            Project Status
+          <Typography sx={{ color: "#fff", mb: 1, textAlign: "center" }} fontWeight="bold">
+            Maintainence Overview
           </Typography>
           <Box sx={{ minHeight: 240, width: "100%" }}>
-            <SMPieChart />
+            <SMPieChart data={MaintenancesChart} />
           </Box>
         </Box>
       </Box>

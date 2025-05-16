@@ -25,6 +25,10 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import Collapse from "@mui/material/Collapse";
 import assistantsList from "../../Data/SiteDataComponent/Assistants";
 import DataDeleteConfirm from "../../components/DeleteConfirmComponent/DataDeleteConfirm";
+import WaterRepair from "../../assets/WaterRepair.gif";
+import ACInstallation from "../../assets/ACInstallation.gif";
+import Painting from "../../assets/Painting.gif";
+import ElectricianWorking from "../../assets/ElectricianWorking.gif";
 
 const MaintenancePage = () => {
   const [expandedRequestId, setExpandedRequestId] = useState(null);
@@ -40,6 +44,9 @@ const MaintenancePage = () => {
 
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [selectedAssistantId, setSelectedAssistantId] = useState(null);
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [fade, setFade] = useState(true);
 
   const deleteAssistant =
     "Are you sure you want to Delete this Assistant? If you do so, it will be undone";
@@ -141,7 +148,7 @@ const MaintenancePage = () => {
     setProperties(updatedProperties);
   };
 
-  const MaintenencesChart = [
+  const MaintenancesChart = [
     {
       id: "All",
       label: "All",
@@ -176,21 +183,67 @@ const MaintenancePage = () => {
 
   // snackbar
 
+  const MaintainSVG = [
+    {
+      src: WaterRepair,
+      alt: "Water Repair",
+    },
+    {
+      src: ACInstallation,
+      alt: "AC Installation",
+    },
+    {
+      src: Painting,
+      alt: "Painting Works",
+    },
+    {
+      src: ElectricianWorking,
+      alt: "Electician Working",
+    },
+  ];
+
+  useEffect(() => {
+    const Interval = setInterval(() => {
+      setFade(false);
+      setTimeout(() => {
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % MaintainSVG.length);
+        setFade(true);
+      }, 750);
+    }, 4000);
+
+    return () => clearInterval(Interval);
+  });
+  const currentImage = MaintainSVG[currentIndex];
+
   return (
     <Box>
       <Box classname="">
         <Box className="">
           {/* charts */}
-          <Box className="bg-[#6950e8] p-3 pb-7 flex justify-center md:justify-start">
+          <Box
+            style={{
+              backgroundImage:
+                "linear-gradient(to right, #0f0c29, #302b63, #24243e)",
+            }}
+            className="p-3 px-16 pb-7 flex justify-center md:justify-between items-center"
+          >
             <Typography
               fontWeight="bold"
-              sx={{ fontSize: { sm: "18px", md: "20px", lg: "28px" } }}
+              sx={{
+                fontSize: { sm: "18px", md: "20px", lg: "28px" },
+                whiteSpace: "nowrap",
+              }}
             >
               Maintenance Issues Panel
             </Typography>
+            <img
+              src={currentImage.src}
+              alt={currentImage.alt}
+              className={`w-[200px] hidden md:block transition-opacity duration-500 ${fade ? "opacity-100" : "opacity-0"}`}
+            />
           </Box>
           {/* Down One */}
-          <Box className="mx-4 mb-4 flex flex-col lg:grid grid-cols-12 col-span-12 gap-5 -mt-6">
+          <Box className="mx-4 mb-4 flex flex-col lg:grid grid-cols-12 col-span-12 gap-5 -mt-7">
             {/* Boxes */}
             <Box className="col-span-7">
               {/* 1 row 2 box */}
@@ -427,7 +480,7 @@ const MaintenancePage = () => {
               <Box className="bg-[#2D454D] -mt-4 lg:mt-0 rounded p-3 border-t-2 h-fit">
                 <Typography fontWeight="bold">Maintenance Overview</Typography>
                 <Box sx={{ minHeight: 240, width: "100%" }}>
-                  <SMPieChart data={MaintenencesChart} />
+                  <SMPieChart data={MaintenancesChart} />
                 </Box>
               </Box>
               {/* Companies and employees */}

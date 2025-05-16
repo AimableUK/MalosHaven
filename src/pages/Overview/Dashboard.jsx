@@ -1,11 +1,11 @@
 import { Box, Button, Typography } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PieChart from "../../components/DataCharts/PieChart.jsx";
 import LineChart from "../../components/DataCharts/LineChart.jsx";
 import PlaceIcon from "@mui/icons-material/Place";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import MyProperties from "../../Data/SiteDataComponent/Properties.js";
+import propertiesList from "../../Data/SiteDataComponent/Properties.js";
 import FooterPage from "../Footer/FooterPage.jsx";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { Link } from "react-router-dom";
@@ -18,9 +18,54 @@ import ClearAllIcon from "@mui/icons-material/ClearAll";
 import ChecklistIcon from "@mui/icons-material/Checklist";
 import PeopleIcon from "@mui/icons-material/People";
 import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
+import assistantsList from "../../Data/SiteDataComponent/Assistants.js";
 
 const Dashboard = () => {
+  const [properties, setProperties] = useState(propertiesList);
+  const [assistants, setAssistants] = useState(assistantsList);
+
+  const [requests, setRequests] = useState([]);
+  const [pendingRequests, setPendingRequests] = useState([]);
+  const [solvedRequests, setSolvedRequests] = useState([]);
+
+  const [totalUnits, setTotalUnits] = useState(0);
+  const [totalTenants, setTotalTenants] = useState(0);
+
   const isSmallScreen = useMediaQuery("(max-width:1024px)");
+
+  useEffect(() => {
+    const allRequests = [];
+    let unitCount = 0;
+    let tenantCount = 0;
+
+    properties.forEach((property) => {
+      property.units.forEach((unit) => {
+        unitCount++;
+        const tenant = unit.tenant;
+        if (tenant) {
+          tenantCount++;
+          if (tenant.maintenanceRequests?.length > 0) {
+            tenant.maintenanceRequests.forEach((request) => {
+              allRequests.push({
+                ...request,
+                tenantName: tenant.name,
+                tenantPhone: tenant.phone,
+                tenantImage: tenant.image,
+                propertyTitle: property.title,
+                unit: unit.UnitNumber,
+              });
+            });
+          }
+        }
+      });
+    });
+
+    setRequests(allRequests);
+    setPendingRequests(allRequests.filter((r) => r.status === "pending"));
+    setSolvedRequests(allRequests.filter((r) => r.status === "done"));
+    setTotalUnits(unitCount);
+    setTotalTenants(tenantCount);
+  }, [properties]);
 
   return (
     <Box display="flex" flexDirection="column">
@@ -76,7 +121,7 @@ const Dashboard = () => {
                 <Typography
                   sx={{ fontWeight: "bold", fontSize: "30px", color: "#fff" }}
                 >
-                  8
+                  {properties?.length}
                 </Typography>
                 <Typography sx={{ fontWeight: "bold", color: "#fff" }}>
                   Total Properties
@@ -107,7 +152,7 @@ const Dashboard = () => {
                 <Typography
                   sx={{ fontWeight: "bold", fontSize: "30px", color: "#fff" }}
                 >
-                  49
+                  {totalUnits}
                 </Typography>
                 <Typography sx={{ fontWeight: "bold", color: "#fff" }}>
                   Total Units
@@ -136,10 +181,10 @@ const Dashboard = () => {
                 <Typography
                   sx={{ fontWeight: "bold", fontSize: "30px", color: "#fff" }}
                 >
-                  42
+                  {totalTenants}
                 </Typography>
                 <Typography sx={{ fontWeight: "bold", color: "#fff" }}>
-                  Toatal Tenants
+                  Total Tenants
                 </Typography>
               </Box>
             </Box>
@@ -227,7 +272,7 @@ const Dashboard = () => {
                 <Typography
                   sx={{ color: "#fff", fontSize: "24px", fontWeight: "bold" }}
                 >
-                  37
+                  {requests?.length}
                 </Typography>
                 <Typography sx={{ color: "#fff" }}>All Maintenances</Typography>
               </Box>
@@ -260,13 +305,13 @@ const Dashboard = () => {
                   width: "fit-content",
                 }}
               >
-                <ChecklistIcon fontSize="large" />
+                <HourglassBottomIcon fontSize="large" />
               </Box>
               <Box className="flex flex-col items-end -mt-8">
                 <Typography
                   sx={{ color: "#fff", fontSize: "24px", fontWeight: "bold" }}
                 >
-                  20
+                  {pendingRequests?.length}
                 </Typography>
                 <Typography sx={{ color: "#fff" }}>
                   Pending Maintenances
@@ -303,14 +348,14 @@ const Dashboard = () => {
                   width: "fit-content",
                 }}
               >
-                <HourglassBottomIcon fontSize="large" />
+                <ChecklistIcon fontSize="large" />
               </Box>
             </Box>
             <Box className="flex flex-col items-end -mt-8">
               <Typography
                 sx={{ color: "#fff", fontSize: "24px", fontWeight: "bold" }}
               >
-                17
+                {solvedRequests?.length}
               </Typography>
               <Typography sx={{ color: "#fff" }}>
                 Solved Maintenances
@@ -350,7 +395,7 @@ const Dashboard = () => {
                 <Typography
                   sx={{ color: "#fff", fontSize: "24px", fontWeight: "bold" }}
                 >
-                  7
+                  {assistants?.length}
                 </Typography>
                 <Typography sx={{ color: "#fff" }}>Assistants</Typography>
               </Box>
@@ -369,7 +414,7 @@ const Dashboard = () => {
             </Button>
           </Link>
         </Box>
-        {MyProperties.map((property) => (
+        {properties.map((property) => (
           <Box
             key={property.id}
             sx={{
