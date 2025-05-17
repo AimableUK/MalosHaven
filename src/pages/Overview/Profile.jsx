@@ -1,28 +1,15 @@
 import { Avatar, Box, Button, Typography } from "@mui/material";
-import React, { useState } from "react";
 import profileCover from "../../assets/profileCover.jpg";
 import userAvatar from "../../assets/userAvatar.jpg";
 import EditIcon from "@mui/icons-material/Edit";
 import BarChartIcon from "@mui/icons-material/BarChart";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import { Link } from "react-router-dom";
-import AddIcon from "@mui/icons-material/Add";
-import DataPropertyFormModal from "../../components/PropertyFormComponent/DataPropertyForm";
-import MyProperties from "../../Data/SiteDataComponent/Properties";
-import PlaceIcon from "@mui/icons-material/Place";
-import DeleteIcon from "@mui/icons-material/Delete";
-import VisibilityIcon from "@mui/icons-material/Visibility";
 import FooterPage from "../Footer/FooterPage";
 import { useMediaQuery } from "@mui/material";
+import PropertiesComponent from "./PropertiesComponent";
 
 const Profile = () => {
-  const [openModal, setOpenModal] = useState(false);
-  const [properties, setProperties] = useState(MyProperties);
-
-  const handleAddProp = (newProp) => {
-    setProperties((prev) => [...prev, newProp]);
-    setOpenModal(false);
-  };
   const isSmallScreen = useMediaQuery("(max-width:768px)");
 
   return (
@@ -37,7 +24,6 @@ const Profile = () => {
 
       {/* all content */}
       <Box
-        // mx= {isSmallScreen ?"15px" : "5px" }
         sx={{
           background: "#2D454D",
           p: 2,
@@ -46,7 +32,7 @@ const Profile = () => {
           position: "relative",
           zIndex: 1,
         }}
-        className={`${isSmallScreen ? "m-[2px]" :"m-3"}`}
+        className={`${isSmallScreen ? "m-[2px]" : "m-3"}`}
       >
         {/* prof-top */}
         <Box className="flex flex-col md:flex-row items-center justify-between">
@@ -121,140 +107,8 @@ const Profile = () => {
             </Box>
           </Box>
         </Box>
-
-        <Box className="font-roboto" padding="10px">
-          <Box className="flex flex-col md:flex-row justify-between my-1 items-center">
-            <Typography fontWeight="bold">PROPERTIES</Typography>
-            <Button
-              startIcon={<AddIcon />}
-              variant="contained"
-              color="info"
-              onClick={() => setOpenModal(true)}
-            >
-              ADD PROPERTY
-            </Button>
-          </Box>
-
-          <DataPropertyFormModal
-            open={openModal}
-            onClose={() => setOpenModal(false)}
-            onAddProperty={handleAddProp}
-          />
-
-          <Box className="flex flex-col md:grid grid-cols-12 gap-2">
-            {properties.slice(0, 3).map((property) => (
-              <Box
-                key={property.id}
-                sx={{
-                  gridColumn: "span 4",
-                  display: "flex",
-                  flexDirection: "column",
-                  background: "#2D454D",
-                  borderRadius: "8px",
-                  justifyContent: "space-between",
-                  p: 2,
-                  mb: 1,
-                }}
-                className="group border-t-2 border-t-slate-300 shadow-md shadow-slate-800"
-              >
-                <Box>
-                  <img
-                    src={property.image}
-                    alt="house"
-                    className="shadow-md shadow-slate-500 rounded-md transition-transform duration-300 ease-in-out group-hover:-translate-y-12 cursor-pointer z-10 relative"
-                  />
-
-                  <Box
-                    display="flex"
-                    flexDirection="row"
-                    gap= {isSmallScreen ? "": "10px"}
-                    zIndex="0"
-                    mt="-40px"
-                  >
-                    <Link
-                      to={`/propertydetails/${property.id}`}
-                      key={property.id}
-                    >
-                      <Button
-                        variant={isSmallScreen ? "text" : "contained"}
-                        color="info"
-                        startIcon={<VisibilityIcon />}
-                      >
-                        {!isSmallScreen && "Edit"}
-                      </Button>
-                    </Link>
-
-                    <Button
-                      variant={isSmallScreen ? "text" : "contained"}
-                      startIcon={<EditIcon />}
-                      color="success"
-                    >
-                      {!isSmallScreen && "Edit"}
-                    </Button>
-                    <Button
-                      variant={isSmallScreen ? "text" : "contained"}
-                      startIcon={<DeleteIcon />}
-                      color="error"
-                    >
-                      {!isSmallScreen && "Delete"}
-                    </Button>
-                  </Box>
-                </Box>
-                <Box>
-                  <Link
-                    to={`/propertydetails/${property.id}`}
-                    key={property.id}
-                  >
-                    <Typography
-                      fontWeight="bold"
-                      textAlign="center"
-                      my="15px"
-                      mt="25px"
-                    >
-                      {property.title}
-                    </Typography>
-                  </Link>
-                  <Typography variant="body1" component="p">
-                    {property.description}
-                  </Typography>
-                </Box>
-                <Box
-                  sx={{
-                    height: "2px",
-                    width: "100%",
-                    background:
-                      "linear-gradient(to right, #2d454d, white, #2d454d)",
-                    my: 3,
-                    borderRadius: "999px",
-                  }}
-                />
-                <Box
-                  display="flex"
-                  flexDirection="row"
-                  justifyContent="space-between"
-                >
-                  <Typography fontWeight="bold">
-                    {property.units.length} Units
-                  </Typography>
-                  <Typography textAlign="center">
-                    <PlaceIcon />
-                    {property.location}
-                  </Typography>
-                </Box>
-              </Box>
-            ))}
-          </Box>
-          <Link to="/properties">
-            <Button
-              variant="contained"
-              sx={{ whiteSpace: "nowrap" }}
-              color="success"
-            >
-              VIEW MORE
-            </Button>
-          </Link>
-        </Box>
       </Box>
+      <PropertiesComponent />
       <FooterPage />
     </Box>
   );

@@ -1,19 +1,21 @@
+import {
+  Alert,
+  Box,
+  useMediaQuery,
+  Button,
+  Snackbar,
+  Typography,
+} from "@mui/material";
 import React, { useState } from "react";
-import { Alert, Box, Button, Snackbar, Typography } from "@mui/material";
+import MyProperties from "../../Data/SiteDataComponent/Properties";
+import { Link } from "react-router-dom";
 import PlaceIcon from "@mui/icons-material/Place";
 import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import { Link } from "react-router-dom";
-import AddIcon from "@mui/icons-material/Add";
-import DataPropertyFormModal from "../../components/PropertyFormComponent/DataPropertyForm";
-import MyProperties from "../../Data/SiteDataComponent/Properties";
-import FooterPage from "../Footer/FooterPage";
-import { useMediaQuery } from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
 import DataDeleteConfirm from "../../components/DeleteConfirmComponent/DataDeleteConfirm";
 
-const PropertiesPage = () => {
-  const [openModal, setOpenModal] = useState(false);
+const PropertiesComponent = () => {
   const [properties, setProperties] = useState(MyProperties);
 
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
@@ -28,7 +30,12 @@ const PropertiesPage = () => {
   const deleteProperty =
     "Are you sure you want to Delete this Property? If you do so, it will be undone";
 
-  const isSmallScreen = useMediaQuery("(max-width:380px)");
+  const isSmallScreen = useMediaQuery("(max-width:768px)");
+
+  const handleDeleteDialogOpen = (property) => {
+    setDeleteDialogOpen(true);
+    setSelectedProperty(property);
+  };
 
   const showSnackbar = (message, severity = "success") => {
     setSnackbar((prev) => ({ ...prev, open: false }));
@@ -41,21 +48,6 @@ const PropertiesPage = () => {
     }, 100);
   };
 
-  const handleCloseSnackbar = () => {
-    setSnackbar(null);
-    setSnackbar({ open: false, message: "", severity: "" });
-  };
-
-  const handleAddProp = (newProp) => {
-    setProperties((prev) => [...prev, newProp]);
-    setOpenModal(false);
-  };
-
-  const handleDeleteDialogOpen = (property) => {
-    setDeleteDialogOpen(true);
-    setSelectedProperty(property);
-  };
-
   const handleDeleteProperty = () => {
     setProperties((prevProperty) =>
       prevProperty.filter((property) => property.id !== selectedProperty.id)
@@ -64,28 +56,22 @@ const PropertiesPage = () => {
     showSnackbar(`${selectedProperty.title} deleted successfully`, "success");
   };
 
+  const handleCloseSnackbar = () => {
+    setSnackbar(null);
+    setSnackbar({ open: false, message: "", severity: "" });
+  };
+
   return (
-    <Box className={`${isSmallScreen ? "" : "m-[10px]"}`} padding="10px">
-      <Box className="flex flex-col md:flex-row justify-between items-center my-1">
-        <Typography fontWeight="bold">PROPERTIES</Typography>
-        <Button
-          startIcon={<AddIcon />}
-          variant="contained"
-          color="info"
-          onClick={() => setOpenModal(true)}
-          sx={{ whiteSpace: "nowrap" }}
-        >
-          ADD PROPERTY
-        </Button>
+    <Box>
+      <Box className="flex flex-col md:flex-row items-center justify-center md:justify-between bg-[#2D454D] p-2 px-2 rounded-md border-t-2 border-t-slate-300">
+        <Typography fontWeight="bold">Properties</Typography>
+        <Link to="/properties">
+          <Button color="info" variant="contained">
+            View More
+          </Button>
+        </Link>
       </Box>
-
-      <DataPropertyFormModal
-        open={openModal}
-        onClose={() => setOpenModal(false)}
-        onAddProperty={handleAddProp}
-      />
-
-      <Box className="flex flex-col grid-cols-12 gap-[10px] py-[10px] font-roboto">
+      <Box className="flex flex-col grid-cols-12 gap-[10px] py-[10px] font-roboto bg-[#1c292d]">
         {properties.length > 0 ? (
           properties.slice(0, 3).map((property) => (
             <Box
@@ -204,6 +190,7 @@ const PropertiesPage = () => {
         deleteProperty={deleteProperty}
         deleteType="property"
       />
+
       <Snackbar
         open={snackbar.open}
         autoHideDuration={3000}
@@ -217,9 +204,8 @@ const PropertiesPage = () => {
           {snackbar.message}
         </Alert>
       </Snackbar>
-      <FooterPage />
     </Box>
   );
 };
 
-export default PropertiesPage;
+export default PropertiesComponent;
