@@ -9,14 +9,31 @@ import {
   Snackbar,
   TextField,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-const EditAssistantForm = ({ open, onClose, onEditAssistant, showSnackbar }) => {
+const EditAssistantForm = ({
+  open,
+  onClose,
+  onEditAssistant,
+  showSnackbar,
+  selectedAssistant,
+}) => {
   const [formData, setFormData] = useState({
     assistantName: "",
     phoneNumber: "",
     workType: "",
   });
+
+  // ✅ Prefill the form when the selectedAssistant changes
+  useEffect(() => {
+    if (selectedAssistant) {
+      setFormData({
+        assistantName: selectedAssistant.assistantName || "",
+        phoneNumber: selectedAssistant.phoneNumber || "",
+        workType: selectedAssistant.workType || "",
+      });
+    }
+  }, [selectedAssistant]);
 
   const handleChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -26,13 +43,15 @@ const EditAssistantForm = ({ open, onClose, onEditAssistant, showSnackbar }) => 
     const { assistantName, phoneNumber, workType } = formData;
 
     if (!assistantName.trim() || !phoneNumber.trim() || !workType.trim()) {
-      showSnackbar("Please Fill out all fields", "error");
+      showSnackbar("Please fill out all fields", "error");
       return;
     }
+
     onEditAssistant({
-      assistantName: formData.assistantName,
-      phoneNumber: formData.phoneNumber,
-      workType: formData.workType,
+      ...selectedAssistant,
+      assistantName,
+      phoneNumber,
+      workType,
     });
 
     setFormData({ assistantName: "", phoneNumber: "", workType: "" });
@@ -41,7 +60,7 @@ const EditAssistantForm = ({ open, onClose, onEditAssistant, showSnackbar }) => 
 
   return (
     <Dialog open={open} onClose={onClose}>
-      <DialogTitle fontWeight="bold">Add An Assistant</DialogTitle>
+      <DialogTitle fontWeight="bold">Edit An Assistant</DialogTitle>
       <DialogContent>
         <TextField
           label="Assistant Name"
@@ -51,7 +70,7 @@ const EditAssistantForm = ({ open, onClose, onEditAssistant, showSnackbar }) => 
           autoComplete="off"
           required
           sx={{ mt: 1 }}
-          value={formData.name}
+          value={formData.assistantName}
           onChange={handleChange}
         />
         <TextField
@@ -62,7 +81,7 @@ const EditAssistantForm = ({ open, onClose, onEditAssistant, showSnackbar }) => 
           autoComplete="off"
           required
           sx={{ my: 1 }}
-          value={formData.phone}
+          value={formData.phoneNumber}
           onChange={handleChange}
         />
         <TextField
@@ -81,7 +100,7 @@ const EditAssistantForm = ({ open, onClose, onEditAssistant, showSnackbar }) => 
           Cancel
         </Button>
         <Button variant="contained" onClick={handleSubmit}>
-          Add Assistant
+          Update Assistant
         </Button>
       </DialogActions>
     </Dialog>

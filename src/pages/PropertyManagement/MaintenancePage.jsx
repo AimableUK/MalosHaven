@@ -49,7 +49,6 @@ const MaintenancePage = () => {
   const [pendingRequests, setPendingRequests] = useState([]);
   const [solvedRequests, setSolvedRequests] = useState([]);
 
-  const [editDialogOpen, setEditDialogOpen] = useState(false)
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [selectedAssistant, setSelectedAssistant] = useState(null);
 
@@ -241,15 +240,22 @@ const MaintenancePage = () => {
     showSnackbar(`${newAssistant.assistantName} added Successfully`, "success");
   };
 
-  const handleEditDialogOpen = (newAssistant) => {
-    setEditDialogOpen(true) 
-    setSelectedAssistant(newAssistant)
+  const handleEditDialogOpen = (assistant) => {
+    setEditOpenModal(true);
+    setSelectedAssistant(assistant);
   };
 
-  const handleEditAssistant = (newAssistant) => {
-    setAssistants((prev) => [...prev, newAssistant]);
+  const handleEditAssistant = (updatedAssistant) => {
+    setAssistants((prevAssistants) =>
+      prevAssistants.map((assistant) =>
+        assistant.id === updatedAssistant.id ? updatedAssistant : assistant
+      )
+    );
     setAddOpenModal(false);
-    showSnackbar(`${newAssistant.assistantName} added Successfully`, "success");
+    showSnackbar(
+      `${updatedAssistant.assistantName} Updated Successfully`,
+      "success"
+    );
   };
 
   return (
@@ -554,7 +560,9 @@ const MaintenancePage = () => {
                         </Box>
                         <Box className="flex flex-row gap-2 justify-end">
                           <Tooltip title="Edit Assistant">
-                            <IconButton onClick={() => handleEditDialogOpen(assistant)}>
+                            <IconButton
+                              onClick={() => handleEditDialogOpen(assistant)}
+                            >
                               <EditIcon />
                             </IconButton>
                           </Tooltip>
@@ -600,6 +608,7 @@ const MaintenancePage = () => {
         onEditAssistant={handleEditAssistant}
         setSnackbar={setSnackbar}
         showSnackbar={showSnackbar}
+        selectedAssistant={selectedAssistant}
       />
 
       <Snackbar
