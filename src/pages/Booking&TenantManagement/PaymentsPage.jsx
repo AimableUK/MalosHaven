@@ -112,9 +112,9 @@ const PaymentsPage = () => {
       headerName: "More",
       width: 80,
       sortable: false,
-      renderCell: () => (
+      renderCell: (params) => (
         <Box className="text-gray-400 cursor-pointer">
-          <MoreVertIcon onClick={(event) => handleActionsClick(event)} />
+          <MoreVertIcon onClick={(event) => handleActionsClick(event, params.row)} />
         </Box>
       ),
     },
@@ -132,7 +132,7 @@ const PaymentsPage = () => {
   };
 
   const handleAddInvoice = (invoice) => {
-    selectedInvoice((prevInvoices) => ({ ...prevInvoices, invoice }));
+    setInvoices((prevInvoices) => ({ ...prevInvoices, invoice }));
 
     setSnackbar({
       open: true,
@@ -141,7 +141,8 @@ const PaymentsPage = () => {
     });
   };
 
-  const handleActionsClick = (event) => {
+  const handleActionsClick = (event, invoice) => {
+    setSelectedInvoice(invoice)
     setAnchorEl(event.currentTarget);
   };
 
@@ -156,7 +157,7 @@ const PaymentsPage = () => {
       prevInvoice.filter((invoice) => invoice.id !== selectedInvoice.id)
     );
     setDeleteDialogOpen(false);
-    showSnackbar(`${selectedInvoice.name} deleted successfully`, "success");
+    showSnackbar(`${selectedInvoice.tenantName} deleted successfully`, "success");
   };
 
   const handleCloseMenu = () => {
@@ -281,7 +282,7 @@ const PaymentsPage = () => {
             </MenuItem>
             <MenuItem
               onClose={handleCloseMenu}
-              onClick={() => handleDeleteDialogOpen()}
+              onClick={() => handleDeleteDialogOpen(selectedInvoice)}
               sx={{ ":hover": { color: "#F44545" } }}
             >
               <DeleteIcon />
