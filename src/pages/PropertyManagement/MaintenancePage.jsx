@@ -139,9 +139,9 @@ const MaintenancePage = () => {
             const newStatus = req.status === "done" ? "pending" : "done";
             showSnackbar(
               `${unit.tenant.name}'s Request Marked as ${
-                newStatus === "done" ? "Done" : "Pending"
+                newStatus === "done" ? "Pending" : "Done"
               }`,
-              newStatus === "done" ? "success" : "warning"
+              newStatus === "done" ? "warning" : "success"
             );
             return { ...req, status: newStatus };
           }

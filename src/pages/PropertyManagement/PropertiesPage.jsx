@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Alert, Box, Button, Snackbar, Typography } from "@mui/material";
 import PlaceIcon from "@mui/icons-material/Place";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -11,12 +11,14 @@ import MyProperties from "../../Data/SiteDataComponent/Properties";
 import FooterPage from "../Footer/FooterPage";
 import { useMediaQuery } from "@mui/material";
 import DataDeleteConfirm from "../../components/DeleteConfirmComponent/DataDeleteConfirm";
+import EditPropertyFormModal from "../../components/PropertyFormComponent/EditPropertyForm";
 
 const PropertiesPage = () => {
-  const [openModal, setOpenModal] = useState(false);
+  const [addPropertyOpenModal, setAddPropertyOpenModal] = useState(false);
   const [properties, setProperties] = useState(MyProperties);
 
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [editPropertyFormModal, setEditPropertyFormModal] = useState(false);
   const [selectedProperty, setSelectedProperty] = useState(null);
 
   const [snackbar, setSnackbar] = useState({
@@ -29,6 +31,10 @@ const PropertiesPage = () => {
     "Are you sure you want to Delete this Property? If you do so, it will be undone";
 
   const isSmallScreen = useMediaQuery("(max-width:380px)");
+
+  useEffect(() => {
+    setProperties(properties)
+  }, [properties])
 
   const showSnackbar = (message, severity = "success") => {
     setSnackbar((prev) => ({ ...prev, open: false }));
@@ -48,7 +54,7 @@ const PropertiesPage = () => {
 
   const handleAddProp = (newProp) => {
     setProperties((prev) => [...prev, newProp]);
-    setOpenModal(false);
+    setAddPropertyOpenModal(false);
   };
 
   const handleDeleteDialogOpen = (property) => {
@@ -64,6 +70,23 @@ const PropertiesPage = () => {
     showSnackbar(`${selectedProperty.title} deleted successfully`, "success");
   };
 
+  const handleEditPropertyDialogOpen = (property) => {
+    setEditPropertyFormModal(true);
+    setSelectedProperty(property);
+  };
+
+  const handleEditProp = (updatedProperty) => {
+    setProperties((prevProperties) =>
+      prevProperties.map((property) =>
+        property.id === updatedProperty.id ? updatedProperty : property
+      )
+    );
+    setEditPropertyFormModal(false);
+    showSnackbar(`${updatedProperty.title} Updated Successfully`, "success");
+    console.log(updatedProperty)
+    console.log(updatedProperty.image)
+  };
+
   return (
     <Box className={`${isSmallScreen ? "" : "m-[10px]"}`} padding="10px">
       <Box className="flex flex-col md:flex-row justify-between items-center my-1">
@@ -72,7 +95,7 @@ const PropertiesPage = () => {
           startIcon={<AddIcon />}
           variant="contained"
           color="info"
-          onClick={() => setOpenModal(true)}
+          onClick={() => setAddPropertyOpenModal(true)}
           sx={{ whiteSpace: "nowrap" }}
         >
           ADD PROPERTY
@@ -80,9 +103,16 @@ const PropertiesPage = () => {
       </Box>
 
       <DataPropertyFormModal
-        open={openModal}
-        onClose={() => setOpenModal(false)}
+        open={addPropertyOpenModal}
+        onClose={() => setAddPropertyOpenModal(false)}
         onAddProperty={handleAddProp}
+      />
+
+      <EditPropertyFormModal
+        open={editPropertyFormModal}
+        onClose={() => setEditPropertyFormModal(false)}
+        onEditProperty={handleEditProp}
+        selectedProperty={selectedProperty}
       />
 
       <Box className="flex flex-col grid-cols-12 gap-[10px] py-[10px] font-roboto">
@@ -131,6 +161,7 @@ const PropertiesPage = () => {
                     variant={isSmallScreen ? "text" : "contained"}
                     startIcon={<EditIcon />}
                     color="success"
+                    onClick={() => handleEditPropertyDialogOpen(property)}
                   >
                     {!isSmallScreen && "Edit"}
                   </Button>
