@@ -28,6 +28,8 @@ const PaymentsPage = () => {
   const [openAddModal, setOpenAddModal] = useState(false);
   const [openEditModal, setOpenEditModal] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [editDialogOpen, setEditDialogOpen] = useState(false);
+
   const [selectedInvoice, setSelectedInvoice] = useState(null);
   const [deleteType, setDeleteType] = useState("invoice");
   const [anchorEl, setAnchorEl] = useState(null);
@@ -114,7 +116,9 @@ const PaymentsPage = () => {
       sortable: false,
       renderCell: (params) => (
         <Box className="text-gray-400 cursor-pointer">
-          <MoreVertIcon onClick={(event) => handleActionsClick(event, params.row)} />
+          <MoreVertIcon
+            onClick={(event) => handleActionsClick(event, params.row)}
+          />
         </Box>
       ),
     },
@@ -142,14 +146,14 @@ const PaymentsPage = () => {
   };
 
   const handleActionsClick = (event, invoice) => {
-    setSelectedInvoice(invoice)
+    setSelectedInvoice(invoice);
     setAnchorEl(event.currentTarget);
   };
 
   const handleDeleteDialogOpen = (invoice) => {
     setDeleteDialogOpen(true);
     setSelectedInvoice(invoice);
-    setAnchorEl(null);
+    handleCloseMenu()
   };
 
   const handleDeleteInvoice = () => {
@@ -157,8 +161,21 @@ const PaymentsPage = () => {
       prevInvoice.filter((invoice) => invoice.id !== selectedInvoice.id)
     );
     setDeleteDialogOpen(false);
-    showSnackbar(`${selectedInvoice.tenantName} deleted successfully`, "success");
+    showSnackbar(
+      `${selectedInvoice.tenantName} deleted successfully`,
+      "success"
+    );
   };
+
+  const handleEditDialogOpen = () => {
+    setOpenEditModal(true);
+    handleCloseMenu();
+    console.log(selectedInvoice)
+  };
+
+  const handleEditInvoice = () => {
+
+  }
 
   const handleCloseMenu = () => {
     setAnchorEl(null);
@@ -235,8 +252,9 @@ const PaymentsPage = () => {
           <EditInvoiceForm
             open={openEditModal}
             onClose={() => setOpenEditModal(false)}
-            onAddInvoice={handleAddInvoice}
+            onEditInvoice={handleEditInvoice}
             propertiesState={propertiesState}
+            selectedInvoice={selectedInvoice}
           />
 
           {/* Delete Confirmation Modal */}
@@ -270,10 +288,7 @@ const PaymentsPage = () => {
             onClose={handleCloseMenu}
           >
             <MenuItem
-              onClick={() => {
-                setOpenEditModal(true);
-                handleCloseMenu();
-              }}
+              onClick={() => handleEditDialogOpen(selectedInvoice)}
               onClose={handleCloseMenu}
               sx={{ ":hover": { color: "#10b981" } }}
             >

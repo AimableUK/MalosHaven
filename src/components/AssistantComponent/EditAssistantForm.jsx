@@ -24,7 +24,6 @@ const EditAssistantForm = ({
     workType: "",
   });
 
-  // ✅ Prefill the form when the selectedAssistant changes
   useEffect(() => {
     if (selectedAssistant) {
       setFormData({

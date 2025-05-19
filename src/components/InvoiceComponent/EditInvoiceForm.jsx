@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Dialog,
   DialogTitle,
@@ -23,7 +23,13 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
-const EditInvoiceForm = ({ open, onClose, onAddInvoice, propertiesState }) => {
+const EditInvoiceForm = ({
+  open,
+  onClose,
+  onEditInvoice,
+  selectedInvoice,
+  propertiesState,
+}) => {
   const [selectedIssueDate, setSelectedIssueDate] = useState(null);
   const [selectedDueDate, setSelectedDueDate] = useState(null);
 
@@ -40,6 +46,20 @@ const EditInvoiceForm = ({ open, onClose, onAddInvoice, propertiesState }) => {
     message: "",
     severity: "success",
   });
+
+  useEffect(() => {
+    if (selectedInvoice) {
+      setFormData({
+        tenant: selectedInvoice.tenantName,
+        amount: selectedInvoice.amount,
+        issueDate: selectedInvoice.issueDate,
+        paymentStatus: selectedInvoice.paymentStatus,
+        reason: selectedInvoice.reason,
+        dateIssued: selectedInvoice.dateIssued,
+        dueDate: selectedInvoice.dueDate,
+      });
+    }
+  }, [selectedInvoice]);
 
   const handleChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -64,7 +84,7 @@ const EditInvoiceForm = ({ open, onClose, onAddInvoice, propertiesState }) => {
       return;
     }
 
-    onAddInvoice({
+    onEditInvoice({
       id: Date.now(),
       tenantName: tenant,
       amount: Number(amount),
