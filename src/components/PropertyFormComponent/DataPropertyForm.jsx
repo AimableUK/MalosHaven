@@ -59,11 +59,6 @@ const DataPropertyFormModal = ({ open, onClose, onAddProperty }) => {
     setFormData({ name: "", desc: "", units: "", loc: "" });
     setImage(null);
     setImagePreview(null);
-    setSnackbar({
-      open: true,
-      message: "Property added successfully!",
-      severity: "success",
-    });
   };
 
   const handleImageChange = (e) => {

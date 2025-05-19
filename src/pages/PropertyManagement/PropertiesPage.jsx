@@ -32,10 +32,6 @@ const PropertiesPage = () => {
 
   const isSmallScreen = useMediaQuery("(max-width:380px)");
 
-  useEffect(() => {
-    setProperties(properties)
-  }, [properties])
-
   const showSnackbar = (message, severity = "success") => {
     setSnackbar((prev) => ({ ...prev, open: false }));
     setTimeout(() => {
@@ -53,8 +49,14 @@ const PropertiesPage = () => {
   };
 
   const handleAddProp = (newProp) => {
+    console.log("📦 newProp added:", newProp);
     setProperties((prev) => [...prev, newProp]);
     setAddPropertyOpenModal(false);
+    setSnackbar({
+      open: true,
+      message: "Property added successfully!",
+      severity: "success",
+    });
   };
 
   const handleDeleteDialogOpen = (property) => {
@@ -83,8 +85,8 @@ const PropertiesPage = () => {
     );
     setEditPropertyFormModal(false);
     showSnackbar(`${updatedProperty.title} Updated Successfully`, "success");
-    console.log(updatedProperty)
-    console.log(updatedProperty.image)
+    console.log(updatedProperty);
+    console.log(updatedProperty.image);
   };
 
   return (
@@ -116,8 +118,8 @@ const PropertiesPage = () => {
       />
 
       <Box className="flex flex-col grid-cols-12 gap-[10px] py-[10px] font-roboto">
-        {properties.length > 0 ? (
-          properties.slice(0, 3).map((property) => (
+        {(properties?.length ?? 0) > 0 ? (
+          properties.map((property) => (
             <Box
               key={property.id}
               sx={{
@@ -207,10 +209,10 @@ const PropertiesPage = () => {
                     mx="10px"
                   >
                     <Typography fontWeight="bold">
-                      {
-                        property.units.filter((unit) => unit.tenant == null)
-                          .length
-                      }
+                      {Array.isArray(property.units)
+                        ? property.units.filter((unit) => unit.tenant == null)
+                            .length
+                        : 0}
                       &nbsp;Units
                     </Typography>
                     <Typography textAlign="center">
