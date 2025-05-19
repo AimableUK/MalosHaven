@@ -7,7 +7,7 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import { Link } from "react-router-dom";
 import FooterPage from "../Footer/FooterPage";
 import { useMediaQuery } from "@mui/material";
-import PropertiesComponent from "./PropertiesComponent";
+import PropertiesComponent from "../PropertyManagement/PropertiesComponent"
 
 const Profile = () => {
   const isSmallScreen = useMediaQuery("(max-width:768px)");

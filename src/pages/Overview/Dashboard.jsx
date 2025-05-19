@@ -13,7 +13,7 @@ import ChecklistIcon from "@mui/icons-material/Checklist";
 import PeopleIcon from "@mui/icons-material/People";
 import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
 import assistantsList from "../../Data/SiteDataComponent/Assistants.js";
-import PropertiesComponent from "./PropertiesComponent.jsx";
+import PropertiesComponent from "../PropertyManagement/PropertiesComponent.jsx";
 
 const Dashboard = () => {
   const [properties, setProperties] = useState(propertiesList);

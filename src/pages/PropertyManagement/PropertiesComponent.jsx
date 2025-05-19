@@ -14,9 +14,12 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import EditIcon from "@mui/icons-material/Edit";
 import DataDeleteConfirm from "../../components/DeleteConfirmComponent/DataDeleteConfirm";
+import EditPropertyFormModal from "../../components/PropertyFormComponent/EditPropertyForm";
 
 const PropertiesComponent = () => {
   const [properties, setProperties] = useState(MyProperties);
+
+  const [editPropertyFormModal, setEditPropertyFormModal] = useState(false);
 
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [selectedProperty, setSelectedProperty] = useState(null);
@@ -59,6 +62,23 @@ const PropertiesComponent = () => {
   const handleCloseSnackbar = () => {
     setSnackbar(null);
     setSnackbar({ open: false, message: "", severity: "" });
+  };
+
+  const handleEditPropertyDialogOpen = (property) => {
+    setEditPropertyFormModal(true);
+    setSelectedProperty(property);
+  };
+
+  const handleEditProp = (updatedProperty) => {
+    setProperties((prevProperties) =>
+      prevProperties.map((property) =>
+        property.id === updatedProperty.id ? updatedProperty : property
+      )
+    );
+    setEditPropertyFormModal(false);
+    showSnackbar(`${updatedProperty.title} Updated Successfully`, "success");
+    console.log(updatedProperty);
+    console.log(updatedProperty.image);
   };
 
   return (
@@ -117,6 +137,7 @@ const PropertiesComponent = () => {
                     variant={isSmallScreen ? "text" : "contained"}
                     startIcon={<EditIcon />}
                     color="success"
+                    onClick={() => handleEditPropertyDialogOpen(property)}
                   >
                     {!isSmallScreen && "Edit"}
                   </Button>
@@ -189,6 +210,13 @@ const PropertiesComponent = () => {
         handleDeleteProperty={handleDeleteProperty}
         deleteProperty={deleteProperty}
         deleteType="property"
+      />
+
+      <EditPropertyFormModal
+        open={editPropertyFormModal}
+        onClose={() => setEditPropertyFormModal(false)}
+        onEditProperty={handleEditProp}
+        selectedProperty={selectedProperty}
       />
 
       <Snackbar
