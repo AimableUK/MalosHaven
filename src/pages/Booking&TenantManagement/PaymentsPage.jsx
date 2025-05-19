@@ -10,7 +10,7 @@ import {
 import React, { useState } from "react";
 import ReceiptIcon from "@mui/icons-material/Receipt";
 import { GridToolbar } from "@mui/x-data-grid/internals";
-import invoices from "../../Data/SiteDataComponent/Invoices.js";
+import MyInvoices from "../../Data/SiteDataComponent/Invoices.js";
 import { DataGrid } from "@mui/x-data-grid";
 import AddInvoiceForm from "../../components/InvoiceComponent/AddInvoiceForm.jsx";
 import DataDeleteConfirm from "../../components/DeleteConfirmComponent/DataDeleteConfirm.jsx";
@@ -20,15 +20,15 @@ import EditIcon from "@mui/icons-material/Edit";
 import Properties from "../../Data/SiteDataComponent/Properties.js";
 import AddIcon from "@mui/icons-material/Add";
 import EditInvoiceForm from "../../components/InvoiceComponent/EditInvoiceForm.jsx";
-import userAvatar from "../../assets/userAvatar.jpg"
+import userAvatar from "../../assets/userAvatar.jpg";
 
 const PaymentsPage = () => {
   const [propertiesState, setPropertiesState] = useState(Properties);
-  const [invoicesState, setInvoicesState] = useState(invoices);
+  const [invoices, setInvoices] = useState(MyInvoices);
   const [openAddModal, setOpenAddModal] = useState(false);
   const [openEditModal, setOpenEditModal] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-  const [selectedInvoiceId, setSelectedInvoiceId] = useState(null);
+  const [selectedInvoice, setSelectedInvoice] = useState(null);
   const [deleteType, setDeleteType] = useState("invoice");
   const [anchorEl, setAnchorEl] = useState(null);
   const [snackbar, setSnackbar] = useState({
@@ -38,7 +38,7 @@ const PaymentsPage = () => {
   });
 
   const deleteInvoice =
-    "Are you sure you want to Delete this Assistant? If you do so, it will be undone";
+    "Are you sure you want to Delete this Invoice? If you do so, it will be undone";
 
   const columns = [
     {
@@ -114,18 +114,25 @@ const PaymentsPage = () => {
       sortable: false,
       renderCell: () => (
         <Box className="text-gray-400 cursor-pointer">
-          <MoreVertIcon onClick={(event) => setAnchorEl(event.currentTarget)} />
+          <MoreVertIcon onClick={(event) => handleActionsClick(event)} />
         </Box>
       ),
     },
   ];
 
-  // const selectedUnit = invoice.units.find(
-  //   (unit) => unit.id === selectedInvoiceId
-  // );
+  const showSnackbar = (message, severity = "success") => {
+    setSnackbar((prev) => ({ ...prev, open: false }));
+    setTimeout(() => {
+      setSnackbar({
+        open: true,
+        message,
+        severity,
+      });
+    }, 100); // Delay can be short like 100ms
+  };
 
   const handleAddInvoice = (invoice) => {
-    setInvoicesState((prevInvoices) => ({ ...prevInvoices, invoice }));
+    selectedInvoice((prevInvoices) => ({ ...prevInvoices, invoice }));
 
     setSnackbar({
       open: true,
@@ -134,35 +141,27 @@ const PaymentsPage = () => {
     });
   };
 
-  // const handleDeleteUnit = () => {
-  //   setInvoicesState((prevInvoices) =>
-  //     prevInvoices.map((invoice) =>
-  //       invoice.id === parseInt(id)
-  //         ? {
-  //             ...invoice,
-  //             units: invoice.units.filter(
-  //               (unit) => unit.id !== selectedInvoiceId
-  //             ),
-  //           }
-  //         : invoice
-  //     )
-  //   );
+  const handleActionsClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
 
-  //   setSnackbar({
-  //     open: true,
-  //     message: "Unit deleted successfully!",
-  //     severity: "success",
-  //   });
-  //   setDeleteDialogOpen(false);
-  //   setSelectedInvoiceId(null);
-  // };
+  const handleDeleteDialogOpen = (invoice) => {
+    setDeleteDialogOpen(true);
+    setSelectedInvoice(invoice);
+    setAnchorEl(null);
+  };
+
+  const handleDeleteInvoice = () => {
+    setInvoices((prevInvoice) =>
+      prevInvoice.filter((invoice) => invoice.id !== selectedInvoice.id)
+    );
+    setDeleteDialogOpen(false);
+    showSnackbar(`${selectedInvoice.name} deleted successfully`, "success");
+  };
 
   const handleCloseMenu = () => {
     setAnchorEl(null);
   };
-
-  const deleteUnit =
-    "Are you sure you want to Delete this Unit? If you do so, it will be undone";
 
   const handleCloseSnackbar = () => {
     setSnackbar({ ...snackbar, open: false });
@@ -187,7 +186,7 @@ const PaymentsPage = () => {
         </Box>
         <Box>
           <DataGrid
-            rows={invoicesState}
+            rows={invoices}
             columns={columns}
             showToolbar
             initialState={{
@@ -243,11 +242,9 @@ const PaymentsPage = () => {
           <DataDeleteConfirm
             deleteDialogOpen={deleteDialogOpen}
             setDeleteDialogOpen={setDeleteDialogOpen}
-            selectedInvoiceId={selectedInvoiceId}
-            setSelectedInvoiceId={setSelectedInvoiceId}
-            // handleDeleteUnit={handleDeleteUnit}
+            handleDeleteInvoice={handleDeleteInvoice}
             deleteInvoice={deleteInvoice}
-            deleteType="unit"
+            deleteType="invoice"
           />
 
           {/* Snackbar */}
@@ -274,7 +271,7 @@ const PaymentsPage = () => {
             <MenuItem
               onClick={() => {
                 setOpenEditModal(true);
-                handleCloseMenu()
+                handleCloseMenu();
               }}
               onClose={handleCloseMenu}
               sx={{ ":hover": { color: "#10b981" } }}
@@ -284,10 +281,7 @@ const PaymentsPage = () => {
             </MenuItem>
             <MenuItem
               onClose={handleCloseMenu}
-              onClick={() => {
-                setDeleteDialogOpen(true);
-                setAnchorEl(null);
-              }}
+              onClick={() => handleDeleteDialogOpen()}
               sx={{ ":hover": { color: "#F44545" } }}
             >
               <DeleteIcon />
