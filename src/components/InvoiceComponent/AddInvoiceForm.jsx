@@ -130,7 +130,7 @@ const AddInvoiceForm = ({ open, onClose, onAddInvoice, propertiesState }) => {
               >
                 {tenants.map((tenant, idx) => (
                   <MenuItem key={idx} value={tenant.name}>
-                    {tenant.name} — Unit ({tenant.unitNumber}) —{" "}
+                    {tenant.name} — Unit ({tenant.unitNumber}) —
                     {tenant.propertyName}
                   </MenuItem>
                 ))}
@@ -166,16 +166,14 @@ const AddInvoiceForm = ({ open, onClose, onAddInvoice, propertiesState }) => {
             </LocalizationProvider>
           </Box>
 
-          <FormControl
-            value={formData.paymentStatus}
-            onChange={handleChange}
-            name="paymentStatus"
-          >
+          <FormControl>
             <FormLabel id="status-options-label">Payment Status</FormLabel>
             <RadioGroup
               row
               aria-labelledby="status-options-radio-label"
-              name="row-radio-buttons-group"
+              name="paymentStatus"
+              value={formData.paymentStatus}
+              onChange={handleChange}
             >
               <FormControlLabel value="Paid" control={<Radio />} label="Paid" />
               <FormControlLabel
