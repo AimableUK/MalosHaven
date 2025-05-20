@@ -8,7 +8,6 @@ import {
   TextField,
   Snackbar,
   Alert,
-  Typography,
   FormControl,
   FormLabel,
   RadioGroup,
@@ -18,14 +17,17 @@ import {
   Select,
   MenuItem,
   Box,
+  Avatar,
+  Typography,
 } from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
-const AddInvoiceForm = ({ open, onClose, onAddInvoice, propertiesState }) => {
+const AddInvoiceForm = ({ open, onClose, onAddInvoice, propertiesState, setSelectedInvoice }) => {
   const [selectedIssueDate, setSelectedIssueDate] = useState(null);
   const [selectedDueDate, setSelectedDueDate] = useState(null);
+  const [selectedTenant, setSelectedTenant] = useState(null);
 
   const [formData, setFormData] = useState({
     tenant: "",
@@ -35,6 +37,7 @@ const AddInvoiceForm = ({ open, onClose, onAddInvoice, propertiesState }) => {
     paymentStatus: "",
     reason: "",
   });
+
   const [snackbar, setSnackbar] = useState({
     open: false,
     message: "",
@@ -42,7 +45,14 @@ const AddInvoiceForm = ({ open, onClose, onAddInvoice, propertiesState }) => {
   });
 
   const handleChange = (e) => {
-    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    const { name, value } = e.target;
+
+    setFormData((prev) => ({ ...prev, [name]: value }));
+
+    if (name === "tenant") {
+      const tenantInfo = tenants.find((t) => t.name === value);
+      setSelectedTenant(tenantInfo || null);
+    }
   };
 
   const handleSubmit = () => {
@@ -68,6 +78,8 @@ const AddInvoiceForm = ({ open, onClose, onAddInvoice, propertiesState }) => {
       id: `INV-${Date.now()}`,
       tenantName: tenant,
       amount: Number(amount),
+      avatar: selectedTenant.image,
+      phone: selectedTenant.phone,
       reason,
       status: paymentStatus,
       dateIssued: selectedIssueDate.format("YYYY-MM-DD"),
@@ -85,6 +97,7 @@ const AddInvoiceForm = ({ open, onClose, onAddInvoice, propertiesState }) => {
     });
     setSelectedIssueDate(null);
     setSelectedDueDate(null);
+    setSelectedInvoice(null)
   };
 
   const handleCloseSnackbar = () => {
@@ -117,8 +130,16 @@ const AddInvoiceForm = ({ open, onClose, onAddInvoice, propertiesState }) => {
         <DialogContent
           sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 1 }}
         >
+          {selectedTenant && (
+            <Box className="flex flex-col md:flex-row items-center gap-2">
+              <Avatar src={selectedTenant.image} alt="Tenant" width={80} />
+
+              <Typography>
+                <strong>Phone Number:</strong> {selectedTenant.phone}
+              </Typography>
+            </Box>
+          )}
           <Box className="flex flex-col md:flex-row items-center mt-3">
-            {/* tenant details */}
             <FormControl fullWidth sx={{ width: "full" }}>
               <InputLabel id="tenant-select-label">Tenant</InputLabel>
               <Select
@@ -128,8 +149,11 @@ const AddInvoiceForm = ({ open, onClose, onAddInvoice, propertiesState }) => {
                 label="Tenant"
                 onChange={handleChange}
               >
-                {tenants.map((tenant, idx) => (
-                  <MenuItem key={idx} value={tenant.name}>
+                {tenants.map((tenant) => (
+                  <MenuItem
+                    key={tenant.email || tenant.name}
+                    value={tenant.name}
+                  >
                     {tenant.name} — Unit ({tenant.unitNumber}) —
                     {tenant.propertyName}
                   </MenuItem>
@@ -142,11 +166,10 @@ const AddInvoiceForm = ({ open, onClose, onAddInvoice, propertiesState }) => {
             label="Amount"
             type="number"
             name="amount"
-            value={formData.amount}
+            value={formData.amount || ""}
             onChange={handleChange}
           />
 
-          {/* dates */}
           <Box className="flex flex-col md:flex-row gap-3">
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker
@@ -172,29 +195,30 @@ const AddInvoiceForm = ({ open, onClose, onAddInvoice, propertiesState }) => {
               row
               aria-labelledby="status-options-radio-label"
               name="paymentStatus"
-              value={formData.paymentStatus}
+              value={formData.paymentStatus || ""}
               onChange={handleChange}
             >
               <FormControlLabel value="Paid" control={<Radio />} label="Paid" />
               <FormControlLabel
-                value="UnPaid"
+                value="Unpaid"
                 control={<Radio />}
                 label="UnPaid"
               />
               <FormControlLabel
-                value="OverDue"
+                value="Overdue"
                 control={<Radio />}
                 label="OverDue"
               />
             </RadioGroup>
           </FormControl>
+
           <TextField
             multiline
             rows={4}
             label="Reason"
             name="reason"
             fullWidth
-            value={formData.reason}
+            value={formData.reason || ""}
             onChange={handleChange}
           />
         </DialogContent>
@@ -207,6 +231,7 @@ const AddInvoiceForm = ({ open, onClose, onAddInvoice, propertiesState }) => {
           </Button>
         </DialogActions>
       </Dialog>
+
       <Snackbar
         open={snackbar.open}
         autoHideDuration={2000}

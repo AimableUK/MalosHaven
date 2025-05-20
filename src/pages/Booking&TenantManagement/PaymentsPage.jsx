@@ -70,10 +70,10 @@ const PaymentsPage = () => {
     },
     {
       field: "amount",
-      headerName: "Amount",
+      headerName: "Amount (FRW)",
       width: 120,
       renderCell: (params) => (
-        <span className="text-white">${params.value.toFixed(2)}</span>
+        <span className="text-white">{params.value.toFixed(2)}</span>
       ),
     },
     {
@@ -240,6 +240,7 @@ const PaymentsPage = () => {
             onClose={() => setOpenAddModal(false)}
             onAddInvoice={handleAddInvoice}
             propertiesState={propertiesState}
+            setSelectedInvoice={setSelectedInvoice}
           />
 
           <EditInvoiceForm
