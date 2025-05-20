@@ -65,7 +65,7 @@ const AddInvoiceForm = ({ open, onClose, onAddInvoice, propertiesState }) => {
     }
 
     onAddInvoice({
-      id: Date.now(),
+      id: `INV-${Date.now()}`,
       tenantName: tenant,
       amount: Number(amount),
       reason,
@@ -85,12 +85,6 @@ const AddInvoiceForm = ({ open, onClose, onAddInvoice, propertiesState }) => {
     });
     setSelectedIssueDate(null);
     setSelectedDueDate(null);
-
-    setSnackbar({
-      open: true,
-      message: "Invoice added successfully!",
-      severity: "success",
-    });
   };
 
   const handleCloseSnackbar = () => {

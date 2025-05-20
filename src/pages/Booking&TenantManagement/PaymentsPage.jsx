@@ -138,8 +138,7 @@ const PaymentsPage = () => {
   const handleAddInvoice = (invoice) => {
     setInvoices((prevInvoices) => ({ ...prevInvoices, invoice }));
 
-    setSnackbar({
-      open: true,
+    showSnackbar({
       message: `Invoice of: ${invoice.tenant} added Successfully`,
       severity: "success",
     });
@@ -153,7 +152,7 @@ const PaymentsPage = () => {
   const handleDeleteDialogOpen = (invoice) => {
     setDeleteDialogOpen(true);
     setSelectedInvoice(invoice);
-    handleCloseMenu()
+    handleCloseMenu();
   };
 
   const handleDeleteInvoice = () => {
@@ -170,12 +169,10 @@ const PaymentsPage = () => {
   const handleEditDialogOpen = () => {
     setOpenEditModal(true);
     handleCloseMenu();
-    console.log(selectedInvoice)
+    console.log(selectedInvoice);
   };
 
-  const handleEditInvoice = () => {
-
-  }
+  const handleEditInvoice = () => {};
 
   const handleCloseMenu = () => {
     setAnchorEl(null);
