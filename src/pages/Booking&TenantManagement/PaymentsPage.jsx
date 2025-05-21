@@ -139,7 +139,7 @@ const PaymentsPage = () => {
 
   const handleAddInvoice = (invoice) => {
     setInvoices((prevInvoices) => [...prevInvoices, invoice]);
-    showSnackbar(`Invoice of: ${invoice.tenant} added Successfully`, "success");
+    showSnackbar(`Invoice of ${invoice.tenantName} added Successfully`, "success");
   };
 
   const handleActionsClick = (event, invoice) => {

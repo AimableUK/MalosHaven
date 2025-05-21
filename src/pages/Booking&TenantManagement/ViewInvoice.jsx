@@ -66,14 +66,20 @@ const PrintableArticle = () => {
           </Box>
           <Box className="flex flex-col">
             <Typography fontWeight="bold" fontFamily="poppins">
-              Issue Date:{" "}
+              Issue Date:
               <span style={{ fontWeight: "initial" }}>
                 {invoice.dateIssued}
               </span>
             </Typography>
             <Typography fontWeight="bold" fontFamily="poppins">
-              Due Date:{" "}
+              Due Date:
               <span style={{ fontWeight: "initial" }}>{invoice.dueDate}</span>
+            </Typography>
+          </Box>
+          <Box>
+            <Typography fontWeight="bold" fontFamily="poppins">
+              Reason:&nbsp;
+              <span style={{ fontWeight: "initial" }}>{invoice.reason}</span>
             </Typography>
           </Box>
         </Box>
