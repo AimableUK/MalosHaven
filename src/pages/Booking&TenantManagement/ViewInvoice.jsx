@@ -34,30 +34,19 @@ const PrintableArticle = () => {
 
   return (
     <Box className="m-5">
-      <Box>
-        <Typography className="text-gray-400">
-          Date Issued: {invoice.dateIssued}
-        </Typography>
-
-        <Typography className="text-gray-400">
-          Reason: {invoice.reason}
-        </Typography>
-        <Typography className="text-gray-400">
-          Payment Status: {invoice.status}
-        </Typography>
-        <Typography className="text-gray-400">
-          Due Date: {invoice.dueDate}
-        </Typography>
-      </Box>
-
       <Box
         className="a4-page print:bg-white print:text-black p-6 bg-[#24383E] rounded-md"
         ref={componentRef}
       >
-        <Box className="flex flex-row justify-between">
-          <Box>
+        <Box className="flex flex-col gap-4">
+          <Box className="flex flex-row justify-between">
             <img src={Logo} alt="Our Logo" />
-            <Box mt={2}>
+            <Typography fontFamily="poppins">
+              Invoice #<br /> {invoice.invoiceNumber}
+            </Typography>
+          </Box>
+          <Box className="flex flex-row justify-between">
+            <Box>
               <Typography fontWeight="bold" fontFamily="poppins">
                 KAMO BUSINESS CO. LTD
               </Typography>
@@ -67,17 +56,24 @@ const PrintableArticle = () => {
               <Typography fontFamily="poppins">Muhima, 120KN ST</Typography>
               <Typography fontFamily="poppins">+250 780934382</Typography>
             </Box>
+            <Box className="flex flex-col items-end">
+              <Typography fontFamily="poppins" fontWeight="bold">
+                {invoice.tenantName}
+              </Typography>
+              <Typography fontFamily="poppins">{invoice.email}</Typography>
+              <Typography fontFamily="poppins">{invoice.phone}</Typography>
+            </Box>
           </Box>
-          <Box className="flex flex-col items-end">
-            <Typography fontFamily="poppins">Invoice # {invoice.id}</Typography>
-            <Typography fontFamily="poppins" variant="h7">
-              {invoice.tenantName}
+          <Box className="flex flex-col">
+            <Typography fontWeight="bold" fontFamily="poppins">
+              Issue Date:{" "}
+              <span style={{ fontWeight: "initial" }}>
+                {invoice.dateIssued}
+              </span>
             </Typography>
-            <Typography fontFamily="poppins" variant="h7">
-              {invoice.phone}
-            </Typography>
-            <Typography fontFamily="poppins" variant="h7">
-              {invoice.amount}
+            <Typography fontWeight="bold" fontFamily="poppins">
+              Due Date:{" "}
+              <span style={{ fontWeight: "initial" }}>{invoice.dueDate}</span>
             </Typography>
           </Box>
         </Box>

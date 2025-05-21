@@ -1,6 +1,7 @@
 export const invoices = [
   {
     id: 1,
+    invoiceNumber: "INV-0001",
     tenantName: "Alice Uwimana",
     email: "alice.uwimana@example.rw",
     phone: "+250 780 123 456",
@@ -13,6 +14,7 @@ export const invoices = [
   },
   {
     id: 2,
+    invoiceNumber: "INV-0002",
     tenantName: "Michael Ndayisaba",
     email: "michael.ndayisaba@example.rw",
     phone: "+250 781 987 654",
@@ -25,6 +27,7 @@ export const invoices = [
   },
   {
     id: 3,
+    invoiceNumber: "INV-0003",
     tenantName: "Emily Ingabire",
     email: "emily.ingabire@example.rw",
     phone: "+250 782 222 333",
@@ -37,6 +40,7 @@ export const invoices = [
   },
   {
     id: 4,
+    invoiceNumber: "INV-0004",
     tenantName: "James Mugabo",
     email: "james.mugabo@example.rw",
     phone: "+250 783 444 567",
@@ -49,6 +53,7 @@ export const invoices = [
   },
   {
     id: 5,
+    invoiceNumber: "INV-0005",
     tenantName: "Sophia Mukamana",
     email: "sophia.mukamana@example.rw",
     phone: "+250 784 555 678",
@@ -61,6 +66,7 @@ export const invoices = [
   },
   {
     id: 6,
+    invoiceNumber: "INV-0006",
     tenantName: "Liam Habimana",
     email: "liam.habimana@example.rw",
     phone: "+250 785 666 112",
@@ -73,6 +79,7 @@ export const invoices = [
   },
   {
     id: 7,
+    invoiceNumber: "INV-0007",
     tenantName: "Olivia Mutoni",
     email: "olivia.mutoni@example.rw",
     phone: "+250 786 777 334",
@@ -85,6 +92,7 @@ export const invoices = [
   },
   {
     id: 8,
+    invoiceNumber: "INV-0008",
     tenantName: "William Gashugi",
     email: "william.gashugi@example.rw",
     phone: "+250 787 888 556",
@@ -97,6 +105,7 @@ export const invoices = [
   },
   {
     id: 9,
+    invoiceNumber: "INV-0009",
     tenantName: "Ava Uwamahoro",
     email: "ava.uwamahoro@example.rw",
     phone: "+250 788 999 778",
@@ -109,6 +118,7 @@ export const invoices = [
   },
   {
     id: 10,
+    invoiceNumber: "INV-0010",
     tenantName: "Ethan Nkurunziza",
     email: "ethan.nkurunziza@example.rw",
     phone: "+250 789 101 010",
@@ -121,6 +131,7 @@ export const invoices = [
   },
   {
     id: 11,
+    invoiceNumber: "INV-0011",
     tenantName: "Isabella Nyirabega",
     email: "isabella.nyirabega@example.rw",
     phone: "+250 790 202 202",
@@ -133,6 +144,7 @@ export const invoices = [
   },
   {
     id: 12,
+    invoiceNumber: "INV-0012",
     tenantName: "Noah Rutikanga",
     email: "noah.rutikanga@example.rw",
     phone: "+250 791 303 303",
@@ -145,6 +157,7 @@ export const invoices = [
   },
   {
     id: 13,
+    invoiceNumber: "INV-0013",
     tenantName: "Mia Niyonsenga",
     email: "mia.niyonsenga@example.rw",
     phone: "+250 792 404 404",
@@ -157,6 +170,7 @@ export const invoices = [
   },
   {
     id: 14,
+    invoiceNumber: "INV-0014",
     tenantName: "Lucas Murenzi",
     email: "lucas.murenzi@example.rw",
     phone: "+250 793 505 505",
@@ -169,6 +183,7 @@ export const invoices = [
   },
   {
     id: 15,
+    invoiceNumber: "INV-0015",
     tenantName: "Charlotte Uwase",
     email: "charlotte.uwase@example.rw",
     phone: "+250 794 606 606",
