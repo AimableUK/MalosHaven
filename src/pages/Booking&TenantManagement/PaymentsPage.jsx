@@ -22,6 +22,7 @@ import AddIcon from "@mui/icons-material/Add";
 import EditInvoiceForm from "../../components/InvoiceComponent/EditInvoiceForm.jsx";
 import userAvatar from "../../assets/userAvatar.jpg";
 import { Link, Navigate } from "react-router-dom";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 
 const PaymentsPage = () => {
   const [propertiesState, setPropertiesState] = useState(Properties);
@@ -171,10 +172,6 @@ const PaymentsPage = () => {
 
   const handleEditInvoice = () => {};
 
-  const handleViewInvoice = (invoice) => {
-    // Navigate('invoiceview')
-    // handleCloseMenu()
-  };
 
   const handleCloseMenu = () => {
     setAnchorEl(null);
@@ -287,16 +284,17 @@ const PaymentsPage = () => {
             open={Boolean(anchorEl)}
             onClose={handleCloseMenu}
           >
-            <Link>
-              <MenuItem
-                onClick={() => handleViewInvoice(selectedInvoice)}
-                onClose={handleCloseMenu}
-                sx={{ ":hover": { color: "#10b981" } }}
-              >
-                <EditIcon />
-                View
-              </MenuItem>
-            </Link>
+            {selectedInvoice && (
+              <Link to={`/invoiceview/${selectedInvoice.id}`}>
+                <MenuItem
+                  onClick={handleCloseMenu}
+                  sx={{ ":hover": { color: "#10b981" } }}
+                >
+                  <VisibilityIcon />
+                  View
+                </MenuItem>
+              </Link>
+            )}
 
             <MenuItem
               onClick={() => handleEditDialogOpen(selectedInvoice)}

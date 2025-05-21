@@ -13,8 +13,6 @@ import FooterPage from "../Footer/FooterPage";
 import AddIcon from "@mui/icons-material/Add";
 import PlaceIcon from "@mui/icons-material/Place";
 
-
-
 const PropertyDetails = () => {
   const [propertiesState, setPropertiesState] = useState(properties);
   const [openModal, setOpenModal] = useState(false);
