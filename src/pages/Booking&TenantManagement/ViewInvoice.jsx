@@ -35,18 +35,10 @@ const PrintableArticle = () => {
   return (
     <Box className="m-5">
       <Box>
-        <Typography variant="h6" className="text-white">
-          Tenant: {invoice.tenantName}
-        </Typography>
-        <Typography variant="h6" className="text-white">
-          Tenant: {invoice.phone}
-        </Typography>
         <Typography className="text-gray-400">
           Date Issued: {invoice.dateIssued}
         </Typography>
-        <Typography className="text-gray-400">
-          Amount: {invoice.amount}
-        </Typography>
+
         <Typography className="text-gray-400">
           Reason: {invoice.reason}
         </Typography>
@@ -59,19 +51,34 @@ const PrintableArticle = () => {
       </Box>
 
       <Box
-        component="div"
-        className="a4-page page-break  print:bg-white print:text-black flex flex-row p-6 bg-[#24383E] rounded-md"
+        className="a4-page print:bg-white print:text-black p-6 bg-[#24383E] rounded-md"
         ref={componentRef}
       >
-        <Box>
+        <Box className="flex flex-row justify-between">
           <Box>
             <img src={Logo} alt="Our Logo" />
             <Box mt={2}>
-              <Typography fontWeight="bold">KAMO BUSINESS CO. LTD</Typography>
-              <Typography sx={{ fontSize: "16px", fontWeight: "bold" }}>Luxury Gatsata Center</Typography>
-              <Typography>Muhima, 120KN ST</Typography>
-              <Typography>+250 780934382</Typography>
+              <Typography fontWeight="bold" fontFamily="poppins">
+                KAMO BUSINESS CO. LTD
+              </Typography>
+              <Typography variant="h7" fontWeight="bold">
+                Luxury Gatsata Center
+              </Typography>
+              <Typography fontFamily="poppins">Muhima, 120KN ST</Typography>
+              <Typography fontFamily="poppins">+250 780934382</Typography>
             </Box>
+          </Box>
+          <Box className="flex flex-col items-end">
+            <Typography fontFamily="poppins">Invoice # {invoice.id}</Typography>
+            <Typography fontFamily="poppins" variant="h7">
+              {invoice.tenantName}
+            </Typography>
+            <Typography fontFamily="poppins" variant="h7">
+              {invoice.phone}
+            </Typography>
+            <Typography fontFamily="poppins" variant="h7">
+              {invoice.amount}
+            </Typography>
           </Box>
         </Box>
         <Box></Box>
