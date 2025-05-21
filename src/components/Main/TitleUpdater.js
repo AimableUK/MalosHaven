@@ -41,6 +41,9 @@ const PageTitleUpdater = () => {
       case '/permissions':
         title = 'User Permissions';
         break;
+      case '/invoiceview':
+        title= 'Invoice View'
+        break;
       default:
         title = 'Malos Haven';
     }

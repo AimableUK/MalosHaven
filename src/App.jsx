@@ -15,6 +15,7 @@ import MaintenancePage from "./pages/PropertyManagement/MaintenancePage";
 import BookingsPage from "./pages/Booking&TenantManagement/BookingsPage";
 import TenantsPage from "./pages/Booking&TenantManagement/TenantsPage";
 import PaymentsPage from "./pages/Booking&TenantManagement/PaymentsPage";
+import ViewInvoice from "./pages/Booking&TenantManagement/ViewInvoice";
 
 // Analytics&Reports
 import AnalyticsPage from "./pages/Analytics&Reports/AnalyticsPage";
@@ -39,6 +40,7 @@ const AppRoutes = () => {
         <Route path="bookings" element={<BookingsPage />} />
         <Route path="tenants" element={<TenantsPage />} />
         <Route path="payments" element={<PaymentsPage />} />
+        <Route path="invoiceview" element={<ViewInvoice />} />
         <Route path="analytics" element={<AnalyticsPage />} />
         <Route path="reports" element={<ReportsPage />} />
         <Route path="settings" element={<SettingsPage />} />

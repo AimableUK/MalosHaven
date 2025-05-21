@@ -21,6 +21,7 @@ import Properties from "../../Data/SiteDataComponent/Properties.js";
 import AddIcon from "@mui/icons-material/Add";
 import EditInvoiceForm from "../../components/InvoiceComponent/EditInvoiceForm.jsx";
 import userAvatar from "../../assets/userAvatar.jpg";
+import { Link, Navigate } from "react-router-dom";
 
 const PaymentsPage = () => {
   const [propertiesState, setPropertiesState] = useState(Properties);
@@ -157,7 +158,7 @@ const PaymentsPage = () => {
     );
     setDeleteDialogOpen(false);
     showSnackbar(
-      `${selectedInvoice.tenantName} deleted successfully`,
+      `${selectedInvoice.tenantName}'s Invoice deleted successfully`,
       "success"
     );
   };
@@ -169,6 +170,11 @@ const PaymentsPage = () => {
   };
 
   const handleEditInvoice = () => {};
+
+  const handleViewInvoice = (invoice) => {
+    // Navigate('invoiceview')
+    // handleCloseMenu()
+  };
 
   const handleCloseMenu = () => {
     setAnchorEl(null);
@@ -281,6 +287,17 @@ const PaymentsPage = () => {
             open={Boolean(anchorEl)}
             onClose={handleCloseMenu}
           >
+            <Link>
+              <MenuItem
+                onClick={() => handleViewInvoice(selectedInvoice)}
+                onClose={handleCloseMenu}
+                sx={{ ":hover": { color: "#10b981" } }}
+              >
+                <EditIcon />
+                View
+              </MenuItem>
+            </Link>
+
             <MenuItem
               onClick={() => handleEditDialogOpen(selectedInvoice)}
               onClose={handleCloseMenu}
