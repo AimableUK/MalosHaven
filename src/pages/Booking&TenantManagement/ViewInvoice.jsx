@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { Box, Typography, Button } from "@mui/material";
+import { Box, Typography, Button, List, ListItem } from "@mui/material";
 import { useReactToPrint } from "react-to-print";
 import { useParams } from "react-router-dom";
 import MyInvoices from "../../Data/SiteDataComponent/Invoices";
@@ -128,7 +128,7 @@ const PrintableArticle = () => {
           <Typography fontWeight="bold" fontFamily="poppins">
             PAYMENT INSTRUCTIONS:
           </Typography>
-          <Typography component="p" fontFamily="poppins">
+          <Typography fontWeight="bold" component="p" fontFamily="poppins">
             Please pay the above total to:
           </Typography>
           <Typography fontFamily="poppins">
@@ -158,21 +158,29 @@ const PrintableArticle = () => {
           <Typography fontWeight="bold" fontFamily="poppins">
             NOTES:
           </Typography>
-          <Box component="dl">
-            <Typography fontFamily="poppins">
+          <List sx={{ listStyleType: "disc", pl: 4 }}>
+            <ListItem sx={{ display: "list-item" }} fontFamily="poppins">
               Late Payment After {invoice.dueDate} may result in a 5% penalty
-            </Typography>
-            <Typography fontFamily="poppins">Contact us if you have made this payment</Typography>
-          </Box>
+            </ListItem>
+            <ListItem sx={{ display: "list-item" }} fontFamily="poppins">
+              Contact us if you have made this payment
+            </ListItem>
+          </List>
         </Box>
-        <Typography fontFamily="poppins">THANK YOU FOR YOUR BUSINESS</Typography>
+        <Typography fontFamily="poppins">
+          THANK YOU FOR YOUR BUSINESS
+        </Typography>
         <Box className="flex flex-row justify-between">
           <Box className="flex flex-col">
-            <Typography fontWeight="bold" fontFamily="poppins">KAMO 7 SONS B'SS LTD</Typography>
+            <Typography fontWeight="bold" fontFamily="poppins">
+              KAMO 7 SONS B'SS LTD
+            </Typography>
             <Typography>____________________</Typography>
           </Box>
           <Box className="flex flex-col">
-            <Typography fontWeight="bold" fontFamily="poppins">{invoice.tenantName}</Typography>
+            <Typography fontWeight="bold" fontFamily="poppins">
+              {invoice.tenantName}
+            </Typography>
             <Typography>____________________</Typography>
           </Box>
         </Box>
