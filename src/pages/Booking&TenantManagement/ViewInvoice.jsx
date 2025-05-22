@@ -77,10 +77,24 @@ const PrintableArticle = () => {
             </Typography>
           </Box>
           <Box>
-            <Typography fontWeight="bold" fontFamily="poppins">
-              Reason:&nbsp;
-              <span style={{ fontWeight: "initial" }}>{invoice.reason}</span>
-            </Typography>
+            <Box className="flex flex-row justify-between">
+              <Typography fontWeight="bold" fontStyle="poppins">Reason</Typography>
+              <Typography fontWeight="bold" fontStyle="poppins">Amount</Typography>
+            </Box>
+            <Box
+              sx={{
+                height: "2px",
+                width: "100%",
+                background:
+                  "linear-gradient(to right, #2d454d, white, #2d454d)",
+                my: 1,
+                borderRadius: "999px",
+              }}
+            />
+            <Box className="flex flex-row justify-between">
+              <Typography fontStyle="poppins">{invoice.reason}</Typography>
+              <Typography fontStyle="poppins">{invoice.amount}</Typography>
+            </Box>
           </Box>
         </Box>
         <Box></Box>
