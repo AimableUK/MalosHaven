@@ -75,10 +75,25 @@ const PrintableArticle = () => {
         </Box>
         <Box>
           <Box className="flex flex-row justify-between">
-            <Typography fontWeight="bold" fontStyle="poppins">
+            <Typography
+              fontWeight="bold"
+              fontStyle="poppins"
+              className="w-full"
+            >
               Description
             </Typography>
-            <Typography fontWeight="bold" fontStyle="poppins">
+            <Typography
+              fontWeight="bold"
+              fontStyle="poppins"
+              className="w-full"
+            >
+              Period
+            </Typography>
+            <Typography
+              fontWeight="bold"
+              fontStyle="poppins"
+              className="w-full"
+            >
               Amount (RWF)
             </Typography>
           </Box>
@@ -86,25 +101,52 @@ const PrintableArticle = () => {
             sx={{
               height: "2px",
               width: "100%",
-              background: "linear-gradient(to right, #2d454d, white, #2d454d)",
+              background: "linear-gradient(to right, #2d454d)",
               my: 1,
               borderRadius: "999px",
             }}
           />
           <Box className="flex flex-row justify-between">
-            <Typography fontStyle="poppins">Monthly Rent</Typography>
-            <Typography fontStyle="poppins">{invoice.amount}</Typography>
+            <Typography fontStyle="poppins" className="w-full">
+              Monthly Rent
+            </Typography>
+            <Typography className="w-full">April 2025</Typography>
+            <Typography fontStyle="poppins" className="w-full">
+              {invoice.amount}
+            </Typography>
+          </Box>
+          <Box className="flex flex-row justify-between">
+            <Typography fontStyle="poppins" className="w-full">
+              Monthly Income in renting and its really fine
+            </Typography>
+            <Typography className="w-full">June 2025</Typography>
+            <Typography fontStyle="poppins" className="w-full">
+              {invoice.amount}
+            </Typography>
+          </Box>
+          <Box className="flex flex-row justify-between">
+            <Typography fontStyle="poppins" className="w-full">
+              Water Utility
+            </Typography>
+            <Typography className="w-full">January 2010</Typography>
+            <Typography fontStyle="poppins" className="w-full">
+              {invoice.amount}
+            </Typography>
           </Box>
         </Box>
         <Box
-          sx={{
-            height: "2px",
-            width: "100%",
-            background: "linear-gradient(to right, #2d454d, white, #2d454d)",
-            my: 1,
-            borderRadius: "999px",
-          }}
-        />
+            sx={{
+              height: "2px",
+              width: "100%",
+              background: "linear-gradient(to right, #2d454d)",
+              borderRadius: "999px",
+            }}
+          />
+          <Box className="flex justify-between">
+            <Typography className="w-full" fontStyle="poppins">Total Due: </Typography>
+            <Typography className="w-full"></Typography>
+            <Typography className="w-full" fontStyle="poppins">{invoice.amount}</Typography>
+          </Box>
         <Box>
           <Typography fontWeight="bold" fontFamily="poppins">
             Payment Status:&nbsp;
