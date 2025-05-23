@@ -100,8 +100,7 @@ const PaymentsPage = () => {
       width: 130,
       renderCell: (params) => {
         let bg = "bg-gray-500";
-        if (params.value === "Paid") bg = "bg-emerald-500";
-        else if (params.value === "Unpaid") bg = "bg-yellow-500";
+        if (params.value === "Unpaid") bg = "bg-yellow-500";
         else if (params.value === "Overdue") bg = "bg-red-500";
 
         return (

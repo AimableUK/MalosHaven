@@ -198,7 +198,6 @@ const AddInvoiceForm = ({ open, onClose, onAddInvoice, propertiesState, setSelec
               value={formData.paymentStatus || ""}
               onChange={handleChange}
             >
-              <FormControlLabel value="Paid" control={<Radio />} label="Paid" />
               <FormControlLabel
                 value="Unpaid"
                 control={<Radio />}

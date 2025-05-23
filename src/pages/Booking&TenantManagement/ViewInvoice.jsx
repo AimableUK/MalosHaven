@@ -99,7 +99,7 @@ const PrintableArticle = () => {
           </Box>
           <Box
             sx={{
-              height: "2px",
+              height: "1px",
               width: "100%",
               background: "linear-gradient(to right, #2d454d)",
               my: 1,
@@ -135,18 +135,22 @@ const PrintableArticle = () => {
           </Box>
         </Box>
         <Box
-            sx={{
-              height: "2px",
-              width: "100%",
-              background: "linear-gradient(to right, #2d454d)",
-              borderRadius: "999px",
-            }}
-          />
-          <Box className="flex justify-between">
-            <Typography className="w-full" fontStyle="poppins">Total Due: </Typography>
-            <Typography className="w-full"></Typography>
-            <Typography className="w-full" fontStyle="poppins">{invoice.amount}</Typography>
-          </Box>
+          sx={{
+            height: "1px",
+            width: "100%",
+            background: "linear-gradient(to right, #2d454d)",
+            borderRadius: "999px",
+          }}
+        />
+        <Box className="flex justify-between">
+          <Typography className="w-full" fontStyle="poppins">
+            Total Due:{" "}
+          </Typography>
+          <Typography className="w-full"></Typography>
+          <Typography className="w-full" fontStyle="poppins">
+            {invoice.amount}
+          </Typography>
+        </Box>
         <Box>
           <Typography fontWeight="bold" fontFamily="poppins">
             Payment Status:&nbsp;
@@ -159,9 +163,9 @@ const PrintableArticle = () => {
         </Box>
         <Box
           sx={{
-            height: "2px",
+            height: "1px",
             width: "100%",
-            background: "linear-gradient(to right, #2d454d, white, #2d454d)",
+            background: "linear-gradient(to right, #2d454d)",
             my: 1,
             borderRadius: "999px",
           }}
@@ -189,9 +193,9 @@ const PrintableArticle = () => {
         </Box>
         <Box
           sx={{
-            height: "2px",
+            height: "1px",
             width: "100%",
-            background: "linear-gradient(to right, #2d454d, white, #2d454d)",
+            background: "linear-gradient(to right, #2d454d)",
             my: 1,
             borderRadius: "999px",
           }}
