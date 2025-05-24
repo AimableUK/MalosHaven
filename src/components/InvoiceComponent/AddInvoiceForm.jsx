@@ -19,15 +19,28 @@ import {
   Box,
   Avatar,
   Typography,
+  Divider,
+  Chip,
+  Tooltip,
+  IconButton,
 } from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import AddIcon from "@mui/icons-material/Add";
+import DeleteIcon from "@mui/icons-material/Delete";
 
-const AddInvoiceForm = ({ open, onClose, onAddInvoice, propertiesState, setSelectedInvoice }) => {
+const AddInvoiceForm = ({
+  open,
+  onClose,
+  onAddInvoice,
+  propertiesState,
+  setSelectedInvoice,
+}) => {
   const [selectedIssueDate, setSelectedIssueDate] = useState(null);
   const [selectedDueDate, setSelectedDueDate] = useState(null);
   const [selectedTenant, setSelectedTenant] = useState(null);
+  const [invoiceItems, setInvoiceItems] = useState([{ id: 1 }]);
 
   const [formData, setFormData] = useState({
     tenant: "",
@@ -97,7 +110,7 @@ const AddInvoiceForm = ({ open, onClose, onAddInvoice, propertiesState, setSelec
     });
     setSelectedIssueDate(null);
     setSelectedDueDate(null);
-    setSelectedInvoice(null)
+    setSelectedInvoice(null);
   };
 
   const handleCloseSnackbar = () => {
@@ -114,6 +127,20 @@ const AddInvoiceForm = ({ open, onClose, onAddInvoice, propertiesState, setSelec
         propertyName: property.title,
       }))
   );
+
+  const handleAddInvoiceItem = () => {
+    setInvoiceItems((prev) => [...prev, { id: prev.length + 1 }]);
+  };
+
+  const handleDeleteInvoiceItem = (invoiceItemId) => {
+    setInvoiceItems((prevItems) => {
+      if (prevItems.length === 1) {
+        setSnackbar("You can't delete the first Invoice Item");
+        return prevItems;
+      }
+      return prevItems.filter((item) => item.id !== invoiceItemId);
+    });
+  };
 
   return (
     <>
@@ -161,65 +188,121 @@ const AddInvoiceForm = ({ open, onClose, onAddInvoice, propertiesState, setSelec
               </Select>
             </FormControl>
           </Box>
+          {invoiceItems.map((item, index) => (
+            <Box key={item.id} className="mt-6">
+              <Divider
+                sx={{
+                  borderColor: "#ccc",
+                  borderBottomWidth: 2,
+                  mb: 2,
+                }}
+              >
+                <Chip
+                  label={`Invoice Item - ${index + 1}`}
+                  size="small"
+                  sx={{
+                    bgcolor: "#f5f5f5",
+                    color: "#333",
+                    fontWeight: "bold",
+                    fontSize: "0.75rem",
+                  }}
+                />
+                {
+                  <Tooltip title="Delete Invoice Item">
+                    <IconButton
+                      sx={{
+                        "&:hover": {
+                          backgroundColor: "#EF4F4F",
+                        },
+                      }}
+                      onClick={() => handleDeleteInvoiceItem(item.id)}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </Tooltip>
+                }
+              </Divider>
 
-          <TextField
-            label="Amount"
-            type="number"
-            name="amount"
-            value={formData.amount || ""}
-            onChange={handleChange}
-          />
+              <Box className="flex flex-col gap-3">
+                <TextField
+                  multiline
+                  rows={2}
+                  label="Description"
+                  name={`description-${item.id}`}
+                  fullWidth
+                  value={formData[`description-${item.id}`] || ""}
+                  onChange={handleChange}
+                />
 
-          <Box className="flex flex-col md:flex-row gap-3">
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DatePicker
-                label="Issue Date"
-                value={selectedIssueDate}
-                onChange={(newValue) => setSelectedIssueDate(newValue)}
-                renderInput={(params) => <TextField {...params} />}
-              />
-            </LocalizationProvider>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DatePicker
-                label="Due Date"
-                value={selectedDueDate}
-                onChange={(newValue) => setSelectedDueDate(newValue)}
-                renderInput={(params) => <TextField {...params} />}
-              />
-            </LocalizationProvider>
-          </Box>
+                <TextField
+                  label="Amount"
+                  type="number"
+                  name={`amount-${item.id}`}
+                  value={formData[`amount-${item.id}`] || ""}
+                  onChange={handleChange}
+                />
 
-          <FormControl>
-            <FormLabel id="status-options-label">Payment Status</FormLabel>
-            <RadioGroup
-              row
-              aria-labelledby="status-options-radio-label"
-              name="paymentStatus"
-              value={formData.paymentStatus || ""}
-              onChange={handleChange}
-            >
-              <FormControlLabel
-                value="Unpaid"
-                control={<Radio />}
-                label="UnPaid"
-              />
-              <FormControlLabel
-                value="Overdue"
-                control={<Radio />}
-                label="OverDue"
-              />
-            </RadioGroup>
-          </FormControl>
+                <Box className="flex flex-col md:flex-row gap-3">
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DatePicker
+                      label="Issue Date"
+                      value={formData[`issueDate-${item.id}`] || null}
+                      onChange={(newValue) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          [`issueDate-${item.id}`]: newValue,
+                        }))
+                      }
+                      renderInput={(params) => <TextField {...params} />}
+                    />
+                  </LocalizationProvider>
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DatePicker
+                      label="Due Date"
+                      value={formData[`dueDate-${item.id}`] || null}
+                      onChange={(newValue) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          [`dueDate-${item.id}`]: newValue,
+                        }))
+                      }
+                      renderInput={(params) => <TextField {...params} />}
+                    />
+                  </LocalizationProvider>
+                </Box>
 
-          <TextField
-            multiline
-            rows={4}
-            label="Reason"
-            name="reason"
-            fullWidth
-            value={formData.reason || ""}
-            onChange={handleChange}
-          />
+                <FormControl>
+                  <FormLabel>Payment Status</FormLabel>
+                  <RadioGroup
+                    row
+                    name={`paymentStatus-${item.id}`}
+                    value={formData[`paymentStatus-${item.id}`] || ""}
+                    onChange={handleChange}
+                  >
+                    <FormControlLabel
+                      value="Unpaid"
+                      control={<Radio />}
+                      label="Unpaid"
+                    />
+                    <FormControlLabel
+                      value="Overdue"
+                      control={<Radio />}
+                      label="Overdue"
+                    />
+                  </RadioGroup>
+                </FormControl>
+              </Box>
+            </Box>
+          ))}
+
+          <Button
+            startIcon={<AddIcon />}
+            variant="contained"
+            color="info"
+            onClick={handleAddInvoiceItem}
+          >
+            Add Invoice Item
+          </Button>
         </DialogContent>
         <DialogActions>
           <Button onClick={onClose} color="secondary">
