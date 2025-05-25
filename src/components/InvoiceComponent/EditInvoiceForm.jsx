@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Dialog,
   DialogTitle,
@@ -8,7 +8,6 @@ import {
   TextField,
   Snackbar,
   Alert,
-  Typography,
   FormControl,
   FormLabel,
   RadioGroup,
@@ -18,99 +17,144 @@ import {
   Select,
   MenuItem,
   Box,
+  Avatar,
+  Typography,
+  Divider,
+  Chip,
+  Tooltip,
+  IconButton,
 } from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import AddIcon from "@mui/icons-material/Add";
+import DeleteIcon from "@mui/icons-material/Delete";
+import invoices from "../../Data/SiteDataComponent/Invoices";
 
 const EditInvoiceForm = ({
   open,
   onClose,
-  onEditInvoice,
-  selectedInvoice,
+  onAddInvoice,
   propertiesState,
+  setSelectedInvoice,
 }) => {
-  const [selectedIssueDate, setSelectedIssueDate] = useState(null);
-  const [selectedDueDate, setSelectedDueDate] = useState(null);
+  const [selectedTenant, setSelectedTenant] = useState(null);
+  const [invoiceItems, setInvoiceItems] = useState([{ id: 1 }]);
 
   const [formData, setFormData] = useState({
     tenant: "",
+    description: "",
     amount: "",
     issueDate: "",
     dueDate: "",
     paymentStatus: "",
-    reason: "",
   });
+
   const [snackbar, setSnackbar] = useState({
     open: false,
     message: "",
     severity: "success",
   });
 
-  useEffect(() => {
-    if (selectedInvoice) {
-      setFormData({
-        tenant: selectedInvoice.tenantName,
-        amount: selectedInvoice.amount,
-        issueDate: selectedInvoice.issueDate,
-        paymentStatus: selectedInvoice.paymentStatus,
-        reason: selectedInvoice.reason,
-        dateIssued: selectedInvoice.dateIssued,
-        dueDate: selectedInvoice.dueDate,
+  const showSnackbar = (message, severity = "success") => {
+    setSnackbar((prev) => ({ ...prev, open: false }));
+    setTimeout(() => {
+      setSnackbar({
+        open: true,
+        message,
+        severity,
       });
-    }
-  }, [selectedInvoice]);
+    }, 100);
+  };
 
   const handleChange = (e) => {
-    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    const { name, value } = e.target;
+
+    setFormData((prev) => ({ ...prev, [name]: value }));
+
+    if (name === "tenant") {
+      const tenantInfo = tenants.find((t) => t.name === value);
+      setSelectedTenant(tenantInfo || null);
+    }
   };
 
   const handleSubmit = () => {
-    const { tenant, amount, reason, paymentStatus } = formData;
-
-    if (
-      !tenant ||
-      !amount ||
-      !reason ||
-      !paymentStatus ||
-      !selectedIssueDate ||
-      !selectedDueDate
-    ) {
-      setSnackbar({
-        open: true,
-        message: "Please fill out all fields",
-        severity: "error",
-      });
+    if (!formData.tenant || !selectedTenant) {
+      showSnackbar("Please select a tenant", "error");
       return;
     }
 
-    onEditInvoice({
-      id: Date.now(),
-      tenantName: tenant,
-      amount: Number(amount),
-      reason,
-      status: paymentStatus,
-      dateIssued: selectedIssueDate.format("YYYY-MM-DD"),
-      dueDate: selectedDueDate.format("YYYY-MM-DD"),
+    const compiledItems = invoiceItems.map((item) => {
+      const description = formData[`description-${item.id}`];
+      const amount = parseFloat(formData[`amount-${item.id}`]);
+      const issueDate = formData[`issueDate-${item.id}`];
+      const dueDate = formData[`dueDate-${item.id}`];
+      const status = formData[`paymentStatus-${item.id}`];
+
+      if (
+        !description ||
+        !amount ||
+        isNaN(amount) ||
+        amount <= 0 ||
+        !issueDate ||
+        !dueDate ||
+        !status
+      ) {
+        showSnackbar("Please fill out all invoice item fields", "error");
+      }
+
+      return {
+        id: item.id,
+        description,
+        amount,
+        dateIssued: issueDate.format
+          ? issueDate.format("YYYY-MM-DD")
+          : issueDate,
+        dueDate: dueDate.format ? dueDate.format("YYYY-MM-DD") : dueDate,
+        status,
+      };
     });
+
+    const newInvoice = {
+      id: `INV-${Date.now()}`,
+      invoiceNumber: `${Date.now()}${invoices.length + 1}`,
+      tenantName: formData.tenant,
+      email: selectedTenant.email,
+      phone: selectedTenant.phone,
+      avatar: selectedTenant.image,
+      invoiceItems: compiledItems,
+    };
+
+    onAddInvoice(newInvoice);
+
+    console.log("Invoice Summary:");
+    console.table([
+      {
+        InvoiceID: newInvoice.id,
+        InvoiceNumber: newInvoice.invoiceNumber,
+        Tenant: newInvoice.tenantName,
+        Email: newInvoice.email,
+        Phone: newInvoice.phone,
+        Items: newInvoice.invoiceItems.length,
+      },
+    ]);
+
+    console.log("Invoice Items:");
+    console.table(
+      newInvoice.invoiceItems.map((item) => ({
+        ItemID: item.id,
+        Description: item.description,
+        Amount: item.amount,
+        DateIssued: item.dateIssued,
+        DueDate: item.dueDate,
+        Status: item.status,
+      }))
+    );
 
     onClose();
-    setFormData({
-      tenant: "",
-      amount: "",
-      issueDate: "",
-      dueDate: "",
-      paymentStatus: "",
-      reason: "",
-    });
-    setSelectedIssueDate(null);
-    setSelectedDueDate(null);
-
-    setSnackbar({
-      open: true,
-      message: "Invoice added successfully!",
-      severity: "success",
-    });
+    setFormData({});
+    setSelectedInvoice(null);
+    setSelectedTenant(null);
   };
 
   const handleCloseSnackbar = () => {
@@ -128,6 +172,41 @@ const EditInvoiceForm = ({
       }))
   );
 
+  const handleAddInvoiceItem = () => {
+    const nextId = invoiceItems.length + 1;
+    setInvoiceItems((prev) => [...prev, { id: nextId }]);
+    setFormData((prev) => ({
+      ...prev,
+      [`description-${nextId}`]: "",
+      [`amount-${nextId}`]: "",
+      [`issueDate-${nextId}`]: null,
+      [`dueDate-${nextId}`]: null,
+      [`paymentStatus-${nextId}`]: "",
+    }));
+  };
+
+  const handleDeleteInvoiceItem = (invoiceItemId) => {
+    setInvoiceItems((prevItems) => {
+      if (prevItems.length === 1) {
+        showSnackbar("You can't delete the first Invoice Item", "error");
+        return prevItems;
+      }
+      return prevItems.filter((item) => item.id !== invoiceItemId);
+    });
+  };
+
+  const onCancel = () => {
+    setSelectedTenant(null);
+    setFormData({
+      tenant: "",
+      description: "",
+      amount: "",
+      issueDate: "",
+      dueDate: "",
+      paymentStatus: "",
+    });
+  };
+
   return (
     <>
       <Dialog
@@ -139,12 +218,20 @@ const EditInvoiceForm = ({
           },
         }}
       >
-        <DialogTitle sx={{ fontWeight: "bold" }}>Edit Invoice</DialogTitle>
+        <DialogTitle sx={{ fontWeight: "bold" }}>Add New Invoice</DialogTitle>
         <DialogContent
           sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 1 }}
         >
+          {selectedTenant && (
+            <Box className="flex flex-col md:flex-row items-center gap-2">
+              <Avatar src={selectedTenant.image} alt="Tenant" width={80} />
+
+              <Typography>
+                <strong>Phone Number:</strong> {selectedTenant.phone}
+              </Typography>
+            </Box>
+          )}
           <Box className="flex flex-col md:flex-row items-center mt-3">
-            {/* tenant details */}
             <FormControl fullWidth sx={{ width: "full" }}>
               <InputLabel id="tenant-select-label">Tenant</InputLabel>
               <Select
@@ -154,80 +241,140 @@ const EditInvoiceForm = ({
                 label="Tenant"
                 onChange={handleChange}
               >
-                {tenants.map((tenant, idx) => (
-                  <MenuItem key={idx} value={tenant.name}>
-                    {tenant.name} — Unit ({tenant.unitNumber}) —{" "}
+                {tenants.map((tenant) => (
+                  <MenuItem
+                    key={tenant.email || tenant.name}
+                    value={tenant.name}
+                  >
+                    {tenant.name} — Unit ({tenant.unitNumber}) —
                     {tenant.propertyName}
                   </MenuItem>
                 ))}
               </Select>
             </FormControl>
           </Box>
+          {invoiceItems.map((item, index) => (
+            <Box key={item.id}>
+              <Divider
+                sx={{
+                  borderColor: "#ccc",
+                  borderBottomWidth: 2,
+                  mb: 2,
+                }}
+              >
+                <Chip
+                  label={`Invoice Item - ${index + 1}`}
+                  size="small"
+                  sx={{
+                    bgcolor: "#f5f5f5",
+                    color: "#333",
+                    fontWeight: "bold",
+                    fontSize: "0.75rem",
+                  }}
+                />
+                <Tooltip title="Delete Invoice Item">
+                  <IconButton
+                    sx={{
+                      "&:hover": {
+                        backgroundColor: "#EF4F4F",
+                      },
+                    }}
+                    onClick={() => handleDeleteInvoiceItem(item.id)}
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                </Tooltip>
+              </Divider>
 
-          <TextField
-            label="Amount"
-            type="number"
-            name="amount"
-            value={formData.amount}
-            onChange={handleChange}
-          />
+              <Box className="flex flex-col gap-3">
+                <TextField
+                  multiline
+                  rows={2}
+                  label="Description"
+                  name={`description-${item.id}`}
+                  fullWidth
+                  value={formData[`description-${item.id}`] || ""}
+                  onChange={handleChange}
+                />
 
-          {/* dates */}
-          <Box className="flex flex-col md:flex-row gap-3">
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DatePicker
-                label="Issue Date"
-                value={selectedIssueDate}
-                onChange={(newValue) => setSelectedIssueDate(newValue)}
-                renderInput={(params) => <TextField {...params} />}
-              />
-            </LocalizationProvider>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DatePicker
-                label="Due Date"
-                value={selectedDueDate}
-                onChange={(newValue) => setSelectedDueDate(newValue)}
-                renderInput={(params) => <TextField {...params} />}
-              />
-            </LocalizationProvider>
-          </Box>
+                <TextField
+                  label="Amount"
+                  type="number"
+                  name={`amount-${item.id}`}
+                  value={formData[`amount-${item.id}`] || ""}
+                  onChange={handleChange}
+                />
 
-          <FormControl
-            value={formData.paymentStatus}
-            onChange={handleChange}
-            name="paymentStatus"
+                <Box className="flex flex-col md:flex-row gap-3">
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DatePicker
+                      label="Issue Date"
+                      value={formData[`issueDate-${item.id}`] || null}
+                      onChange={(newValue) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          [`issueDate-${item.id}`]: newValue,
+                        }))
+                      }
+                      slotProps={{ textField: { variant: "outlined" } }}
+                    />
+                  </LocalizationProvider>
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DatePicker
+                      label="Due Date"
+                      value={formData[`dueDate-${item.id}`] || null}
+                      onChange={(newValue) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          [`dueDate-${item.id}`]: newValue,
+                        }))
+                      }
+                      slotProps={{ textField: { variant: "outlined" } }}
+                    />
+                  </LocalizationProvider>
+                </Box>
+
+                <FormControl>
+                  <FormLabel>Payment Status</FormLabel>
+                  <RadioGroup
+                    row
+                    name={`paymentStatus-${item.id}`}
+                    value={formData[`paymentStatus-${item.id}`] || ""}
+                    onChange={handleChange}
+                  >
+                    <FormControlLabel
+                      value="Unpaid"
+                      control={<Radio />}
+                      label="Unpaid"
+                    />
+                    <FormControlLabel
+                      value="Overdue"
+                      control={<Radio />}
+                      label="Overdue"
+                    />
+                  </RadioGroup>
+                </FormControl>
+              </Box>
+            </Box>
+          ))}
+
+          <Button
+            startIcon={<AddIcon />}
+            variant="contained"
+            color="info"
+            onClick={handleAddInvoiceItem}
           >
-            <FormLabel id="status-options-label">Payment Status</FormLabel>
-            <RadioGroup
-              row
-              aria-labelledby="status-options-radio-label"
-              name="row-radio-buttons-group"
-            >
-              <FormControlLabel value="Paid" control={<Radio />} label="Paid" />
-              <FormControlLabel
-                value="UnPaid"
-                control={<Radio />}
-                label="UnPaid"
-              />
-              <FormControlLabel
-                value="OverDue"
-                control={<Radio />}
-                label="OverDue"
-              />
-            </RadioGroup>
-          </FormControl>
-          <TextField
-            multiline
-            rows={4}
-            label="Reason"
-            name="reason"
-            fullWidth
-            value={formData.reason}
-            onChange={handleChange}
-          />
+            Add Invoice Item
+          </Button>
         </DialogContent>
         <DialogActions>
-          <Button onClick={onClose} color="secondary">
+          <Button
+            onClick={() => {
+              onClose();
+              onCancel();
+            }}
+            color="secondary"
+          >
             Cancel
           </Button>
           <Button onClick={handleSubmit} variant="contained">
@@ -235,6 +382,7 @@ const EditInvoiceForm = ({
           </Button>
         </DialogActions>
       </Dialog>
+
       <Snackbar
         open={snackbar.open}
         autoHideDuration={2000}

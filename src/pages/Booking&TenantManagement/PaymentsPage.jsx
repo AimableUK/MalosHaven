@@ -225,6 +225,7 @@ const PaymentsPage = () => {
             onEditInvoice={handleEditInvoice}
             propertiesState={propertiesState}
             selectedInvoice={selectedInvoice}
+            setSelectedInvoice={setSelectedInvoice}
           />
 
           {/* Delete Confirmation Modal */}

@@ -196,8 +196,16 @@ const AddInvoiceForm = ({
   };
 
   const onCancel = () => {
-    
-  }
+    setSelectedTenant(null);
+    setFormData({
+      tenant: "",
+      description: "",
+      amount: "",
+      issueDate: "",
+      dueDate: "",
+      paymentStatus: "",
+    });
+  };
 
   return (
     <>
