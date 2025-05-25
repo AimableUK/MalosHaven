@@ -48,7 +48,8 @@ const PaymentsPage = () => {
     {
       field: "tenantName",
       headerName: "Tenant",
-      width: 210,
+      minWidth: 210,
+      flex: 1,
       renderCell: (params) => (
         <Box className="flex items-center gap-2">
           <img
@@ -65,56 +66,27 @@ const PaymentsPage = () => {
     {
       field: "phone",
       headerName: "Phone",
-      width: 200,
+      minWidth: 200,
+      flex: 1,
       renderCell: (params) => (
         <span className="text-white">{params.value}</span>
       ),
     },
     {
-      field: "amount",
-      headerName: "Amount (FRW)",
-      width: 120,
-      renderCell: (params) => (
-        <span className="text-white">{params.value.toFixed(2)}</span>
-      ),
-    },
-    {
-      field: "dateIssued",
-      headerName: "Issued",
-      width: 130,
-      renderCell: (params) => (
-        <span className="text-white">{params.value}</span>
-      ),
-    },
-    {
-      field: "dueDate",
-      headerName: "Due",
-      width: 130,
-      renderCell: (params) => (
-        <span className="text-white">{params.value}</span>
-      ),
-    },
-    {
-      field: "status",
-      headerName: "Status",
-      width: 130,
+      field: "invoiceNumber",
+      headerName: "Invoice NUmber",
+      minWidth: 150,
+      flex: 1,
       renderCell: (params) => {
-        let bg = "bg-gray-500";
-        if (params.value === "Unpaid") bg = "bg-yellow-500";
-        else if (params.value === "Overdue") bg = "bg-red-500";
-
-        return (
-          <span className={`${bg} text-white py-1 px-3 rounded-full text-sm`}>
-            {params.value}
-          </span>
-        );
+        <span className="text-white">{params.value}</span>;
       },
     },
     {
       field: "actions",
       headerName: "More",
-      width: 80,
+      minWidth: 80,
       sortable: false,
+      flex: 1,
       renderCell: (params) => (
         <Box className="text-gray-400 cursor-pointer">
           <MoreVertIcon
@@ -138,7 +110,10 @@ const PaymentsPage = () => {
 
   const handleAddInvoice = (invoice) => {
     setInvoices((prevInvoices) => [...prevInvoices, invoice]);
-    showSnackbar(`Invoice of ${invoice.tenantName} added Successfully`, "success");
+    showSnackbar(
+      `Invoice of ${invoice.tenantName} added Successfully`,
+      "success"
+    );
   };
 
   const handleActionsClick = (event, invoice) => {
@@ -170,7 +145,6 @@ const PaymentsPage = () => {
   };
 
   const handleEditInvoice = () => {};
-
 
   const handleCloseMenu = () => {
     setAnchorEl(null);

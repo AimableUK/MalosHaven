@@ -21,17 +21,18 @@ import Logo from "../../assets/Logo.svg";
 
 const PrintableInvoice = () => {
   const [invoices, setInvoices] = useState(MyInvoices);
-
-  const componentRef = useRef();
-
-  const handlePrint = useReactToPrint({
-    contentRef: componentRef,
-    documentTitle: "article",
-    onAfterPrint: () => console.log("Print success"),
-  });
+  const [scrollX, setScrollX] = useState(true);
 
   const { id } = useParams();
   const invoice = invoices.find((invoice) => invoice.id === parseInt(id));
+  document.title = `${invoice.tenantName}'s Invoice`;
+
+  const componentRef = useRef();
+  const handlePrint = useReactToPrint({
+    contentRef: componentRef,
+    documentTitle: `Invoice of ${invoice.tenantName}`,
+    onAfterPrint: () => console.log("Invoice Successfully Printed"),
+  });
 
   if (!invoice) {
     return (
@@ -94,7 +95,9 @@ const PrintableInvoice = () => {
           </Box>
         </Box>
         <Paper sx={{ width: "100%", overflow: "hidden", pb: 1 }}>
-          <TableContainer sx={{ maxHeight: 440, overflow: "hidden" }}>
+          <TableContainer
+            sx={{ maxHeight: 440, overflow: scrollX ? "hidden" : "block" }}
+          >
             <Table stickyHeader aria-label="invoice items table">
               <TableHead>
                 <TableRow>
@@ -217,8 +220,15 @@ const PrintableInvoice = () => {
 
       {/* Print Button */}
       <Box className="mt-6">
-        <Button variant="contained" color="primary" onClick={handlePrint}>
-          Print Article
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => {
+            handlePrint();
+            setScrollX(prev => !prev);
+          }}
+        >
+          Print Invoice
         </Button>
       </Box>
     </Box>
