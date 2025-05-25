@@ -304,9 +304,8 @@ const AddInvoiceForm = ({
                   value={formData[`amount-${item.id}`] || ""}
                   onChange={handleChange}
                 />
-
-                <Box className="flex flex-col md:flex-row gap-3">
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <Box className="flex flex-col md:flex-row gap-3">
                     <DatePicker
                       label="Issue Date"
                       value={formData[`issueDate-${item.id}`] || null}
@@ -318,8 +317,6 @@ const AddInvoiceForm = ({
                       }
                       slotProps={{ textField: { variant: "outlined" } }}
                     />
-                  </LocalizationProvider>
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DatePicker
                       label="Due Date"
                       value={formData[`dueDate-${item.id}`] || null}
@@ -331,8 +328,8 @@ const AddInvoiceForm = ({
                       }
                       slotProps={{ textField: { variant: "outlined" } }}
                     />
-                  </LocalizationProvider>
-                </Box>
+                  </Box>
+                </LocalizationProvider>
 
                 <FormControl>
                   <FormLabel>Payment Status</FormLabel>
