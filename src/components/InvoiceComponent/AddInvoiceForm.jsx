@@ -29,6 +29,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
+import invoices from "../../Data/SiteDataComponent/Invoices";
 
 const AddInvoiceForm = ({
   open,
@@ -37,18 +38,16 @@ const AddInvoiceForm = ({
   propertiesState,
   setSelectedInvoice,
 }) => {
-  const [selectedIssueDate, setSelectedIssueDate] = useState(null);
-  const [selectedDueDate, setSelectedDueDate] = useState(null);
   const [selectedTenant, setSelectedTenant] = useState(null);
   const [invoiceItems, setInvoiceItems] = useState([{ id: 1 }]);
 
   const [formData, setFormData] = useState({
     tenant: "",
+    description: "",
     amount: "",
     issueDate: "",
     dueDate: "",
     paymentStatus: "",
-    reason: "",
   });
 
   const [snackbar, setSnackbar] = useState({
@@ -80,48 +79,82 @@ const AddInvoiceForm = ({
   };
 
   const handleSubmit = () => {
-    const { tenant, amount, reason, paymentStatus } = formData;
-
-    if (
-      !tenant ||
-      !amount ||
-      !reason ||
-      !paymentStatus ||
-      !selectedIssueDate ||
-      !selectedDueDate
-    ) {
-      setSnackbar({
-        open: true,
-        message: "Please fill out all fields",
-        severity: "error",
-      });
+    if (!formData.tenant || !selectedTenant) {
+      showSnackbar("Please select a tenant", "error");
       return;
     }
 
-    onAddInvoice({
-      id: `INV-${Date.now()}`,
-      tenantName: tenant,
-      amount: Number(amount),
-      avatar: selectedTenant.image,
-      phone: selectedTenant.phone,
-      reason,
-      status: paymentStatus,
-      dateIssued: selectedIssueDate.format("YYYY-MM-DD"),
-      dueDate: selectedDueDate.format("YYYY-MM-DD"),
+    const compiledItems = invoiceItems.map((item) => {
+      const description = formData[`description-${item.id}`];
+      const amount = parseFloat(formData[`amount-${item.id}`]);
+      const issueDate = formData[`issueDate-${item.id}`];
+      const dueDate = formData[`dueDate-${item.id}`];
+      const status = formData[`paymentStatus-${item.id}`];
+
+      if (
+        !description ||
+        !amount ||
+        isNaN(amount) ||
+        amount <= 0 ||
+        !issueDate ||
+        !dueDate ||
+        !status
+      ) {
+        showSnackbar("Please fill out all invoice item fields", "error");
+      }
+
+      return {
+        id: item.id,
+        description,
+        amount,
+        dateIssued: issueDate.format
+          ? issueDate.format("YYYY-MM-DD")
+          : issueDate,
+        dueDate: dueDate.format ? dueDate.format("YYYY-MM-DD") : dueDate,
+        status,
+      };
     });
 
+    const newInvoice = {
+      id: `INV-${Date.now()}`,
+      invoiceNumber: `${Date.now()}${invoices.length + 1}`,
+      tenantName: formData.tenant,
+      email: selectedTenant.email,
+      phone: selectedTenant.phone,
+      avatar: selectedTenant.image,
+      invoiceItems: compiledItems,
+    };
+
+    onAddInvoice(newInvoice);
+
+    console.log("Invoice Summary:");
+    console.table([
+      {
+        InvoiceID: newInvoice.id,
+        InvoiceNumber: newInvoice.invoiceNumber,
+        Tenant: newInvoice.tenantName,
+        Email: newInvoice.email,
+        Phone: newInvoice.phone,
+        Items: newInvoice.invoiceItems.length,
+      },
+    ]);
+
+    console.log("Invoice Items:");
+    console.table(
+      newInvoice.invoiceItems.map((item) => ({
+        ItemID: item.id,
+        Description: item.description,
+        Amount: item.amount,
+        DateIssued: item.dateIssued,
+        DueDate: item.dueDate,
+        Status: item.status,
+      }))
+    );
+
     onClose();
-    setFormData({
-      tenant: "",
-      amount: "",
-      issueDate: "",
-      dueDate: "",
-      paymentStatus: "",
-      reason: "",
-    });
-    setSelectedIssueDate(null);
-    setSelectedDueDate(null);
+    setFormData({});
     setSelectedInvoice(null);
+    setSelectedTenant(null);
   };
 
   const handleCloseSnackbar = () => {
@@ -140,7 +173,16 @@ const AddInvoiceForm = ({
   );
 
   const handleAddInvoiceItem = () => {
-    setInvoiceItems((prev) => [...prev, { id: prev.length + 1 }]);
+    const nextId = invoiceItems.length + 1;
+    setInvoiceItems((prev) => [...prev, { id: nextId }]);
+    setFormData((prev) => ({
+      ...prev,
+      [`description-${nextId}`]: "",
+      [`amount-${nextId}`]: "",
+      [`issueDate-${nextId}`]: null,
+      [`dueDate-${nextId}`]: null,
+      [`paymentStatus-${nextId}`]: "",
+    }));
   };
 
   const handleDeleteInvoiceItem = (invoiceItemId) => {
@@ -152,6 +194,10 @@ const AddInvoiceForm = ({
       return prevItems.filter((item) => item.id !== invoiceItemId);
     });
   };
+
+  const onCancel = () => {
+    
+  }
 
   return (
     <>
@@ -218,20 +264,18 @@ const AddInvoiceForm = ({
                     fontSize: "0.75rem",
                   }}
                 />
-                {
-                  <Tooltip title="Delete Invoice Item">
-                    <IconButton
-                      sx={{
-                        "&:hover": {
-                          backgroundColor: "#EF4F4F",
-                        },
-                      }}
-                      onClick={() => handleDeleteInvoiceItem(item.id)}
-                    >
-                      <DeleteIcon />
-                    </IconButton>
-                  </Tooltip>
-                }
+                <Tooltip title="Delete Invoice Item">
+                  <IconButton
+                    sx={{
+                      "&:hover": {
+                        backgroundColor: "#EF4F4F",
+                      },
+                    }}
+                    onClick={() => handleDeleteInvoiceItem(item.id)}
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                </Tooltip>
               </Divider>
 
               <Box className="flex flex-col gap-3">
@@ -316,7 +360,13 @@ const AddInvoiceForm = ({
           </Button>
         </DialogContent>
         <DialogActions>
-          <Button onClick={onClose} color="secondary">
+          <Button
+            onClick={() => {
+              onClose();
+              onCancel();
+            }}
+            color="secondary"
+          >
             Cancel
           </Button>
           <Button onClick={handleSubmit} variant="contained">
