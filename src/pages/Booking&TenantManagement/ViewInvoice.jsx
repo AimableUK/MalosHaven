@@ -1,12 +1,28 @@
 import React, { useRef, useState } from "react";
-import { Box, Typography, Button, List, ListItem } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Button,
+  List,
+  ListItem,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TablePagination,
+  TableRow,
+} from "@mui/material";
 import { useReactToPrint } from "react-to-print";
 import { useParams } from "react-router-dom";
 import MyInvoices from "../../Data/SiteDataComponent/Invoices";
 import Logo from "../../assets/Logo.svg";
 
-const PrintableArticle = () => {
+const PrintableInvoice = () => {
   const [invoices, setInvoices] = useState(MyInvoices);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const componentRef = useRef();
 
@@ -31,6 +47,14 @@ const PrintableArticle = () => {
       </Box>
     );
   }
+
+  const columns = [
+    { id: "description", label: "Description", minWidth: 200 },
+    { id: "amount", label: "Amount (RWF)", minWidth: 130, align: "right" },
+    { id: "dateIssued", label: "Date Issued", minWidth: 117 },
+    { id: "dueDate", label: "Due Date", minWidth: 117 },
+    { id: "status", label: "Status", minWidth: 98 },
+  ];
 
   return (
     <Box className="m-5">
@@ -63,77 +87,47 @@ const PrintableArticle = () => {
             <Typography fontFamily="poppins">{invoice.phone}</Typography>
           </Box>
         </Box>
-        <Box className="flex flex-col">
-          <Typography fontWeight="bold" fontFamily="poppins">
-            Issue Date:
-            <span style={{ fontWeight: "initial" }}>{invoice.dateIssued}</span>
-          </Typography>
-          <Typography fontWeight="bold" fontFamily="poppins">
-            Due Date:
-            <span style={{ fontWeight: "initial" }}>{invoice.dueDate}</span>
-          </Typography>
-        </Box>
-        <Box>
-          <Box className="flex flex-row justify-between">
-            <Typography
-              fontWeight="bold"
-              fontStyle="poppins"
-              className="w-full"
-            >
-              Description
-            </Typography>
-            <Typography
-              fontWeight="bold"
-              fontStyle="poppins"
-              className="w-full"
-            >
-              Period
-            </Typography>
-            <Typography
-              fontWeight="bold"
-              fontStyle="poppins"
-              className="w-full"
-            >
-              Amount (RWF)
-            </Typography>
-          </Box>
-          <Box
-            sx={{
-              height: "1px",
-              width: "100%",
-              background: "linear-gradient(to right, #2d454d)",
-              my: 1,
-              borderRadius: "999px",
-            }}
-          />
-          <Box className="flex flex-row justify-between">
-            <Typography fontStyle="poppins" className="w-full">
-              Monthly Rent
-            </Typography>
-            <Typography className="w-full">April 2025</Typography>
-            <Typography fontStyle="poppins" className="w-full">
-              {invoice.amount}
-            </Typography>
-          </Box>
-          <Box className="flex flex-row justify-between">
-            <Typography fontStyle="poppins" className="w-full">
-              Monthly Income in renting and its really fine
-            </Typography>
-            <Typography className="w-full">June 2025</Typography>
-            <Typography fontStyle="poppins" className="w-full">
-              {invoice.amount}
-            </Typography>
-          </Box>
-          <Box className="flex flex-row justify-between">
-            <Typography fontStyle="poppins" className="w-full">
-              Water Utility
-            </Typography>
-            <Typography className="w-full">January 2010</Typography>
-            <Typography fontStyle="poppins" className="w-full">
-              {invoice.amount}
-            </Typography>
-          </Box>
-        </Box>
+        <Paper sx={{ width: "100%", overflow: "hidden" }}>
+          <TableContainer sx={{ maxHeight: 440, overflow: "hidden" }}>
+            <Table stickyHeader aria-label="invoice items table">
+              <TableHead>
+                <TableRow>
+                  {columns.map((column) => (
+                    <TableCell
+                      key={column.id}
+                      align={column.align || "left"}
+                      style={{ minWidth: column.minWidth }}
+                    >
+                      {column.label}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              </TableHead>
+
+              <TableBody>
+                {invoice.invoiceItems
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((row) => (
+                    <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
+                      {columns.map((column) => {
+                        const value = row[column.id];
+                        return (
+                          <TableCell
+                            key={column.id}
+                            align={column.align || "left"}
+                          >
+                            {column.id === "amount"
+                              ? value.toLocaleString("en-US") + " RWF"
+                              : value}
+                          </TableCell>
+                        );
+                      })}
+                    </TableRow>
+                  ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Paper>
         <Box
           sx={{
             height: "1px",
@@ -144,21 +138,11 @@ const PrintableArticle = () => {
         />
         <Box className="flex justify-between">
           <Typography className="w-full" fontStyle="poppins">
-            Total Due:{" "}
+            Total Due:
           </Typography>
           <Typography className="w-full"></Typography>
           <Typography className="w-full" fontStyle="poppins">
             {invoice.amount}
-          </Typography>
-        </Box>
-        <Box>
-          <Typography fontWeight="bold" fontFamily="poppins">
-            Payment Status:&nbsp;
-            <span style={{ fontWeight: "initial" }}>{invoice.status}</span>
-          </Typography>
-          <Typography fontWeight="bold" fontFamily="poppins">
-            Reason:&nbsp;
-            <span style={{ fontWeight: "initial" }}>{invoice.reason}</span>
           </Typography>
         </Box>
         <Box
@@ -242,4 +226,4 @@ const PrintableArticle = () => {
   );
 };
 
-export default PrintableArticle;
+export default PrintableInvoice;
