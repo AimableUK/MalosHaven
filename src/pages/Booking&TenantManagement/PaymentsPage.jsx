@@ -133,7 +133,7 @@ const PaymentsPage = () => {
         message,
         severity,
       });
-    }, 100); // Delay can be short like 100ms
+    }, 100);
   };
 
   const handleAddInvoice = (invoice) => {

@@ -57,6 +57,17 @@ const AddInvoiceForm = ({
     severity: "success",
   });
 
+  const showSnackbar = (message, severity = "success") => {
+    setSnackbar((prev) => ({ ...prev, open: false }));
+    setTimeout(() => {
+      setSnackbar({
+        open: true,
+        message,
+        severity,
+      });
+    }, 100);
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -135,7 +146,7 @@ const AddInvoiceForm = ({
   const handleDeleteInvoiceItem = (invoiceItemId) => {
     setInvoiceItems((prevItems) => {
       if (prevItems.length === 1) {
-        setSnackbar("You can't delete the first Invoice Item");
+        showSnackbar("You can't delete the first Invoice Item", "error");
         return prevItems;
       }
       return prevItems.filter((item) => item.id !== invoiceItemId);
