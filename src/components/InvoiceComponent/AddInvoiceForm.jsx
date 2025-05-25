@@ -200,7 +200,7 @@ const AddInvoiceForm = ({
             </FormControl>
           </Box>
           {invoiceItems.map((item, index) => (
-            <Box key={item.id} className="mt-6">
+            <Box key={item.id}>
               <Divider
                 sx={{
                   borderColor: "#ccc",
@@ -264,7 +264,7 @@ const AddInvoiceForm = ({
                           [`issueDate-${item.id}`]: newValue,
                         }))
                       }
-                      renderInput={(params) => <TextField {...params} />}
+                      slotProps={{ textField: { variant: "outlined" } }}
                     />
                   </LocalizationProvider>
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -277,7 +277,7 @@ const AddInvoiceForm = ({
                           [`dueDate-${item.id}`]: newValue,
                         }))
                       }
-                      renderInput={(params) => <TextField {...params} />}
+                      slotProps={{ textField: { variant: "outlined" } }}
                     />
                   </LocalizationProvider>
                 </Box>
