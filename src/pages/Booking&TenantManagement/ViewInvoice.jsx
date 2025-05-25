@@ -21,8 +21,6 @@ import Logo from "../../assets/Logo.svg";
 
 const PrintableInvoice = () => {
   const [invoices, setInvoices] = useState(MyInvoices);
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const componentRef = useRef();
 
@@ -56,6 +54,14 @@ const PrintableInvoice = () => {
     { id: "status", label: "Status", minWidth: 98 },
   ];
 
+  const totalInvoiceAmount = () => {
+    return (
+      invoice.invoiceItems
+        .reduce((acc, item) => acc + item.amount, 0)
+        .toLocaleString("en-US") + " RWF"
+    );
+  };
+
   return (
     <Box className="m-5">
       <Box
@@ -87,7 +93,7 @@ const PrintableInvoice = () => {
             <Typography fontFamily="poppins">{invoice.phone}</Typography>
           </Box>
         </Box>
-        <Paper sx={{ width: "100%", overflow: "hidden" }}>
+        <Paper sx={{ width: "100%", overflow: "hidden", pb: 1 }}>
           <TableContainer sx={{ maxHeight: 440, overflow: "hidden" }}>
             <Table stickyHeader aria-label="invoice items table">
               <TableHead>
@@ -105,44 +111,37 @@ const PrintableInvoice = () => {
               </TableHead>
 
               <TableBody>
-                {invoice.invoiceItems
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row) => (
-                    <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
-                      {columns.map((column) => {
-                        const value = row[column.id];
-                        return (
-                          <TableCell
-                            key={column.id}
-                            align={column.align || "left"}
-                          >
-                            {column.id === "amount"
-                              ? value.toLocaleString("en-US") + " RWF"
-                              : value}
-                          </TableCell>
-                        );
-                      })}
-                    </TableRow>
-                  ))}
+                {invoice.invoiceItems.map((row) => (
+                  <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
+                    {columns.map((column) => {
+                      const value = row[column.id];
+                      return (
+                        <TableCell
+                          key={column.id}
+                          align={column.align || "left"}
+                        >
+                          {column.id === "amount"
+                            ? value.toLocaleString("en-US") + " RWF"
+                            : value}
+                        </TableCell>
+                      );
+                    })}
+                  </TableRow>
+                ))}
               </TableBody>
             </Table>
           </TableContainer>
         </Paper>
-        <Box
-          sx={{
-            height: "1px",
-            width: "100%",
-            background: "linear-gradient(to right, #2d454d)",
-            borderRadius: "999px",
-          }}
-        />
-        <Box className="flex justify-between">
-          <Typography className="w-full" fontStyle="poppins">
-            Total Due:
+        <Box className="flex justify-between w-[50%]">
+          <Typography
+            className="whitespace-nowrap"
+            fontWeight="bold"
+            fontFamily="poppins"
+          >
+            Total:&nbsp;
           </Typography>
-          <Typography className="w-full"></Typography>
-          <Typography className="w-full" fontStyle="poppins">
-            {invoice.amount}
+          <Typography className="whitespace-nowrap" fontFamily="poppins">
+            {totalInvoiceAmount()}
           </Typography>
         </Box>
         <Box
