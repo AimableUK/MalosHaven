@@ -42,6 +42,7 @@ const EditInvoiceForm = ({
 }) => {
   const [selectedTenant, setSelectedTenant] = useState(selectedInvoice);
   const [invoiceItems, setInvoiceItems] = useState([{ id: 1 }]);
+  const [userDetails, setUserDetails] = useState({});
 
   const [formData, setFormData] = useState({
     tenant: "",
@@ -80,6 +81,13 @@ const EditInvoiceForm = ({
         tenant: selectedInvoice.tenantName,
       };
 
+      const invoiceUserDetails = {
+        tenantName: selectedInvoice.tenantName,
+        avatar: selectedInvoice.avatar,
+      };
+
+      setUserDetails(invoiceUserDetails);
+
       selectedInvoice.invoiceItems.forEach((item, index) => {
         const id = index + 1;
         data[`description-${id}`] = item.description;
@@ -93,7 +101,6 @@ const EditInvoiceForm = ({
       const tenantInfo = tenants.find(
         (t) => t.name === selectedInvoice.tenantName
       );
-      console.log(tenantInfo)
       setSelectedTenant(tenantInfo || null);
     }
   }, [selectedInvoice, tenants]);
@@ -113,11 +120,6 @@ const EditInvoiceForm = ({
     const { name, value } = e.target;
 
     setFormData((prev) => ({ ...prev, [name]: value }));
-
-    if (name === "tenant") {
-      const tenantInfo = tenants.find((t) => t.name === value);
-      // setSelectedTenant(tenantInfo || null);
-    }
   };
 
   const handleSubmit = () => {
@@ -226,22 +228,25 @@ const EditInvoiceForm = ({
           },
         }}
       >
-        {selectedInvoice.map((inc) => (
-          <Box>{inc.tenantName}</Box>
-        ))}
         <DialogTitle sx={{ fontWeight: "bold" }}>Edit Invoice</DialogTitle>
         <DialogContent
           sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 1 }}
         >
           <Box className="flex flex-col md:flex-row items-center gap-2">
-            <Box>
-              <Avatar src={selectedTenant.avatar} alt="Tenant" width={80} />
+            <Box className="flex flex-row items-center gap-3">
+              <Avatar
+                src={userDetails.avatar}
+                alt="Tenant"
+                sx={{ width: "50px", height: "50px" }}
+              />
 
               <Typography
-                key={selectedInvoice.email || selectedInvoice.tenantName}
-                value={selectedInvoice.tenantName}
+                key={userDetails.tenantName}
+                value={userDetails.tenantName}
+                fontFamily="poppins"
+                fontWeight="bold"
               >
-                {selectedInvoice.tenantName}
+                {userDetails.tenantName}
               </Typography>
             </Box>
           </Box>
