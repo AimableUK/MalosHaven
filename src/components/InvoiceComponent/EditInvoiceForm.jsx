@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   Dialog,
   DialogTitle,
@@ -59,15 +59,19 @@ const EditInvoiceForm = ({
     severity: "success",
   });
 
-  const tenants = propertiesState.flatMap((property) =>
-    property.units
-      .filter((unit) => unit.tenant !== null)
-      .map((unit) => ({
-        ...unit.tenant,
-        unitNumber: unit.UnitNumber,
-        unitValue: unit.UnitValue,
-        propertyName: property.title,
-      }))
+  const tenants = useMemo(
+    () =>
+      propertiesState.flatMap((property) =>
+        property.units
+          .filter((unit) => unit.tenant !== null)
+          .map((unit) => ({
+            ...unit.tenant,
+            unitNumber: unit.UnitNumber,
+            unitValue: unit.UnitValue,
+            propertyName: property.title,
+          }))
+      ),
+    [propertiesState]
   );
 
   useEffect(() => {
@@ -98,11 +102,18 @@ const EditInvoiceForm = ({
       });
 
       setFormData(data);
+
       const tenantInfo = tenants.find(
         (t) => t.name === selectedInvoice.tenantName
       );
-      setSelectedTenant(tenantInfo || null);
+      if (
+        tenantInfo &&
+        (!selectedTenant || selectedTenant.name !== tenantInfo.name)
+      ) {
+        setSelectedTenant(tenantInfo);
+      }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedInvoice, tenants]);
 
   const showSnackbar = (message, severity = "success") => {
