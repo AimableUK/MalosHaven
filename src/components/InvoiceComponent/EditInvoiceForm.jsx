@@ -166,9 +166,8 @@ const EditInvoiceForm = ({
     });
 
     const newInvoice = {
-      id: selectedInvoice?.id || `INV-${Date.now()}`,
-      invoiceNumber:
-        selectedInvoice?.invoiceNumber || `${Date.now()}${invoices.length + 1}`,
+      id: selectedInvoice?.id,
+      invoiceNumber: selectedInvoice?.invoiceNumber,
       tenantName: formData.tenant,
       invoiceItems: compiledItems,
     };
@@ -186,7 +185,7 @@ const EditInvoiceForm = ({
     setSnackbar({ open: false, message: "", severity: "" });
   };
 
-  const handleEditInvoiceItem = () => {
+  const handleAddInvoiceItem = () => {
     const nextId = invoiceItems.length + 1;
     setInvoiceItems((prev) => [...prev, { id: nextId }]);
     setFormData((prev) => ({
@@ -367,7 +366,7 @@ const EditInvoiceForm = ({
             startIcon={<AddIcon />}
             variant="contained"
             color="info"
-            onClick={handleEditInvoiceItem}
+            onClick={handleAddInvoiceItem}
           >
             Add Invoice Item
           </Button>
