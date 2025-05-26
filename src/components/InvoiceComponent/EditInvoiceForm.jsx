@@ -134,11 +134,6 @@ const EditInvoiceForm = ({
   };
 
   const handleSubmit = () => {
-    if (!formData.tenant || !selectedTenant) {
-      showSnackbar("Please select a tenant", "error");
-      return;
-    }
-
     const compiledItems = invoiceItems.map((item) => {
       const description = formData[`description-${item.id}`];
       const amount = parseFloat(formData[`amount-${item.id}`]);
@@ -175,13 +170,11 @@ const EditInvoiceForm = ({
       invoiceNumber:
         selectedInvoice?.invoiceNumber || `${Date.now()}${invoices.length + 1}`,
       tenantName: formData.tenant,
-      email: selectedTenant.email,
-      phone: selectedTenant.phone,
-      avatar: selectedTenant.image,
       invoiceItems: compiledItems,
     };
 
     onEditInvoice(newInvoice);
+    showSnackbar(`Updated ${userDetails.tenantName} Successfully`, "success");
 
     onClose();
     setFormData({});
@@ -254,7 +247,6 @@ const EditInvoiceForm = ({
               <Typography
                 key={userDetails.tenantName}
                 value={userDetails.tenantName}
-                fontFamily="poppins"
                 fontWeight="bold"
               >
                 {userDetails.tenantName}

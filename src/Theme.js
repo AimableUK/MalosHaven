@@ -16,7 +16,7 @@ export const customTheme = createTheme({
     },
   },
   typography: {
-    fontFamily: "Roboto, sans-serif",
+    fontFamily: "poppins, sans-serif",
   },
   components: {
     MuiCssBaseline: {

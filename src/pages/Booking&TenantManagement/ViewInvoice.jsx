@@ -71,27 +71,27 @@ const PrintableInvoice = () => {
       >
         <Box className="flex flex-row justify-between">
           <img src={Logo} alt="Our Logo" />
-          <Typography fontFamily="poppins">
+          <Typography>
             Invoice #<br /> {invoice.invoiceNumber}
           </Typography>
         </Box>
         <Box className="flex flex-row justify-between">
           <Box>
-            <Typography fontWeight="bold" fontFamily="poppins">
+            <Typography fontWeight="bold">
               KAMO BUSINESS CO. LTD
             </Typography>
             <Typography variant="h7" fontWeight="bold">
               Luxury Gatsata Center
             </Typography>
-            <Typography fontFamily="poppins">Muhima, 120KN ST</Typography>
-            <Typography fontFamily="poppins">+250 780934382</Typography>
+            <Typography>Muhima, 120KN ST</Typography>
+            <Typography>+250 780934382</Typography>
           </Box>
           <Box className="flex flex-col items-end">
-            <Typography fontFamily="poppins" fontWeight="bold">
+            <Typography fontWeight="bold">
               {invoice.tenantName}
             </Typography>
-            <Typography fontFamily="poppins">{invoice.email}</Typography>
-            <Typography fontFamily="poppins">{invoice.phone}</Typography>
+            <Typography>{invoice.email}</Typography>
+            <Typography>{invoice.phone}</Typography>
           </Box>
         </Box>
         <Paper sx={{ width: "100%", overflow: "hidden", pb: 1 }}>
@@ -139,11 +139,11 @@ const PrintableInvoice = () => {
           <Typography
             className="whitespace-nowrap"
             fontWeight="bold"
-            fontFamily="poppins"
+          
           >
             Total:&nbsp;
           </Typography>
-          <Typography className="whitespace-nowrap" fontFamily="poppins">
+          <Typography className="whitespace-nowrap">
             {totalInvoiceAmount()}
           </Typography>
         </Box>
@@ -157,20 +157,20 @@ const PrintableInvoice = () => {
           }}
         />
         <Box>
-          <Typography fontWeight="bold" fontFamily="poppins">
+          <Typography fontWeight="bold">
             PAYMENT INSTRUCTIONS:
           </Typography>
-          <Typography fontWeight="bold" component="p" fontFamily="poppins">
+          <Typography fontWeight="bold" component="p">
             Please pay the above total to:
           </Typography>
-          <Typography fontFamily="poppins">
+          <Typography>
             Bank of Kigali - KAMO & SONS BUSINESS LTD
           </Typography>
-          <Typography fontWeight="bold" fontFamily="poppins">
+          <Typography fontWeight="bold">
             Account Number:&nbsp;
             <span style={{ fontWeight: "initial" }}>000123456789</span>
           </Typography>
-          <Typography fontWeight="bold" fontFamily="poppins">
+          <Typography fontWeight="bold">
             Reference:&nbsp;
             <span style={{ fontWeight: "initial" }}>
               Invoice {invoice.invoiceNumber}
@@ -187,30 +187,30 @@ const PrintableInvoice = () => {
           }}
         />
         <Box>
-          <Typography fontWeight="bold" fontFamily="poppins">
+          <Typography fontWeight="bold">
             NOTES:
           </Typography>
           <List sx={{ listStyleType: "disc", pl: 4 }}>
-            <ListItem sx={{ display: "list-item" }} fontFamily="poppins">
+            <ListItem sx={{ display: "list-item" }}>
               Late Payment After {invoice.dueDate} may result in a 5% penalty
             </ListItem>
-            <ListItem sx={{ display: "list-item" }} fontFamily="poppins">
+            <ListItem sx={{ display: "list-item" }}>
               Contact us if you have made this payment
             </ListItem>
           </List>
         </Box>
-        <Typography fontFamily="poppins">
+        <Typography>
           THANK YOU FOR YOUR BUSINESS
         </Typography>
         <Box className="flex flex-row justify-between">
           <Box className="flex flex-col">
-            <Typography fontWeight="bold" fontFamily="poppins">
+            <Typography fontWeight="bold">
               KAMO 7 SONS B'SS LTD
             </Typography>
             <Typography>____________________</Typography>
           </Box>
           <Box className="flex flex-col">
-            <Typography fontWeight="bold" fontFamily="poppins">
+            <Typography fontWeight="bold">
               {invoice.tenantName}
             </Typography>
             <Typography>____________________</Typography>
