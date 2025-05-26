@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Box,
   Typography,
@@ -25,24 +25,21 @@ const PrintableInvoice = () => {
 
   const { id } = useParams();
   const invoice = invoices.find((invoice) => invoice.id === parseInt(id));
-  document.title = `${invoice.tenantName}'s Invoice`;
+  useEffect(() => {
+    document.title = `${invoice?.tenantName || "Tenant"}'s Invoice`;
+  });
 
   const componentRef = useRef();
   const handlePrint = useReactToPrint({
     contentRef: componentRef,
-    documentTitle: `Invoice of ${invoice.tenantName}`,
+    documentTitle: `Invoice of ${invoice?.tenantName || "Tenant"}`,
     onAfterPrint: () => console.log("Invoice Successfully Printed"),
   });
 
   if (!invoice) {
     return (
-      <Box
-        flex="flex"
-        justifyContent="center"
-        alignSelf="center"
-        justifySelf="center"
-      >
-        <Typography>Invoice not found</Typography>
+      <Box className="flex justify-center m-3 p-2 bg-[#2D454D] rounded-md border-t-2 border-t-slate-300">
+        <Typography>Invoice Not Found</Typography>
       </Box>
     );
   }
@@ -77,9 +74,7 @@ const PrintableInvoice = () => {
         </Box>
         <Box className="flex flex-row justify-between">
           <Box>
-            <Typography fontWeight="bold">
-              KAMO BUSINESS CO. LTD
-            </Typography>
+            <Typography fontWeight="bold">KAMO BUSINESS CO. LTD</Typography>
             <Typography variant="h7" fontWeight="bold">
               Luxury Gatsata Center
             </Typography>
@@ -87,9 +82,7 @@ const PrintableInvoice = () => {
             <Typography>+250 780934382</Typography>
           </Box>
           <Box className="flex flex-col items-end">
-            <Typography fontWeight="bold">
-              {invoice.tenantName}
-            </Typography>
+            <Typography fontWeight="bold">{invoice.tenantName}</Typography>
             <Typography>{invoice.email}</Typography>
             <Typography>{invoice.phone}</Typography>
           </Box>
@@ -136,11 +129,7 @@ const PrintableInvoice = () => {
           </TableContainer>
         </Paper>
         <Box className="flex justify-between w-[50%]">
-          <Typography
-            className="whitespace-nowrap"
-            fontWeight="bold"
-          
-          >
+          <Typography className="whitespace-nowrap" fontWeight="bold">
             Total:&nbsp;
           </Typography>
           <Typography className="whitespace-nowrap">
@@ -157,15 +146,11 @@ const PrintableInvoice = () => {
           }}
         />
         <Box>
-          <Typography fontWeight="bold">
-            PAYMENT INSTRUCTIONS:
-          </Typography>
+          <Typography fontWeight="bold">PAYMENT INSTRUCTIONS:</Typography>
           <Typography fontWeight="bold" component="p">
             Please pay the above total to:
           </Typography>
-          <Typography>
-            Bank of Kigali - KAMO & SONS BUSINESS LTD
-          </Typography>
+          <Typography>Bank of Kigali - KAMO & SONS BUSINESS LTD</Typography>
           <Typography fontWeight="bold">
             Account Number:&nbsp;
             <span style={{ fontWeight: "initial" }}>000123456789</span>
@@ -187,9 +172,7 @@ const PrintableInvoice = () => {
           }}
         />
         <Box>
-          <Typography fontWeight="bold">
-            NOTES:
-          </Typography>
+          <Typography fontWeight="bold">NOTES:</Typography>
           <List sx={{ listStyleType: "disc", pl: 4 }}>
             <ListItem sx={{ display: "list-item" }}>
               Late Payment After {invoice.dueDate} may result in a 5% penalty
@@ -199,20 +182,14 @@ const PrintableInvoice = () => {
             </ListItem>
           </List>
         </Box>
-        <Typography>
-          THANK YOU FOR YOUR BUSINESS
-        </Typography>
+        <Typography>THANK YOU FOR YOUR BUSINESS</Typography>
         <Box className="flex flex-row justify-between">
           <Box className="flex flex-col">
-            <Typography fontWeight="bold">
-              KAMO 7 SONS B'SS LTD
-            </Typography>
+            <Typography fontWeight="bold">KAMO 7 SONS B'SS LTD</Typography>
             <Typography>____________________</Typography>
           </Box>
           <Box className="flex flex-col">
-            <Typography fontWeight="bold">
-              {invoice.tenantName}
-            </Typography>
+            <Typography fontWeight="bold">{invoice.tenantName}</Typography>
             <Typography>____________________</Typography>
           </Box>
         </Box>
@@ -225,7 +202,7 @@ const PrintableInvoice = () => {
           color="primary"
           onClick={() => {
             handlePrint();
-            setScrollX(prev => !prev);
+            setScrollX((prev) => !prev);
           }}
         >
           Print Invoice
