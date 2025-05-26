@@ -25,7 +25,7 @@ import TenantUpdateForm from "../../components/TenantFormComponent/TenantUpdateF
 import MyProperties from "../../Data/SiteDataComponent/Properties";
 import DeleteIcon from "@mui/icons-material/Delete";
 import DataDeleteConfirm from "../../components/DeleteConfirmComponent/DataDeleteConfirm";
-import userAvatar from "../../assets/userAvatar.jpg"
+import userAvatar from "../../assets/userAvatar.jpg";
 
 const TenantsPage = () => {
   const [properties, setProperties] = useState(MyProperties);
@@ -240,7 +240,7 @@ const TenantsPage = () => {
                   sx={{
                     fontWeight: "bold",
                     fontSize: "20px",
-                    m: 1
+                    m: 1,
                   }}
                 >
                   {tenantDetails.name}
@@ -409,9 +409,9 @@ const TenantsPage = () => {
             setDeleteDialogOpen(true);
             setAnchorEl(null);
           }}
-          sx={{ ":hover": { color: "#F44545" } }}
+          className="group hover:text-[#F44545]"
         >
-          <DeleteIcon />
+          <DeleteIcon className="group-hover:text-[#F44545]" />
           Delete
         </MenuItem>
       </Menu>

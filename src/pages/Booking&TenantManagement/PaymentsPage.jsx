@@ -262,9 +262,9 @@ const PaymentsPage = () => {
               <Link to={`/invoiceview/${selectedInvoice.id}`}>
                 <MenuItem
                   onClick={handleCloseMenu}
-                  sx={{ ":hover": { color: "#10b981" } }}
+                  className="group hover:text-[#0288d1]"
                 >
-                  <VisibilityIcon />
+                  <VisibilityIcon className="group-hover:text-[#0288d1]" />
                   View
                 </MenuItem>
               </Link>
@@ -273,17 +273,17 @@ const PaymentsPage = () => {
             <MenuItem
               onClick={() => handleEditDialogOpen(selectedInvoice)}
               onClose={handleCloseMenu}
-              sx={{ ":hover": { color: "#10b981" } }}
+              className="group hover:text-[#10b981]"
             >
-              <EditIcon />
+              <EditIcon className="group-hover:text-[#10b981]" />
               Edit
             </MenuItem>
             <MenuItem
               onClose={handleCloseMenu}
               onClick={() => handleDeleteDialogOpen(selectedInvoice)}
-              sx={{ ":hover": { color: "#F44545" } }}
+              className="group hover:text-[#F44545]"
             >
-              <DeleteIcon />
+              <DeleteIcon className="group-hover:text-[#F44545]" />
               Delete
             </MenuItem>
           </Menu>
