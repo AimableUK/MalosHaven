@@ -40,7 +40,7 @@ const EditInvoiceForm = ({
   selectedInvoice,
   setSelectedInvoice,
 }) => {
-  const [selectedTenant, setSelectedTenant] = useState(null);
+  const [selectedTenant, setSelectedTenant] = useState(selectedInvoice);
   const [invoiceItems, setInvoiceItems] = useState([{ id: 1 }]);
 
   const [formData, setFormData] = useState({
@@ -87,18 +87,16 @@ const EditInvoiceForm = ({
         data[`issueDate-${id}`] = item.dateIssued;
         data[`dueDate-${id}`] = item.dueDate;
         data[`paymentStatus-${id}`] = item.status;
-        
       });
 
       setFormData(data);
       const tenantInfo = tenants.find(
         (t) => t.name === selectedInvoice.tenantName
       );
+      console.log(tenantInfo)
       setSelectedTenant(tenantInfo || null);
     }
   }, [selectedInvoice, tenants]);
-
-  
 
   const showSnackbar = (message, severity = "success") => {
     setSnackbar((prev) => ({ ...prev, open: false }));
@@ -118,7 +116,7 @@ const EditInvoiceForm = ({
 
     if (name === "tenant") {
       const tenantInfo = tenants.find((t) => t.name === value);
-      setSelectedTenant(tenantInfo || null);
+      // setSelectedTenant(tenantInfo || null);
     }
   };
 
@@ -228,40 +226,24 @@ const EditInvoiceForm = ({
           },
         }}
       >
+        {selectedInvoice.map((inc) => (
+          <Box>{inc.tenantName}</Box>
+        ))}
         <DialogTitle sx={{ fontWeight: "bold" }}>Edit Invoice</DialogTitle>
         <DialogContent
           sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 1 }}
         >
-          {selectedTenant && (
-            <Box className="flex flex-col md:flex-row items-center gap-2">
-              <Avatar src={selectedTenant.image} alt="Tenant" width={80} />
+          <Box className="flex flex-col md:flex-row items-center gap-2">
+            <Box>
+              <Avatar src={selectedTenant.avatar} alt="Tenant" width={80} />
 
-              <Typography>
-                <strong>Phone Number:</strong> {selectedTenant.phone}
+              <Typography
+                key={selectedInvoice.email || selectedInvoice.tenantName}
+                value={selectedInvoice.tenantName}
+              >
+                {selectedInvoice.tenantName}
               </Typography>
             </Box>
-          )}
-          <Box className="flex flex-col md:flex-row items-center mt-3">
-            <FormControl fullWidth sx={{ width: "full" }}>
-              <InputLabel id="tenant-select-label">Tenant</InputLabel>
-              <Select
-                labelId="tenant-select-label"
-                name="tenant"
-                value={formData.tenant || ""}
-                label="Tenant"
-                onChange={handleChange}
-              >
-                {tenants.map((tenant) => (
-                  <MenuItem
-                    key={tenant.email || tenant.name}
-                    value={tenant.name}
-                  >
-                    {tenant.name} — Unit ({tenant.unitNumber}) —
-                    {tenant.propertyName}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
           </Box>
           {invoiceItems.map((item, index) => (
             <Box key={item.id}>
