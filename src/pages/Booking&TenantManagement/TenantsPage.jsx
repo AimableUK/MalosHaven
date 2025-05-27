@@ -9,6 +9,7 @@ import {
   MenuItem,
   Snackbar,
   Alert,
+  useMediaQuery,
 } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import SearchBar from "../../components/SearchBar/SearchBar";
@@ -28,6 +29,7 @@ import MyProperties from "../../Data/SiteDataComponent/Properties";
 import DeleteIcon from "@mui/icons-material/Delete";
 import DataDeleteConfirm from "../../components/DeleteConfirmComponent/DataDeleteConfirm";
 import userAvatar from "../../assets/userAvatar.jpg";
+import MobileTenantDisplay from "./MobileTenantDisplay";
 
 const TenantsPage = () => {
   const [properties, setProperties] = useState(MyProperties);
@@ -39,6 +41,8 @@ const TenantsPage = () => {
   const [tenantDetails, setTenantDetails] = useState();
   const [addTenantOpenModal, setAddTenantOpenModal] = useState(false);
   const [updateTenantOpenModal, setUpdateTenantOpenModal] = useState(false);
+  const [mobileTenantDisplayOpenModal, setMobileTenantDisplayOpenModal] =
+    useState(false);
 
   const [anchorEl, setAnchorEl] = useState(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
@@ -52,6 +56,15 @@ const TenantsPage = () => {
 
   const deleteTenant =
     "Are you sure you want to Delete this Tenant? If you do so, it will be undone";
+
+  const isTablet = useMediaQuery("(max-width:768px)");
+
+  useEffect(() => {
+    const allTenants = properties.flatMap((property) =>
+      property.units.map((unit) => unit.tenant).filter((tenant) => tenant)
+    );
+    setTenants(allTenants);
+  }, [properties]);
 
   const showSnackbar = (message, severity = "success") => {
     setSnackbar((prev) => ({ ...prev, open: false }));
@@ -85,18 +98,13 @@ const TenantsPage = () => {
       )
     );
     setDeleteDialogOpen(false);
+    setMobileTenantDisplayOpenModal(false);
     showSnackbar(`${selectedTenant.name} deleted Successfully`, "success");
   };
 
-  useEffect(() => {
-    const allTenants = properties.flatMap((property) =>
-      property.units.map((unit) => unit.tenant).filter((tenant) => tenant)
-    );
-    setTenants(allTenants);
-  }, [properties]);
-
   const displayTenant = (tenant) => {
     setSelectedTenant(tenant);
+    setMobileTenantDisplayOpenModal(true);
   };
 
   useEffect(() => {
@@ -176,7 +184,7 @@ const TenantsPage = () => {
 
   return (
     <Box m="20px" display="flex" flexDirection="column">
-      <Box className="flex flex-col md:grid grid-cols-12 gap-4">
+      <Box className="flex flex-col lg:grid grid-cols-12 gap-4">
         <Box className="bg-[#2D454D] col-span-8 rounded-l-lg p-5">
           {/* tenants header */}
           <Box className="flex flex-col md:flex-row justify-between">
@@ -233,193 +241,197 @@ const TenantsPage = () => {
               ))}
           </Box>
         </Box>
-        <Box className="col-span-4 flex flex-col bg-[#2D454D] p-3 rounded-r-lg">
-          <Button
-            onClick={() => setAddTenantOpenModal(true)}
-            variant="contained"
-            color="info"
-            startIcon={<AddIcon />}
-          >
-            Add Tenant
-          </Button>
+        {!isTablet && (
+          <Box className="col-span-4 flex flex-col bg-[#2D454D] p-3 rounded-r-lg">
+            <Button
+              onClick={() => setAddTenantOpenModal(true)}
+              variant="contained"
+              color="info"
+              startIcon={<AddIcon />}
+            >
+              Add Tenant
+            </Button>
 
-          {/* action buttons */}
-          {tenantDetails ? (
-            <Box key={tenantDetails.tenant_id}>
-              <Box
-                display="flex"
-                flexDirection="row"
-                justifyContent="space-between"
-                sx={{ mt: 3 }}
-              >
-                <IconButton onClick={() => handleUpdateClick(tenantDetails)}>
-                  <EditIcon sx={{ color: "white" }} />
-                </IconButton>
-                <IconButton
-                  onClick={(event) => handleActionsClick(event, tenantDetails)}
-                >
-                  <MoreHorizIcon sx={{ color: "white" }} />
-                </IconButton>
-              </Box>
-
-              <Box
-                display="flex"
-                flexDirection="column"
-                justifyContent="center"
-                alignItems="center"
-              >
-                <Avatar
-                  src={tenantDetails.image}
-                  sx={{ width: "100px", height: "100px" }}
-                />
-                <Typography
-                  sx={{
-                    fontWeight: "bold",
-                    fontSize: "20px",
-                    m: 1,
-                  }}
-                >
-                  {tenantDetails.name}
-                </Typography>
-              </Box>
-
-              <Box
-                sx={{
-                  height: "1px",
-                  width: "100%",
-                  background:
-                    "linear-gradient(to right, #2d454d, #ABADAE, #2d454d)",
-                  my: 1,
-                  borderRadius: "999px",
-                }}
-              />
-              <Box
-                display="flex"
-                flexDirection="column"
-                color="#D4D4D4"
-                gap="15px"
-              >
-                <Typography>
-                  <PersonIcon />
-                  &nbsp;&nbsp;{tenantDetails.gender}
-                </Typography>
-                <Typography>
-                  <PhoneIcon />
-                  &nbsp;&nbsp;{tenantDetails.phone}
-                </Typography>
-                <Typography>
-                  <EmailIcon />
-                  &nbsp;&nbsp;{tenantDetails.email}
-                </Typography>
-                <Typography>
-                  <CreditCardIcon />
-                  &nbsp;&nbsp;{tenantDetails.national_id}
-                </Typography>
-                <Typography>
-                  <ApartmentIcon />
-                  &nbsp;&nbsp;{tenantDetails.property}
-                </Typography>
-                <Typography>
-                  <PlaceIcon />
-                  &nbsp;&nbsp;{tenantDetails.unit}
-                </Typography>
+            {/* action buttons */}
+            {tenantDetails ? (
+              <Box key={tenantDetails.tenant_id}>
                 <Box
                   display="flex"
                   flexDirection="row"
                   justifyContent="space-between"
+                  sx={{ mt: 3 }}
+                >
+                  <IconButton onClick={() => handleUpdateClick(tenantDetails)}>
+                    <EditIcon sx={{ color: "white" }} />
+                  </IconButton>
+                  <IconButton
+                    onClick={(event) =>
+                      handleActionsClick(event, tenantDetails)
+                    }
+                  >
+                    <MoreHorizIcon sx={{ color: "white" }} />
+                  </IconButton>
+                </Box>
+
+                <Box
+                  display="flex"
+                  flexDirection="column"
+                  justifyContent="center"
                   alignItems="center"
                 >
-                  <Typography>
-                    <PaidIcon />
-                    &nbsp;&nbsp;STATUS
-                  </Typography>
+                  <Avatar
+                    src={tenantDetails.image}
+                    sx={{ width: "100px", height: "100px" }}
+                  />
                   <Typography
                     sx={{
-                      border: "1px solid",
-                      px: 2,
-                      py: "4px",
-                      borderRadius: "8px",
-                      backgroundColor: (() => {
-                        switch (tenantDetails.paymentStatus) {
-                          case "Paid":
-                            return "#089846";
-                          case "Not Yet":
-                            return "#8D071E";
-                          case "Partially":
-                            return "#9D861C";
-                          default:
-                            return "grey";
-                        }
-                      })(),
-                      color: "white",
+                      fontWeight: "bold",
+                      fontSize: "20px",
+                      m: 1,
                     }}
                   >
-                    {tenantDetails.paymentStatus}
+                    {tenantDetails.name}
                   </Typography>
                 </Box>
-                {/* </Box> */}
-                <Button variant="contained" color="success">
-                  Full Payment Status
-                </Button>
+
+                <Box
+                  sx={{
+                    height: "1px",
+                    width: "100%",
+                    background:
+                      "linear-gradient(to right, #2d454d, #ABADAE, #2d454d)",
+                    my: 1,
+                    borderRadius: "999px",
+                  }}
+                />
+                <Box
+                  display="flex"
+                  flexDirection="column"
+                  color="#D4D4D4"
+                  gap="15px"
+                >
+                  <Typography>
+                    <PersonIcon />
+                    &nbsp;&nbsp;{tenantDetails.gender}
+                  </Typography>
+                  <Typography>
+                    <PhoneIcon />
+                    &nbsp;&nbsp;{tenantDetails.phone}
+                  </Typography>
+                  <Typography>
+                    <EmailIcon />
+                    &nbsp;&nbsp;{tenantDetails.email}
+                  </Typography>
+                  <Typography>
+                    <CreditCardIcon />
+                    &nbsp;&nbsp;{tenantDetails.national_id}
+                  </Typography>
+                  <Typography>
+                    <ApartmentIcon />
+                    &nbsp;&nbsp;{tenantDetails.property}
+                  </Typography>
+                  <Typography>
+                    <PlaceIcon />
+                    &nbsp;&nbsp;{tenantDetails.unit}
+                  </Typography>
+                  <Box
+                    display="flex"
+                    flexDirection="row"
+                    justifyContent="space-between"
+                    alignItems="center"
+                  >
+                    <Typography>
+                      <PaidIcon />
+                      &nbsp;&nbsp;STATUS
+                    </Typography>
+                    <Typography
+                      sx={{
+                        border: "1px solid",
+                        px: 2,
+                        py: "4px",
+                        borderRadius: "8px",
+                        backgroundColor: (() => {
+                          switch (tenantDetails.paymentStatus) {
+                            case "Paid":
+                              return "#089846";
+                            case "Not Yet":
+                              return "#8D071E";
+                            case "Partially":
+                              return "#9D861C";
+                            default:
+                              return "grey";
+                          }
+                        })(),
+                        color: "white",
+                      }}
+                    >
+                      {tenantDetails.paymentStatus}
+                    </Typography>
+                  </Box>
+                  {/* </Box> */}
+                  <Button variant="contained" color="success">
+                    Full Payment Status
+                  </Button>
+                </Box>
               </Box>
-            </Box>
-          ) : (
-            <Box>
-              {/* Skeleton UI for loading state */}
-              <Box
-                display="flex"
-                flexDirection="row"
-                justifyContent="space-between"
-                sx={{ mt: 3 }}
-              >
-                <Skeleton variant="circular" width={40} height={40} />
-                <Skeleton variant="circular" width={40} height={40} />
-              </Box>
-
-              <Box
-                display="flex"
-                flexDirection="column"
-                justifyContent="center"
-                alignItems="center"
-                mt={2}
-              >
-                <Skeleton variant="circular" width={100} height={100} />
-                <Skeleton width="60%" height={30} sx={{ mt: 2 }} />
-              </Box>
-
-              <Box
-                sx={{
-                  height: "1px",
-                  width: "100%",
-                  background:
-                    "linear-gradient(to right, #2d454d, #ABADAE, #2d454d)",
-                  my: 2,
-                  borderRadius: "999px",
-                }}
-              />
-
-              <Box display="flex" flexDirection="column" gap="15px">
-                <Skeleton height={24} width="80%" />
-                <Skeleton height={24} width="80%" />
-                <Skeleton height={24} width="80%" />
-                <Skeleton height={24} width="80%" />
-                <Skeleton height={24} width="80%" />
-                <Skeleton height={24} width="80%" />
-
-                <Box display="flex" justifyContent="space-between">
-                  <Skeleton height={24} width="30%" />
-                  <Skeleton height={30} width="60px" />
+            ) : (
+              <Box>
+                {/* Skeleton UI for loading state */}
+                <Box
+                  display="flex"
+                  flexDirection="row"
+                  justifyContent="space-between"
+                  sx={{ mt: 3 }}
+                >
+                  <Skeleton variant="circular" width={40} height={40} />
+                  <Skeleton variant="circular" width={40} height={40} />
                 </Box>
 
-                <Skeleton
-                  height={36}
-                  width="100%"
-                  sx={{ borderRadius: "6px" }}
+                <Box
+                  display="flex"
+                  flexDirection="column"
+                  justifyContent="center"
+                  alignItems="center"
+                  mt={2}
+                >
+                  <Skeleton variant="circular" width={100} height={100} />
+                  <Skeleton width="60%" height={30} sx={{ mt: 2 }} />
+                </Box>
+
+                <Box
+                  sx={{
+                    height: "1px",
+                    width: "100%",
+                    background:
+                      "linear-gradient(to right, #2d454d, #ABADAE, #2d454d)",
+                    my: 2,
+                    borderRadius: "999px",
+                  }}
                 />
+
+                <Box display="flex" flexDirection="column" gap="15px">
+                  <Skeleton height={24} width="80%" />
+                  <Skeleton height={24} width="80%" />
+                  <Skeleton height={24} width="80%" />
+                  <Skeleton height={24} width="80%" />
+                  <Skeleton height={24} width="80%" />
+                  <Skeleton height={24} width="80%" />
+
+                  <Box display="flex" justifyContent="space-between">
+                    <Skeleton height={24} width="30%" />
+                    <Skeleton height={30} width="60px" />
+                  </Box>
+
+                  <Skeleton
+                    height={36}
+                    width="100%"
+                    sx={{ borderRadius: "6px" }}
+                  />
+                </Box>
               </Box>
-            </Box>
-          )}
-        </Box>
+            )}
+          </Box>
+        )}
       </Box>
 
       <TenantForm
@@ -436,6 +448,7 @@ const TenantsPage = () => {
         properties={properties}
         selectedTenant={selectedTenant}
       />
+
       <Menu
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}
@@ -453,6 +466,21 @@ const TenantsPage = () => {
           Delete
         </MenuItem>
       </Menu>
+
+      <MobileTenantDisplay
+        mobileTenantDisplayOpenModal={mobileTenantDisplayOpenModal}
+        tenantDetails={tenantDetails}
+        handleUpdateClick={handleUpdateClick}
+        handleActionsClick={handleActionsClick}
+        setSelectedTenant={setSelectedTenant}
+        selectedTenant={selectedTenant}
+        tenants={tenants}
+        setTenantDetails={setTenantDetails}
+        onClose={() => {
+          setMobileTenantDisplayOpenModal(false);
+          setTenantDetails(null);
+        }}
+      />
 
       {/* Snackbar */}
       <Snackbar
