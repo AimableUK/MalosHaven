@@ -30,6 +30,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import DataDeleteConfirm from "../../components/DeleteConfirmComponent/DataDeleteConfirm";
 import userAvatar from "../../assets/userAvatar.jpg";
 import MobileTenantDisplay from "./MobileTenantDisplay";
+import FooterPage from "../Footer/FooterPage";
 
 const TenantsPage = () => {
   const [properties, setProperties] = useState(MyProperties);
@@ -57,7 +58,7 @@ const TenantsPage = () => {
   const deleteTenant =
     "Are you sure you want to Delete this Tenant? If you do so, it will be undone";
 
-  const isTablet = useMediaQuery("(max-width:768px)");
+  const isTablet = useMediaQuery("(max-width:1200px)");
 
   useEffect(() => {
     const allTenants = properties.flatMap((property) =>
@@ -185,10 +186,23 @@ const TenantsPage = () => {
   return (
     <Box m="20px" display="flex" flexDirection="column">
       <Box className="flex flex-col lg:grid grid-cols-12 gap-4">
-        <Box className="bg-[#2D454D] col-span-8 rounded-l-lg p-5">
+        <Box
+          className={`bg-[#2D454D] ${isTablet ? "col-span-12" : "col-span-8"}  rounded-l-lg p-5`}
+        >
           {/* tenants header */}
-          <Box className="flex flex-col md:flex-row justify-between">
+          <Box className="flex flex-col md:flex-row gap-y-1 justify-center md:justify-between">
             <Typography fontWeight="bold">Tenants List</Typography>
+            {isTablet && (
+              <Button
+                onClick={() => setAddTenantOpenModal(true)}
+                variant="contained"
+                color="info"
+                startIcon={<AddIcon />}
+                sx={{ width: "fit-content" }}
+              >
+                Add Tenant
+              </Button>
+            )}
             <SearchBar
               value={searchTerm}
               onChange={handleChange}
@@ -508,6 +522,7 @@ const TenantsPage = () => {
         deleteTenant={deleteTenant}
         deleteType="tenant"
       />
+      <FooterPage />
     </Box>
   );
 };
