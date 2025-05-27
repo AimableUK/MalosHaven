@@ -7,6 +7,8 @@ import {
   Skeleton,
   Menu,
   MenuItem,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import SearchBar from "../../components/SearchBar/SearchBar";
@@ -30,27 +32,46 @@ import userAvatar from "../../assets/userAvatar.jpg";
 const TenantsPage = () => {
   const [properties, setProperties] = useState(MyProperties);
   const [tenants, setTenants] = useState([]);
+
   const [showClearIcon, setShowClearIcon] = useState("none");
   const [searchTerm, setSearchTerm] = useState("");
+
   const [tenantDetails, setTenantDetails] = useState();
   const [addTenantOpenModal, setAddTenantOpenModal] = useState(false);
   const [updateTenantOpenModal, setUpdateTenantOpenModal] = useState(false);
+
   const [anchorEl, setAnchorEl] = useState(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-  const [selectedTenantId, setSelectedTenantId] = useState(null);
+  const [selectedTenant, setSelectedTenant] = useState(null);
   const [deleteType, setDeleteType] = useState("tenant");
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+    severity: "",
+  });
 
   const deleteTenant =
     "Are you sure you want to Delete this Tenant? If you do so, it will be undone";
 
+  const showSnackbar = (message, severity = "success") => {
+    setSnackbar((prev) => ({ ...prev, open: false }));
+    setTimeout(() => {
+      setSnackbar({
+        open: true,
+        message,
+        severity,
+      });
+    }, 100);
+  };
+
   const handleUpdateClick = (tenant) => {
-    setSelectedTenantId(tenant);
+    setSelectedTenant(tenant);
     setUpdateTenantOpenModal(true);
   };
 
-  const handleActionsClick = (event, tenantId) => {
+  const handleActionsClick = (event, tenant) => {
     setAnchorEl(event.currentTarget);
-    setSelectedTenantId(tenantId);
+    setSelectedTenant(tenant);
   };
 
   const handleCloseMenu = () => {
@@ -59,9 +80,12 @@ const TenantsPage = () => {
 
   const handleDeleteTenant = () => {
     setTenants((prevTenants) =>
-      prevTenants.filter((tenant) => tenant.tenant_id !== selectedTenantId)
+      prevTenants.filter(
+        (tenant) => tenant.tenant_id !== selectedTenant.tenant_id
+      )
     );
     setDeleteDialogOpen(false);
+    showSnackbar(`${selectedTenant.name} deleted Successfully`, "success");
   };
 
   useEffect(() => {
@@ -134,6 +158,10 @@ const TenantsPage = () => {
         tenant.tenant_id === updatedTenant.tenant_id ? updatedTenant : tenant
       )
     );
+  };
+
+  const handleCloseSnackbar = () => {
+    setSnackbar({ ...snackbar, open: false });
   };
 
   return (
@@ -218,9 +246,7 @@ const TenantsPage = () => {
                   <EditIcon sx={{ color: "white" }} />
                 </IconButton>
                 <IconButton
-                  onClick={(event) =>
-                    handleActionsClick(event, tenantDetails.tenant_id)
-                  }
+                  onClick={(event) => handleActionsClick(event, tenantDetails)}
                 >
                   <MoreHorizIcon sx={{ color: "white" }} />
                 </IconButton>
@@ -396,7 +422,7 @@ const TenantsPage = () => {
         onClose={() => setUpdateTenantOpenModal(false)}
         onUpdateTenant={handleUpdateTenant}
         properties={properties}
-        selectedTenantId={selectedTenantId}
+        selectedTenant={selectedTenant}
       />
       <Menu
         anchorEl={anchorEl}
@@ -416,11 +442,26 @@ const TenantsPage = () => {
         </MenuItem>
       </Menu>
 
+      {/* Snackbar */}
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={4000}
+        onClose={handleCloseSnackbar}
+      >
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity={snackbar.severity}
+          sx={{ width: "100%" }}
+        >
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
+
       <DataDeleteConfirm
         deleteDialogOpen={deleteDialogOpen}
         setDeleteDialogOpen={setDeleteDialogOpen}
-        selectedTenantId={selectedTenantId}
-        setSelectedTenantId={setSelectedTenantId}
+        selectedTenant={selectedTenant}
+        setSelectedTenant={setSelectedTenant}
         handleDeleteTenant={handleDeleteTenant}
         deleteTenant={deleteTenant}
         deleteType="tenant"
