@@ -491,10 +491,7 @@ const TenantsPage = () => {
           selectedTenant={selectedTenant}
           tenants={tenants}
           setTenantDetails={setTenantDetails}
-          onClose={() => {
-            setMobileTenantDisplayOpenModal(false);
-            setTenantDetails(null);
-          }}
+          onClose={() => setMobileTenantDisplayOpenModal(false)}
         />
       )}
 
