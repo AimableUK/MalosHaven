@@ -177,6 +177,8 @@ const TenantsPage = () => {
         tenant.tenant_id === updatedTenant.tenant_id ? updatedTenant : tenant
       )
     );
+
+    showSnackbar(`${updatedTenant.name} updated successfully!`, "success");
   };
 
   const handleCloseSnackbar = () => {

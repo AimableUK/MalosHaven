@@ -23,7 +23,7 @@ const TenantUpdateForm = ({
   onClose,
   onUpdateTenant,
   properties,
-  selectedTenantId,
+  selectedTenant,
 }) => {
   const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
@@ -45,7 +45,7 @@ const TenantUpdateForm = ({
   });
 
   useEffect(() => {
-    if (!selectedTenantId) return;
+    if (!selectedTenant) return;
 
     // Find tenant data
     const foundTenant = properties
@@ -56,7 +56,7 @@ const TenantUpdateForm = ({
           unit: unit.UnitNumber,
         }))
       )
-      .find((tenant) => tenant && tenant.national_id === selectedTenantId);
+      .find((tenant) => tenant && tenant.tenant_id === selectedTenant.tenant_id);
 
     if (foundTenant) {
       setFormData({
@@ -76,7 +76,7 @@ const TenantUpdateForm = ({
       );
       setUnitsList(propertyObj?.units || []);
     }
-  }, [selectedTenantId, properties]);
+  }, [selectedTenant, properties]);
 
   const handleSubmit = () => {
     const {
@@ -108,9 +108,8 @@ const TenantUpdateForm = ({
       return;
     }
 
-    // Update existing tenant
     onUpdateTenant({
-      ...selectedTenantId, // keep same tenant_id
+      ...selectedTenant.tenant_id,
       name,
       email,
       phone,
@@ -119,13 +118,7 @@ const TenantUpdateForm = ({
       unit,
       gender,
       paymentStatus,
-      image: imagePreview || selectedTenantId.image,
-    });
-
-    setSnackbar({
-      open: true,
-      message: "Tenant updated successfully!",
-      severity: "success",
+      image: imagePreview || selectedTenant.tenant_id.image,
     });
 
     onClose();

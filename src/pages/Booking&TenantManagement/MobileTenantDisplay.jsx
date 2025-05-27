@@ -17,7 +17,7 @@ import ApartmentIcon from "@mui/icons-material/Apartment";
 import PaidIcon from "@mui/icons-material/Paid";
 import EditIcon from "@mui/icons-material/Edit";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-import CloseIcon from '@mui/icons-material/Close';
+import CloseIcon from "@mui/icons-material/Close";
 
 const MobileTenantDisplay = ({
   tenantDetails,
@@ -30,8 +30,12 @@ const MobileTenantDisplay = ({
     <>
       <Dialog open={mobileTenantDisplayOpenModal} onClose={onClose}>
         <DialogTitle className="flex flex-row justify-between items-center">
-            <Typography variant="h6" fontWeight="bold">Tenant Details</Typography>
-            <IconButton edge="end" aria-label="close" onClick={onClose}><CloseIcon /></IconButton>
+          <Typography sx={{ fontSize: "23px" }} fontWeight="bold">
+            Tenant Details
+          </Typography>
+          <IconButton edge="end" aria-label="close" onClick={onClose}>
+            <CloseIcon />
+          </IconButton>
         </DialogTitle>
         {tenantDetails && (
           <DialogContent className="-mt-5">
