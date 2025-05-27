@@ -467,20 +467,22 @@ const TenantsPage = () => {
         </MenuItem>
       </Menu>
 
-      <MobileTenantDisplay
-        mobileTenantDisplayOpenModal={mobileTenantDisplayOpenModal}
-        tenantDetails={tenantDetails}
-        handleUpdateClick={handleUpdateClick}
-        handleActionsClick={handleActionsClick}
-        setSelectedTenant={setSelectedTenant}
-        selectedTenant={selectedTenant}
-        tenants={tenants}
-        setTenantDetails={setTenantDetails}
-        onClose={() => {
-          setMobileTenantDisplayOpenModal(false);
-          setTenantDetails(null);
-        }}
-      />
+      {isTablet && (
+        <MobileTenantDisplay
+          mobileTenantDisplayOpenModal={mobileTenantDisplayOpenModal}
+          tenantDetails={tenantDetails}
+          handleUpdateClick={handleUpdateClick}
+          handleActionsClick={handleActionsClick}
+          setSelectedTenant={setSelectedTenant}
+          selectedTenant={selectedTenant}
+          tenants={tenants}
+          setTenantDetails={setTenantDetails}
+          onClose={() => {
+            setMobileTenantDisplayOpenModal(false);
+            setTenantDetails(null);
+          }}
+        />
+      )}
 
       {/* Snackbar */}
       <Snackbar

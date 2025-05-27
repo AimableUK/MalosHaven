@@ -28,9 +28,9 @@ const MobileTenantDisplay = ({
   return (
     <>
       <Dialog open={mobileTenantDisplayOpenModal} onClose={onClose}>
-        <DialogTitle>Tenant Details</DialogTitle>
+        <DialogTitle fontWeight="bold">Tenant Details</DialogTitle>
         {tenantDetails && (
-          <DialogContent>
+          <DialogContent className="-mt-5">
             <Box key={tenantDetails.tenant_id}>
               <Box
                 display="flex"
@@ -144,7 +144,12 @@ const MobileTenantDisplay = ({
                   </Typography>
                 </Box>
               </Box>
-              <Button variant="contained" color="success">
+              <Button
+                variant="contained"
+                color="success"
+                fullWidth
+                sx={{ mt: 1 }}
+              >
                 Full Payment Status
               </Button>
             </Box>
