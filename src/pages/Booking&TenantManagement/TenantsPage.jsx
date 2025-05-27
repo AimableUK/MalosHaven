@@ -95,10 +95,20 @@ const TenantsPage = () => {
     setTenants(allTenants);
   }, [properties]);
 
-  const displayTenant = (tenantID) => {
-    const selectedTenant = tenants.find((t) => t.tenant_id === tenantID);
-    setTenantDetails(selectedTenant);
+  const displayTenant = (tenant) => {
+    setSelectedTenant(tenant);
   };
+
+  useEffect(() => {
+    if (selectedTenant) {
+      const updatedDetails = tenants.find(
+        (t) => t.tenant_id === selectedTenant.tenant_id
+      );
+      setTenantDetails(updatedDetails);
+    } else {
+      setTenantDetails(undefined);
+    }
+  }, [selectedTenant, tenants]);
 
   const handleChange = (event) => {
     setSearchTerm(event.target.value);
@@ -210,7 +220,7 @@ const TenantsPage = () => {
                 <Box
                   key={tenant.tenant_id}
                   className="flex flex-col md:flex-row gap-3 rounded-b border-t-2 border-t-slate-300 p-3 m-1 shadow-sm shadow-slate-900 w-[calc(30%-1rem)] min-w-[230px] max-w-[300px] cursor-pointer transition duration-50 ease-in-out active:scale-95"
-                  onClick={() => displayTenant(tenant.tenant_id)}
+                  onClick={() => displayTenant(tenant)}
                 >
                   <Avatar src={tenant.image || userAvatar} />
                   <Box className="flex flex-col">
@@ -411,12 +421,14 @@ const TenantsPage = () => {
           )}
         </Box>
       </Box>
+
       <TenantForm
         open={addTenantOpenModal}
         onClose={() => setAddTenantOpenModal(false)}
         onAddTenant={handleAddTenant}
         properties={properties}
       />
+
       <TenantUpdateForm
         open={updateTenantOpenModal}
         onClose={() => setUpdateTenantOpenModal(false)}
