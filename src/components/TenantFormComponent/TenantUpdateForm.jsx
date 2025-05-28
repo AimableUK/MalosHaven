@@ -109,7 +109,7 @@ const TenantUpdateForm = ({
     }
 
     onUpdateTenant({
-      ...selectedTenant.tenant_id,
+      ...selectedTenant?.tenant_id,
       name,
       email,
       phone,
