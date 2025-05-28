@@ -99,7 +99,7 @@ const TenantForm = ({ open, onClose, onAddTenant, properties }) => {
       !unit.trim() ||
       !gender.trim() ||
       !paymentStatus.trim() ||
-      (!image && !imagePreview) // <<< fixed here
+      (!image && !imagePreview)
     ) {
       setSnackbar({
         open: true,

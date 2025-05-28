@@ -56,7 +56,9 @@ const TenantUpdateForm = ({
           unit: unit.UnitNumber,
         }))
       )
-      .find((tenant) => tenant && tenant.tenant_id === selectedTenant.tenant_id);
+      .find(
+        (tenant) => tenant && tenant.tenant_id === selectedTenant.tenant_id
+      );
 
     if (foundTenant) {
       setFormData({
@@ -109,7 +111,7 @@ const TenantUpdateForm = ({
     }
 
     onUpdateTenant({
-      ...selectedTenant?.tenant_id,
+      tenant_id: selectedTenant?.tenant_id,
       name,
       email,
       phone,
@@ -118,7 +120,7 @@ const TenantUpdateForm = ({
       unit,
       gender,
       paymentStatus,
-      image: imagePreview || selectedTenant.tenant_id.image,
+      image: imagePreview || selectedTenant?.image,
     });
 
     onClose();
