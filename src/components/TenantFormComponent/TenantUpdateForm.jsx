@@ -159,6 +159,7 @@ const TenantUpdateForm = ({
 
   const handleGenderChange = (e) =>
     setFormData((prev) => ({ ...prev, gender: e.target.value }));
+
   const handlePaymentStatusChange = (e) =>
     setFormData((prev) => ({ ...prev, paymentStatus: e.target.value }));
 
@@ -267,7 +268,7 @@ const TenantUpdateForm = ({
                   setFormData({ ...formData, national_id: e.target.value })
                 }
               />
-              <FormControl fullWidth>
+              <FormControl fullWidth required>
                 <InputLabel id="property-label">Property</InputLabel>
                 <Select
                   labelId="property-label"
