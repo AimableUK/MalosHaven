@@ -7,7 +7,7 @@ import DataUnitFormModal from "../../components/UnitFormComponent/DataUnitForm";
 import DataDeleteConfirm from "../../components/DeleteConfirmComponent/DataDeleteConfirm";
 import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 import EditUnitFormModal from "../../components/UnitFormComponent/EditUnitForm";
-import { useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import MyProperties from "../../Data/SiteDataComponent/Properties";
 import FooterPage from "../Footer/FooterPage";
 import AddIcon from "@mui/icons-material/Add";
@@ -93,6 +93,8 @@ const PropertyDetails = () => {
       ),
     },
   ];
+
+  const navigate = useNavigate();
 
   const { id } = useParams();
   const property = properties.find((property) => property.id === parseInt(id));
@@ -204,6 +206,7 @@ const PropertyDetails = () => {
       prevProperty.filter((property) => property.id !== selectedProperty.id)
     );
     setDeleteDialogOpen(false);
+    navigate("/properties/");
     showSnackbar(`${selectedProperty.title} deleted successfully`, "success");
   };
 
