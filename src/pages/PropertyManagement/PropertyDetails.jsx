@@ -20,6 +20,7 @@ const PropertyDetails = () => {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [selectedUnitId, setSelectedUnitId] = useState(null);
   const [deleteType, setDeleteType] = useState("unit");
+  const [selectedProperty, setSelectedProperty] = useState(null);
 
   const [snackbar, setSnackbar] = useState({
     open: false,
@@ -172,7 +173,6 @@ const PropertyDetails = () => {
       )
     );
 
-
     setSnackbar({
       open: true,
       message: "Unit deleted successfully!",
@@ -182,11 +182,19 @@ const PropertyDetails = () => {
     setSelectedUnitId(null);
   };
 
-  const deleteUnit = "Are you sure you want to Delete this Unit? If you do so, it will be undone"
+  const deleteUnit =
+    "Are you sure you want to Delete this Unit? If you do so, it will be undone";
 
+  const deleteProperty =
+    "Are you sure you want to Delete this Property? If you do so, it will be undone";
 
   const handleCloseSnackbar = () => {
     setSnackbar({ ...snackbar, open: false });
+  };
+
+  const handleDeleteDialogOpen = (property) => {
+    setDeleteDialogOpen(true);
+    setSelectedProperty(property);
   };
 
   return (
@@ -202,8 +210,7 @@ const PropertyDetails = () => {
         className="m-5 md:m-12 border-t-2 border-t-slate-300"
       >
         {/* Property Header */}
-        <Box className="flex flex-col md:flex-row justify-between md:items-center"
-        >
+        <Box className="flex flex-col md:flex-row justify-between md:items-center">
           <Box className="flex flex-col md:flex-row items-center gap-1">
             <Box>
               <img
@@ -214,7 +221,10 @@ const PropertyDetails = () => {
             </Box>
             <Box className="text-center md:text-start ml-2 md:ml-0">
               <Typography fontWeight="bold">{property.title}</Typography>
-              <Typography><PlaceIcon />{property.location}</Typography>
+              <Typography>
+                <PlaceIcon />
+                {property.location}
+              </Typography>
             </Box>
           </Box>
 
@@ -232,6 +242,7 @@ const PropertyDetails = () => {
               variant="contained"
               startIcon={<DeleteIcon />}
               color="error"
+              onClick={() => handleDeleteDialogOpen(property)}
             >
               Delete
             </Button>
@@ -256,15 +267,24 @@ const PropertyDetails = () => {
             <Typography fontWeight="bold">
               Units Available:&nbsp;&nbsp;
             </Typography>
-            <Typography>{property.units.filter((unit) => unit.tenant == null).length} Units</Typography>
+            <Typography>
+              {property.units.filter((unit) => unit.tenant == null).length}{" "}
+              Units
+            </Typography>
           </Box>
 
           <Box className="flex flex-col md:flex-row items-center justify-between mt-5">
             <Typography fontSize="20px" fontWeight="bold">
               AVAILABLE UNITS
             </Typography>
-            <Button sx={{ whiteSpace: "nowrap" }} variant="contained" color="info" onClick={() => setOpenModal(true)}>
-              <AddIcon />Add Unit
+            <Button
+              sx={{ whiteSpace: "nowrap" }}
+              variant="contained"
+              color="info"
+              onClick={() => setOpenModal(true)}
+            >
+              <AddIcon />
+              Add Unit
             </Button>
           </Box>
 
@@ -318,11 +338,18 @@ const PropertyDetails = () => {
           <DataDeleteConfirm
             deleteDialogOpen={deleteDialogOpen}
             setDeleteDialogOpen={setDeleteDialogOpen}
+            // unit
             selectedUnitId={selectedUnitId}
             setSelectedUnitId={setSelectedUnitId}
-            handleDeleteUnit={handleDeleteUnit} 
+            handleDeleteUnit={handleDeleteUnit}
             deleteUnit={deleteUnit}
             deleteType="unit"
+            // property
+            selectedPropertyId={selectedPropertyId}
+            setSelectedPropertyId={setSelectedPropertyId}
+            handleDeleteProperty={handleDeleteProperty}
+            deleteProperty={deleteProperty}
+            deleteType="property"
           />
 
           {/* Edit Unit Modal */}
