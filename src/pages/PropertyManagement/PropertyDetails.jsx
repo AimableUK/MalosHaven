@@ -8,18 +8,18 @@ import DataDeleteConfirm from "../../components/DeleteConfirmComponent/DataDelet
 import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 import EditUnitFormModal from "../../components/UnitFormComponent/EditUnitForm";
 import { useParams } from "react-router-dom";
-import properties from "../../Data/SiteDataComponent/Properties";
+import MyProperties from "../../Data/SiteDataComponent/Properties";
 import FooterPage from "../Footer/FooterPage";
 import AddIcon from "@mui/icons-material/Add";
 import PlaceIcon from "@mui/icons-material/Place";
 
 const PropertyDetails = () => {
-  const [propertiesState, setPropertiesState] = useState(properties);
+  const [properties, setProperties] = useState(MyProperties);
   const [openModal, setOpenModal] = useState(false);
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [selectedUnitId, setSelectedUnitId] = useState(null);
-  const [deleteType, setDeleteType] = useState("unit");
+  const [deleteType, setDeleteType] = useState(null);
   const [selectedProperty, setSelectedProperty] = useState(null);
 
   const [snackbar, setSnackbar] = useState({
@@ -95,19 +95,12 @@ const PropertyDetails = () => {
   ];
 
   const { id } = useParams();
-  const property = propertiesState.find(
-    (property) => property.id === parseInt(id)
-  );
+  const property = properties.find((property) => property.id === parseInt(id));
 
   if (!property) {
     return (
-      <Box
-        flex="flex"
-        justifyContent="center"
-        alignSelf="center"
-        justifySelf="center"
-      >
-        <Typography>Property not found</Typography>
+      <Box className="m-3 flex justify-center p-2 bg-[#2D454D] rounded-md border-t-2 border-t-slate-300">
+        <Typography fontWeight="bold">Property Not Found</Typography>
       </Box>
     );
   }
@@ -121,7 +114,7 @@ const PropertyDetails = () => {
   };
 
   const handleAddUnit = (unit) => {
-    setPropertiesState((prevProperties) =>
+    setProperties((prevProperties) =>
       prevProperties.map((property) =>
         property.id === parseInt(id)
           ? { ...property, units: [...property.units, unit] }
@@ -137,7 +130,7 @@ const PropertyDetails = () => {
   };
 
   const processRowUpdate = (newRow) => {
-    const updatedProperty = propertiesState.map((property) =>
+    const updatedProperty = properties.map((property) =>
       property.id === parseInt(id)
         ? {
             ...property,
@@ -148,7 +141,7 @@ const PropertyDetails = () => {
         : property
     );
 
-    setPropertiesState(updatedProperty);
+    setProperties(updatedProperty);
 
     setSnackbar({
       open: true,
@@ -160,7 +153,8 @@ const PropertyDetails = () => {
   };
 
   const handleDeleteUnit = () => {
-    setPropertiesState((prevProperties) =>
+    setDeleteType("unit");
+    setProperties((prevProperties) =>
       prevProperties.map((property) =>
         property.id === parseInt(id)
           ? {
@@ -182,19 +176,35 @@ const PropertyDetails = () => {
     setSelectedUnitId(null);
   };
 
-  const deleteUnit =
-    "Are you sure you want to Delete this Unit? If you do so, it will be undone";
+  const deleteUnit = `Are you sure you want to Delete this ${deleteType}? If you do so, it will be undone`;
 
-  const deleteProperty =
-    "Are you sure you want to Delete this Property? If you do so, it will be undone";
+  const showSnackbar = (message, severity = "success") => {
+    setSnackbar((prev) => ({ ...prev, open: false }));
+    setTimeout(() => {
+      setSnackbar({
+        open: true,
+        message,
+        severity,
+      });
+    }, 100);
+  };
 
   const handleCloseSnackbar = () => {
     setSnackbar({ ...snackbar, open: false });
   };
 
-  const handleDeleteDialogOpen = (property) => {
+  const handleDeleteDialogOpen = (property, type) => {
+    setDeleteType(type);
     setDeleteDialogOpen(true);
     setSelectedProperty(property);
+  };
+
+  const handleDeleteProperty = () => {
+    setProperties((prevProperty) =>
+      prevProperty.filter((property) => property.id !== selectedProperty.id)
+    );
+    setDeleteDialogOpen(false);
+    showSnackbar(`${selectedProperty.title} deleted successfully`, "success");
   };
 
   return (
@@ -242,7 +252,7 @@ const PropertyDetails = () => {
               variant="contained"
               startIcon={<DeleteIcon />}
               color="error"
-              onClick={() => handleDeleteDialogOpen(property)}
+              onClick={() => handleDeleteDialogOpen(property, "property")}
             >
               Delete
             </Button>
@@ -343,13 +353,11 @@ const PropertyDetails = () => {
             setSelectedUnitId={setSelectedUnitId}
             handleDeleteUnit={handleDeleteUnit}
             deleteUnit={deleteUnit}
-            deleteType="unit"
+            deleteType={deleteType}
             // property
-            selectedPropertyId={selectedPropertyId}
-            setSelectedPropertyId={setSelectedPropertyId}
+            selectedPropertyId={property.id}
+            // setSelectedPropertyId={setSelectedPropertyId}
             handleDeleteProperty={handleDeleteProperty}
-            deleteProperty={deleteProperty}
-            deleteType="property"
           />
 
           {/* Edit Unit Modal */}
@@ -357,7 +365,7 @@ const PropertyDetails = () => {
             open={editDialogOpen}
             onClose={() => setEditDialogOpen(false)}
             onEditUnit={(updatedUnit) => {
-              setPropertiesState((prevProperties) =>
+              setProperties((prevProperties) =>
                 prevProperties.map((property) =>
                   property.id === parseInt(id)
                     ? {
