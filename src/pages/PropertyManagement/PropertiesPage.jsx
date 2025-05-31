@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Alert, Box, Button, Snackbar, Typography } from "@mui/material";
 import PlaceIcon from "@mui/icons-material/Place";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import AddIcon from "@mui/icons-material/Add";
 import DataPropertyFormModal from "../../components/PropertyFormComponent/DataPropertyForm";
 import MyProperties from "../../Data/SiteDataComponent/Properties";
@@ -12,6 +12,8 @@ import FooterPage from "../Footer/FooterPage";
 import { useMediaQuery } from "@mui/material";
 import DataDeleteConfirm from "../../components/DeleteConfirmComponent/DataDeleteConfirm";
 import EditPropertyFormModal from "../../components/PropertyFormComponent/EditPropertyForm";
+
+import { useNavigate } from "react-router-dom";
 
 const PropertiesPage = () => {
   const [addPropertyOpenModal, setAddPropertyOpenModal] = useState(false);
@@ -31,6 +33,16 @@ const PropertiesPage = () => {
     "Are you sure you want to Delete this Property? If you do so, it will be undone";
 
   const isSmallScreen = useMediaQuery("(max-width:380px)");
+
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.state?.snackbar) {
+      showSnackbar(location.state.snackbar, "success");
+      navigate(location.pathname, { replace: true });
+    }
+  }, [location.state?.snackbar, location.pathname, navigate]);
 
   const showSnackbar = (message, severity = "success") => {
     setSnackbar((prev) => ({ ...prev, open: false }));
