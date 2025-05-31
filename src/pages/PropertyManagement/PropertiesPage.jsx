@@ -4,7 +4,7 @@ import PlaceIcon from "@mui/icons-material/Place";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import AddIcon from "@mui/icons-material/Add";
 import DataPropertyFormModal from "../../components/PropertyFormComponent/DataPropertyForm";
 import MyProperties from "../../Data/SiteDataComponent/Properties";
@@ -12,8 +12,6 @@ import FooterPage from "../Footer/FooterPage";
 import { useMediaQuery } from "@mui/material";
 import DataDeleteConfirm from "../../components/DeleteConfirmComponent/DataDeleteConfirm";
 import EditPropertyFormModal from "../../components/PropertyFormComponent/EditPropertyForm";
-
-import { useNavigate } from "react-router-dom";
 
 const PropertiesPage = () => {
   const [addPropertyOpenModal, setAddPropertyOpenModal] = useState(false);
@@ -160,6 +158,7 @@ const PropertiesPage = () => {
                 >
                   <Link
                     to={`/propertydetails/${property.id}`}
+                    state={{ from: location.pathname }}
                     key={property.id}
                   >
                     <Button

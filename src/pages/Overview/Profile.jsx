@@ -4,13 +4,46 @@ import userAvatar from "../../assets/userAvatar.jpg";
 import EditIcon from "@mui/icons-material/Edit";
 import BarChartIcon from "@mui/icons-material/BarChart";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import FooterPage from "../Footer/FooterPage";
 import { useMediaQuery } from "@mui/material";
-import PropertiesComponent from "../PropertyManagement/PropertiesComponent"
+import PropertiesComponent from "../PropertyManagement/PropertiesComponent";
+import { useEffect } from "react";
 
 const Profile = () => {
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+    severity: "",
+  });
+
   const isSmallScreen = useMediaQuery("(max-width:768px)");
+
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (location.state?.snackbar) {
+      showSnackbar(location.state.snackbar, "success");
+      navigate(location.pathname, { replace: true });
+    }
+  }, [location.state?.snackbar, location.pathname, navigate]);
+
+  const showSnackbar = (message, severity = "success") => {
+    setSnackbar((prev) => ({ ...prev, open: false }));
+    setTimeout(() => {
+      setSnackbar({
+        open: true,
+        message,
+        severity,
+      });
+    }, 100);
+  };
+
+  const handleCloseSnackbar = () => {
+    setSnackbar(null);
+    setSnackbar({ open: false, message: "", severity: "" });
+  };
 
   return (
     <Box className={`${isSmallScreen ? "m-[10px]" : "m-5"}`}>

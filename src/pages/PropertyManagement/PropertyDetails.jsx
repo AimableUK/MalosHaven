@@ -202,8 +202,10 @@ const PropertyDetails = () => {
   };
 
   const handleDeleteProperty = () => {
-    navigate("/properties/", {
-      state: { snackbar: `${selectedProperty.title} deleted successfully` },
+    navigate(location.state?.from || "/properties", {
+      state: {
+        snackbar: `${selectedProperty.title} deleted successfully`,
+      },
     });
     setDeleteDialogOpen(false);
 

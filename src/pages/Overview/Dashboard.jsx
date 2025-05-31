@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Alert, Box, Snackbar, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import PieChart from "../../components/DataCharts/PieChart.jsx";
 import LineChart from "../../components/DataCharts/LineChart.jsx";
@@ -14,6 +14,7 @@ import PeopleIcon from "@mui/icons-material/People";
 import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
 import assistantsList from "../../Data/SiteDataComponent/Assistants.js";
 import PropertiesComponent from "../PropertyManagement/PropertiesComponent.jsx";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
   const [properties, setProperties] = useState(propertiesList);
@@ -25,6 +26,12 @@ const Dashboard = () => {
 
   const [totalUnits, setTotalUnits] = useState(0);
   const [totalTenants, setTotalTenants] = useState(0);
+
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+    severity: "",
+  });
 
   useEffect(() => {
     const allRequests = [];
@@ -59,6 +66,32 @@ const Dashboard = () => {
     setTotalUnits(unitCount);
     setTotalTenants(tenantCount);
   }, [properties]);
+
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (location.state?.snackbar) {
+      showSnackbar(location.state.snackbar, "success");
+      navigate(location.pathname, { replace: true });
+    }
+  }, [location.state?.snackbar, location.pathname, navigate]);
+
+  const showSnackbar = (message, severity = "success") => {
+    setSnackbar((prev) => ({ ...prev, open: false }));
+    setTimeout(() => {
+      setSnackbar({
+        open: true,
+        message,
+        severity,
+      });
+    }, 100);
+  };
+
+  const handleCloseSnackbar = () => {
+    setSnackbar(null);
+    setSnackbar({ open: false, message: "", severity: "" });
+  };
 
   return (
     <Box display="flex" flexDirection="column">
@@ -396,6 +429,20 @@ const Dashboard = () => {
           </Box>
         </Box>
       </Box>
+
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={3000}
+        onClose={handleCloseSnackbar}
+      >
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity={snackbar.severity}
+          variant="filled"
+        >
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
 
       {/* Fouth Grid */}
       <Box className="flex flex-col grid-cols-12 gap-[10px] p-[10px] font-roboto">

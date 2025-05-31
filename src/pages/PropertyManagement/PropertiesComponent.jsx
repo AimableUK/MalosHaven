@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import MyProperties from "../../Data/SiteDataComponent/Properties";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import PlaceIcon from "@mui/icons-material/Place";
 import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from "@mui/icons-material/Visibility";
@@ -29,6 +29,8 @@ const PropertiesComponent = () => {
     message: "",
     severity: "",
   });
+
+  const location = useLocation();
 
   const deleteProperty =
     "Are you sure you want to Delete this Property? If you do so, it will be undone";
@@ -122,6 +124,7 @@ const PropertiesComponent = () => {
                 >
                   <Link
                     to={`/propertydetails/${property.id}`}
+                    state={{ from: location.pathname }}
                     key={property.id}
                   >
                     <Button
