@@ -1,4 +1,4 @@
-import { Avatar, Box, Button, Typography } from "@mui/material";
+import { Alert, Avatar, Box, Button, Snackbar, Typography } from "@mui/material";
 import profileCover from "../../assets/profileCover.jpg";
 import userAvatar from "../../assets/userAvatar.jpg";
 import EditIcon from "@mui/icons-material/Edit";
@@ -8,7 +8,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import FooterPage from "../Footer/FooterPage";
 import { useMediaQuery } from "@mui/material";
 import PropertiesComponent from "../PropertyManagement/PropertiesComponent";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const Profile = () => {
   const [snackbar, setSnackbar] = useState({
@@ -141,6 +141,20 @@ const Profile = () => {
           </Box>
         </Box>
       </Box>
+
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={3000}
+        onClose={handleCloseSnackbar}
+      >
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity={snackbar.severity}
+          variant="filled"
+        >
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
       <PropertiesComponent />
       <FooterPage />
     </Box>
