@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Typography, Button, Snackbar, Alert } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
@@ -21,6 +21,7 @@ const PropertyDetails = () => {
   const [selectedUnitId, setSelectedUnitId] = useState(null);
   const [deleteType, setDeleteType] = useState(null);
   const [selectedProperty, setSelectedProperty] = useState(null);
+  const [backPath] = useState(location.state?.from || "/properties");
 
   const [snackbar, setSnackbar] = useState({
     open: false,
@@ -95,6 +96,10 @@ const PropertyDetails = () => {
   ];
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    console.log("FROM STATE:", location.state?.from);
+  }, []);
 
   const { id } = useParams();
   const property = properties.find((property) => property.id === parseInt(id));
@@ -202,11 +207,13 @@ const PropertyDetails = () => {
   };
 
   const handleDeleteProperty = () => {
-    navigate(location.state?.from || "/properties", {
+    navigate(backPath || "/properties", {
       state: {
         snackbar: `${selectedProperty.title} deleted successfully`,
       },
     });
+    console.log("Going back to:", backPath);
+
     setDeleteDialogOpen(false);
 
     setTimeout(() => {
