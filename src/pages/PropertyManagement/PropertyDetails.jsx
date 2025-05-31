@@ -99,7 +99,7 @@ const PropertyDetails = () => {
   const { id } = useParams();
   const property = properties.find((property) => property.id === parseInt(id));
 
-  if (!property) {  
+  if (!property) {
     return (
       <Box className="m-3 flex justify-center p-2 bg-[#2D454D] rounded-md border-t-2 border-t-slate-300">
         <Typography fontWeight="bold">Property Not Found</Typography>
@@ -202,11 +202,15 @@ const PropertyDetails = () => {
   };
 
   const handleDeleteProperty = () => {
-    setProperties((prevProperty) =>
-      prevProperty.filter((property) => property.id !== selectedProperty.id)
-    );
     setDeleteDialogOpen(false);
     navigate("/properties/");
+
+    setTimeout(() => {
+      setProperties((prev) =>
+        prev.filter((property) => property.id !== selectedProperty.id)
+      );
+      showSnackbar(`${selectedProperty.title} deleted successfully`, "success");
+    }, 1000);
     showSnackbar(`${selectedProperty.title} deleted successfully`, "success");
   };
 
