@@ -7,7 +7,12 @@ import DataUnitFormModal from "../../components/UnitFormComponent/DataUnitForm";
 import DataDeleteConfirm from "../../components/DeleteConfirmComponent/DataDeleteConfirm";
 import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 import EditUnitFormModal from "../../components/UnitFormComponent/EditUnitForm";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import {
+  Navigate,
+  useLocation,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
 import MyProperties from "../../Data/SiteDataComponent/Properties";
 import FooterPage from "../Footer/FooterPage";
 import AddIcon from "@mui/icons-material/Add";
@@ -22,7 +27,6 @@ const PropertyDetails = () => {
   const [selectedUnitId, setSelectedUnitId] = useState(null);
   const [deleteType, setDeleteType] = useState(null);
   const [selectedProperty, setSelectedProperty] = useState(null);
-  const [backPath] = useState(location.state?.from || "/properties");
 
   const [editPropertyFormModal, setEditPropertyFormModal] = useState(false);
 
@@ -95,11 +99,9 @@ const PropertyDetails = () => {
     },
   ];
 
+  const location = useLocation();
+  const [backPath] = useState(location.state?.from || "/properties");
   const navigate = useNavigate();
-
-  useEffect(() => {
-    console.log("FROM STATE:", location.state?.from);
-  }, []);
 
   const { id } = useParams();
   const property = properties.find((property) => property.id === parseInt(id));
@@ -170,6 +172,20 @@ const PropertyDetails = () => {
     return newRow;
   };
 
+  const deleteUnitProp = `Are you sure you want to Delete this ${deleteType}? If you do so, it will be undone`;
+
+  const handleDelete = (id, type) => {
+    if (type === "unit") {
+      setDeleteType(type);
+      setSelectedUnitId(id);
+      setDeleteDialogOpen(true);
+    } else {
+      setDeleteType(type);
+      setSelectedProperty(id);
+      setDeleteDialogOpen(true);
+    }
+  };
+
   const handleDeleteUnit = () => {
     // setSelectedUnitId(selectedUnit);
     setProperties((prevProperties) =>
@@ -194,27 +210,12 @@ const PropertyDetails = () => {
     setSelectedUnitId(null);
   };
 
-  const deleteUnitProp = `Are you sure you want to Delete this ${deleteType}? If you do so, it will be undone`;
-
-  const handleDelete = (id, type) => {
-    if (type === "unit") {
-      setDeleteType(type);
-      setSelectedUnitId(id);
-      setDeleteDialogOpen(true);
-    } else {
-      setDeleteType(type);
-      setSelectedProperty(id);
-      setDeleteDialogOpen(true);
-    }
-  };
-
   const handleDeleteProperty = () => {
     navigate(backPath || "/properties", {
       state: {
         snackbar: `${selectedProperty.title} deleted successfully`,
       },
     });
-    console.log("Going back to:", backPath);
 
     setDeleteDialogOpen(false);
 
