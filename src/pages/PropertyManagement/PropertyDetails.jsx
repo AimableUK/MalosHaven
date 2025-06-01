@@ -119,6 +119,17 @@ const PropertyDetails = () => {
     (unit) => unit.id === selectedUnitId
   );
 
+  const showSnackbar = (message, severity = "success") => {
+    setSnackbar((prev) => ({ ...prev, open: false }));
+    setTimeout(() => {
+      setSnackbar({
+        open: true,
+        message,
+        severity,
+      });
+    }, 100);
+  };
+
   const handleBook = (id) => {
     console.log("Booked unit ID:", id);
   };
@@ -132,7 +143,7 @@ const PropertyDetails = () => {
       )
     );
 
-    setSnackbar({
+    showSnackbar({
       open: true,
       message: `Added new unit: ${unit.UnitNumber}`,
       severity: "success",
@@ -187,17 +198,6 @@ const PropertyDetails = () => {
   };
 
   const deleteUnit = `Are you sure you want to Delete this ${deleteType}? If you do so, it will be undone`;
-
-  const showSnackbar = (message, severity = "success") => {
-    setSnackbar((prev) => ({ ...prev, open: false }));
-    setTimeout(() => {
-      setSnackbar({
-        open: true,
-        message,
-        severity,
-      });
-    }, 100);
-  };
 
   const handleCloseSnackbar = () => {
     setSnackbar({ ...snackbar, open: false });
@@ -420,11 +420,11 @@ const PropertyDetails = () => {
                     : property
                 )
               );
-              setSnackbar({
-                open: true,
-                message: `Unit ${updatedUnit.UnitNumber} updated successfully!`,
-                severity: "success",
-              });
+              // setSnackbar({
+              //   open: true,
+              //   message: `Unit ${updatedUnit.UnitNumber} updated successfully!`,
+              //   severity: "success",
+              // });
             }}
             selectedUnit={selectedUnit}
           />

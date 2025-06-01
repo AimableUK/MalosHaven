@@ -51,7 +51,7 @@ const EditUnitFormModal = ({ open, onClose, onEditUnit, selectedUnit }) => {
     onClose();
     setSnackbar({
       open: true,
-      message: "Updated Successfully",
+      message: `${unit} Updated Successfully`,
       severity: "success",
     });
   };
