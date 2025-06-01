@@ -71,11 +71,7 @@ const PropertyDetails = () => {
         <Button
           variant="contained"
           color="error"
-          onClick={() => {
-            handleDeleteDialogOpen(params.row.id, "unit");
-            // setSelectedUnitId();
-            // setDeleteDialogOpen(true);
-          }}
+          onClick={() => handleDelete(params.row.id, "unit")}
           startIcon={<DeleteIcon />}
         >
           Delete
@@ -174,13 +170,6 @@ const PropertyDetails = () => {
     return newRow;
   };
 
-  const handleDeleteDialogOpen = (property, unit, type) => {
-    setDeleteType(type);
-    setDeleteDialogOpen(true);
-    setSelectedProperty(property);
-    setSelectedUnitId(unit);
-  };
-
   const handleDeleteUnit = () => {
     // setSelectedUnitId(selectedUnit);
     setProperties((prevProperties) =>
@@ -207,8 +196,17 @@ const PropertyDetails = () => {
 
   const deleteUnitProp = `Are you sure you want to Delete this ${deleteType}? If you do so, it will be undone`;
 
-  const handleDelete = deleteType === "unit" ? handleDeleteUnit : handleDeleteProperty;
-
+  const handleDelete = (id, type) => {
+    if (type === "unit") {
+      setDeleteType(type);
+      setSelectedUnitId(id);
+      setDeleteDialogOpen(true);
+    } else {
+      setDeleteType(type);
+      setSelectedProperty(id);
+      setDeleteDialogOpen(true);
+    }
+  };
 
   const handleDeleteProperty = () => {
     navigate(backPath || "/properties", {
@@ -292,7 +290,7 @@ const PropertyDetails = () => {
               variant="contained"
               startIcon={<DeleteIcon />}
               color="error"
-              onClick={() => handleDeleteDialogOpen(property, "property")}
+              onClick={() => handleDelete(property, "property")}
             >
               Delete
             </Button>
@@ -388,15 +386,10 @@ const PropertyDetails = () => {
           <DataDeleteConfirm
             deleteDialogOpen={deleteDialogOpen}
             setDeleteDialogOpen={setDeleteDialogOpen}
-            // deletion
-            deleteUnitProp={deleteUnitProp} //type to delete
-            // type
+            deleteUnitProp={deleteUnitProp}
             deleteType={deleteType}
-            {deleteType === "unit" ? 
-              handleDeleteUnit={handleDeleteUnit}
-              :
-              handleDeleteProperty={handleDeleteProperty}
-            }
+            handleDeleteUnit={handleDeleteUnit}
+            handleDeleteProperty={handleDeleteProperty}
           />
 
           <EditPropertyFormModal
