@@ -205,7 +205,10 @@ const PropertyDetails = () => {
     setSelectedUnitId(null);
   };
 
-  const deletePrompt = `Are you sure you want to Delete this ${deleteType}? If you do so, it will be undone`;
+  const deleteUnitProp = `Are you sure you want to Delete this ${deleteType}? If you do so, it will be undone`;
+
+  const handleDelete = deleteType === "unit" ? handleDeleteUnit : handleDeleteProperty;
+
 
   const handleDeleteProperty = () => {
     navigate(backPath || "/properties", {
@@ -385,14 +388,15 @@ const PropertyDetails = () => {
           <DataDeleteConfirm
             deleteDialogOpen={deleteDialogOpen}
             setDeleteDialogOpen={setDeleteDialogOpen}
-            // functions
-            handleDeleteUnit={handleDeleteUnit}
-            handleDeleteProperty={handleDeleteProperty}
             // deletion
-            deleteUnit={deletePrompt}
-            deleteProperty={deletePrompt}
+            deleteUnitProp={deleteUnitProp} //type to delete
             // type
             deleteType={deleteType}
+            {deleteType === "unit" ? 
+              handleDeleteUnit={handleDeleteUnit}
+              :
+              handleDeleteProperty={handleDeleteProperty}
+            }
           />
 
           <EditPropertyFormModal

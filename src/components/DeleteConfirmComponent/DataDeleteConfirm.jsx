@@ -20,7 +20,7 @@ const DataDeleteConfirm = ({
   handleDeleteProperty,
   handleDeleteInvoice,
   deleteTenant,
-  deleteUnit,
+  deleteUnitProp,
   deleteNotification,
   deleteAssistant,
   deleteProperty,
