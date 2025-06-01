@@ -57,7 +57,7 @@ const EditUnitFormModal = ({ open, onClose, onEditUnit, selectedUnit }) => {
   };
 
   const handleCloseSnackbar = () => {
-    setSnackbar({ open: false, message: "", severity: "" });
+    setSnackbar({ ...snackbar, open: false });
   };
 
   return (

@@ -72,8 +72,9 @@ const PropertyDetails = () => {
           variant="contained"
           color="error"
           onClick={() => {
-            setSelectedUnitId(params.row.id);
-            setDeleteDialogOpen(true);
+            handleDeleteDialogOpen(params.row.id, "unit");
+            // setSelectedUnitId();
+            // setDeleteDialogOpen(true);
           }}
           startIcon={<DeleteIcon />}
         >
@@ -173,8 +174,15 @@ const PropertyDetails = () => {
     return newRow;
   };
 
+  const handleDeleteDialogOpen = (property, unit, type) => {
+    setDeleteType(type);
+    setDeleteDialogOpen(true);
+    setSelectedProperty(property);
+    setSelectedUnitId(unit);
+  };
+
   const handleDeleteUnit = () => {
-    setDeleteType("unit");
+    // setSelectedUnitId(selectedUnit);
     setProperties((prevProperties) =>
       prevProperties.map((property) =>
         property.id === parseInt(id)
@@ -197,17 +205,7 @@ const PropertyDetails = () => {
     setSelectedUnitId(null);
   };
 
-  const deleteUnit = `Are you sure you want to Delete this ${deleteType}? If you do so, it will be undone`;
-
-  const handleCloseSnackbar = () => {
-    setSnackbar({ ...snackbar, open: false });
-  };
-
-  const handleDeleteDialogOpen = (property, type) => {
-    setDeleteType(type);
-    setDeleteDialogOpen(true);
-    setSelectedProperty(property);
-  };
+  const deletePrompt = `Are you sure you want to Delete this ${deleteType}? If you do so, it will be undone`;
 
   const handleDeleteProperty = () => {
     navigate(backPath || "/properties", {
@@ -239,8 +237,10 @@ const PropertyDetails = () => {
     );
     setEditPropertyFormModal(false);
     showSnackbar(`${updatedProperty.title} Updated Successfully`, "success");
-    console.log(updatedProperty);
-    console.log(updatedProperty.image);
+  };
+
+  const handleCloseSnackbar = () => {
+    setSnackbar({ ...snackbar, open: false });
   };
 
   return (
@@ -385,15 +385,14 @@ const PropertyDetails = () => {
           <DataDeleteConfirm
             deleteDialogOpen={deleteDialogOpen}
             setDeleteDialogOpen={setDeleteDialogOpen}
-            // unit
-            selectedUnitId={selectedUnitId}
-            setSelectedUnitId={setSelectedUnitId}
+            // functions
             handleDeleteUnit={handleDeleteUnit}
-            deleteUnit={deleteUnit}
-            deleteType={deleteType}
-            // property
-            selectedPropertyId={property.id}
             handleDeleteProperty={handleDeleteProperty}
+            // deletion
+            deleteUnit={deletePrompt}
+            deleteProperty={deletePrompt}
+            // type
+            deleteType={deleteType}
           />
 
           <EditPropertyFormModal
