@@ -12,6 +12,7 @@ import MyProperties from "../../Data/SiteDataComponent/Properties";
 import FooterPage from "../Footer/FooterPage";
 import AddIcon from "@mui/icons-material/Add";
 import PlaceIcon from "@mui/icons-material/Place";
+import EditPropertyFormModal from "../../components/PropertyFormComponent/EditPropertyForm";
 
 const PropertyDetails = () => {
   const [properties, setProperties] = useState(MyProperties);
@@ -22,6 +23,8 @@ const PropertyDetails = () => {
   const [deleteType, setDeleteType] = useState(null);
   const [selectedProperty, setSelectedProperty] = useState(null);
   const [backPath] = useState(location.state?.from || "/properties");
+
+  const [editPropertyFormModal, setEditPropertyFormModal] = useState(false);
 
   const [snackbar, setSnackbar] = useState({
     open: false,
@@ -223,6 +226,23 @@ const PropertyDetails = () => {
     }, 1000);
   };
 
+  const handleEditPropertyDialogOpen = (property) => {
+    setEditPropertyFormModal(true);
+    setSelectedProperty(property);
+  };
+
+  const handleEditProp = (updatedProperty) => {
+    setProperties((prevProperties) =>
+      prevProperties.map((property) =>
+        property.id === updatedProperty.id ? updatedProperty : property
+      )
+    );
+    setEditPropertyFormModal(false);
+    showSnackbar(`${updatedProperty.title} Updated Successfully`, "success");
+    console.log(updatedProperty);
+    console.log(updatedProperty.image);
+  };
+
   return (
     <Box>
       <Box
@@ -260,6 +280,7 @@ const PropertyDetails = () => {
               variant="contained"
               startIcon={<EditIcon />}
               color="success"
+              onClick={() => handleEditPropertyDialogOpen(property)}
             >
               Edit
             </Button>
@@ -372,8 +393,14 @@ const PropertyDetails = () => {
             deleteType={deleteType}
             // property
             selectedPropertyId={property.id}
-            // setSelectedPropertyId={setSelectedPropertyId}
             handleDeleteProperty={handleDeleteProperty}
+          />
+
+          <EditPropertyFormModal
+            open={editPropertyFormModal}
+            onClose={() => setEditPropertyFormModal(false)}
+            onEditProperty={handleEditProp}
+            selectedProperty={selectedProperty}
           />
 
           {/* Edit Unit Modal */}
