@@ -1,5 +1,13 @@
 import React, { useState } from "react";
-import { Box, Typography, Button, Snackbar, Alert } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Button,
+  Snackbar,
+  Alert,
+  Tooltip,
+  IconButton,
+} from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
@@ -7,16 +15,13 @@ import DataUnitFormModal from "../../components/UnitFormComponent/DataUnitForm";
 import DataDeleteConfirm from "../../components/DeleteConfirmComponent/DataDeleteConfirm";
 import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 import EditUnitFormModal from "../../components/UnitFormComponent/EditUnitForm";
-import {
-  useLocation,
-  useNavigate,
-  useParams,
-} from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import MyProperties from "../../Data/SiteDataComponent/Properties";
 import FooterPage from "../Footer/FooterPage";
 import AddIcon from "@mui/icons-material/Add";
 import PlaceIcon from "@mui/icons-material/Place";
 import EditPropertyFormModal from "../../components/PropertyFormComponent/EditPropertyForm";
+import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
 
 const PropertyDetails = () => {
   const [properties, setProperties] = useState(MyProperties);
@@ -245,7 +250,7 @@ const PropertyDetails = () => {
   };
 
   return (
-    <Box>
+    <Box className="">
       <Box
         sx={{
           display: "flex",
@@ -254,10 +259,22 @@ const PropertyDetails = () => {
           borderRadius: "8px",
           p: 2,
         }}
-        className="m-5 md:m-12 border-t-2 border-t-slate-300"
+        className="m-5 md:m-6 md:mt-10 border-t-2 border-t-slate-300"
       >
+        <Box className="bg-[#1b2c31] md:pr-5 w-fit right-0 top-0 self-end rounded-full group">
+          <Link to="/properties" className="group">
+            <Tooltip title="Return to Properties">
+              <IconButton sx={{ bgcolor: "#1b2c31" }}>
+                <ArrowCircleLeftIcon
+                  fontSize="medium"
+                  className="group-hover:translate-x-5 transition-transform duration-150 ease-in"
+                />
+              </IconButton>
+            </Tooltip>
+          </Link>
+        </Box>
         {/* Property Header */}
-        <Box className="flex flex-col md:flex-row justify-between md:items-center">
+        <Box className="flex flex-col md:flex-row justify-between md:items-center -mt-10">
           <Box className="flex flex-col md:flex-row items-center gap-1">
             <Box>
               <img

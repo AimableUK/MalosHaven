@@ -13,11 +13,14 @@ import {
   TableHead,
   TablePagination,
   TableRow,
+  IconButton,
+  Tooltip,
 } from "@mui/material";
 import { useReactToPrint } from "react-to-print";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import MyInvoices from "../../Data/SiteDataComponent/Invoices";
 import Logo from "../../assets/Logo.svg";
+import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
 
 const PrintableInvoice = () => {
   const [invoices, setInvoices] = useState(MyInvoices);
@@ -62,6 +65,30 @@ const PrintableInvoice = () => {
 
   return (
     <Box className="m-5">
+      <Box className="flex items-center justify-center relative bg-[#24383E] mb-2 rounded-b-md border-t-2 border-t-slate-300 h-[47px] md:h-[42px] px-1 md:px-6">
+        <Box
+          sx={{
+            borderRadius: "0 99px 9999px 0",
+          }}
+          className="mr-auto flex items-center md:bg-gradient-to-l md:from-[#2D454D] md:to-[#24383E] md:pr-5"
+        >
+          <Tooltip title="Return to Invoices">
+            <Link to="/payments">
+              <IconButton>
+                <ArrowCircleLeftIcon />
+              </IconButton>
+            </Link>
+          </Tooltip>
+        </Box>
+
+        <Typography
+          fontWeight="bold"
+          className="absolute left-1/2 transform -translate-x-1/2 text-white text-sm md:text-base text-center"
+        >
+          Invoice of {invoice.tenantName}
+        </Typography>
+      </Box>
+
       <Box
         className="flex flex-col gap-3 a4-page print:bg-white print:text-black p-6 bg-[#24383E] rounded-md"
         ref={componentRef}
