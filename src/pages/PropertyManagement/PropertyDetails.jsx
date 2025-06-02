@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Box, Typography, Button, Snackbar, Alert } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
@@ -8,7 +8,6 @@ import DataDeleteConfirm from "../../components/DeleteConfirmComponent/DataDelet
 import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 import EditUnitFormModal from "../../components/UnitFormComponent/EditUnitForm";
 import {
-  Navigate,
   useLocation,
   useNavigate,
   useParams,

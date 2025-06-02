@@ -85,7 +85,7 @@ const PropertiesComponent = () => {
 
   return (
     <Box>
-      <Box className="flex flex-col md:flex-row items-center justify-center md:justify-between bg-[#2D454D] p-2 px-2 rounded-md border-t-2 border-t-slate-300">
+      <Box className="flex flex-col md:flex-row items-center justify-center md:justify-between bg-[#2D454D] mt-2 md:mt-0 p-2 px-2 rounded-md border-t-2 border-t-slate-300">
         <Typography fontWeight="bold">Properties</Typography>
         <Link to="/properties">
           <Button color="info" variant="contained">

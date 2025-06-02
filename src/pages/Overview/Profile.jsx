@@ -1,4 +1,11 @@
-import { Alert, Avatar, Box, Button, Snackbar, Typography } from "@mui/material";
+import {
+  Alert,
+  Avatar,
+  Box,
+  Button,
+  Snackbar,
+  Typography,
+} from "@mui/material";
 import profileCover from "../../assets/profileCover.jpg";
 import userAvatar from "../../assets/userAvatar.jpg";
 import EditIcon from "@mui/icons-material/Edit";
@@ -46,7 +53,7 @@ const Profile = () => {
   };
 
   return (
-    <Box className={`${isSmallScreen ? "m-[10px]" : "m-5"}`}>
+    <Box className={`${isSmallScreen ? "m-[10px]" : "m-5"} `}>
       <Box zIndex="0">
         <img
           src={profileCover}
@@ -85,7 +92,7 @@ const Profile = () => {
               <Typography>Property Owner</Typography>
             </Box>
           </Box>
-          <Box className="flex gap-1 flex-col md:flex-row mt-2">
+          <Box className="flex gap-1 flex-col lg:flex-row mt-2">
             <Link to="/analytics">
               <Button startIcon={<BarChartIcon />} variant="outlined">
                 Analytics
@@ -129,9 +136,15 @@ const Profile = () => {
                 <span style={{ fontWeight: "bold" }}>Mobile:</span>&nbsp;+250
                 783 309 468
               </Typography>
-              <Typography>
+              <Typography
+                sx={{
+                  whiteSpace: "normal",
+                  overflowWrap: "break-word",
+                  hyphens: "auto",
+                }}
+              >
                 <span style={{ fontWeight: "bold" }}>Email:</span>
-                &nbsp;johnDoe@example.com
+                &nbsp;johnDoe@exam&shy;ple.com
               </Typography>
               <Typography>
                 <span style={{ fontWeight: "bold" }}>Location:</span>
