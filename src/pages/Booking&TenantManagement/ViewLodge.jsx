@@ -23,6 +23,7 @@ import PlaceIcon from "@mui/icons-material/Place";
 import EditPropertyFormModal from "../../components/PropertyFormComponent/EditPropertyForm";
 import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
 import MyLodges from "../../Data/SiteDataComponent/Lodges";
+import HolidayVillageIcon from "@mui/icons-material/HolidayVillage";
 
 const PropertyDetails = () => {
   const [lodges, setLodges] = useState(MyLodges);
@@ -275,7 +276,7 @@ const PropertyDetails = () => {
 
       <Box className="flex flex-col bg-[#2D454D] p-3 border-t-2 border-t-slate-300 rounded-b-md">
         {/* Property Header */}
-        <Box className="flex flex-col md:flex-row justify-between md:items-center">
+        <Box className="flex flex-col md:flex-row gap-4">
           <Box>
             <Box>
               <img
@@ -284,7 +285,7 @@ const PropertyDetails = () => {
                 className="shadow-md shadow-slate-900 rounded-md w-fit md:w-52"
               />
             </Box>
-            <Box className="flex flex-row justify-center gap-[10px] mt-1 md:mt-10 z-0">
+            <Box className="flex flex-row justify-center gap-[10px] mt-2 z-0">
               <Button
                 sx={{ height: "fit-content" }}
                 variant="contained"
@@ -306,7 +307,9 @@ const PropertyDetails = () => {
             </Box>
           </Box>
           <Box>
-            <Typography fontWeight="bold">{lodge.name}</Typography>
+            <Typography fontWeight="bold">
+              <HolidayVillageIcon />{lodge.name}
+            </Typography>
             <Typography>
               <PlaceIcon />
               {lodge.location}
@@ -331,7 +334,7 @@ const PropertyDetails = () => {
         </Box>
 
         {/* Property Info */}
-        <Box m="10px" mt="20px">
+        <Box>
           <Box className="flex flex-col md:flex-row items-center justify-between mt-5">
             <Typography fontSize="20px" fontWeight="bold">
               AVAILABLE ROOMS
@@ -385,73 +388,73 @@ const PropertyDetails = () => {
               },
             }}
           /> */}
-
-          {/* Add Unit Modal */}
-          <DataUnitFormModal
-            open={openModal}
-            onClose={() => setOpenModal(false)}
-            // onAddUnit={handleAddUnit}
-          />
-
-          {/* Delete Confirmation Modal */}
-          <DataDeleteConfirm
-            deleteDialogOpen={deleteDialogOpen}
-            setDeleteDialogOpen={setDeleteDialogOpen}
-            // deleteUnitProp={deleteUnitProp}
-            deleteType={deleteType}
-            // handleDeleteUnit={handleDeleteUnit}
-            // handleDeleteProperty={handleDeleteProperty}
-          />
-
-          <EditPropertyFormModal
-            open={editPropertyFormModal}
-            onClose={() => setEditPropertyFormModal(false)}
-            // onEditProperty={handleEditProp}
-            selectedProperty={selectedProperty}
-          />
-
-          {/* Edit Unit Modal */}
-          <EditUnitFormModal
-            open={editDialogOpen}
-            onClose={() => setEditDialogOpen(false)}
-            // onEditUnit={(updatedUnit) => {
-            //   setProperties((prevProperties) =>
-            //     prevProperties.map((property) =>
-            //       property.id === parseInt(id)
-            //         ? {
-            //             ...property,
-            //             units: property.units.map((unit) =>
-            //               unit.id === updatedUnit.id ? updatedUnit : unit
-            //             ),
-            //           }
-            //         : property
-            //     )
-            //   );
-            // setSnackbar({
-            //   open: true,
-            //   message: `Unit ${updatedUnit.UnitNumber} updated successfully!`,
-            //   severity: "success",
-            // });
-            // }}
-            // selectedUnit={selectedUnit}
-          />
-
-          {/* Snackbar */}
-          <Snackbar
-            open={snackbar.open}
-            autoHideDuration={4000}
-            // onClose={handleCloseSnackbar}
-          >
-            <Alert
-              //   onClose={handleCloseSnackbar}
-              severity={snackbar.severity}
-              sx={{ width: "100%" }}
-            >
-              {snackbar.message}
-            </Alert>
-          </Snackbar>
         </Box>
       </Box>
+
+      {/* Add Unit Modal */}
+      <DataUnitFormModal
+        open={openModal}
+        onClose={() => setOpenModal(false)}
+        // onAddUnit={handleAddUnit}
+      />
+
+      {/* Delete Confirmation Modal */}
+      <DataDeleteConfirm
+        deleteDialogOpen={deleteDialogOpen}
+        setDeleteDialogOpen={setDeleteDialogOpen}
+        // deleteUnitProp={deleteUnitProp}
+        deleteType={deleteType}
+        // handleDeleteUnit={handleDeleteUnit}
+        // handleDeleteProperty={handleDeleteProperty}
+      />
+
+      <EditPropertyFormModal
+        open={editPropertyFormModal}
+        onClose={() => setEditPropertyFormModal(false)}
+        // onEditProperty={handleEditProp}
+        selectedProperty={selectedProperty}
+      />
+
+      {/* Edit Unit Modal */}
+      <EditUnitFormModal
+        open={editDialogOpen}
+        onClose={() => setEditDialogOpen(false)}
+        // onEditUnit={(updatedUnit) => {
+        //   setProperties((prevProperties) =>
+        //     prevProperties.map((property) =>
+        //       property.id === parseInt(id)
+        //         ? {
+        //             ...property,
+        //             units: property.units.map((unit) =>
+        //               unit.id === updatedUnit.id ? updatedUnit : unit
+        //             ),
+        //           }
+        //         : property
+        //     )
+        //   );
+        // setSnackbar({
+        //   open: true,
+        //   message: `Unit ${updatedUnit.UnitNumber} updated successfully!`,
+        //   severity: "success",
+        // });
+        // }}
+        // selectedUnit={selectedUnit}
+      />
+
+      {/* Snackbar */}
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={4000}
+        // onClose={handleCloseSnackbar}
+      >
+        <Alert
+          //   onClose={handleCloseSnackbar}
+          severity={snackbar.severity}
+          sx={{ width: "100%" }}
+        >
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
       <FooterPage />
     </Box>
   );

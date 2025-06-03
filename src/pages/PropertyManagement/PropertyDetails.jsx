@@ -391,73 +391,73 @@ const PropertyDetails = () => {
               },
             }}
           />
-
-          {/* Add Unit Modal */}
-          <DataUnitFormModal
-            open={openModal}
-            onClose={() => setOpenModal(false)}
-            onAddUnit={handleAddUnit}
-          />
-
-          {/* Delete Confirmation Modal */}
-          <DataDeleteConfirm
-            deleteDialogOpen={deleteDialogOpen}
-            setDeleteDialogOpen={setDeleteDialogOpen}
-            deleteUnitProp={deleteUnitProp}
-            deleteType={deleteType}
-            handleDeleteUnit={handleDeleteUnit}
-            handleDeleteProperty={handleDeleteProperty}
-          />
-
-          <EditPropertyFormModal
-            open={editPropertyFormModal}
-            onClose={() => setEditPropertyFormModal(false)}
-            onEditProperty={handleEditProp}
-            selectedProperty={selectedProperty}
-          />
-
-          {/* Edit Unit Modal */}
-          <EditUnitFormModal
-            open={editDialogOpen}
-            onClose={() => setEditDialogOpen(false)}
-            onEditUnit={(updatedUnit) => {
-              setProperties((prevProperties) =>
-                prevProperties.map((property) =>
-                  property.id === parseInt(id)
-                    ? {
-                        ...property,
-                        units: property.units.map((unit) =>
-                          unit.id === updatedUnit.id ? updatedUnit : unit
-                        ),
-                      }
-                    : property
-                )
-              );
-              // setSnackbar({
-              //   open: true,
-              //   message: `Unit ${updatedUnit.UnitNumber} updated successfully!`,
-              //   severity: "success",
-              // });
-            }}
-            selectedUnit={selectedUnit}
-          />
-
-          {/* Snackbar */}
-          <Snackbar
-            open={snackbar.open}
-            autoHideDuration={4000}
-            onClose={handleCloseSnackbar}
-          >
-            <Alert
-              onClose={handleCloseSnackbar}
-              severity={snackbar.severity}
-              sx={{ width: "100%" }}
-            >
-              {snackbar.message}
-            </Alert>
-          </Snackbar>
         </Box>
       </Box>
+
+      {/* Add Unit Modal */}
+      <DataUnitFormModal
+        open={openModal}
+        onClose={() => setOpenModal(false)}
+        onAddUnit={handleAddUnit}
+      />
+
+      {/* Delete Confirmation Modal */}
+      <DataDeleteConfirm
+        deleteDialogOpen={deleteDialogOpen}
+        setDeleteDialogOpen={setDeleteDialogOpen}
+        deleteUnitProp={deleteUnitProp}
+        deleteType={deleteType}
+        handleDeleteUnit={handleDeleteUnit}
+        handleDeleteProperty={handleDeleteProperty}
+      />
+
+      <EditPropertyFormModal
+        open={editPropertyFormModal}
+        onClose={() => setEditPropertyFormModal(false)}
+        onEditProperty={handleEditProp}
+        selectedProperty={selectedProperty}
+      />
+
+      {/* Edit Unit Modal */}
+      <EditUnitFormModal
+        open={editDialogOpen}
+        onClose={() => setEditDialogOpen(false)}
+        onEditUnit={(updatedUnit) => {
+          setProperties((prevProperties) =>
+            prevProperties.map((property) =>
+              property.id === parseInt(id)
+                ? {
+                    ...property,
+                    units: property.units.map((unit) =>
+                      unit.id === updatedUnit.id ? updatedUnit : unit
+                    ),
+                  }
+                : property
+            )
+          );
+          // setSnackbar({
+          //   open: true,
+          //   message: `Unit ${updatedUnit.UnitNumber} updated successfully!`,
+          //   severity: "success",
+          // });
+        }}
+        selectedUnit={selectedUnit}
+      />
+
+      {/* Snackbar */}
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={4000}
+        onClose={handleCloseSnackbar}
+      >
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity={snackbar.severity}
+          sx={{ width: "100%" }}
+        >
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
       <FooterPage />
     </Box>
   );
