@@ -45,11 +45,7 @@ const AddRoomFormModal = ({ open, onClose, onAddRoom }) => {
   const handleSubmit = () => {
     const { lodgename, price, type } = formData;
     if (!lodgename.trim() || !price.toString().trim() || !type.trim()) {
-      showSnackbar({
-        open: true,
-        message: "Please fill out all fields",
-        severity: "error",
-      });
+      showSnackbar("Please fill out all fields", "error");
       return;
     }
 
@@ -62,11 +58,7 @@ const AddRoomFormModal = ({ open, onClose, onAddRoom }) => {
 
     onClose();
     setFormData({ lodgename: "", price: "", type: "" });
-    setSnackbar({
-      open: true,
-      message: "Lodge added successfully!",
-      severity: "success",
-    });
+    showSnackbar("Room added successfully!", "success");
   };
 
   const handleCloseSnackbar = () => {

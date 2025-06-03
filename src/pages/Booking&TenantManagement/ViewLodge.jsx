@@ -135,32 +135,26 @@ const PropertyDetails = () => {
   //     (unit) => unit.id === selectedUnitId
   //   );
 
-    const showSnackbar = (message, severity = "success") => {
-      setSnackbar((prev) => ({ ...prev, open: false }));
-      setTimeout(() => {
-        setSnackbar({
-          open: true,
-          message,
-          severity,
-        });
-      }, 100);
-    };
-
-    const handleAddRoom = (unit) => {
-      setLodges((prevLodges) =>
-        prevLodges.map((lodge) =>
-          lodge.id === parseInt(id)
-            ? { ...lodge, rooms: [...lodge.rooms, lodge] }
-            : lodge
-        )
-      );
-
-      showSnackbar({
+  const showSnackbar = (message, severity = "success") => {
+    setSnackbar((prev) => ({ ...prev, open: false }));
+    setTimeout(() => {
+      setSnackbar({
         open: true,
-        message: `Added new Lodge: ${lodge.name}`,
-        severity: "success",
+        message,
+        severity,
       });
-    };
+    }, 100);
+  };
+
+  const handleAddRoom = (newRoom) => {
+    setLodges((prevLodges) =>
+      prevLodges.map((lodgeItem) =>
+        lodgeItem.id === parseInt(id)
+          ? { ...lodgeItem, rooms: [...lodgeItem.rooms, newRoom] }
+          : lodgeItem
+      )
+    );
+  };
 
   const processRowUpdate = (newRow) => {
     //   const updatedProperty = lodge.map((property) =>
@@ -251,9 +245,9 @@ const PropertyDetails = () => {
   //     showSnackbar(`${updatedProperty.title} Updated Successfully`, "success");
   //   };
 
-  //   const handleCloseSnackbar = () => {
-  //     setSnackbar({ ...snackbar, open: false });
-  //   };
+    const handleCloseSnackbar = () => {
+      setSnackbar({ ...snackbar, open: false });
+    };
 
   return (
     <Box className="m-2 md:m-5">
