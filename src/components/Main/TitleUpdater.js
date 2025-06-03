@@ -44,7 +44,7 @@ const PageTitleUpdater = () => {
       case "/invoiceview":
         title = "Invoice View";
         break;
-      case "/ViewLodge":
+      case "/Viewlodge":
         title = "Lodge View";
         break;
       default:

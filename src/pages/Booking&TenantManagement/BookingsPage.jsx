@@ -14,6 +14,7 @@ import AddIcon from "@mui/icons-material/Add";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { Link } from "react-router-dom";
 
 const BookingsPage = () => {
   const [hoveredId, setHoveredId] = useState(null);
@@ -53,21 +54,25 @@ const BookingsPage = () => {
                 onMouseEnter={() => onCardHover(lodge.id)}
                 onMouseLeave={onCardLeave}
               >
-                <CardMedia
-                  component="img"
-                  alt="lodge one"
-                  image={lodge.image}
-                  className="transition-all duration-500"
-                  style={{
-                    borderRadius:
-                      hoveredId === lodge.id
-                        ? "83% 17% 97% 3% / 12% 88% 12% 88%"
-                        : "10% 64% 7% 7% / 10% 47% 9% 8%",
-                  }}
-                />
+                <Link to={`/viewlodge/${lodge.id}`}>
+                  <CardMedia
+                    component="img"
+                    alt="lodge one"
+                    image={lodge.image}
+                    className="transition-all duration-500"
+                    style={{
+                      borderRadius:
+                        hoveredId === lodge.id
+                          ? "83% 17% 97% 3% / 12% 88% 12% 88%"
+                          : "10% 64% 7% 7% / 10% 47% 9% 8%",
+                    }}
+                  />
+                </Link>
                 <Box className="flex flex-col justify-between gap-4">
                   <Box className="flex flex-col">
-                    <Typography fontWeight="bold">{lodge.name}</Typography>
+                    <Link to={`/viewlodge/${lodge.id}`}>
+                      <Typography fontWeight="bold">{lodge.name}</Typography>
+                    </Link>
                     <Typography color="#D4D4D4">
                       <span className="font-bold">Rooms:</span>&nbsp;
                       {lodge.rooms.length}
@@ -85,14 +90,17 @@ const BookingsPage = () => {
                     ${hoveredId === lodge.id ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4 pointer-events-none"}
                   `}
                 >
-                  <Button
-                    startIcon={<VisibilityIcon />}
-                    variant="contained"
-                    color="info"
-                    className="flex-1"
-                  >
-                    View
-                  </Button>
+                  <Link to={`/viewlodge/${lodge.id}`}>
+                    <Button
+                      startIcon={<VisibilityIcon />}
+                      variant="contained"
+                      color="info"
+                      className="flex-1"
+                    >
+                      View
+                    </Button>
+                  </Link>
+
                   <IconButton>
                     <EditIcon sx={{ color: "#10b981" }} />
                   </IconButton>
