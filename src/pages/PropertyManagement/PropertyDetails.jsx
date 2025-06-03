@@ -22,6 +22,9 @@ import AddIcon from "@mui/icons-material/Add";
 import PlaceIcon from "@mui/icons-material/Place";
 import EditPropertyFormModal from "../../components/PropertyFormComponent/EditPropertyForm";
 import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
+import HolidayVillageIcon from "@mui/icons-material/HolidayVillage";
+import ConfirmationNumberIcon from "@mui/icons-material/ConfirmationNumber";
+import ChairIcon from "@mui/icons-material/Chair";
 
 const PropertyDetails = () => {
   const [properties, setProperties] = useState(MyProperties);
@@ -283,11 +286,20 @@ const PropertyDetails = () => {
                 className="shadow-md shadow-slate-900 rounded-md md:-mt-12 w-fit md:w-52"
               />
             </Box>
-            <Box className="text-center md:text-start ml-2 md:ml-0">
-              <Typography fontWeight="bold">{property.title}</Typography>
+            <Box className="text-center md:text-start ml-2 md:ml-0 flex flex-col gap-1">
+              <Typography fontWeight="bold">
+                <HolidayVillageIcon
+                  className="bg-[#1c292d] p-1 rounded-lg"
+                  fontSize="large"
+                />
+                &nbsp;{property.title}
+              </Typography>
               <Typography>
-                <PlaceIcon />
-                {property.location}
+                <PlaceIcon
+                  className="bg-[#1c292d] p-1 rounded-lg"
+                  fontSize="large"
+                />
+                &nbsp;{property.location}
               </Typography>
             </Box>
           </Box>
@@ -323,14 +335,22 @@ const PropertyDetails = () => {
 
           <Box mt="10px" display="flex" flexDirection="row">
             <Typography fontWeight="bold">
-              Number of Units:&nbsp;&nbsp;
+              <ConfirmationNumberIcon
+                className="bg-[#1c292d] p-1 rounded-lg"
+                fontSize="large"
+              />
+              &nbsp;Number of Units:&nbsp;&nbsp;
             </Typography>
             <Typography>{property.units.length} Units</Typography>
           </Box>
 
           <Box mt="10px" display="flex" flexDirection="row">
             <Typography fontWeight="bold">
-              Units Available:&nbsp;&nbsp;
+              <ChairIcon
+                className="bg-[#1c292d] p-1 rounded-lg"
+                fontSize="large"
+              />
+              &nbsp;Units Available:&nbsp;&nbsp;
             </Typography>
             <Typography>
               {property.units.filter((unit) => unit.tenant == null).length}{" "}

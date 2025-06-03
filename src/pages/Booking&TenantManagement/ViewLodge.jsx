@@ -24,6 +24,8 @@ import EditPropertyFormModal from "../../components/PropertyFormComponent/EditPr
 import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
 import MyLodges from "../../Data/SiteDataComponent/Lodges";
 import HolidayVillageIcon from "@mui/icons-material/HolidayVillage";
+import ConfirmationNumberIcon from "@mui/icons-material/ConfirmationNumber";
+import ChairIcon from "@mui/icons-material/Chair";
 
 const PropertyDetails = () => {
   const [lodges, setLodges] = useState(MyLodges);
@@ -306,24 +308,39 @@ const PropertyDetails = () => {
               </Button>
             </Box>
           </Box>
-          <Box>
+          <Box className="flex flex-col gap-1">
             <Typography fontWeight="bold">
-              <HolidayVillageIcon />{lodge.name}
+              <HolidayVillageIcon
+                className="bg-[#1c292d] p-1 rounded-lg"
+                fontSize="large"
+              />
+              &nbsp;{lodge.name}
             </Typography>
-            <Typography>
-              <PlaceIcon />
-              {lodge.location}
+            <Typography fontWeight="bold">
+              <PlaceIcon
+                className="bg-[#1c292d] p-1 rounded-lg"
+                fontSize="large"
+              />
+              &nbsp;{lodge.location}
             </Typography>
             <Box display="flex" flexDirection="row">
               <Typography fontWeight="bold">
-                Number of Rooms:&nbsp;&nbsp;
+                <ConfirmationNumberIcon
+                  className="bg-[#1c292d] p-1 rounded-lg"
+                  fontSize="large"
+                />
+                &nbsp;Number of Rooms:&nbsp;&nbsp;
               </Typography>
               <Typography>9 Rooms</Typography>
             </Box>
 
             <Box display="flex" flexDirection="row">
               <Typography fontWeight="bold">
-                Units Available:&nbsp;&nbsp;
+                <ChairIcon
+                  className="bg-[#1c292d] p-1 rounded-lg"
+                  fontSize="large"
+                />
+                &nbsp;Units Available:&nbsp;&nbsp;
               </Typography>
               <Typography>
                 {/* {property.units.filter((unit) => unit.tenant == null).length}{" "} */}
