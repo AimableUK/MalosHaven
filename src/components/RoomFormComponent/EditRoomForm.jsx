@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Dialog,
   DialogTitle,
@@ -10,7 +10,7 @@ import {
   Alert,
 } from "@mui/material";
 
-const DataUnitFormModal = ({ open, onClose, onAddUnit }) => {
+const EditRoomFormModal = ({ open, onClose, onEditUnit, selectedUnit }) => {
   const [formData, setFormData] = useState({ unit: "", value: "" });
   const [snackbar, setSnackbar] = useState({
     open: false,
@@ -18,16 +18,14 @@ const DataUnitFormModal = ({ open, onClose, onAddUnit }) => {
     severity: "success",
   });
 
-  const showSnackbar = (message, severity = "success") => {
-    setSnackbar((prev) => ({ ...prev, open: false }));
-    setTimeout(() => {
-      setSnackbar({
-        open: true,
-        message,
-        severity,
+  useEffect(() => {
+    if (selectedUnit) {
+      setFormData({
+        unit: selectedUnit.UnitNumber || "",
+        value: selectedUnit.UnitValue || "",
       });
-    }, 100);
-  };
+    }
+  }, [selectedUnit]);
 
   const handleChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -36,7 +34,7 @@ const DataUnitFormModal = ({ open, onClose, onAddUnit }) => {
   const handleSubmit = () => {
     const { unit, value } = formData;
     if (!unit.trim() || !value.toString().trim()) {
-      showSnackbar({
+      setSnackbar({
         open: true,
         message: "Please fill out all fields",
         severity: "error",
@@ -44,17 +42,16 @@ const DataUnitFormModal = ({ open, onClose, onAddUnit }) => {
       return;
     }
 
-    onAddUnit({
-      id: Date.now(),
+    onEditUnit({
+      ...selectedUnit,
       UnitNumber: unit,
       UnitValue: Number(value),
     });
 
     onClose();
-    setFormData({ unit: "", value: "" });
     setSnackbar({
       open: true,
-      message: "Unit added successfully!",
+      message: `${unit} Updated Successfully`,
       severity: "success",
     });
   };
@@ -66,7 +63,7 @@ const DataUnitFormModal = ({ open, onClose, onAddUnit }) => {
   return (
     <>
       <Dialog open={open} onClose={onClose}>
-        <DialogTitle sx={{ fontWeight: "bold" }}>Add New Unit</DialogTitle>
+        <DialogTitle sx={{ fontWeight: "bold" }}>Edit Room</DialogTitle>
         <DialogContent sx={{ gap: 2, mt: 1 }}>
           <TextField
             label="Unit Number"
@@ -90,10 +87,11 @@ const DataUnitFormModal = ({ open, onClose, onAddUnit }) => {
             Cancel
           </Button>
           <Button onClick={handleSubmit} variant="contained">
-            Add
+            Update
           </Button>
         </DialogActions>
       </Dialog>
+
       <Snackbar
         open={snackbar.open}
         autoHideDuration={2000}
@@ -112,4 +110,4 @@ const DataUnitFormModal = ({ open, onClose, onAddUnit }) => {
   );
 };
 
-export default DataUnitFormModal;
+export default EditRoomFormModal;

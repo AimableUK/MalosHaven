@@ -11,12 +11,10 @@ import {
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-import DataUnitFormModal from "../../components/UnitFormComponent/DataUnitForm";
 import DataDeleteConfirm from "../../components/DeleteConfirmComponent/DataDeleteConfirm";
 import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 import EditUnitFormModal from "../../components/UnitFormComponent/EditUnitForm";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
-import MyProperties from "../../Data/SiteDataComponent/Properties";
 import FooterPage from "../Footer/FooterPage";
 import AddIcon from "@mui/icons-material/Add";
 import PlaceIcon from "@mui/icons-material/Place";
@@ -26,6 +24,7 @@ import MyLodges from "../../Data/SiteDataComponent/Lodges";
 import HolidayVillageIcon from "@mui/icons-material/HolidayVillage";
 import ConfirmationNumberIcon from "@mui/icons-material/ConfirmationNumber";
 import ChairIcon from "@mui/icons-material/Chair";
+import AddRoomFormModal from "../../components/RoomFormComponent/AddRoomForm";
 
 const PropertyDetails = () => {
   const [lodges, setLodges] = useState(MyLodges);
@@ -48,68 +47,74 @@ const PropertyDetails = () => {
     document.title = `${lodge?.name || "View Lodge"}`;
   });
 
-  //   const columns = [
-  //     {
-  //       field: "UnitNumber",
-  //       headerName: "Unit Number",
-  //       width: 150,
-  //       editable: true,
-  //     },
-  //     {
-  //       field: "UnitValue",
-  //       headerName: "Unit Value (RWF)",
-  //       width: 180,
-  //       editable: true,
-  //     },
-  //     {
-  //       field: "edit",
-  //       headerName: "Edit Unit",
-  //       width: 150,
-  //       renderCell: (params) => (
-  //         <Button
-  //           variant="contained"
-  //           color="success"
-  //           onClick={() => {
-  //             setSelectedUnitId(params.row.id);
-  //             setEditDialogOpen(true);
-  //           }}
-  //           startIcon={<EditIcon />}
-  //         >
-  //           Edit
-  //         </Button>
-  //       ),
-  //     },
-  //     {
-  //       field: "delete",
-  //       headerName: "Delete Unit",
-  //       width: 150,
-  //       renderCell: (params) => (
-  //         <Button
-  //           variant="contained"
-  //           color="error"
-  //           onClick={() => handleDelete(params.row.id, "unit")}
-  //           startIcon={<DeleteIcon />}
-  //         >
-  //           Delete
-  //         </Button>
-  //       ),
-  //     },
-  //     {
-  //       field: "book",
-  //       headerName: "Book Unit",
-  //       width: 150,
-  //       renderCell: (params) => (
-  //         <Button
-  //           variant="contained"
-  //           color="info"
-  //           onClick={() => handleBook(params.row.id)}
-  //           startIcon={<AutoStoriesIcon />}
-  //         >
-  //           Book
-  //         </Button>
-  //       ),
-  //     },
-  //   ];
+  const columns = [
+    {
+      field: "name",
+      headerName: "Room",
+      width: 140,
+      editable: true,
+    },
+    {
+      field: "type",
+      headerName: "Type",
+      width: 140,
+    },
+    {
+      field: "price",
+      headerName: "Price",
+      width: 140,
+      editable: true,
+    },
+    {
+      field: "edit",
+      headerName: "Edit Room",
+      width: 150,
+      renderCell: (params) => (
+        <Button
+          variant="contained"
+          color="success"
+          onClick={() => {
+            setSelectedUnitId(params.row.id);
+            setEditDialogOpen(true);
+          }}
+          startIcon={<EditIcon />}
+        >
+          Edit
+        </Button>
+      ),
+    },
+    {
+      field: "delete",
+      headerName: "Delete Room",
+      width: 150,
+      renderCell: (params) => (
+        <Button
+          variant="contained"
+          color="error"
+          //   onClick={() => handleDelete(params.row.id)}
+          startIcon={<DeleteIcon />}
+        >
+          Delete
+        </Button>
+      ),
+    },
+    {
+      field: "book",
+      headerName: "Book Room",
+      width: 150,
+      renderCell: (params) => (
+        <Button
+          variant="contained"
+          color="info"
+          //   onClick={() => handleBook(params.row.id)}
+          startIcon={<AutoStoriesIcon />}
+          disabled={!params.row.isAvailable}
+        >
+          Book
+        </Button>
+      ),
+    },
+  ];
 
   //   const location = useLocation();
   //   const [backPath] = useState(location.state?.from || "/properties");
@@ -157,28 +162,25 @@ const PropertyDetails = () => {
   //     });
   //   };
 
-  //   const processRowUpdate = (newRow) => {
-  //     const updatedProperty = properties.map((property) =>
-  //       property.id === parseInt(id)
-  //         ? {
-  //             ...property,
-  //             units: property.units.map((unit) =>
-  //               unit.id === newRow.id ? newRow : unit
-  //             ),
-  //           }
-  //         : property
-  //     );
-
-  //     setProperties(updatedProperty);
-
-  //     setSnackbar({
-  //       open: true,
-  //       message: `Unit ${newRow.UnitNumber} updated successfully!`,
-  //       severity: "success",
-  //     });
-
-  //     return newRow;
-  //   };
+  const processRowUpdate = (newRow) => {
+    //   const updatedProperty = lodge.map((property) =>
+    //     property.id === parseInt(id)
+    //       ? {
+    //           ...property,
+    //           units: property.units.map((unit) =>
+    //             unit.id === newRow.id ? newRow : unit
+    //           ),
+    //         }
+    //       : property
+    //   );
+    //   setProperties(updatedProperty);
+    //   setSnackbar({
+    //     open: true,
+    //     message: `Unit ${newRow.UnitNumber} updated successfully!`,
+    //     severity: "success",
+    //   });
+    //   return newRow;
+  };
 
   //   const deleteUnitProp = `Are you sure you want to Delete this ${deleteType}? If you do so, it will be undone`;
 
@@ -366,8 +368,8 @@ const PropertyDetails = () => {
             </Button>
           </Box>
 
-          {/* <DataGrid
-            rows={property.units.filter((unit) => unit.tenant == null)}
+          <DataGrid
+            rows={lodge.rooms.filter((room) => room.isAvailable == true)}
             columns={columns}
             showToolbar
             initialState={{
@@ -403,35 +405,17 @@ const PropertyDetails = () => {
                 quickFilterProps: { debounceMs: 300 },
               },
             }}
-          /> */}
+          />
         </Box>
       </Box>
 
       {/* Add Unit Modal */}
-      <DataUnitFormModal
+      <AddRoomFormModal
         open={openModal}
         onClose={() => setOpenModal(false)}
         // onAddUnit={handleAddUnit}
       />
 
-      {/* Delete Confirmation Modal */}
-      <DataDeleteConfirm
-        deleteDialogOpen={deleteDialogOpen}
-        setDeleteDialogOpen={setDeleteDialogOpen}
-        // deleteUnitProp={deleteUnitProp}
-        deleteType={deleteType}
-        // handleDeleteUnit={handleDeleteUnit}
-        // handleDeleteProperty={handleDeleteProperty}
-      />
-
-      <EditPropertyFormModal
-        open={editPropertyFormModal}
-        onClose={() => setEditPropertyFormModal(false)}
-        // onEditProperty={handleEditProp}
-        selectedProperty={selectedProperty}
-      />
-
-      {/* Edit Unit Modal */}
       <EditUnitFormModal
         open={editDialogOpen}
         onClose={() => setEditDialogOpen(false)}
@@ -456,6 +440,25 @@ const PropertyDetails = () => {
         // }}
         // selectedUnit={selectedUnit}
       />
+
+      {/* Delete Confirmation Modal */}
+      <DataDeleteConfirm
+        deleteDialogOpen={deleteDialogOpen}
+        setDeleteDialogOpen={setDeleteDialogOpen}
+        // deleteUnitProp={deleteUnitProp}
+        deleteType={deleteType}
+        // handleDeleteUnit={handleDeleteUnit}
+        // handleDeleteProperty={handleDeleteProperty}
+      />
+
+      <EditPropertyFormModal
+        open={editPropertyFormModal}
+        onClose={() => setEditPropertyFormModal(false)}
+        // onEditProperty={handleEditProp}
+        selectedProperty={selectedProperty}
+      />
+
+      {/* Edit Unit Modal */}
 
       {/* Snackbar */}
       <Snackbar

@@ -10,7 +10,7 @@ import {
   Alert,
 } from "@mui/material";
 
-const DataUnitFormModal = ({ open, onClose, onAddUnit }) => {
+const AddRoomFormModal = ({ open, onClose, onAddUnit }) => {
   const [formData, setFormData] = useState({ unit: "", value: "" });
   const [snackbar, setSnackbar] = useState({
     open: false,
@@ -66,8 +66,8 @@ const DataUnitFormModal = ({ open, onClose, onAddUnit }) => {
   return (
     <>
       <Dialog open={open} onClose={onClose}>
-        <DialogTitle sx={{ fontWeight: "bold" }}>Add New Unit</DialogTitle>
-        <DialogContent sx={{ gap: 2, mt: 1 }}>
+        <DialogTitle sx={{ fontWeight: "bold" }}>Add New Room</DialogTitle>
+        <DialogContent sx={{ gap: 2, mt: "10px" }}>
           <TextField
             label="Unit Number"
             name="unit"
@@ -112,4 +112,4 @@ const DataUnitFormModal = ({ open, onClose, onAddUnit }) => {
   );
 };
 
-export default DataUnitFormModal;
+export default AddRoomFormModal;
