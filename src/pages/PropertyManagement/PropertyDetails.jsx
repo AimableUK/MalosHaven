@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Typography,
@@ -105,6 +105,10 @@ const PropertyDetails = () => {
       ),
     },
   ];
+
+  useEffect(() => {
+    document.title = `${property?.title || "View Property"}`;
+  });
 
   const location = useLocation();
   const [backPath] = useState(location.state?.from || "/properties");
@@ -253,7 +257,7 @@ const PropertyDetails = () => {
   };
 
   return (
-    <Box className="">
+    <Box>
       <Box
         sx={{
           display: "flex",
@@ -262,7 +266,7 @@ const PropertyDetails = () => {
           borderRadius: "8px",
           p: 2,
         }}
-        className="m-5 md:m-6 md:mt-10 border-t-2 border-t-slate-300"
+        className="m-2 md:m-5 md:mt-10 border-t-2 border-t-slate-300"
       >
         <Box className="bg-[#1b2c31] md:pr-5 w-fit right-0 top-0 self-end rounded-full group">
           <Link to="/properties" className="group">
@@ -270,7 +274,7 @@ const PropertyDetails = () => {
               <IconButton sx={{ bgcolor: "#1b2c31" }}>
                 <ArrowCircleLeftIcon
                   fontSize="medium"
-                  className="group-hover:translate-x-5"
+                  className="md:group-hover:translate-x-5"
                 />
               </IconButton>
             </Tooltip>
@@ -286,7 +290,7 @@ const PropertyDetails = () => {
                 className="shadow-md shadow-slate-900 rounded-md md:-mt-12 w-fit md:w-52"
               />
             </Box>
-            <Box className="text-center md:text-start ml-2 md:ml-0 flex flex-col gap-1">
+            <Box className="md:text-start ml-2 md:ml-0 flex flex-col gap-1">
               <Typography fontWeight="bold">
                 <HolidayVillageIcon
                   className="bg-[#1c292d] p-1 rounded-lg"
@@ -333,30 +337,22 @@ const PropertyDetails = () => {
             <Typography component="p">{property.description}</Typography>
           </Box>
 
-          <Box mt="10px" display="flex" flexDirection="row">
-            <Typography fontWeight="bold">
-              <ConfirmationNumberIcon
-                className="bg-[#1c292d] p-1 rounded-lg"
-                fontSize="large"
-              />
-              &nbsp;Number of Units:&nbsp;&nbsp;
-            </Typography>
-            <Typography>{property.units.length} Units</Typography>
-          </Box>
+          <Typography fontWeight="bold" mb="3px">
+            <ConfirmationNumberIcon
+              className="bg-[#1c292d] p-1 rounded-lg"
+              fontSize="large"
+            />
+            &nbsp;{property.units.length} Units
+          </Typography>
 
-          <Box mt="10px" display="flex" flexDirection="row">
-            <Typography fontWeight="bold">
-              <ChairIcon
-                className="bg-[#1c292d] p-1 rounded-lg"
-                fontSize="large"
-              />
-              &nbsp;Units Available:&nbsp;&nbsp;
-            </Typography>
-            <Typography>
-              {property.units.filter((unit) => unit.tenant == null).length}{" "}
-              Units
-            </Typography>
-          </Box>
+          <Typography fontWeight="bold">
+            <ChairIcon
+              className="bg-[#1c292d] p-1 rounded-lg"
+              fontSize="large"
+            />
+            &nbsp; {property.units.filter((unit) => unit.tenant == null).length}{" "}
+            Units Available
+          </Typography>
 
           <Box className="flex flex-col md:flex-row items-center justify-between mt-5">
             <Typography fontSize="20px" fontWeight="bold">

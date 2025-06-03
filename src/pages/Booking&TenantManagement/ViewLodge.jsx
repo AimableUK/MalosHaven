@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Typography,
@@ -42,6 +42,10 @@ const PropertyDetails = () => {
     open: false,
     message: "",
     severity: "",
+  });
+
+  useEffect(() => {
+    document.title = `${lodge?.name || "View Lodge"}`;
   });
 
   //   const columns = [
@@ -250,7 +254,7 @@ const PropertyDetails = () => {
   //   };
 
   return (
-    <Box className="m-5">
+    <Box className="m-2 md:m-5">
       {/* Header nav */}
       <Box className="flex items-center justify-center relative bg-[#24383E] mb-2 rounded-t-md border-t-2 border-t-slate-300 h-[47px] md:h-[42px] px-1 md:px-6">
         <Box
@@ -272,7 +276,7 @@ const PropertyDetails = () => {
           fontWeight="bold"
           className="absolute left-1/2 transform -translate-x-1/2 text-sm md:text-base text-center"
         >
-          Lodge of ...
+          {lodge.name}
         </Typography>
       </Box>
 
@@ -323,30 +327,25 @@ const PropertyDetails = () => {
               />
               &nbsp;{lodge.location}
             </Typography>
-            <Box display="flex" flexDirection="row">
-              <Typography fontWeight="bold">
-                <ConfirmationNumberIcon
-                  className="bg-[#1c292d] p-1 rounded-lg"
-                  fontSize="large"
-                />
-                &nbsp;Number of Rooms:&nbsp;&nbsp;
-              </Typography>
-              <Typography>9 Rooms</Typography>
-            </Box>
+            <Typography fontWeight="bold">
+              <ConfirmationNumberIcon
+                className="bg-[#1c292d] p-1 rounded-lg"
+                fontSize="large"
+              />
+              &nbsp;
+              {lodge.rooms.length}
+              &nbsp;Rooms
+            </Typography>
 
-            <Box display="flex" flexDirection="row">
-              <Typography fontWeight="bold">
-                <ChairIcon
-                  className="bg-[#1c292d] p-1 rounded-lg"
-                  fontSize="large"
-                />
-                &nbsp;Units Available:&nbsp;&nbsp;
-              </Typography>
-              <Typography>
-                {/* {property.units.filter((unit) => unit.tenant == null).length}{" "} */}
-                1 Unit
-              </Typography>
-            </Box>
+            <Typography fontWeight="bold">
+              <ChairIcon
+                className="bg-[#1c292d] p-1 rounded-lg"
+                fontSize="large"
+              />
+              &nbsp;
+              {lodge.rooms.filter((room) => room.isAvailable == true).length}
+              &nbsp;Room Available
+            </Typography>
           </Box>
         </Box>
 
