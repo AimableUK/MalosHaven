@@ -126,31 +126,6 @@ const AddInvoiceForm = ({
     };
 
     onAddInvoice(newInvoice);
-
-    console.log("Invoice Summary:");
-    console.table([
-      {
-        InvoiceID: newInvoice.id,
-        InvoiceNumber: newInvoice.invoiceNumber,
-        Tenant: newInvoice.tenantName,
-        Email: newInvoice.email,
-        Phone: newInvoice.phone,
-        Items: newInvoice.invoiceItems.length,
-      },
-    ]);
-
-    console.log("Invoice Items:");
-    console.table(
-      newInvoice.invoiceItems.map((item) => ({
-        ItemID: item.id,
-        Description: item.description,
-        Amount: item.amount,
-        DateIssued: item.dateIssued,
-        DueDate: item.dueDate,
-        Status: item.status,
-      }))
-    );
-
     onClose();
     setFormData({});
     setSelectedInvoice(null);

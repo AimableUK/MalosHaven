@@ -8,10 +8,19 @@ import {
   TextField,
   Snackbar,
   Alert,
+  FormControl,
+  RadioGroup,
+  FormControlLabel,
+  Radio,
+  FormLabel,
 } from "@mui/material";
 
-const AddRoomFormModal = ({ open, onClose, onAddUnit }) => {
-  const [formData, setFormData] = useState({ unit: "", value: "" });
+const AddRoomFormModal = ({ open, onClose, onAddRoom }) => {
+  const [formData, setFormData] = useState({
+    lodgename: "",
+    price: "",
+    type: "",
+  });
   const [snackbar, setSnackbar] = useState({
     open: false,
     message: "",
@@ -34,8 +43,8 @@ const AddRoomFormModal = ({ open, onClose, onAddUnit }) => {
   };
 
   const handleSubmit = () => {
-    const { unit, value } = formData;
-    if (!unit.trim() || !value.toString().trim()) {
+    const { lodgename, price, type } = formData;
+    if (!lodgename.trim() || !price.toString().trim() || !type.trim()) {
       showSnackbar({
         open: true,
         message: "Please fill out all fields",
@@ -44,17 +53,18 @@ const AddRoomFormModal = ({ open, onClose, onAddUnit }) => {
       return;
     }
 
-    onAddUnit({
-      id: Date.now(),
-      UnitNumber: unit,
-      UnitValue: Number(value),
+    onAddRoom({
+      id: `RM-${Date.now()}`,
+      name: lodgename,
+      price: Number(price),
+      type,
     });
 
     onClose();
-    setFormData({ unit: "", value: "" });
+    setFormData({ lodgename: "", price: "", type: "" });
     setSnackbar({
       open: true,
-      message: "Unit added successfully!",
+      message: "Lodge added successfully!",
       severity: "success",
     });
   };
@@ -69,21 +79,46 @@ const AddRoomFormModal = ({ open, onClose, onAddUnit }) => {
         <DialogTitle sx={{ fontWeight: "bold" }}>Add New Room</DialogTitle>
         <DialogContent sx={{ gap: 2, mt: "10px" }}>
           <TextField
-            label="Unit Number"
-            name="unit"
+            label="Lodge Name"
+            name="lodgename"
             fullWidth
-            value={formData.unit}
+            value={formData.lodgename}
             onChange={handleChange}
             sx={{ mb: 1 }}
           />
           <TextField
-            label="Unit Value"
-            name="value"
+            label="Room Price"
+            name="price"
             fullWidth
             type="number"
-            value={formData.value}
+            value={formData.price}
             onChange={handleChange}
           />
+          <FormControl>
+            <FormLabel>Lodge Type</FormLabel>
+            <RadioGroup
+              row
+              name="type"
+              value={formData.type}
+              onChange={handleChange}
+            >
+              <FormControlLabel
+                value="Single"
+                control={<Radio />}
+                label="Single"
+              />
+              <FormControlLabel
+                value="Double"
+                control={<Radio />}
+                label="Double"
+              />
+              <FormControlLabel
+                value="Suite"
+                control={<Radio />}
+                label="Suite"
+              />
+            </RadioGroup>
+          </FormControl>
         </DialogContent>
         <DialogActions>
           <Button onClick={onClose} color="secondary">

@@ -8,6 +8,11 @@ import {
   TextField,
   Snackbar,
   Alert,
+  FormControl,
+  RadioGroup,
+  FormControlLabel,
+  Radio,
+  FormLabel,
 } from "@mui/material";
 
 const EditRoomFormModal = ({ open, onClose, onEditUnit, selectedUnit }) => {
@@ -64,23 +69,48 @@ const EditRoomFormModal = ({ open, onClose, onEditUnit, selectedUnit }) => {
     <>
       <Dialog open={open} onClose={onClose}>
         <DialogTitle sx={{ fontWeight: "bold" }}>Edit Room</DialogTitle>
-        <DialogContent sx={{ gap: 2, mt: 1 }}>
+        <DialogContent sx={{ gap: 2, mt: "10px" }}>
           <TextField
-            label="Unit Number"
-            name="unit"
+            label="Lodge Name"
+            name="lodgename"
             fullWidth
-            value={formData.unit}
+            value={formData.lodgename}
             onChange={handleChange}
             sx={{ mb: 1 }}
           />
           <TextField
-            label="Unit Value"
-            name="value"
+            label="Room Price"
+            name="price"
             fullWidth
             type="number"
-            value={formData.value}
+            value={formData.price}
             onChange={handleChange}
           />
+          <FormControl>
+            <FormLabel>Lodge Type</FormLabel>
+            <RadioGroup
+              row
+              name="type"
+              value={formData.type}
+              onChange={handleChange}
+            >
+              <FormControlLabel
+                value="Single"
+                control={<Radio />}
+                label="Single"
+              />
+              <FormControlLabel
+                value="Double"
+                control={<Radio />}
+                label="Double"
+              />
+              <FormControlLabel
+                value="Suite"
+                control={<Radio />}
+                label="Suite"
+              />
+            </RadioGroup>
+          </FormControl>
         </DialogContent>
         <DialogActions>
           <Button onClick={onClose} color="secondary">

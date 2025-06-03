@@ -13,7 +13,6 @@ import EditIcon from "@mui/icons-material/Edit";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import DataDeleteConfirm from "../../components/DeleteConfirmComponent/DataDeleteConfirm";
 import AutoStoriesIcon from "@mui/icons-material/AutoStories";
-import EditUnitFormModal from "../../components/UnitFormComponent/EditUnitForm";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import FooterPage from "../Footer/FooterPage";
 import AddIcon from "@mui/icons-material/Add";
@@ -25,6 +24,7 @@ import HolidayVillageIcon from "@mui/icons-material/HolidayVillage";
 import ConfirmationNumberIcon from "@mui/icons-material/ConfirmationNumber";
 import ChairIcon from "@mui/icons-material/Chair";
 import AddRoomFormModal from "../../components/RoomFormComponent/AddRoomForm";
+import EditRoomFormModal from "../../components/RoomFormComponent/EditRoomForm";
 
 const PropertyDetails = () => {
   const [lodges, setLodges] = useState(MyLodges);
@@ -135,32 +135,32 @@ const PropertyDetails = () => {
   //     (unit) => unit.id === selectedUnitId
   //   );
 
-  //   const showSnackbar = (message, severity = "success") => {
-  //     setSnackbar((prev) => ({ ...prev, open: false }));
-  //     setTimeout(() => {
-  //       setSnackbar({
-  //         open: true,
-  //         message,
-  //         severity,
-  //       });
-  //     }, 100);
-  //   };
+    const showSnackbar = (message, severity = "success") => {
+      setSnackbar((prev) => ({ ...prev, open: false }));
+      setTimeout(() => {
+        setSnackbar({
+          open: true,
+          message,
+          severity,
+        });
+      }, 100);
+    };
 
-  //   const handleAddUnit = (unit) => {
-  //     setProperties((prevProperties) =>
-  //       prevProperties.map((property) =>
-  //         property.id === parseInt(id)
-  //           ? { ...property, units: [...property.units, unit] }
-  //           : property
-  //       )
-  //     );
+    const handleAddRoom = (unit) => {
+      setLodges((prevLodges) =>
+        prevLodges.map((lodge) =>
+          lodge.id === parseInt(id)
+            ? { ...lodge, rooms: [...lodge.rooms, lodge] }
+            : lodge
+        )
+      );
 
-  //     showSnackbar({
-  //       open: true,
-  //       message: `Added new unit: ${unit.UnitNumber}`,
-  //       severity: "success",
-  //     });
-  //   };
+      showSnackbar({
+        open: true,
+        message: `Added new Lodge: ${lodge.name}`,
+        severity: "success",
+      });
+    };
 
   const processRowUpdate = (newRow) => {
     //   const updatedProperty = lodge.map((property) =>
@@ -413,10 +413,10 @@ const PropertyDetails = () => {
       <AddRoomFormModal
         open={openModal}
         onClose={() => setOpenModal(false)}
-        // onAddUnit={handleAddUnit}
+        onAddRoom={handleAddRoom}
       />
 
-      <EditUnitFormModal
+      <EditRoomFormModal
         open={editDialogOpen}
         onClose={() => setEditDialogOpen(false)}
         // onEditUnit={(updatedUnit) => {

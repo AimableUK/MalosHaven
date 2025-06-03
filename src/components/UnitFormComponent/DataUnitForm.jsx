@@ -45,7 +45,7 @@ const DataUnitFormModal = ({ open, onClose, onAddUnit }) => {
     }
 
     onAddUnit({
-      id: Date.now(),
+      id: `UNT-${Date.now()}`,
       UnitNumber: unit,
       UnitValue: Number(value),
     });
