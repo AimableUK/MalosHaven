@@ -267,7 +267,7 @@ const PropertyDetails = () => {
               <IconButton sx={{ bgcolor: "#1b2c31" }}>
                 <ArrowCircleLeftIcon
                   fontSize="medium"
-                  className="group-hover:translate-x-5 transition-transform duration-150 ease-in"
+                  className="group-hover:translate-x-5"
                 />
               </IconButton>
             </Tooltip>

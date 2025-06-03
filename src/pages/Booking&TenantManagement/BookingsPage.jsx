@@ -1,8 +1,19 @@
-import { Box, Button, Card, CardContent, CardMedia, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  CardMedia,
+  IconButton,
+  Typography,
+} from "@mui/material";
 import React, { useState } from "react";
 import FooterPage from "../Footer/FooterPage";
 import lodges from "../../Data/SiteDataComponent/Lodges";
 import AddIcon from "@mui/icons-material/Add";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const BookingsPage = () => {
   const [hoveredId, setHoveredId] = useState(null);
@@ -28,7 +39,9 @@ const BookingsPage = () => {
           >
             BOOKINGS AND RESERVATION
           </Typography>
-          <Button startIcon={<AddIcon />} variant="contained" color="info">Add Lodge</Button>
+          <Button startIcon={<AddIcon />} variant="contained" color="info">
+            Add Lodge
+          </Button>
         </Box>
         {/* lodges */}
         <Box className="flex flex-col md:grid grid-cols-12 gap-2">
@@ -36,7 +49,7 @@ const BookingsPage = () => {
             lodgesList.map((lodge) => (
               <Card
                 key={lodge.name}
-                className="bg-[#2D454D] col-span-3 p-4 cursor-pointer active:scale-95 transition-transform duration-150 ease-in-out"
+                className="relative bg-[#2D454D] col-span-3 p-3 cursor-pointer transition-transform duration-500 ease-in-out group"
                 onMouseEnter={() => onCardHover(lodge.id)}
                 onMouseLeave={onCardLeave}
               >
@@ -52,17 +65,41 @@ const BookingsPage = () => {
                         : "10% 64% 7% 7% / 10% 47% 9% 8%",
                   }}
                 />
-                <CardContent>
-                  <Typography fontWeight="bold">{lodge.name}</Typography>
-                  <Typography color="#D4D4D4">
-                    <span className="font-bold">Rooms:</span>&nbsp;
-                    {lodge.rooms.length}
-                  </Typography>
-                  <Typography color="#D4D4D4">
-                    <span className="font-bold">Available:</span>&nbsp;
-                    {lodge.rooms.filter((room) => room.client == null).length}
-                  </Typography>
-                </CardContent>
+                <Box className="flex flex-col justify-between gap-4">
+                  <Box className="flex flex-col">
+                    <Typography fontWeight="bold">{lodge.name}</Typography>
+                    <Typography color="#D4D4D4">
+                      <span className="font-bold">Rooms:</span>&nbsp;
+                      {lodge.rooms.length}
+                    </Typography>
+                    <Typography color="#D4D4D4">
+                      <span className="font-bold">Available:</span>&nbsp;
+                      {lodge.rooms.filter((room) => room.client == null).length}
+                    </Typography>
+                  </Box>
+                </Box>
+
+                <Box
+                  className={`
+                    absolute bottom-0 left-0 w-full px-3 py-2 bg-[#2D454D] flex items-center justify-between gap-2 transition-all duration-300 border-t-2 border-t-slate-300
+                    ${hoveredId === lodge.id ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4 pointer-events-none"}
+                  `}
+                >
+                  <Button
+                    startIcon={<VisibilityIcon />}
+                    variant="contained"
+                    color="info"
+                    className="flex-1"
+                  >
+                    View
+                  </Button>
+                  <IconButton>
+                    <EditIcon sx={{ color: "#10b981" }} />
+                  </IconButton>
+                  <IconButton>
+                    <DeleteIcon sx={{ color: "#F44545" }} />
+                  </IconButton>
+                </Box>
               </Card>
             ))
           ) : (

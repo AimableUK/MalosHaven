@@ -16,6 +16,7 @@ import BookingsPage from "./pages/Booking&TenantManagement/BookingsPage";
 import TenantsPage from "./pages/Booking&TenantManagement/TenantsPage";
 import PaymentsPage from "./pages/Booking&TenantManagement/PaymentsPage";
 import ViewInvoice from "./pages/Booking&TenantManagement/ViewInvoice";
+import ViewLodge from "./pages/Booking&TenantManagement/ViewLodge";
 
 // Analytics&Reports
 import AnalyticsPage from "./pages/Analytics&Reports/AnalyticsPage";
@@ -41,6 +42,7 @@ const AppRoutes = () => {
         <Route path="tenants" element={<TenantsPage />} />
         <Route path="payments" element={<PaymentsPage />} />
         <Route path="invoiceview/:id" element={<ViewInvoice />} />
+        <Route path="Viewlodge" element={<ViewLodge />} />
         <Route path="analytics" element={<AnalyticsPage />} />
         <Route path="reports" element={<ReportsPage />} />
         <Route path="settings" element={<SettingsPage />} />
