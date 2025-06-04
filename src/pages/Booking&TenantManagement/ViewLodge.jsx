@@ -129,9 +129,9 @@ const PropertyDetails = () => {
     );
   }
 
-  //   const selectedUnit = property.units.find(
-  //     (unit) => unit.id === selectedRoomId
-  //   );
+    const selectedRoom = lodge.rooms.find(
+      (room) => room.id === selectedRoomId
+    );
 
   const showSnackbar = (message, severity = "success") => {
     setSnackbar((prev) => ({ ...prev, open: false }));
@@ -173,7 +173,7 @@ const PropertyDetails = () => {
   const deleteRoomLodge = `Are you sure you want to Delete this ${deleteType}? If you do so, it will be undone`;
 
   const handleDelete = (id, type) => {
-    if (type === "unit") {
+    if (type === "room") {
       setDeleteType(type);
       setSelectedRoomId(id);
       setDeleteDialogOpen(true);
@@ -419,7 +419,7 @@ const PropertyDetails = () => {
         //   severity: "success",
         // });
         // }}
-        // selectedUnit={selectedUnit}
+        selectedRoom={selectedRoom}
       />
 
       {/* Delete Confirmation Modal */}
