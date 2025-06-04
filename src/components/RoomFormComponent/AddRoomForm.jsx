@@ -52,8 +52,10 @@ const AddRoomFormModal = ({ open, onClose, onAddRoom }) => {
     onAddRoom({
       id: `RM-${Date.now()}`,
       name: lodgename,
-      price: Number(price),
       type,
+      price: Number(price),
+      isAvailable: true,
+      client: null,
     });
 
     onClose();

@@ -13,7 +13,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import DataDeleteConfirm from "../../components/DeleteConfirmComponent/DataDeleteConfirm";
 import AutoStoriesIcon from "@mui/icons-material/AutoStories";
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import FooterPage from "../Footer/FooterPage";
 import AddIcon from "@mui/icons-material/Add";
 import PlaceIcon from "@mui/icons-material/Place";
@@ -31,9 +31,9 @@ const PropertyDetails = () => {
   const [openModal, setOpenModal] = useState(false);
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-  const [selectedUnitId, setSelectedUnitId] = useState(null);
+  const [selectedRoomId, setSelectedRoomId] = useState(null);
   const [deleteType, setDeleteType] = useState(null);
-  const [selectedProperty, setSelectedProperty] = useState(null);
+  const [selectedLodge, setSelectedLodge] = useState(null);
 
   const [editPropertyFormModal, setEditPropertyFormModal] = useState(false);
 
@@ -74,7 +74,7 @@ const PropertyDetails = () => {
           variant="contained"
           color="success"
           onClick={() => {
-            setSelectedUnitId(params.row.id);
+            setSelectedRoomId(params.row.id);
             setEditDialogOpen(true);
           }}
           startIcon={<EditIcon />}
@@ -91,7 +91,7 @@ const PropertyDetails = () => {
         <Button
           variant="contained"
           color="error"
-          //   onClick={() => handleDelete(params.row.id)}
+          onClick={() => handleDelete(params.row.id, "room")}
           startIcon={<DeleteIcon />}
         >
           Delete
@@ -116,9 +116,7 @@ const PropertyDetails = () => {
     },
   ];
 
-  //   const location = useLocation();
-  //   const [backPath] = useState(location.state?.from || "/properties");
-  //   const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const { id } = useParams();
   const lodge = lodges.find((lodge) => lodge.id === parseInt(id));
@@ -132,7 +130,7 @@ const PropertyDetails = () => {
   }
 
   //   const selectedUnit = property.units.find(
-  //     (unit) => unit.id === selectedUnitId
+  //     (unit) => unit.id === selectedRoomId
   //   );
 
   const showSnackbar = (message, severity = "success") => {
@@ -157,78 +155,67 @@ const PropertyDetails = () => {
   };
 
   const processRowUpdate = (newRow) => {
-    //   const updatedProperty = lodge.map((property) =>
-    //     property.id === parseInt(id)
-    //       ? {
-    //           ...property,
-    //           units: property.units.map((unit) =>
-    //             unit.id === newRow.id ? newRow : unit
-    //           ),
-    //         }
-    //       : property
-    //   );
-    //   setProperties(updatedProperty);
-    //   setSnackbar({
-    //     open: true,
-    //     message: `Unit ${newRow.UnitNumber} updated successfully!`,
-    //     severity: "success",
-    //   });
-    //   return newRow;
+    const updatedLodge = lodges.map((lodge) =>
+      lodge.id === parseInt(id)
+        ? {
+            ...lodge,
+            rooms: lodge.rooms.map((room) =>
+              room.id === newRow.id ? newRow : room
+            ),
+          }
+        : lodge
+    );
+    setLodges(updatedLodge);
+    showSnackbar(`${newRow.name} updated successfully!`, "success");
+    return newRow;
   };
 
-  //   const deleteUnitProp = `Are you sure you want to Delete this ${deleteType}? If you do so, it will be undone`;
+  const deleteRoomLodge = `Are you sure you want to Delete this ${deleteType}? If you do so, it will be undone`;
 
-  //   const handleDelete = (id, type) => {
-  //     if (type === "unit") {
-  //       setDeleteType(type);
-  //       setSelectedUnitId(id);
-  //       setDeleteDialogOpen(true);
-  //     } else {
-  //       setDeleteType(type);
-  //       setSelectedProperty(id);
-  //       setDeleteDialogOpen(true);
-  //     }
-  //   };
+  const handleDelete = (id, type) => {
+    if (type === "unit") {
+      setDeleteType(type);
+      setSelectedRoomId(id);
+      setDeleteDialogOpen(true);
+    } else {
+      setDeleteType(type);
+      setSelectedLodge(id);
+      setDeleteDialogOpen(true);
+    }
+  };
 
-  //   const handleDeleteUnit = () => {
-  //     // setSelectedUnitId(selectedUnit);
-  //     setProperties((prevProperties) =>
-  //       prevProperties.map((property) =>
-  //         property.id === parseInt(id)
-  //           ? {
-  //               ...property,
-  //               units: property.units.filter(
-  //                 (unit) => unit.id !== selectedUnitId
-  //               ),
-  //             }
-  //           : property
-  //       )
-  //     );
+  const handleDeleteRoom = () => {
+    setLodges((prevLodges) =>
+      prevLodges.map((lodge) =>
+        lodge.id === parseInt(id)
+          ? {
+              ...lodge,
+              rooms: lodge.rooms.filter((room) => room.id !== selectedRoomId),
+            }
+          : lodge
+      )
+    );
 
-  //     setSnackbar({
-  //       open: true,
-  //       message: "Unit deleted successfully!",
-  //       severity: "success",
-  //     });
-  //     setDeleteDialogOpen(false);
-  //     setSelectedUnitId(null);
-  //   };
+    showSnackbar("Room deleted successfully!", "success");
+    setDeleteDialogOpen(false);
+    setSelectedRoomId(null);
+  };
 
-  //   const handleDeleteProperty = () => {
-  //     navigate(backPath || "/properties", {
-  //       state: {
-  //         snackbar: `${selectedProperty.title} deleted successfully`,
-  //       },
-  //     });
+  const handleDeleteLodge = () => {
+    navigate("/bookings", {
+      state: {
+        snackbar: `${selectedLodge.name} deleted successfully`,
+      },
+    });
 
-  //     setDeleteDialogOpen(false);
+    setDeleteDialogOpen(false);
 
-  //     setTimeout(() => {
-  //       setProperties((prev) =>
-  //         prev.filter((property) => property.id !== selectedProperty.id)
-  //       );
-  //     }, 1000);
-  //   };
+    setTimeout(() => {
+      setLodges((prev) =>
+        prev.filter((lodge) => lodge.id !== selectedLodge.id)
+      );
+    }, 1000);
+  };
 
   //   const handleEditPropertyDialogOpen = (property) => {
   //     setEditPropertyFormModal(true);
@@ -245,9 +232,9 @@ const PropertyDetails = () => {
   //     showSnackbar(`${updatedProperty.title} Updated Successfully`, "success");
   //   };
 
-    const handleCloseSnackbar = () => {
-      setSnackbar({ ...snackbar, open: false });
-    };
+  const handleCloseSnackbar = () => {
+    setSnackbar({ ...snackbar, open: false });
+  };
 
   return (
     <Box className="m-2 md:m-5">
@@ -293,7 +280,7 @@ const PropertyDetails = () => {
                 variant="contained"
                 startIcon={<EditIcon />}
                 color="success"
-                //   onClick={() => handleEditPropertyDialogOpen(property)}
+                // onClick={() => handleEditPropertyDialogOpen(property)}
               >
                 Edit
               </Button>
@@ -302,7 +289,7 @@ const PropertyDetails = () => {
                 variant="contained"
                 startIcon={<DeleteIcon />}
                 color="error"
-                //   onClick={() => handleDelete(property, "property")}
+                onClick={() => handleDelete(lodge, "property")}
               >
                 Delete
               </Button>
@@ -439,17 +426,17 @@ const PropertyDetails = () => {
       <DataDeleteConfirm
         deleteDialogOpen={deleteDialogOpen}
         setDeleteDialogOpen={setDeleteDialogOpen}
-        // deleteUnitProp={deleteUnitProp}
+        deleteRoomLodge={deleteRoomLodge}
         deleteType={deleteType}
-        // handleDeleteUnit={handleDeleteUnit}
-        // handleDeleteProperty={handleDeleteProperty}
+        handleDeleteRoom={handleDeleteRoom}
+        handleDeleteLodge={handleDeleteLodge}
       />
 
       <EditPropertyFormModal
         open={editPropertyFormModal}
         onClose={() => setEditPropertyFormModal(false)}
         // onEditProperty={handleEditProp}
-        selectedProperty={selectedProperty}
+        selectedLodge={selectedLodge}
       />
 
       {/* Edit Unit Modal */}
@@ -458,10 +445,10 @@ const PropertyDetails = () => {
       <Snackbar
         open={snackbar.open}
         autoHideDuration={4000}
-        // onClose={handleCloseSnackbar}
+        onClose={handleCloseSnackbar}
       >
         <Alert
-          //   onClose={handleCloseSnackbar}
+          onClose={handleCloseSnackbar}
           severity={snackbar.severity}
           sx={{ width: "100%" }}
         >

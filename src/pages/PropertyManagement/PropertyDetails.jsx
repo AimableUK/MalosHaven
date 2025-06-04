@@ -198,7 +198,6 @@ const PropertyDetails = () => {
   };
 
   const handleDeleteUnit = () => {
-    // setSelectedUnitId(selectedUnit);
     setProperties((prevProperties) =>
       prevProperties.map((property) =>
         property.id === parseInt(id)
