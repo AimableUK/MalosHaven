@@ -19,8 +19,11 @@ const DataDeleteConfirm = ({
   handleDeleteAssistant,
   handleDeleteProperty,
   handleDeleteInvoice,
+  handleDeleteLodge,
+  handleDeleteRoom,
   deleteTenant,
   deleteUnitProp,
+  deleteRoomLodge,
   deleteNotification,
   deleteAssistant,
   deleteProperty,
@@ -50,6 +53,10 @@ const DataDeleteConfirm = ({
       handleDeleteProperty();
     } else if (deleteType === "invoice") {
       handleDeleteInvoice();
+    } else if (deleteType === "lodge") {
+      handleDeleteLodge();
+    } else if (deleteType === "room") {
+      handleDeleteRoom();
     }
   };
 
@@ -62,8 +69,10 @@ const DataDeleteConfirm = ({
         <DialogTitle>Delete Confirmation</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            {deleteTenant} {deleteUnitProp} {deleteNotification}
-            {deleteAssistant} {deleteInvoice} {deleteProperty}
+            {deleteTenant} {deleteUnitProp}
+            {deleteRoomLodge} {deleteNotification}
+            {deleteAssistant} {deleteInvoice}
+            {deleteProperty}
           </DialogContentText>
         </DialogContent>
         <DialogActions>

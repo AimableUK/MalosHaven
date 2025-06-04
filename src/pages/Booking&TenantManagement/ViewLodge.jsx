@@ -289,7 +289,7 @@ const PropertyDetails = () => {
                 variant="contained"
                 startIcon={<DeleteIcon />}
                 color="error"
-                onClick={() => handleDelete(lodge, "property")}
+                onClick={() => handleDelete(lodge, "lodge")}
               >
                 Delete
               </Button>

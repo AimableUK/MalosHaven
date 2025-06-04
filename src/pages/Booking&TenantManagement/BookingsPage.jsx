@@ -1,24 +1,53 @@
 import {
+  Alert,
   Box,
   Button,
   Card,
   CardContent,
   CardMedia,
   IconButton,
+  Snackbar,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import FooterPage from "../Footer/FooterPage";
 import lodges from "../../Data/SiteDataComponent/Lodges";
 import AddIcon from "@mui/icons-material/Add";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const BookingsPage = () => {
   const [hoveredId, setHoveredId] = useState(null);
   const [lodgesList, setLoadgesList] = useState(lodges);
+
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+    severity: "",
+  });
+
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.state?.snackbar) {
+      showSnackbar(location.state.snackbar, "success");
+      navigate(location.pathname, { replace: true });
+    }
+  }, [location.state?.snackbar, location.pathname, navigate]);
+
+  const showSnackbar = (message, severity = "success") => {
+    setSnackbar((prev) => ({ ...prev, open: false }));
+    setTimeout(() => {
+      setSnackbar({
+        open: true,
+        message,
+        severity,
+      });
+    }, 100);
+  };
 
   const onCardHover = (lodgeId) => {
     setHoveredId(lodgeId);
@@ -26,6 +55,11 @@ const BookingsPage = () => {
 
   const onCardLeave = () => {
     setHoveredId(null);
+  };
+
+  const handleCloseSnackbar = () => {
+    setSnackbar(null);
+    setSnackbar({ open: false, message: "", severity: "" });
   };
 
   return (
@@ -117,6 +151,19 @@ const BookingsPage = () => {
           )}
         </Box>
       </Box>
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={3000}
+        onClose={handleCloseSnackbar}
+      >
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity={snackbar.severity}
+          variant="filled"
+        >
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
       <FooterPage />
     </Box>
   );

@@ -53,11 +53,6 @@ const PropertiesPage = () => {
     }, 100);
   };
 
-  const handleCloseSnackbar = () => {
-    setSnackbar(null);
-    setSnackbar({ open: false, message: "", severity: "" });
-  };
-
   const handleAddProp = (newProp) => {
     console.log("📦 newProp added:", newProp);
     setProperties((prev) => [...prev, newProp]);
@@ -97,6 +92,11 @@ const PropertiesPage = () => {
     showSnackbar(`${updatedProperty.title} Updated Successfully`, "success");
     console.log(updatedProperty);
     console.log(updatedProperty.image);
+  };
+
+  const handleCloseSnackbar = () => {
+    setSnackbar(null);
+    setSnackbar({ open: false, message: "", severity: "" });
   };
 
   return (
