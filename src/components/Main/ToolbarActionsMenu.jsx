@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Stack,
   IconButton,
@@ -13,8 +13,6 @@ import {
   DialogContent,
   DialogContentText,
   DialogActions,
-  Snackbar,
-  Alert,
   Button,
   Typography,
 } from "@mui/material";
@@ -25,6 +23,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import userAvatar from "../../assets/userAvatar.jpg";
 import PeopleIcon from "@mui/icons-material/People";
 import { Link } from "react-router-dom";
+import AppSnackbar from "../utils/MySnackbar/AppSnackbar";
 
 const ToolbarActionsMenu = () => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -210,15 +209,14 @@ const ToolbarActionsMenu = () => {
           </MenuItem>
         ))}
 
-        <Link to='/notifications'>
-        <MenuItem
-          onClick={handleCloseNotification}
-          sx={{ textAlign: "center", fontWeight: "bold" }}
-        >
-          View All
-        </MenuItem>
+        <Link to="/notifications">
+          <MenuItem
+            onClick={handleCloseNotification}
+            sx={{ textAlign: "center", fontWeight: "bold" }}
+          >
+            View All
+          </MenuItem>
         </Link>
-        
       </Menu>
 
       {/* Logout confirmation dialog */}
@@ -240,20 +238,12 @@ const ToolbarActionsMenu = () => {
       </Dialog>
 
       {/* Snackbar for feedback */}
-      <Snackbar
+      <AppSnackbar
         open={snackbar.open}
-        autoHideDuration={3000}
+        message={snackbar.message}
+        severity={snackbar.severity}
         onClose={handleCloseSnackbar}
-      >
-        <Alert
-          onClose={handleCloseSnackbar}
-          severity={snackbar.severity}
-          variant="filled"
-          sx={{ width: "100%" }}
-        >
-          {snackbar.message}
-        </Alert>
-      </Snackbar>
+      />
     </Stack>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Dialog,
   DialogTitle,
@@ -6,9 +6,8 @@ import {
   DialogContent,
   DialogContentText,
   Button,
-  Snackbar,
-  Alert,
 } from "@mui/material";
+import AppSnackbar from "../utils/MySnackbar/AppSnackbar";
 
 const DataDeleteConfirm = ({
   deleteDialogOpen,
@@ -85,20 +84,12 @@ const DataDeleteConfirm = ({
         </DialogActions>
       </Dialog>
 
-      <Snackbar
+      <AppSnackbar
         open={snackbar.open}
-        autoHideDuration={3000}
+        message={snackbar.message}
+        severity={snackbar.severity}
         onClose={handleCloseSnackbar}
-      >
-        <Alert
-          onClose={handleCloseSnackbar}
-          severity={snackbar.severity}
-          variant="filled"
-          sx={{ width: "100%" }}
-        >
-          {snackbar.message}
-        </Alert>
-      </Snackbar>
+      />
     </>
   );
 };

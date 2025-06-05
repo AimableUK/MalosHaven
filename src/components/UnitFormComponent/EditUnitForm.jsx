@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
   Dialog,
   DialogTitle,
@@ -6,9 +6,8 @@ import {
   DialogActions,
   Button,
   TextField,
-  Snackbar,
-  Alert,
 } from "@mui/material";
+import AppSnackbar from "../utils/MySnackbar/AppSnackbar";
 
 const EditUnitFormModal = ({ open, onClose, onEditUnit, selectedUnit }) => {
   const [formData, setFormData] = useState({ unit: "", value: "" });
@@ -93,20 +92,12 @@ const EditUnitFormModal = ({ open, onClose, onEditUnit, selectedUnit }) => {
         </DialogActions>
       </Dialog>
 
-      <Snackbar
+      <AppSnackbar
         open={snackbar.open}
-        autoHideDuration={2000}
+        message={snackbar.message}
+        severity={snackbar.severity}
         onClose={handleCloseSnackbar}
-      >
-        <Alert
-          onClose={handleCloseSnackbar}
-          severity={snackbar.severity}
-          variant="filled"
-          sx={{ width: "100%" }}
-        >
-          {snackbar.message}
-        </Alert>
-      </Snackbar>
+      />
     </>
   );
 };

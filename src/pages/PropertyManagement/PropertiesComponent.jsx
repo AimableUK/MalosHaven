@@ -1,12 +1,10 @@
 import {
-  Alert,
   Box,
   useMediaQuery,
   Button,
-  Snackbar,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import { useState } from "react";
 import MyProperties from "../../Data/SiteDataComponent/Properties";
 import { Link, useLocation } from "react-router-dom";
 import PlaceIcon from "@mui/icons-material/Place";
@@ -15,6 +13,7 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import EditIcon from "@mui/icons-material/Edit";
 import DataDeleteConfirm from "../../components/DeleteConfirmComponent/DataDeleteConfirm";
 import EditPropertyFormModal from "../../components/PropertyFormComponent/EditPropertyForm";
+import AppSnackbar from "../../components/utils/MySnackbar/AppSnackbar";
 
 const PropertiesComponent = () => {
   const [properties, setProperties] = useState(MyProperties);
@@ -222,19 +221,12 @@ const PropertiesComponent = () => {
         selectedProperty={selectedProperty}
       />
 
-      <Snackbar
+      <AppSnackbar
         open={snackbar.open}
-        autoHideDuration={3000}
+        message={snackbar.message}
+        severity={snackbar.severity}
         onClose={handleCloseSnackbar}
-      >
-        <Alert
-          onClose={handleCloseSnackbar}
-          severity={snackbar.severity}
-          variant="filled"
-        >
-          {snackbar.message}
-        </Alert>
-      </Snackbar>
+      />
     </Box>
   );
 };

@@ -1,5 +1,4 @@
-import { Box, Button, Icon, Typography } from "@mui/material";
-import React, { useState } from "react";
+import { Box, Button, Typography } from "@mui/material";
 import salesEarning from "../../assets/salesEarning.svg";
 import DownloadIcon from "@mui/icons-material/Download";
 import LocalGroceryStoreIcon from "@mui/icons-material/LocalGroceryStore";
@@ -10,11 +9,9 @@ import FlareIcon from "@mui/icons-material/Flare";
 import PreviewIcon from "@mui/icons-material/Preview";
 import FooterPage from "../Footer/FooterPage";
 import SMLineChart from "../../components/DataCharts/SMLineChart";
-import MyProperties from "../../Data/SiteDataComponent/Properties";
 import { useMediaQuery } from "@mui/material";
 
 const ReportsPage = () => {
-  const [properties, setProperties] = useState(MyProperties);
 
   const isTablet = useMediaQuery("(max-width:768px)");
 

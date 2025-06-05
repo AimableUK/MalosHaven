@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Alert, Box, Button, Snackbar, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
+import { Box, Button, Typography } from "@mui/material";
 import PlaceIcon from "@mui/icons-material/Place";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
@@ -12,6 +12,7 @@ import FooterPage from "../Footer/FooterPage";
 import { useMediaQuery } from "@mui/material";
 import DataDeleteConfirm from "../../components/DeleteConfirmComponent/DataDeleteConfirm";
 import EditPropertyFormModal from "../../components/PropertyFormComponent/EditPropertyForm";
+import AppSnackbar from "../../components/utils/MySnackbar/AppSnackbar";
 
 const PropertiesPage = () => {
   const [addPropertyOpenModal, setAddPropertyOpenModal] = useState(false);
@@ -248,19 +249,12 @@ const PropertiesPage = () => {
         deleteProperty={deleteProperty}
         deleteType="property"
       />
-      <Snackbar
+      <AppSnackbar
         open={snackbar.open}
-        autoHideDuration={3000}
+        message={snackbar.message}
+        severity={snackbar.severity}
         onClose={handleCloseSnackbar}
-      >
-        <Alert
-          onClose={handleCloseSnackbar}
-          severity={snackbar.severity}
-          variant="filled"
-        >
-          {snackbar.message}
-        </Alert>
-      </Snackbar>
+      />
       <FooterPage />
     </Box>
   );

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Dialog,
   DialogTitle,
@@ -7,9 +7,8 @@ import {
   Button,
   TextField,
   Box,
-  Snackbar,
-  Alert,
 } from "@mui/material";
+import AppSnackbar from "../utils/MySnackbar/AppSnackbar";
 
 const EditPropertyFormModal = ({
   open,
@@ -170,19 +169,12 @@ const EditPropertyFormModal = ({
         </DialogActions>
       </Dialog>
 
-      <Snackbar
+      <AppSnackbar
         open={snackbar.open}
-        autoHideDuration={3000}
+        message={snackbar.message}
+        severity={snackbar.severity}
         onClose={handleCloseSnackbar}
-      >
-        <Alert
-          onClose={handleCloseSnackbar}
-          severity={snackbar.severity}
-          variant="filled"
-        >
-          {snackbar.message}
-        </Alert>
-      </Snackbar>
+      />
     </>
   );
 };

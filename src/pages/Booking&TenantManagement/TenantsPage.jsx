@@ -7,11 +7,9 @@ import {
   Skeleton,
   Menu,
   MenuItem,
-  Snackbar,
-  Alert,
   useMediaQuery,
 } from "@mui/material";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import EditIcon from "@mui/icons-material/Edit";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
@@ -31,6 +29,7 @@ import DataDeleteConfirm from "../../components/DeleteConfirmComponent/DataDelet
 import userAvatar from "../../assets/userAvatar.jpg";
 import MobileTenantDisplay from "./MobileTenantDisplay";
 import FooterPage from "../Footer/FooterPage";
+import AppSnackbar from "../../components/utils/MySnackbar/AppSnackbar";
 
 const TenantsPage = () => {
   const [properties, setProperties] = useState(MyProperties);
@@ -498,19 +497,12 @@ const TenantsPage = () => {
       )}
 
       {/* Snackbar */}
-      <Snackbar
+      <AppSnackbar
         open={snackbar.open}
-        autoHideDuration={4000}
+        message={snackbar.message}
+        severity={snackbar.severity}
         onClose={handleCloseSnackbar}
-      >
-        <Alert
-          onClose={handleCloseSnackbar}
-          severity={snackbar.severity}
-          sx={{ width: "100%" }}
-        >
-          {snackbar.message}
-        </Alert>
-      </Snackbar>
+      />
 
       <DataDeleteConfirm
         deleteDialogOpen={deleteDialogOpen}

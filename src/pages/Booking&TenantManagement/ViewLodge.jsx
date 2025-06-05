@@ -1,16 +1,14 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Box,
   Typography,
   Button,
-  Snackbar,
-  Alert,
   Tooltip,
   IconButton,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import { DataGrid } from "@mui/x-data-grid";
 import DataDeleteConfirm from "../../components/DeleteConfirmComponent/DataDeleteConfirm";
 import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -25,6 +23,7 @@ import ConfirmationNumberIcon from "@mui/icons-material/ConfirmationNumber";
 import ChairIcon from "@mui/icons-material/Chair";
 import AddRoomFormModal from "../../components/RoomFormComponent/AddRoomForm";
 import EditRoomFormModal from "../../components/RoomFormComponent/EditRoomForm";
+import AppSnackbar from "../../components/utils/MySnackbar/AppSnackbar";
 
 const PropertyDetails = () => {
   const [lodges, setLodges] = useState(MyLodges);
@@ -129,11 +128,9 @@ const PropertyDetails = () => {
     );
   }
 
-    const selectedRoom = lodge.rooms.find(
-      (room) => room.id === selectedRoomId
-    );
+  const selectedRoom = lodge.rooms.find((room) => room.id === selectedRoomId);
 
-  const showSnackbar = (message, severity = "success") => {
+  const ShowSnackbar = (message, severity = "success") => {
     setSnackbar((prev) => ({ ...prev, open: false }));
     setTimeout(() => {
       setSnackbar({
@@ -166,7 +163,7 @@ const PropertyDetails = () => {
         : lodge
     );
     setLodges(updatedLodge);
-    showSnackbar(`${newRow.name} updated successfully!`, "success");
+    ShowSnackbar(`${newRow.name} updated successfully!`, "success");
     return newRow;
   };
 
@@ -196,7 +193,7 @@ const PropertyDetails = () => {
       )
     );
 
-    showSnackbar("Room deleted successfully!", "success");
+    ShowSnackbar("Room deleted successfully!", "success");
     setDeleteDialogOpen(false);
     setSelectedRoomId(null);
   };
@@ -229,7 +226,7 @@ const PropertyDetails = () => {
   //       )
   //     );
   //     setEditPropertyFormModal(false);
-  //     showSnackbar(`${updatedProperty.title} Updated Successfully`, "success");
+  //     ShowSnackbar(`${updatedProperty.title} Updated Successfully`, "success");
   //   };
 
   const handleCloseSnackbar = () => {
@@ -442,19 +439,12 @@ const PropertyDetails = () => {
       {/* Edit Unit Modal */}
 
       {/* Snackbar */}
-      <Snackbar
+      <AppSnackbar
         open={snackbar.open}
-        autoHideDuration={4000}
+        message={snackbar.message}
+        severity={snackbar.severity}
         onClose={handleCloseSnackbar}
-      >
-        <Alert
-          onClose={handleCloseSnackbar}
-          severity={snackbar.severity}
-          sx={{ width: "100%" }}
-        >
-          {snackbar.message}
-        </Alert>
-      </Snackbar>
+      />
       <FooterPage />
     </Box>
   );

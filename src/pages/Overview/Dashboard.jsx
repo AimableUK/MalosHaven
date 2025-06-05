@@ -1,5 +1,5 @@
-import { Alert, Box, Snackbar, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import { Box, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
 import PieChart from "../../components/DataCharts/PieChart.jsx";
 import LineChart from "../../components/DataCharts/LineChart.jsx";
 import propertiesList from "../../Data/SiteDataComponent/Properties.js";
@@ -15,6 +15,7 @@ import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
 import assistantsList from "../../Data/SiteDataComponent/Assistants.js";
 import PropertiesComponent from "../PropertyManagement/PropertiesComponent.jsx";
 import { useLocation, useNavigate } from "react-router-dom";
+import AppSnackbar from "../../components/utils/MySnackbar/AppSnackbar.jsx";
 
 const Dashboard = () => {
   const [properties, setProperties] = useState(propertiesList);
@@ -430,19 +431,12 @@ const Dashboard = () => {
         </Box>
       </Box>
 
-      <Snackbar
+      <AppSnackbar
         open={snackbar.open}
-        autoHideDuration={3000}
+        message={snackbar.message}
+        severity={snackbar.severity}
         onClose={handleCloseSnackbar}
-      >
-        <Alert
-          onClose={handleCloseSnackbar}
-          severity={snackbar.severity}
-          variant="filled"
-        >
-          {snackbar.message}
-        </Alert>
-      </Snackbar>
+      />
 
       {/* Fouth Grid */}
       <Box className="flex flex-col grid-cols-12 gap-[10px] p-[10px] font-roboto">

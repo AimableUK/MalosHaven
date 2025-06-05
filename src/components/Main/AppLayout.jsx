@@ -12,7 +12,6 @@ import InsertChartIcon from "@mui/icons-material/InsertChart";
 import SettingsIcon from "@mui/icons-material/Settings";
 import PageTitleUpdater from "./TitleUpdater";
 import { createToolpadRouter } from "./toolpadRouter";
-import React from "react";
 import { customTheme } from "../../Theme";
 import ToolbarActionsMenu from "./ToolbarActionsMenu";
 import { useMediaQuery } from "@mui/material";

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Dialog,
   DialogTitle,
@@ -6,14 +6,13 @@ import {
   DialogActions,
   Button,
   TextField,
-  Snackbar,
-  Alert,
   FormControl,
   RadioGroup,
   FormControlLabel,
   Radio,
   FormLabel,
 } from "@mui/material";
+import AppSnackbar from "../utils/MySnackbar/AppSnackbar";
 
 const AddRoomFormModal = ({ open, onClose, onAddRoom }) => {
   const [formData, setFormData] = useState({
@@ -123,20 +122,12 @@ const AddRoomFormModal = ({ open, onClose, onAddRoom }) => {
           </Button>
         </DialogActions>
       </Dialog>
-      <Snackbar
+      <AppSnackbar
         open={snackbar.open}
-        autoHideDuration={2000}
+        message={snackbar.message}
+        severity={snackbar.severity}
         onClose={handleCloseSnackbar}
-      >
-        <Alert
-          onClose={handleCloseSnackbar}
-          severity={snackbar.severity}
-          variant="filled"
-          sx={{ width: "100%" }}
-        >
-          {snackbar.message}
-        </Alert>
-      </Snackbar>
+      />
     </>
   );
 };

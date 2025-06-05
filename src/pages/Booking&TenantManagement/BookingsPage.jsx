@@ -1,15 +1,12 @@
 import {
-  Alert,
   Box,
   Button,
   Card,
-  CardContent,
   CardMedia,
   IconButton,
-  Snackbar,
   Typography,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import FooterPage from "../Footer/FooterPage";
 import lodges from "../../Data/SiteDataComponent/Lodges";
 import AddIcon from "@mui/icons-material/Add";
@@ -17,6 +14,7 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import AppSnackbar from "../../components/utils/MySnackbar/AppSnackbar";
 
 const BookingsPage = () => {
   const [hoveredId, setHoveredId] = useState(null);
@@ -150,19 +148,12 @@ const BookingsPage = () => {
           )}
         </Box>
       </Box>
-      <Snackbar
+      <AppSnackbar
         open={snackbar.open}
-        autoHideDuration={3000}
+        message={snackbar.message}
+        severity={snackbar.severity}
         onClose={handleCloseSnackbar}
-      >
-        <Alert
-          onClose={handleCloseSnackbar}
-          severity={snackbar.severity}
-          variant="filled"
-        >
-          {snackbar.message}
-        </Alert>
-      </Snackbar>
+      />
       <FooterPage />
     </Box>
   );

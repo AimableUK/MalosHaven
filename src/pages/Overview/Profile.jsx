@@ -1,9 +1,7 @@
 import {
-  Alert,
   Avatar,
   Box,
   Button,
-  Snackbar,
   Typography,
 } from "@mui/material";
 import profileCover from "../../assets/profileCover.jpg";
@@ -16,6 +14,7 @@ import FooterPage from "../Footer/FooterPage";
 import { useMediaQuery } from "@mui/material";
 import PropertiesComponent from "../PropertyManagement/PropertiesComponent";
 import { useEffect, useState } from "react";
+import AppSnackbar from "../../components/utils/MySnackbar/AppSnackbar";
 
 const Profile = () => {
   const [snackbar, setSnackbar] = useState({
@@ -155,19 +154,12 @@ const Profile = () => {
         </Box>
       </Box>
 
-      <Snackbar
+      <AppSnackbar
         open={snackbar.open}
-        autoHideDuration={3000}
+        message={snackbar.message}
+        severity={snackbar.severity}
         onClose={handleCloseSnackbar}
-      >
-        <Alert
-          onClose={handleCloseSnackbar}
-          severity={snackbar.severity}
-          variant="filled"
-        >
-          {snackbar.message}
-        </Alert>
-      </Snackbar>
+      />
       <PropertiesComponent />
       <FooterPage />
     </Box>

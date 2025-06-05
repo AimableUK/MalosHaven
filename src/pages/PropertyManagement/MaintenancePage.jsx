@@ -1,14 +1,12 @@
 import {
-  Alert,
   Avatar,
   Box,
   Button,
   IconButton,
-  Snackbar,
   Tooltip,
   Typography,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import SMPieChart from "../../components/DataCharts/SMPieChart";
 import PeopleIcon from "@mui/icons-material/People";
 import userAvatar from "../../assets/userAvatar.jpg";
@@ -31,6 +29,7 @@ import Painting from "../../assets/Painting.gif";
 import ElectricianWorking from "../../assets/ElectricianWorking.gif";
 import AddAssistantForm from "../../components/AssistantComponent/AddAssistantForm";
 import EditAssistantForm from "../../components/AssistantComponent/EditAssistantForm";
+import AppSnackbar from "../../components/utils/MySnackbar/AppSnackbar";
 
 const MaintenancePage = () => {
   const [expandedRequestId, setExpandedRequestId] = useState(null);
@@ -611,19 +610,12 @@ const MaintenancePage = () => {
         selectedAssistant={selectedAssistant}
       />
 
-      <Snackbar
+      <AppSnackbar
         open={snackbar.open}
-        autoHideDuration={3000}
+        message={snackbar.message}
+        severity={snackbar.severity}
         onClose={handleCloseSnackbar}
-      >
-        <Alert
-          onClose={handleCloseSnackbar}
-          severity={snackbar.severity}
-          variant="filled"
-        >
-          {snackbar.message}
-        </Alert>
-      </Snackbar>
+      />
 
       <FooterPage />
     </Box>

@@ -7,7 +7,7 @@ import {
   MenuItem,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import { useState } from "react";
 import notifications from "../../Data/SiteDataComponent/Notifications";
 import FooterPage from "../Footer/FooterPage";
 import userAvatar from "../../assets/userAvatar.jpg";

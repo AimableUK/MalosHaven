@@ -1,5 +1,4 @@
 import { Box, TextField, InputAdornment, IconButton } from "@mui/material";
-import React from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import ClearIcon from "@mui/icons-material/Clear";
 

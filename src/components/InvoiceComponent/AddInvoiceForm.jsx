@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Dialog,
   DialogTitle,
@@ -6,8 +6,6 @@ import {
   DialogActions,
   Button,
   TextField,
-  Snackbar,
-  Alert,
   FormControl,
   FormLabel,
   RadioGroup,
@@ -30,6 +28,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
 import invoices from "../../Data/SiteDataComponent/Invoices";
+import AppSnackbar from "../utils/MySnackbar/AppSnackbar";
 
 const AddInvoiceForm = ({
   open,
@@ -355,20 +354,12 @@ const AddInvoiceForm = ({
         </DialogActions>
       </Dialog>
 
-      <Snackbar
+      <AppSnackbar
         open={snackbar.open}
-        autoHideDuration={2000}
+        message={snackbar.message}
+        severity={snackbar.severity}
         onClose={handleCloseSnackbar}
-      >
-        <Alert
-          onClose={handleCloseSnackbar}
-          severity={snackbar.severity}
-          variant="filled"
-          sx={{ width: "100%" }}
-        >
-          {snackbar.message}
-        </Alert>
-      </Snackbar>
+      />
     </>
   );
 };

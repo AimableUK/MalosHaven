@@ -1,15 +1,12 @@
 import {
-  Alert,
   Box,
   Button,
   Menu,
   MenuItem,
-  Snackbar,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import { useState } from "react";
 import ReceiptIcon from "@mui/icons-material/Receipt";
-import { GridToolbar } from "@mui/x-data-grid/internals";
 import MyInvoices from "../../Data/SiteDataComponent/Invoices.js";
 import { DataGrid } from "@mui/x-data-grid";
 import AddInvoiceForm from "../../components/InvoiceComponent/AddInvoiceForm.jsx";
@@ -21,8 +18,9 @@ import Properties from "../../Data/SiteDataComponent/Properties.js";
 import AddIcon from "@mui/icons-material/Add";
 import EditInvoiceForm from "../../components/InvoiceComponent/EditInvoiceForm.jsx";
 import userAvatar from "../../assets/userAvatar.jpg";
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import AppSnackbar from "../../components/utils/MySnackbar/AppSnackbar.jsx";
 
 const PaymentsPage = () => {
   const [propertiesState, setPropertiesState] = useState(Properties);
@@ -238,19 +236,12 @@ const PaymentsPage = () => {
           />
 
           {/* Snackbar */}
-          <Snackbar
+          <AppSnackbar
             open={snackbar.open}
-            autoHideDuration={4000}
+            message={snackbar.message}
+            severity={snackbar.severity}
             onClose={handleCloseSnackbar}
-          >
-            <Alert
-              onClose={handleCloseSnackbar}
-              severity={snackbar.severity}
-              sx={{ width: "100%" }}
-            >
-              {snackbar.message}
-            </Alert>
-          </Snackbar>
+          />
 
           {/* menu */}
           <Menu
