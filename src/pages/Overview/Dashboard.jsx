@@ -16,10 +16,12 @@ import assistantsList from "../../Data/SiteDataComponent/Assistants.js";
 import PropertiesComponent from "../PropertyManagement/PropertiesComponent.jsx";
 import { useLocation, useNavigate } from "react-router-dom";
 import AppSnackbar from "../../components/utils/MySnackbar/AppSnackbar.jsx";
+import lodgesList from "../../Data/SiteDataComponent/Lodges.js";
 
 const Dashboard = () => {
   const [properties, setProperties] = useState(propertiesList);
   const [assistants, setAssistants] = useState(assistantsList);
+  const [lodges, setLodges] = useState(lodgesList);
 
   const [requests, setRequests] = useState([]);
   const [pendingRequests, setPendingRequests] = useState([]);
@@ -119,10 +121,10 @@ const Dashboard = () => {
                 <Typography
                   sx={{ fontWeight: "bold", fontSize: "30px", color: "#fff" }}
                 >
-                  1
+                  {lodges?.length || ""}
                 </Typography>
                 <Typography sx={{ fontWeight: "bold", color: "#fff" }}>
-                  Total Owners
+                  {lodges?.length > 0 ? "Total Lodges" : "No Lodges yet"}
                 </Typography>
               </Box>
             </Box>
