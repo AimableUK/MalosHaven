@@ -8,17 +8,20 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import FooterPage from "../Footer/FooterPage";
-import lodges from "../../Data/SiteDataComponent/Lodges";
+import lodgesList from "../../Data/SiteDataComponent/Lodges";
 import AddIcon from "@mui/icons-material/Add";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import AppSnackbar from "../../components/utils/MySnackbar/AppSnackbar";
+import DataDeleteConfirm from "../../components/DeleteConfirmComponent/DataDeleteConfirm";
 
 const BookingsPage = () => {
   const [hoveredId, setHoveredId] = useState(null);
-  const [lodgesList, setLoadgesList] = useState(lodges);
+  const [lodges, setLodges] = useState(lodgesList);
+  const [selectedLodge, setSelectedLodge] = useState(null);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
   const [snackbar, setSnackbar] = useState({
     open: false,
@@ -59,6 +62,22 @@ const BookingsPage = () => {
     setSnackbar({ ...snackbar, open: false });
   };
 
+  const deleteLodge =
+    "Are you sure you want to Delete this Lodge? If you do so, it will be undone";
+
+  const handleDeleteDialogOpen = (lodge) => {
+    setDeleteDialogOpen(true);
+    setSelectedLodge(lodge);
+  };
+
+  const handleDeleteLodge = () => {
+    setLodges((prevLodge) =>
+      prevLodge.filter((lodge) => lodge.id !== selectedLodge.id)
+    );
+    setDeleteDialogOpen(false);
+    showSnackbar(`${selectedLodge.name} Lodge deleted successfully`, "success");
+  };
+
   return (
     <Box>
       <Box m="20px">
@@ -77,8 +96,8 @@ const BookingsPage = () => {
         </Box>
         {/* lodges */}
         <Box className="flex flex-col md:grid grid-cols-12 gap-2">
-          {lodgesList.length > 0 ? (
-            lodgesList.map((lodge) => (
+          {lodges.length > 0 ? (
+            lodges.map((lodge) => (
               <Card
                 key={lodge.name}
                 className="relative bg-[#2D454D] col-span-3 p-3 cursor-pointer transition-transform duration-500 ease-in-out group"
@@ -135,7 +154,7 @@ const BookingsPage = () => {
                   <IconButton>
                     <EditIcon sx={{ color: "#10b981" }} />
                   </IconButton>
-                  <IconButton>
+                  <IconButton onClick={() => handleDeleteDialogOpen(lodge)}>
                     <DeleteIcon sx={{ color: "#F44545" }} />
                   </IconButton>
                 </Box>
@@ -153,6 +172,15 @@ const BookingsPage = () => {
         message={snackbar.message}
         severity={snackbar.severity}
         onClose={handleCloseSnackbar}
+      />
+
+      {/* Delete Confirmation Modal */}
+      <DataDeleteConfirm
+        deleteDialogOpen={deleteDialogOpen}
+        setDeleteDialogOpen={setDeleteDialogOpen}
+        handleDeleteLodge={handleDeleteLodge}
+        deleteLodge={deleteLodge}
+        deleteType="lodge"
       />
       <FooterPage />
     </Box>
