@@ -142,8 +142,8 @@ const BookingsPage = () => {
               </Card>
             ))
           ) : (
-            <Box>
-              <Typography>No Lodges Available</Typography>
+            <Box className="flex col-span-12 mx-2 justify-center p-2 bg-[#2D454D] rounded-md border-t-2 border-t-slate-300">
+              <Typography fontWeight="bold">No Lodges Available</Typography>
             </Box>
           )}
         </Box>
