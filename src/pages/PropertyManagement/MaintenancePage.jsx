@@ -5,6 +5,7 @@ import {
   IconButton,
   Tooltip,
   Typography,
+  useMediaQuery,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import SMPieChart from "../../components/DataCharts/SMPieChart";
@@ -75,8 +76,10 @@ const MaintenancePage = () => {
         message,
         severity,
       });
-    }, 100); // Delay can be short like 100ms
+    }, 100);
   };
+
+  const is1230 = useMediaQuery("(min-width: 1230px)");
 
   const handleCloseSnackbar = () => {
     setSnackbar(null);
@@ -199,8 +202,6 @@ const MaintenancePage = () => {
     );
   };
 
-  // snackbar
-
   const MaintainSVG = [
     {
       src: WaterRepair,
@@ -289,7 +290,9 @@ const MaintenancePage = () => {
             {/* Boxes */}
             <Box className="col-span-7">
               {/* 1 row 2 box */}
-              <Box className="flex flex-col md:flex-row gap-5 mb-5">
+              <Box
+                className={`flex ${is1230 ? "flex-row" : "flex-col"} gap-5 mb-5`}
+              >
                 <Box className="w-full flex flex-row justify-between bg-[#2D454D] rounded shadow-md p-5 border-t-2">
                   <Box className="flex flex-row items-center gap-3">
                     <ClearAllIcon sx={{ fontSize: "40px", color: "#705add" }} />
@@ -332,7 +335,9 @@ const MaintenancePage = () => {
               </Box>
 
               {/* 2 row 2 box */}
-              <Box className="flex flex-col md:flex-row gap-5 mb-5">
+              <Box
+                className={`flex ${is1230 ? "flex-row" : "flex-col"} gap-5 mb-5`}
+              >
                 <Box className="w-full flex flex-row justify-between bg-[#2D454D] rounded shadow-md p-5 border-t-2">
                   <Box className="flex flex-row items-center gap-3">
                     <HourglassBottomIcon
