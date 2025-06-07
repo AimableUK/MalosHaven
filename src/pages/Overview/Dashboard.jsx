@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Divider, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import PieChart from "../../components/DataCharts/PieChart.jsx";
 import LineChart from "../../components/DataCharts/LineChart.jsx";
@@ -17,6 +17,9 @@ import PropertiesComponent from "../PropertyManagement/PropertiesComponent.jsx";
 import { useLocation, useNavigate } from "react-router-dom";
 import AppSnackbar from "../../components/utils/MySnackbar/AppSnackbar.jsx";
 import lodgesList from "../../Data/SiteDataComponent/Lodges.js";
+import HolidayVillageIcon from "@mui/icons-material/HolidayVillage";
+import ChairIcon from "@mui/icons-material/Chair";
+import ConfirmationNumberIcon from "@mui/icons-material/ConfirmationNumber";
 
 const Dashboard = () => {
   const [properties, setProperties] = useState(propertiesList);
@@ -271,7 +274,6 @@ const Dashboard = () => {
         <Box className="flex flex-col md:flex-row gap-3 w-full">
           <Box
             sx={{
-              gridColumn: "span 3",
               display: "flex",
               flexDirection: "column",
               background: "#2D454D",
@@ -310,7 +312,6 @@ const Dashboard = () => {
 
           <Box
             sx={{
-              gridColumn: "span 3",
               display: "flex",
               flexDirection: "column",
               background: "#2D454D",
@@ -353,7 +354,6 @@ const Dashboard = () => {
         <Box className="flex flex-col md:flex-row gap-3 w-full">
           <Box
             sx={{
-              gridColumn: "span 3",
               display: "flex",
               flexDirection: "column",
               background: "#2D454D",
@@ -394,7 +394,6 @@ const Dashboard = () => {
 
           <Box
             sx={{
-              gridColumn: "span 3",
               display: "flex",
               flexDirection: "column",
               background: "#2D454D",
@@ -427,6 +426,88 @@ const Dashboard = () => {
                   {assistants?.length}
                 </Typography>
                 <Typography sx={{ color: "#fff" }}>Assistants</Typography>
+              </Box>
+            </Box>
+          </Box>
+        </Box>
+      </Box>
+
+      {/* Fourth grid - lodges */}
+      <Box className="flex flex-col lg:flex-row gap-[10px] px-[10px] font-roboto">
+        <Box className="flex flex-col md:flex-row gap-3 w-full">
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              background: "#2D454D",
+              borderRadius: "8px",
+              p: 2,
+            }}
+            className="w-full md:w-2/3 my-1 border-t-2 border-t-slate-300"
+          ></Box>
+
+          <Box className="flex flex-col md:flex-row justify-between bg-[#2D454D] rounded-md p-5 w-full my-1 border-t-2 border-t-slate-300">
+            <Box className="flex flex-row gap-2">
+              <Box
+                sx={{
+                  background: "#3b4371",
+                  height: "fit-content",
+                  padding: "5px",
+                  borderRadius: "5px",
+                  width: "fit-content",
+                }}
+              >
+                <HolidayVillageIcon fontSize="large" />
+              </Box>
+              <Box className="flex flex-col">
+                <Typography fontWeight="bold">Total Lodges</Typography>
+                <Typography fontWeight="bold">5</Typography>
+              </Box>
+            </Box>
+            <Divider
+              orientation="vertical"
+              variant="middle"
+              flexItem
+              sx={{ background: "grey" }}
+            />
+            <Box className="flex flex-row gap-2">
+              <Box
+                sx={{
+                  background: "#3b4371",
+                  height: "fit-content",
+                  padding: "5px",
+                  borderRadius: "5px",
+                  width: "fit-content",
+                }}
+              >
+                <ConfirmationNumberIcon fontSize="large" />
+              </Box>
+              <Box className="flex flex-col">
+                <Typography fontWeight="bold">Total Rooms</Typography>
+                <Typography fontWeight="bold">5</Typography>
+              </Box>
+            </Box>
+            <Divider
+              orientation="vertical"
+              variant="middle"
+              flexItem
+              sx={{ background: "grey" }}
+            />
+            <Box className="flex flex-row gap-2">
+              <Box
+                sx={{
+                  background: "#3b4371",
+                  height: "fit-content",
+                  padding: "5px",
+                  borderRadius: "5px",
+                  width: "fit-content",
+                }}
+              >
+                <ChairIcon fontSize="large" />
+              </Box>
+              <Box className="flex flex-col">
+                <Typography fontWeight="bold">Rooms Available</Typography>
+                <Typography fontWeight="bold">5</Typography>
               </Box>
             </Box>
           </Box>
