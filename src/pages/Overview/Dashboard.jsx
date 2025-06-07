@@ -33,6 +33,9 @@ const Dashboard = () => {
   const [totalUnits, setTotalUnits] = useState(0);
   const [totalTenants, setTotalTenants] = useState(0);
 
+  const [totalRooms, setTotalRooms] = useState(0);
+  const [RoomsAvailable, setRoomsAvailable] = useState(0);
+
   const [snackbar, setSnackbar] = useState({
     open: false,
     message: "",
@@ -44,6 +47,9 @@ const Dashboard = () => {
     let unitCount = 0;
     let tenantCount = 0;
 
+    let roomCount = 0;
+    let availableRoomCount = 0;
+
     properties.forEach((property) => {
       property.units.forEach((unit) => {
         unitCount++;
@@ -53,15 +59,19 @@ const Dashboard = () => {
           if (tenant.maintenanceRequests?.length > 0) {
             tenant.maintenanceRequests.forEach((request) => {
               allRequests.push({
-                ...request,
-                tenantName: tenant.name,
-                tenantPhone: tenant.phone,
-                tenantImage: tenant.image,
-                propertyTitle: property.title,
-                unit: unit.UnitNumber,
+                ...request
               });
             });
           }
+        }
+      });
+    });
+
+    lodges.forEach((lodge) => {
+      lodge.rooms.forEach((room) => {
+        roomCount++;
+        if (room.isAvailable) {
+          availableRoomCount++;
         }
       });
     });
@@ -71,7 +81,9 @@ const Dashboard = () => {
     setSolvedRequests(allRequests.filter((r) => r.status === "done"));
     setTotalUnits(unitCount);
     setTotalTenants(tenantCount);
-  }, [properties]);
+    setTotalRooms(roomCount);
+    setRoomsAvailable(availableRoomCount);
+  }, [properties, lodges]);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -460,8 +472,8 @@ const Dashboard = () => {
                 <HolidayVillageIcon fontSize="large" />
               </Box>
               <Box className="flex flex-col">
-                <Typography fontWeight="bold">Total Lodges</Typography>
-                <Typography fontWeight="bold">5</Typography>
+                <Typography fontWeight="bold">Lodges</Typography>
+                <Typography fontWeight="bold">{lodges?.length}</Typography>
               </Box>
             </Box>
             <Divider
@@ -483,8 +495,8 @@ const Dashboard = () => {
                 <ConfirmationNumberIcon fontSize="large" />
               </Box>
               <Box className="flex flex-col">
-                <Typography fontWeight="bold">Total Rooms</Typography>
-                <Typography fontWeight="bold">5</Typography>
+                <Typography fontWeight="bold">Rooms</Typography>
+                <Typography fontWeight="bold">{totalRooms}</Typography>
               </Box>
             </Box>
             <Divider
@@ -506,8 +518,8 @@ const Dashboard = () => {
                 <ChairIcon fontSize="large" />
               </Box>
               <Box className="flex flex-col">
-                <Typography fontWeight="bold">Rooms Available</Typography>
-                <Typography fontWeight="bold">5</Typography>
+                <Typography fontWeight="bold">Available</Typography>
+                <Typography fontWeight="bold">{RoomsAvailable}</Typography>
               </Box>
             </Box>
           </Box>
