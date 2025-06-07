@@ -22,6 +22,7 @@ import ChairIcon from "@mui/icons-material/Chair";
 import ConfirmationNumberIcon from "@mui/icons-material/ConfirmationNumber";
 import lodgelisting from "../../assets/lodgelisting.svg";
 import LayersClearIcon from "@mui/icons-material/LayersClear";
+import checklist from "../../assets/checklist.png";
 
 const Dashboard = () => {
   const [properties, setProperties] = useState(propertiesList);
@@ -113,6 +114,8 @@ const Dashboard = () => {
     setSnackbar({ open: false, message: "", severity: "" });
   };
 
+  const todos = [];
+
   return (
     <Box display="flex" flexDirection="column">
       {/* Top Grid - 4 Cards */}
@@ -130,7 +133,7 @@ const Dashboard = () => {
             }}
           >
             <Box className="flex flex-row items-center gap-3">
-              <PersonIcon
+              <HolidayVillageIcon
                 sx={{ fontSize: "40px" }}
                 className="rounded-md bg-[#22363d] p-1"
               />
@@ -448,20 +451,52 @@ const Dashboard = () => {
 
       {/* Fourth grid - lodges */}
       <Box className="flex flex-col lg:flex-row gap-[10px] px-[10px] font-roboto">
-        <Box className="flex flex-col md:flex-row gap-3 w-full">
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              background: "#2D454D",
-              borderRadius: "8px",
-              p: 2,
-            }}
-            className="w-full md:w-2/3 my-1 border-t-2 border-t-slate-300"
-          ></Box>
+        {/* todos */}
+        <Box className="flex flex-col lg:flex-row gap-3 w-full">
+          {todos.length > 0 ? (
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                background: "#2D454D",
+                borderRadius: "8px",
+                p: 2,
+              }}
+              className="w-full md:w-2/3 my-1 border-t-2 border-t-slate-300"
+            ></Box>
+          ) : (
+            <Box className="flex flex-col md:flex-row md:items-center justify-between bg-[#2D454D] rounded-md p-5 w-full my-1 border-t-2 border-t-slate-300">
+              <Box className="flex flex-col mt-2 md:mt-0">
+                <Box className="flex flex-row gap-1 items-center">
+                  <Box
+                    sx={{
+                      background: "#3b4371",
+                      height: "fit-content",
+                      padding: "5px",
+                      borderRadius: "5px",
+                      width: "fit-content",
+                    }}
+                  >
+                    <LayersClearIcon />
+                  </Box>
+                  <Box className="flex flex-col">
+                    <Typography fontWeight="bold">
+                      Add Todos to Enable this Feature
+                    </Typography>
+                  </Box>
+                </Box>
+              </Box>
+              <img
+                src={checklist}
+                alt="Lodge Listing"
+                className="w-[70px] hidden md:block"
+              />
+            </Box>
+          )}
 
+          {/* lodges */}
           {lodges?.length > 0 ? (
-            <Box className="flex flex-col md:flex-row justify-between bg-[#2D454D] rounded-md p-5 w-full my-1 border-t-2 border-t-slate-300">
+            <Box className="flex flex-col md:flex-row md:items-center justify-between bg-[#2D454D] my-1 rounded-md p-5 w-full border-t-2 border-t-slate-300">
               <Box className="flex flex-row gap-2">
                 <Box
                   sx={{
@@ -527,14 +562,9 @@ const Dashboard = () => {
               </Box>
             </Box>
           ) : (
-            <Box className="flex flex-col md:flex-row justify-between md:items-center bg-[#2D454D] rounded-md p-5 w-full my-1 border-t-2 border-t-slate-300">
-              <img
-                src={lodgelisting}
-                alt="Lodge Listing"
-                className="w-[200px]"
-              />
+            <Box className="flex flex-col md:flex-row md:items-center justify-between bg-[#2D454D] my-1 rounded-md p-5 w-full border-t-2 border-t-slate-300">
               <Box className="flex flex-col mt-2 md:mt-0">
-                <Box className="flex flex-row gap-1">
+                <Box className="flex flex-row gap-1 items-center">
                   <Box
                     sx={{
                       background: "#3b4371",
@@ -546,16 +576,16 @@ const Dashboard = () => {
                   >
                     <LayersClearIcon />
                   </Box>
-                  <Box className="flex flex-col">
-                    <Typography fontWeight="bold">
-                      This Feature is Disabled
-                    </Typography>
-                    <Typography>
-                      To Enable it to work you must add a Lodge first.
-                    </Typography>
-                  </Box>
+                  <Typography fontWeight="bold">
+                    Add Lodges to Enable this Feature
+                  </Typography>
                 </Box>
               </Box>
+              <img
+                src={lodgelisting}
+                alt="Lodge Listing"
+                className="w-[150px] hidden md:block"
+              />
             </Box>
           )}
         </Box>
