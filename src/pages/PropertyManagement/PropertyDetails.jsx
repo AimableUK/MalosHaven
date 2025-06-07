@@ -1,11 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-  Box,
-  Typography,
-  Button,
-  Tooltip,
-  IconButton,
-} from "@mui/material";
+import { Box, Typography, Button, Tooltip, IconButton } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { DataGrid } from "@mui/x-data-grid";
@@ -152,11 +146,7 @@ const PropertyDetails = () => {
       )
     );
 
-    showSnackbar({
-      open: true,
-      message: `Added new unit: ${unit.UnitNumber}`,
-      severity: "success",
-    });
+    showSnackbar(`Added new unit: ${unit.UnitNumber}`, "success");
   };
 
   const processRowUpdate = (newRow) => {
