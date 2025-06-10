@@ -132,7 +132,7 @@ const AddInvoiceForm = ({
   };
 
   const handleCloseSnackbar = () => {
-    setSnackbar({ open: false, message: "", severity: "" });
+    setSnackbar({ ...snackbar, open: false });
   };
 
   const tenants = propertiesState.flatMap((property) =>

@@ -137,8 +137,9 @@ const TenantUpdateForm = ({
     setImagePreview(null);
   };
 
-  const handleCloseSnackbar = () =>
-    setSnackbar({ open: false, message: "", severity: "" });
+  const handleCloseSnackbar = () => {
+    setSnackbar({ ...snackbar, open: false });
+  };
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];

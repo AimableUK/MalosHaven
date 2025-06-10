@@ -69,19 +69,22 @@ const DataPropertyFormModal = ({ open, onClose, onAddProperty }) => {
   };
 
   const handleCloseSnackbar = () => {
-    setSnackbar({ open: false, message: "", severity: "" });
+    setSnackbar({ ...snackbar, open: false });
   };
 
   return (
     <>
       <Dialog open={open} onClose={onClose}>
         <DialogTitle sx={{ fontWeight: "bold" }}>Add New Property</DialogTitle>
-        <DialogContent
-          sx={{gap: 2, mt:1 }}
-        >
+        <DialogContent sx={{ gap: 2, mt: 1 }}>
           <Box className="flex flex-col mb-2 w-fit">
             <label htmlFor="propertyImage">Select the Image</label>
-            <input id="propertyImage" type="file" accept="image/*" onChange={handleImageChange} />
+            <input
+              id="propertyImage"
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+            />
             {imagePreview && (
               <Box mt={2}>
                 <img src={imagePreview} alt="Preview" width="50%" />
@@ -97,7 +100,7 @@ const DataPropertyFormModal = ({ open, onClose, onAddProperty }) => {
             onChange={handleChange}
             autoComplete="off"
             required
-            sx={{ my: 1}}
+            sx={{ my: 1 }}
           />
           <TextField
             label="Property Description"
@@ -107,7 +110,7 @@ const DataPropertyFormModal = ({ open, onClose, onAddProperty }) => {
             onChange={handleChange}
             autoComplete="off"
             required
-            sx={{ my: 1}}
+            sx={{ my: 1 }}
           />
           <TextField
             label="Property Units"
@@ -118,7 +121,7 @@ const DataPropertyFormModal = ({ open, onClose, onAddProperty }) => {
             autoComplete="off"
             required
             helperText="Number of units eg; R234"
-            sx={{ my: 1}}
+            sx={{ my: 1 }}
           />
           <TextField
             label="Property Location"
@@ -128,7 +131,7 @@ const DataPropertyFormModal = ({ open, onClose, onAddProperty }) => {
             onChange={handleChange}
             autoComplete="off"
             required
-            sx={{ mb: 1}}
+            sx={{ mb: 1 }}
           />
         </DialogContent>
         <DialogActions>

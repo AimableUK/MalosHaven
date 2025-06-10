@@ -1,9 +1,4 @@
-import {
-  Avatar,
-  Box,
-  Button,
-  Typography,
-} from "@mui/material";
+import { Avatar, Box, Button, Typography } from "@mui/material";
 import profileCover from "../../assets/profileCover.jpg";
 import userAvatar from "../../assets/userAvatar.jpg";
 import EditIcon from "@mui/icons-material/Edit";
@@ -47,8 +42,7 @@ const Profile = () => {
   };
 
   const handleCloseSnackbar = () => {
-    setSnackbar(null);
-    setSnackbar({ open: false, message: "", severity: "" });
+    setSnackbar({ ...snackbar, open: false });
   };
 
   return (

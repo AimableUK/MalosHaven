@@ -144,7 +144,7 @@ const TenantForm = ({ open, onClose, onAddTenant, properties }) => {
   };
 
   const handleCloseSnackbar = () => {
-    setSnackbar({ open: false, message: "", severity: "" });
+    setSnackbar({ ...snackbar, open: false });
   };
 
   const handleImageChange = (e) => {

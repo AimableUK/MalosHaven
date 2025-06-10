@@ -109,9 +109,8 @@ const Dashboard = () => {
     }, 100);
   };
 
-  const handleCloseSnackbar = () => {
-    setSnackbar(null);
-    setSnackbar({ open: false, message: "", severity: "" });
+    const handleCloseSnackbar = () => {
+    setSnackbar({ ...snackbar, open: false });
   };
 
   const todos = [];

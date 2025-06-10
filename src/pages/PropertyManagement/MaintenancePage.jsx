@@ -82,8 +82,7 @@ const MaintenancePage = () => {
   const is1230 = useMediaQuery("(min-width: 1230px)");
 
   const handleCloseSnackbar = () => {
-    setSnackbar(null);
-    setSnackbar({ open: false, message: "", severity: "" });
+    setSnackbar({ ...snackbar, open: false });
   };
 
   const toggleTenantDetails = (requestId) => {

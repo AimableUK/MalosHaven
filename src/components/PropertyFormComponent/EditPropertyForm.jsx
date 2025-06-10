@@ -94,7 +94,7 @@ const EditPropertyFormModal = ({
   };
 
   const handleCloseSnackbar = () => {
-    setSnackbar({ open: false, message: "", severity: "" });
+    setSnackbar({ ...snackbar, open: false });
   };
 
   return (

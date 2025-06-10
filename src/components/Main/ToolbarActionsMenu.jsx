@@ -35,8 +35,20 @@ const ToolbarActionsMenu = () => {
     severity: "success",
   });
 
-  const handleCloseSnackbar = () =>
-    setSnackbar({ open: false, message: "", severity: "" });
+  const showSnackbar = (message, severity = "success") => {
+    setSnackbar((prev) => ({ ...prev, open: false }));
+    setTimeout(() => {
+      setSnackbar({
+        open: true,
+        message,
+        severity,
+      });
+    }, 100);
+  };
+
+  const handleCloseSnackbar = () => {
+    setSnackbar({ ...snackbar, open: false });
+  };
 
   const handleLogOutClick = () => {
     setAnchorEl(null);
@@ -45,11 +57,7 @@ const ToolbarActionsMenu = () => {
 
   const handleLogOut = () => {
     setLogOutDialog(false);
-    setSnackbar({
-      open: true,
-      message: "Signed out successfully",
-      severity: "success",
-    });
+    showSnackbar("Signed out successfully", "success");
   };
 
   const handleProfileClick = (event) => {

@@ -1,9 +1,4 @@
-import {
-  Box,
-  useMediaQuery,
-  Button,
-  Typography,
-} from "@mui/material";
+import { Box, useMediaQuery, Button, Typography } from "@mui/material";
 import { useState } from "react";
 import MyProperties from "../../Data/SiteDataComponent/Properties";
 import { Link, useLocation } from "react-router-dom";
@@ -61,8 +56,7 @@ const PropertiesComponent = () => {
   };
 
   const handleCloseSnackbar = () => {
-    setSnackbar(null);
-    setSnackbar({ open: false, message: "", severity: "" });
+    setSnackbar({ ...snackbar, open: false });
   };
 
   const handleEditPropertyDialogOpen = (property) => {

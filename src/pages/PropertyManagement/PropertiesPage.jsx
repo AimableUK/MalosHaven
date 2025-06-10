@@ -96,8 +96,7 @@ const PropertiesPage = () => {
   };
 
   const handleCloseSnackbar = () => {
-    setSnackbar(null);
-    setSnackbar({ open: false, message: "", severity: "" });
+    setSnackbar({ ...snackbar, open: false });
   };
 
   return (

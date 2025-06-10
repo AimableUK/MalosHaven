@@ -177,7 +177,7 @@ const EditInvoiceForm = ({
   };
 
   const handleCloseSnackbar = () => {
-    setSnackbar({ open: false, message: "", severity: "" });
+    setSnackbar({ ...snackbar, open: false });
   };
 
   const handleAddInvoiceItem = () => {
