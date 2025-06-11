@@ -13,8 +13,6 @@ import AppSnackbar from "../utils/MySnackbar/AppSnackbar";
 const AddLodgeFormModal = ({ open, onClose, onAddLodge }) => {
   const [formData, setFormData] = useState({
     name: "",
-    desc: "",
-    units: "",
     loc: "",
   });
   const [image, setImage] = useState(null);
@@ -30,14 +28,8 @@ const AddLodgeFormModal = ({ open, onClose, onAddLodge }) => {
   };
 
   const handleSubmit = () => {
-    const { name, desc, units, loc } = formData;
-    if (
-      !name.trim() ||
-      !desc.trim() ||
-      !units.trim() ||
-      !loc.trim() ||
-      !image
-    ) {
+    const { name, loc } = formData;
+    if (!name.trim() || !loc.trim() || !image) {
       setSnackbar({
         open: true,
         message: "Please fill out all fields",
@@ -46,16 +38,15 @@ const AddLodgeFormModal = ({ open, onClose, onAddLodge }) => {
       return;
     }
     onAddLodge({
-      id: `PRP-${Date.now()}`,
-      title: formData.name,
-      description: formData.desc,
-      units: formData.units,
+      id: `LDG-${Date.now()}`,
+      name: formData.name,
       location: formData.loc,
       image: imagePreview,
+      rooms: [],
     });
 
     onClose();
-    setFormData({ name: "", desc: "", units: "", loc: "" });
+    setFormData({ name: "", loc: "" });
     setImage(null);
     setImagePreview(null);
   };
@@ -75,12 +66,12 @@ const AddLodgeFormModal = ({ open, onClose, onAddLodge }) => {
   return (
     <>
       <Dialog open={open} onClose={onClose}>
-        <DialogTitle sx={{ fontWeight: "bold" }}>Add New Property</DialogTitle>
+        <DialogTitle sx={{ fontWeight: "bold" }}>Add New Lodge</DialogTitle>
         <DialogContent sx={{ gap: 2, mt: 1 }}>
           <Box className="flex flex-col mb-2 w-fit">
-            <label htmlFor="propertyImage">Select the Image</label>
+            <label htmlFor="lodgeImage">Select the Image</label>
             <input
-              id="propertyImage"
+              id="lodgeImage"
               type="file"
               accept="image/*"
               onChange={handleImageChange}
@@ -93,7 +84,7 @@ const AddLodgeFormModal = ({ open, onClose, onAddLodge }) => {
           </Box>
 
           <TextField
-            label="Property Name"
+            label="lodge Name"
             name="name"
             fullWidth
             value={formData.name}
@@ -103,28 +94,7 @@ const AddLodgeFormModal = ({ open, onClose, onAddLodge }) => {
             sx={{ my: 1 }}
           />
           <TextField
-            label="Property Description"
-            name="desc"
-            fullWidth
-            value={formData.desc}
-            onChange={handleChange}
-            autoComplete="off"
-            required
-            sx={{ my: 1 }}
-          />
-          <TextField
-            label="Property Units"
-            name="units"
-            fullWidth
-            value={formData.units}
-            onChange={handleChange}
-            autoComplete="off"
-            required
-            helperText="Number of units eg; R234"
-            sx={{ my: 1 }}
-          />
-          <TextField
-            label="Property Location"
+            label="lodge Location"
             name="loc"
             fullWidth
             value={formData.loc}

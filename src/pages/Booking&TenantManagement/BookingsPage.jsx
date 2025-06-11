@@ -82,6 +82,12 @@ const BookingsPage = () => {
     showSnackbar(`${selectedLodge.name} Lodge deleted successfully`, "success");
   };
 
+  const handleAddLodge = (newLodge) => {
+    setLodges((prev) => [...prev, newLodge]);
+    setAddLodgeOpenModal(false);
+    showSnackbar("Property added successfully!", "success");
+  };
+
   return (
     <Box>
       <Box m="20px">
@@ -94,7 +100,12 @@ const BookingsPage = () => {
           >
             BOOKINGS AND RESERVATION
           </Typography>
-          <Button startIcon={<AddIcon />} variant="contained" color="info">
+          <Button
+            startIcon={<AddIcon />}
+            variant="contained"
+            color="info"
+            onClick={() => setAddLodgeOpenModal(true)}
+          >
             Add Lodge
           </Button>
         </Box>
@@ -129,11 +140,14 @@ const BookingsPage = () => {
                     </Link>
                     <Typography color="#D4D4D4">
                       <span className="font-bold">Rooms:</span>&nbsp;
-                      {lodge.rooms.length}
+                      {lodge.rooms?.length ?? "N/A"}
                     </Typography>
                     <Typography color="#D4D4D4">
                       <span className="font-bold">Available:</span>&nbsp;
-                      {lodge.rooms.filter((room) => room.client == null).length}
+                      {lodge.rooms
+                        ? lodge.rooms.filter((room) => room.client == null)
+                            .length
+                        : "N/A"}
                     </Typography>
                   </Box>
                 </Box>
@@ -174,7 +188,8 @@ const BookingsPage = () => {
 
       <AddLodgeFormModal
         open={addLodgeOpenModal}
-        onClose={() => setAddLodgeOpenModal(true)}
+        onClose={() => setAddLodgeOpenModal(false)}
+        onAddLodge={handleAddLodge}
       />
 
       <AppSnackbar

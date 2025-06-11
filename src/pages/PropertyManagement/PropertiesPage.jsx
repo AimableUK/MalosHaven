@@ -55,14 +55,9 @@ const PropertiesPage = () => {
   };
 
   const handleAddProp = (newProp) => {
-    console.log("📦 newProp added:", newProp);
     setProperties((prev) => [...prev, newProp]);
     setAddPropertyOpenModal(false);
-    setSnackbar({
-      open: true,
-      message: "Property added successfully!",
-      severity: "success",
-    });
+    showSnackbar("Property added successfully!", "success");
   };
 
   const handleDeleteDialogOpen = (property) => {
