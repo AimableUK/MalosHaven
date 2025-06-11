@@ -9,14 +9,13 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import FooterPage from "../Footer/FooterPage";
 import AddIcon from "@mui/icons-material/Add";
 import PlaceIcon from "@mui/icons-material/Place";
-import EditPropertyFormModal from "../../components/PropertyFormComponent/EditPropertyForm";
+import EditRoomFormModal from "../../components/RoomFormComponent/EditRoomForm";
 import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
 import MyLodges from "../../Data/SiteDataComponent/Lodges";
 import HolidayVillageIcon from "@mui/icons-material/HolidayVillage";
 import ConfirmationNumberIcon from "@mui/icons-material/ConfirmationNumber";
 import ChairIcon from "@mui/icons-material/Chair";
 import AddRoomFormModal from "../../components/RoomFormComponent/AddRoomForm";
-import EditRoomFormModal from "../../components/RoomFormComponent/EditRoomForm";
 import AppSnackbar from "../../components/utils/MySnackbar/AppSnackbar";
 
 const PropertyDetails = () => {
@@ -159,6 +158,24 @@ const PropertyDetails = () => {
     setLodges(updatedLodge);
     ShowSnackbar(`${newRow.name} updated successfully!`, "success");
     return newRow;
+  };
+
+  const handleEditRoom = (updatedRoom) => {
+    setLodges((prevLodges) =>
+      prevLodges.map((lodge) =>
+        lodge.id === parseInt(id)
+          ? {
+              ...lodge,
+              rooms: lodge.rooms.filter((room) => room.id !== selectedRoomId),
+            }
+          : lodge
+      )
+    );
+    setSnackbar({
+      open: true,
+      message: `Room ${updatedRoom.name} updated successfully!`,
+      severity: "success",
+    });
   };
 
   const deleteRoomLodge = `Are you sure you want to Delete this ${deleteType}? If you do so, it will be undone`;
@@ -391,25 +408,7 @@ const PropertyDetails = () => {
       <EditRoomFormModal
         open={editDialogOpen}
         onClose={() => setEditDialogOpen(false)}
-        // onEditUnit={(updatedUnit) => {
-        //   setProperties((prevProperties) =>
-        //     prevProperties.map((property) =>
-        //       property.id === parseInt(id)
-        //         ? {
-        //             ...property,
-        //             units: property.units.map((unit) =>
-        //               unit.id === updatedUnit.id ? updatedUnit : unit
-        //             ),
-        //           }
-        //         : property
-        //     )
-        //   );
-        // setSnackbar({
-        //   open: true,
-        //   message: `Unit ${updatedUnit.UnitNumber} updated successfully!`,
-        //   severity: "success",
-        // });
-        // }}
+        onEditRoom={() => handleEditRoom()}
         selectedRoom={selectedRoom}
       />
 
@@ -423,12 +422,12 @@ const PropertyDetails = () => {
         handleDeleteLodge={handleDeleteLodge}
       />
 
-      <EditPropertyFormModal
+      {/* <EditLodgeFormModal
         open={editPropertyFormModal}
         onClose={() => setEditPropertyFormModal(false)}
         // onEditProperty={handleEditProp}
         selectedLodge={selectedLodge}
-      />
+      /> */}
 
       {/* Edit Unit Modal */}
 

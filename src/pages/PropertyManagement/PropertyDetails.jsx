@@ -172,6 +172,25 @@ const PropertyDetails = () => {
     return newRow;
   };
 
+  const handleEditUnit = (updatedUnit) => {
+    setProperties((prevProperties) =>
+      prevProperties.map((property) =>
+        property.id === parseInt(id)
+          ? {
+              ...property,
+              units: property.units.map((unit) =>
+                unit.id === updatedUnit.id ? updatedUnit : unit
+              ),
+            }
+          : property
+      )
+    );
+    showSnackbar(
+      `Unit ${updatedUnit.UnitNumber} updated successfully!`,
+      "success"
+    );
+  };
+
   const deleteUnitProp = `Are you sure you want to Delete this ${deleteType}? If you do so, it will be undone`;
 
   const handleDelete = (id, type) => {
@@ -426,25 +445,7 @@ const PropertyDetails = () => {
       <EditUnitFormModal
         open={editDialogOpen}
         onClose={() => setEditDialogOpen(false)}
-        onEditUnit={(updatedUnit) => {
-          setProperties((prevProperties) =>
-            prevProperties.map((property) =>
-              property.id === parseInt(id)
-                ? {
-                    ...property,
-                    units: property.units.map((unit) =>
-                      unit.id === updatedUnit.id ? updatedUnit : unit
-                    ),
-                  }
-                : property
-            )
-          );
-          // setSnackbar({
-          //   open: true,
-          //   message: `Unit ${updatedUnit.UnitNumber} updated successfully!`,
-          //   severity: "success",
-          // });
-        }}
+        onEditUnit={() => handleEditUnit()}
         selectedUnit={selectedUnit}
       />
 

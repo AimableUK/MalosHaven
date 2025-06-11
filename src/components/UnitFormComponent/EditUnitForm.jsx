@@ -30,14 +30,21 @@ const EditUnitFormModal = ({ open, onClose, onEditUnit, selectedUnit }) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
+  const showSnackbar = (message, severity = "success") => {
+    setSnackbar((prev) => ({ ...prev, open: false }));
+    setTimeout(() => {
+      setSnackbar({
+        open: true,
+        message,
+        severity,
+      });
+    }, 100);
+  };
+
   const handleSubmit = () => {
     const { unit, value } = formData;
     if (!unit.trim() || !value.toString().trim()) {
-      setSnackbar({
-        open: true,
-        message: "Please fill out all fields",
-        severity: "error",
-      });
+      showSnackbar("Please fill out all fields", "error");
       return;
     }
 
@@ -48,11 +55,7 @@ const EditUnitFormModal = ({ open, onClose, onEditUnit, selectedUnit }) => {
     });
 
     onClose();
-    setSnackbar({
-      open: true,
-      message: `${unit} Updated Successfully`,
-      severity: "success",
-    });
+    // showSnackbar(`${unit} Updated Successfully`, "success");
   };
 
   const handleCloseSnackbar = () => {

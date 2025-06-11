@@ -14,8 +14,12 @@ import {
 } from "@mui/material";
 import AppSnackbar from "../utils/MySnackbar/AppSnackbar";
 
-const EditRoomFormModal = ({ open, onClose, onEditUnit, selectedUnit }) => {
-  const [formData, setFormData] = useState({ unit: "", value: "" });
+const EditRoomFormModal = ({ open, onClose, onEditRoom, selectedRoom }) => {
+  const [formData, setFormData] = useState({
+    lodgename: "",
+    price: "",
+    type: "",
+  });
   const [snackbar, setSnackbar] = useState({
     open: false,
     message: "",
@@ -23,41 +27,48 @@ const EditRoomFormModal = ({ open, onClose, onEditUnit, selectedUnit }) => {
   });
 
   useEffect(() => {
-    if (selectedUnit) {
+    if (selectedRoom) {
       setFormData({
-        unit: selectedUnit.UnitNumber || "",
-        value: selectedUnit.UnitValue || "",
+        lodgename: selectedRoom.name || "",
+        price: selectedRoom.price || "",
+        type: selectedRoom.type || "",
       });
     }
-  }, [selectedUnit]);
+  }, [selectedRoom]);
 
   const handleChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = () => {
-    const { unit, value } = formData;
-    if (!unit.trim() || !value.toString().trim()) {
+  const showSnackbar = (message, severity = "success") => {
+    setSnackbar((prev) => ({ ...prev, open: false }));
+    setTimeout(() => {
       setSnackbar({
         open: true,
-        message: "Please fill out all fields",
-        severity: "error",
+        message,
+        severity,
       });
+    }, 100);
+  };
+
+  const handleSubmit = () => {
+    const { lodgename, price, type } = formData;
+    if (!lodgename.trim() || !price.toString().trim() || !type.trim()) {
+      showSnackbar("Please fill out all fields", "error");
       return;
     }
 
-    onEditUnit({
-      ...selectedUnit,
-      UnitNumber: unit,
-      UnitValue: Number(value),
+    onEditRoom({
+      id: selectedRoom?.id,
+      name: lodgename,
+      type,
+      price: Number(price),
+      isAvailable: selectedRoom?.isAvailable,
+      client: selectedRoom?.client,
     });
 
     onClose();
-    setSnackbar({
-      open: true,
-      message: `${unit} Updated Successfully`,
-      severity: "success",
-    });
+    showSnackbar(`${lodgename} Updated Successfully`, "success");
   };
 
   const handleCloseSnackbar = () => {
