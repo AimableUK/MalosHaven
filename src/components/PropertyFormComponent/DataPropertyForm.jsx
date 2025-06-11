@@ -29,33 +29,34 @@ const DataPropertyFormModal = ({ open, onClose, onAddProperty }) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = () => {
-    const { name, desc, units, loc } = formData;
-    if (
-      !name.trim() ||
-      !desc.trim() ||
-      !units.trim() ||
-      !loc.trim() ||
-      !image
-    ) {
+  const showSnackbar = (message, severity = "success") => {
+    setSnackbar((prev) => ({ ...prev, open: false }));
+    setTimeout(() => {
       setSnackbar({
         open: true,
-        message: "Please fill out all fields",
-        severity: "error",
+        message,
+        severity,
       });
+    }, 100);
+  };
+
+  const handleSubmit = () => {
+    const { name, desc, units, loc } = formData;
+    if (!name.trim() || !desc.trim() || !loc.trim() || !image) {
+      showSnackbar("Please fill out all fields", "error");
       return;
     }
     onAddProperty({
       id: `PRP-${Date.now()}`,
       title: formData.name,
       description: formData.desc,
-      units: formData.units,
+      units: [],
       location: formData.loc,
       image: imagePreview,
     });
 
     onClose();
-    setFormData({ name: "", desc: "", units: "", loc: "" });
+    setFormData({ name: "", desc: "", loc: "" });
     setImage(null);
     setImagePreview(null);
   };
@@ -110,17 +111,6 @@ const DataPropertyFormModal = ({ open, onClose, onAddProperty }) => {
             onChange={handleChange}
             autoComplete="off"
             required
-            sx={{ my: 1 }}
-          />
-          <TextField
-            label="Property Units"
-            name="units"
-            fullWidth
-            value={formData.units}
-            onChange={handleChange}
-            autoComplete="off"
-            required
-            helperText="Number of units eg; R234"
             sx={{ my: 1 }}
           />
           <TextField

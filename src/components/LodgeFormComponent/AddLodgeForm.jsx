@@ -27,14 +27,21 @@ const AddLodgeFormModal = ({ open, onClose, onAddLodge }) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
+  const showSnackbar = (message, severity = "success") => {
+    setSnackbar((prev) => ({ ...prev, open: false }));
+    setTimeout(() => {
+      setSnackbar({
+        open: true,
+        message,
+        severity,
+      });
+    }, 100);
+  };
+
   const handleSubmit = () => {
     const { name, loc } = formData;
     if (!name.trim() || !loc.trim() || !image) {
-      setSnackbar({
-        open: true,
-        message: "Please fill out all fields",
-        severity: "error",
-      });
+      showSnackbar("Please fill out all fields", "error");
       return;
     }
     onAddLodge({
