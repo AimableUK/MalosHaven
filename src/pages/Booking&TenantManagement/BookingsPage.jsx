@@ -16,12 +16,16 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import AppSnackbar from "../../components/utils/MySnackbar/AppSnackbar";
 import DataDeleteConfirm from "../../components/DeleteConfirmComponent/DataDeleteConfirm";
+import AddLodgeFormModal from "../../components/LodgeFormComponent/AddLodgeForm";
 
 const BookingsPage = () => {
   const [hoveredId, setHoveredId] = useState(null);
   const [lodges, setLodges] = useState(lodgesList);
   const [selectedLodge, setSelectedLodge] = useState(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+
+  const [addLodgeOpenModal, setAddLodgeOpenModal] = useState(false);
+  const [editPropertyFormModal, setEditPropertyFormModal] = useState(false);
 
   const [snackbar, setSnackbar] = useState({
     open: false,
@@ -167,6 +171,12 @@ const BookingsPage = () => {
           )}
         </Box>
       </Box>
+
+      <AddLodgeFormModal
+        open={addLodgeOpenModal}
+        onClose={() => setAddLodgeOpenModal(true)}
+      />
+
       <AppSnackbar
         open={snackbar.open}
         message={snackbar.message}

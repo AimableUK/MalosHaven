@@ -163,11 +163,7 @@ const PropertyDetails = () => {
 
     setProperties(updatedProperty);
 
-    setSnackbar({
-      open: true,
-      message: `Unit ${newRow.UnitNumber} updated successfully!`,
-      severity: "success",
-    });
+    showSnackbar(`Unit ${newRow.UnitNumber} updated successfully!`, "success");
 
     return newRow;
   };
@@ -219,11 +215,7 @@ const PropertyDetails = () => {
       )
     );
 
-    setSnackbar({
-      open: true,
-      message: "Unit deleted successfully!",
-      severity: "success",
-    });
+    showSnackbar(`Unit deleted successfully!`, "success");
     setDeleteDialogOpen(false);
     setSelectedUnitId(null);
   };
@@ -445,7 +437,7 @@ const PropertyDetails = () => {
       <EditUnitFormModal
         open={editDialogOpen}
         onClose={() => setEditDialogOpen(false)}
-        onEditUnit={() => handleEditUnit()}
+        onEditUnit={handleEditUnit}
         selectedUnit={selectedUnit}
       />
 

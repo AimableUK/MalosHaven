@@ -20,14 +20,18 @@ import AppSnackbar from "../../components/utils/MySnackbar/AppSnackbar";
 
 const PropertyDetails = () => {
   const [lodges, setLodges] = useState(MyLodges);
+
   const [openModal, setOpenModal] = useState(false);
   const [editDialogOpen, setEditDialogOpen] = useState(false);
-  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-  const [selectedRoomId, setSelectedRoomId] = useState(null);
+
   const [deleteType, setDeleteType] = useState(null);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+
+  const [selectedRoomId, setSelectedRoomId] = useState(null);
   const [selectedLodge, setSelectedLodge] = useState(null);
 
   const [editPropertyFormModal, setEditPropertyFormModal] = useState(false);
+  const [addLodgeOpenModal, setAddLodgeOpenModal] = useState(false);
 
   const [snackbar, setSnackbar] = useState({
     open: false,
@@ -123,7 +127,7 @@ const PropertyDetails = () => {
 
   const selectedRoom = lodge.rooms.find((room) => room.id === selectedRoomId);
 
-  const ShowSnackbar = (message, severity = "success") => {
+  const showSnackbar = (message, severity = "success") => {
     setSnackbar((prev) => ({ ...prev, open: false }));
     setTimeout(() => {
       setSnackbar({
@@ -156,7 +160,7 @@ const PropertyDetails = () => {
         : lodge
     );
     setLodges(updatedLodge);
-    ShowSnackbar(`${newRow.name} updated successfully!`, "success");
+    showSnackbar(`${newRow.name} updated successfully!`, "success");
     return newRow;
   };
 
@@ -166,16 +170,14 @@ const PropertyDetails = () => {
         lodge.id === parseInt(id)
           ? {
               ...lodge,
-              rooms: lodge.rooms.filter((room) => room.id !== selectedRoomId),
+              rooms: lodge.rooms.map((room) =>
+                room.id === updatedRoom.id ? updatedRoom : room
+              ),
             }
           : lodge
       )
     );
-    setSnackbar({
-      open: true,
-      message: `Room ${updatedRoom.name} updated successfully!`,
-      severity: "success",
-    });
+    showSnackbar(`Room ${updatedRoom.name} updated successfully!`, "success");
   };
 
   const deleteRoomLodge = `Are you sure you want to Delete this ${deleteType}? If you do so, it will be undone`;
@@ -204,7 +206,7 @@ const PropertyDetails = () => {
       )
     );
 
-    ShowSnackbar("Room deleted successfully!", "success");
+    showSnackbar("Room deleted successfully!", "success");
     setDeleteDialogOpen(false);
     setSelectedRoomId(null);
   };
@@ -408,7 +410,7 @@ const PropertyDetails = () => {
       <EditRoomFormModal
         open={editDialogOpen}
         onClose={() => setEditDialogOpen(false)}
-        onEditRoom={() => handleEditRoom()}
+        onEditRoom={handleEditRoom}
         selectedRoom={selectedRoom}
       />
 
