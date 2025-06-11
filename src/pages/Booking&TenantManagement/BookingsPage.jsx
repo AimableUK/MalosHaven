@@ -5,6 +5,7 @@ import {
   CardMedia,
   IconButton,
   Typography,
+  useMediaQuery,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import FooterPage from "../Footer/FooterPage";
@@ -17,6 +18,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import AppSnackbar from "../../components/utils/MySnackbar/AppSnackbar";
 import DataDeleteConfirm from "../../components/DeleteConfirmComponent/DataDeleteConfirm";
 import AddLodgeFormModal from "../../components/LodgeFormComponent/AddLodgeForm";
+import EditLodgeFormModal from "../../components/LodgeFormComponent/EditLodgeForm";
 
 const BookingsPage = () => {
   const [hoveredId, setHoveredId] = useState(null);
@@ -25,13 +27,16 @@ const BookingsPage = () => {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
   const [addLodgeOpenModal, setAddLodgeOpenModal] = useState(false);
-  const [editPropertyFormModal, setEditPropertyFormModal] = useState(false);
+  const [editLodgeOpenModal, setEditLodgeOpenModal] = useState(false);
 
   const [snackbar, setSnackbar] = useState({
     open: false,
     message: "",
     severity: "",
   });
+
+  const isSmallScreen = useMediaQuery("(max-width:767px)");
+  const isTablet = useMediaQuery("(max-width:950px)");
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -85,7 +90,22 @@ const BookingsPage = () => {
   const handleAddLodge = (newLodge) => {
     setLodges((prev) => [...prev, newLodge]);
     setAddLodgeOpenModal(false);
-    showSnackbar("Property added successfully!", "success");
+    showSnackbar("Lodge added successfully!", "success");
+  };
+
+  const handleEditLodgeDialogOpen = (lodge) => {
+    setEditLodgeOpenModal(true);
+    setSelectedLodge(lodge);
+  };
+
+  const handleEditLodge = (updatedLodge) => {
+    setLodges((prevLodges) =>
+      prevLodges.map((lodge) =>
+        lodge.id === updatedLodge.id ? updatedLodge : lodge
+      )
+    );
+    setEditLodgeOpenModal(false);
+    showSnackbar(`${updatedLodge.title} Updated Successfully`, "success");
   };
 
   return (
@@ -154,22 +174,25 @@ const BookingsPage = () => {
 
                 <Box
                   className={`
-                    absolute bottom-0 left-0 w-full px-3 py-2 bg-[#2D454D] flex items-center justify-between gap-2 transition-all duration-300 border-t-2 border-t-slate-300
+                    absolute bottom-0 left-0 w-full py-2 bg-[#2D454D] flex items-center ${!isTablet ? "px-3 justify-between gap-2" : "px-3 justify-end gap-2"}  transition-all duration-300 border-t-2 border-t-slate-300
                     ${hoveredId === lodge.id ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4 pointer-events-none"}
                   `}
                 >
                   <Link to={`/viewlodge/${lodge.id}`}>
                     <Button
                       startIcon={<VisibilityIcon />}
-                      variant="contained"
+                      variant={
+                        (!isTablet && "contained") ||
+                        (isSmallScreen && "contained")
+                      }
                       color="info"
                       className="flex-1"
                     >
-                      View
+                      {(!isTablet && "View") || (isSmallScreen && "View")}
                     </Button>
                   </Link>
 
-                  <IconButton>
+                  <IconButton onClick={() => handleEditLodgeDialogOpen(lodge)}>
                     <EditIcon sx={{ color: "#10b981" }} />
                   </IconButton>
                   <IconButton onClick={() => handleDeleteDialogOpen(lodge)}>
@@ -190,6 +213,13 @@ const BookingsPage = () => {
         open={addLodgeOpenModal}
         onClose={() => setAddLodgeOpenModal(false)}
         onAddLodge={handleAddLodge}
+      />
+
+      <EditLodgeFormModal
+        open={editLodgeOpenModal}
+        onClose={() => setEditLodgeOpenModal(false)}
+        onEditLodge={handleEditLodge}
+        selectedLodge={selectedLodge}
       />
 
       <AppSnackbar

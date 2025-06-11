@@ -86,8 +86,6 @@ const PropertiesPage = () => {
     );
     setEditPropertyFormModal(false);
     showSnackbar(`${updatedProperty.title} Updated Successfully`, "success");
-    console.log(updatedProperty);
-    console.log(updatedProperty.image);
   };
 
   const handleCloseSnackbar = () => {

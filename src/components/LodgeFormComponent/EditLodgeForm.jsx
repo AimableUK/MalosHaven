@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Dialog,
   DialogTitle,
@@ -10,9 +10,11 @@ import {
 } from "@mui/material";
 import AppSnackbar from "../utils/MySnackbar/AppSnackbar";
 
-const AddLodgeFormModal = ({ open, onClose, onAddLodge }) => {
+const EditLodgeFormModal = ({ open, onClose, onEditLodge, selectedLodge }) => {
   const [formData, setFormData] = useState({
     name: "",
+    desc: "",
+    units: "",
     loc: "",
   });
   const [image, setImage] = useState(null);
@@ -22,10 +24,21 @@ const AddLodgeFormModal = ({ open, onClose, onAddLodge }) => {
     message: "",
     severity: "success",
   });
+  const [preview, setPreview] = useState(null);
 
-  const handleChange = (e) => {
-    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  };
+  useEffect(() => {
+    if (selectedLodge) {
+      setFormData({
+        name: selectedLodge.name || "",
+        loc: selectedLodge.location || "",
+      });
+
+      setImagePreview(
+        typeof selectedLodge.image === "string" ? selectedLodge.image : null
+      );
+      setImage(null);
+    }
+  }, [selectedLodge]);
 
   const showSnackbar = (message, severity = "success") => {
     setSnackbar((prev) => ({ ...prev, open: false }));
@@ -38,18 +51,21 @@ const AddLodgeFormModal = ({ open, onClose, onAddLodge }) => {
     }, 100);
   };
 
+  const handleChange = (e) => {
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
   const handleSubmit = () => {
     const { name, loc } = formData;
-    if (!name.trim() || !loc.trim() || !image) {
+    if (!name.trim() || !loc.trim() || (!image && !imagePreview)) {
       showSnackbar("Please fill out all fields", "error");
       return;
     }
-    onAddLodge({
-      id: `LDG-${Date.now()}`,
-      name: formData.name,
-      location: formData.loc,
-      image: imagePreview,
-      rooms: [],
+    onEditLodge({
+      ...selectedLodge,
+      name: name,
+      location: loc,
+      image: image || imagePreview,
     });
 
     onClose();
@@ -63,6 +79,7 @@ const AddLodgeFormModal = ({ open, onClose, onAddLodge }) => {
     if (file) {
       setImage(file);
       setImagePreview(URL.createObjectURL(file));
+      setPreview(URL.createObjectURL(file));
     }
   };
 
@@ -73,7 +90,7 @@ const AddLodgeFormModal = ({ open, onClose, onAddLodge }) => {
   return (
     <>
       <Dialog open={open} onClose={onClose}>
-        <DialogTitle sx={{ fontWeight: "bold" }}>Add New Lodge</DialogTitle>
+        <DialogTitle sx={{ fontWeight: "bold" }}>Update Lodge</DialogTitle>
         <DialogContent sx={{ gap: 2, mt: 1 }}>
           <Box className="flex flex-col mb-2 w-fit">
             <label htmlFor="lodgeImage">Select the Image</label>
@@ -83,15 +100,12 @@ const AddLodgeFormModal = ({ open, onClose, onAddLodge }) => {
               accept="image/*"
               onChange={handleImageChange}
             />
-            {imagePreview && (
-              <Box mt={2}>
-                <img
-                  src={imagePreview}
-                  alt="Preview"
-                  style={{ maxWidth: "50%" }}
-                />
-              </Box>
-            )}
+            <img
+              src={typeof image === "string" ? image : imagePreview}
+              alt="lodge Image"
+              style={{ maxWidth: "50%", marginTop: 8 }}
+            />
+            {preview}
           </Box>
 
           <TextField
@@ -120,7 +134,7 @@ const AddLodgeFormModal = ({ open, onClose, onAddLodge }) => {
             Cancel
           </Button>
           <Button onClick={handleSubmit} variant="contained">
-            Add
+            Update lodge
           </Button>
         </DialogActions>
       </Dialog>
@@ -135,4 +149,4 @@ const AddLodgeFormModal = ({ open, onClose, onAddLodge }) => {
   );
 };
 
-export default AddLodgeFormModal;
+export default EditLodgeFormModal;
