@@ -4,6 +4,7 @@ import {
   Card,
   CardMedia,
   IconButton,
+  Tooltip,
   Typography,
   useMediaQuery,
 } from "@mui/material";
@@ -146,6 +147,7 @@ const BookingsPage = () => {
                     image={lodge.image}
                     className="transition-all duration-500"
                     style={{
+                      maxHeight: "60%",
                       borderRadius:
                         hoveredId === lodge.id
                           ? "83% 17% 97% 3% / 12% 88% 12% 88%"
@@ -192,12 +194,18 @@ const BookingsPage = () => {
                     </Button>
                   </Link>
 
-                  <IconButton onClick={() => handleEditLodgeDialogOpen(lodge)}>
-                    <EditIcon sx={{ color: "#10b981" }} />
-                  </IconButton>
-                  <IconButton onClick={() => handleDeleteDialogOpen(lodge)}>
-                    <DeleteIcon sx={{ color: "#F44545" }} />
-                  </IconButton>
+                  <Tooltip title="Edit Lodge">
+                    <IconButton
+                      onClick={() => handleEditLodgeDialogOpen(lodge)}
+                    >
+                      <EditIcon sx={{ color: "#10b981" }} />
+                    </IconButton>
+                  </Tooltip>
+                  <Tooltip title="Delete Lodge">
+                    <IconButton onClick={() => handleDeleteDialogOpen(lodge)}>
+                      <DeleteIcon sx={{ color: "#F44545" }} />
+                    </IconButton>
+                  </Tooltip>
                 </Box>
               </Card>
             ))
