@@ -22,7 +22,6 @@ import ChecklistIcon from "@mui/icons-material/Checklist";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Collapse from "@mui/material/Collapse";
-import assistantsList from "../../Data/SiteDataComponent/Assistants";
 import DataDeleteConfirm from "../../components/DeleteConfirmComponent/DataDeleteConfirm";
 import WaterRepair from "../../assets/WaterRepair.gif";
 import ACInstallation from "../../assets/ACInstallation.gif";
@@ -61,8 +60,9 @@ const MaintenancePage = () => {
   const assistants = useAssistantStore((state) => state.assistants);
   const addAssistant = useAssistantStore((state) => state.addAssistant);
   const editAssistant = useAssistantStore((state) => state.editAssistant);
+  const deleteAssistant = useAssistantStore((state) => state.deleteAssistant);
 
-  const deleteAssistant =
+  const deleteAnAssistant =
     "Are you sure you want to Delete this Assistant? If you do so, it will be undone";
 
   const displayedRequests =
@@ -187,24 +187,6 @@ const MaintenancePage = () => {
     },
   ];
 
-  const handleDeleteDialogOpen = (assistant) => {
-    setDeleteDialogOpen(true);
-    setSelectedAssistant(assistant);
-  };
-
-  const handleDeleteAssistant = () => {
-    setAssistants((prevAssistants) =>
-      prevAssistants.filter(
-        (assistant) => assistant.id !== selectedAssistant.id
-      )
-    );
-    setDeleteDialogOpen(false);
-    showSnackbar(
-      `${selectedAssistant.assistantName} deleted successfully`,
-      "success"
-    );
-  };
-
   const MaintainSVG = [
     {
       src: WaterRepair,
@@ -254,6 +236,20 @@ const MaintenancePage = () => {
     setAddOpenModal(false);
     showSnackbar(
       `${updatedAssistant.assistantName} Updated Successfully`,
+      "success"
+    );
+  };
+
+  const handleDeleteDialogOpen = (assistant) => {
+    setDeleteDialogOpen(true);
+    setSelectedAssistant(assistant);
+  };
+
+  const handleDeleteAssistant = () => {
+    deleteAssistant(selectedAssistant.id);
+    setDeleteDialogOpen(false);
+    showSnackbar(
+      `${selectedAssistant.assistantName} deleted successfully`,
       "success"
     );
   };
@@ -594,7 +590,7 @@ const MaintenancePage = () => {
         deleteDialogOpen={deleteDialogOpen}
         setDeleteDialogOpen={setDeleteDialogOpen}
         handleDeleteAssistant={handleDeleteAssistant}
-        deleteAssistant={deleteAssistant}
+        deleteAnAssistant={deleteAnAssistant}
         deleteType="assistant"
       />
 

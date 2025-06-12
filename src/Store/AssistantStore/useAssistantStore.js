@@ -17,6 +17,11 @@ const useAssistantStore = create((set) => ({
         assistant.id === updatedAssistant.id ? updatedAssistant : assistant
       ),
     })),
+
+  deleteAssistant: (id) =>
+    set((state) => ({
+      assistants: state.assistants.filter((assistant) => assistant.id !== id),
+    })),
 }));
 
 export default useAssistantStore;
