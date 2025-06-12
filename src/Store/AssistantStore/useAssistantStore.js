@@ -18,6 +18,7 @@ const useAssistantStore = create((set) => ({
       ),
     })),
 
+  // delete assistant:
   deleteAssistant: (id) =>
     set((state) => ({
       assistants: state.assistants.filter((assistant) => assistant.id !== id),
