@@ -31,6 +31,7 @@ import ElectricianWorking from "../../assets/ElectricianWorking.gif";
 import AddAssistantForm from "../../components/AssistantComponent/AddAssistantForm";
 import EditAssistantForm from "../../components/AssistantComponent/EditAssistantForm";
 import AppSnackbar from "../../components/utils/MySnackbar/AppSnackbar";
+import useAssistantStore from "../../Store/AssistantStore/useAssistantStore";
 
 const MaintenancePage = () => {
   const [expandedRequestId, setExpandedRequestId] = useState(null);
@@ -43,7 +44,6 @@ const MaintenancePage = () => {
   });
 
   const [properties, setProperties] = useState(propertiesList);
-  const [assistants, setAssistants] = useState(assistantsList);
 
   const [requests, setRequests] = useState([]);
   const [pendingRequests, setPendingRequests] = useState([]);
@@ -57,6 +57,10 @@ const MaintenancePage = () => {
 
   const [addOpenModal, setAddOpenModal] = useState(false);
   const [editOpenModal, setEditOpenModal] = useState(false);
+
+  const assistants = useAssistantStore((state) => state.assistants);
+  const addAssistant = useAssistantStore((state) => state.addAssistant);
+  const editAssistant = useAssistantStore((state) => state.editAssistant);
 
   const deleteAssistant =
     "Are you sure you want to Delete this Assistant? If you do so, it will be undone";
@@ -231,10 +235,11 @@ const MaintenancePage = () => {
 
     return () => clearInterval(Interval);
   });
+
   const currentImage = MaintainSVG[currentIndex];
 
   const handleAddAssistant = (newAssistant) => {
-    setAssistants((prev) => [...prev, newAssistant]);
+    addAssistant(newAssistant);
     setAddOpenModal(false);
     showSnackbar(`${newAssistant.assistantName} added Successfully`, "success");
   };
@@ -245,11 +250,7 @@ const MaintenancePage = () => {
   };
 
   const handleEditAssistant = (updatedAssistant) => {
-    setAssistants((prevAssistants) =>
-      prevAssistants.map((assistant) =>
-        assistant.id === updatedAssistant.id ? updatedAssistant : assistant
-      )
-    );
+    editAssistant(updatedAssistant);
     setAddOpenModal(false);
     showSnackbar(
       `${updatedAssistant.assistantName} Updated Successfully`,
@@ -259,8 +260,8 @@ const MaintenancePage = () => {
 
   return (
     <Box>
-      <Box classname="">
-        <Box className="">
+      <Box>
+        <Box>
           {/* charts */}
           <Box
             style={{
