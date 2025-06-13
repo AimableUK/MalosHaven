@@ -31,7 +31,7 @@ const EditInvoiceForm = ({
   open,
   onClose,
   onEditInvoice,
-  propertiesState,
+  properties,
   selectedInvoice,
   setSelectedInvoice,
 }) => {
@@ -56,7 +56,7 @@ const EditInvoiceForm = ({
 
   const tenants = useMemo(
     () =>
-      propertiesState.flatMap((property) =>
+      properties.flatMap((property) =>
         property.units
           .filter((unit) => unit.tenant !== null)
           .map((unit) => ({
@@ -66,7 +66,7 @@ const EditInvoiceForm = ({
             propertyName: property.title,
           }))
       ),
-    [propertiesState]
+    [properties]
   );
 
   useEffect(() => {

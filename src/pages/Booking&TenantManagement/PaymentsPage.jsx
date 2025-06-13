@@ -1,14 +1,12 @@
 import { Box, Button, Menu, MenuItem, Typography } from "@mui/material";
 import { useState } from "react";
 import ReceiptIcon from "@mui/icons-material/Receipt";
-import MyInvoices from "../../Data/SiteDataComponent/Invoices.js";
 import { DataGrid } from "@mui/x-data-grid";
 import AddInvoiceForm from "../../components/InvoiceComponent/AddInvoiceForm.jsx";
 import DataDeleteConfirm from "../../components/DeleteConfirmComponent/DataDeleteConfirm.jsx";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import Properties from "../../Data/SiteDataComponent/Properties.js";
 import AddIcon from "@mui/icons-material/Add";
 import EditInvoiceForm from "../../components/InvoiceComponent/EditInvoiceForm.jsx";
 import userAvatar from "../../assets/userAvatar.jpg";
@@ -16,9 +14,9 @@ import { Link } from "react-router-dom";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import AppSnackbar from "../../components/utils/MySnackbar/AppSnackbar.jsx";
 import useInvoiceStore from "../../Store/InvoicesStore/useInvoiceStore.js";
+import usePropertiesStore from "../../Store/PropertiesStore/usePropertiesStore.js";
 
 const PaymentsPage = () => {
-  const [propertiesState, setPropertiesState] = useState(Properties);
   const [openAddModal, setOpenAddModal] = useState(false);
   const [openEditModal, setOpenEditModal] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
@@ -30,6 +28,8 @@ const PaymentsPage = () => {
     message: "",
     severity: "",
   });
+
+  const properties = usePropertiesStore((state) => state.properties);
 
   const invoices = useInvoiceStore((state) => state.invoices);
   const addInvoice = useInvoiceStore((state) => state.addInvoice);
@@ -212,7 +212,7 @@ const PaymentsPage = () => {
             open={openAddModal}
             onClose={() => setOpenAddModal(false)}
             onAddInvoice={handleAddInvoice}
-            propertiesState={propertiesState}
+            properties={properties}
             setSelectedInvoice={setSelectedInvoice}
           />
 
@@ -220,7 +220,7 @@ const PaymentsPage = () => {
             open={openEditModal}
             onClose={() => setOpenEditModal(false)}
             onEditInvoice={handleEditInvoice}
-            propertiesState={propertiesState}
+            properties={properties}
             selectedInvoice={selectedInvoice}
             setSelectedInvoice={setSelectedInvoice}
           />

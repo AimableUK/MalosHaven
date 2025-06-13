@@ -34,7 +34,7 @@ const AddInvoiceForm = ({
   open,
   onClose,
   onAddInvoice,
-  propertiesState,
+  properties,
   setSelectedInvoice,
 }) => {
   const [selectedTenant, setSelectedTenant] = useState(null);
@@ -135,7 +135,7 @@ const AddInvoiceForm = ({
     setSnackbar({ ...snackbar, open: false });
   };
 
-  const tenants = propertiesState.flatMap((property) =>
+  const tenants = properties.flatMap((property) =>
     property.units
       .filter((unit) => unit.tenant !== null)
       .map((unit) => ({
