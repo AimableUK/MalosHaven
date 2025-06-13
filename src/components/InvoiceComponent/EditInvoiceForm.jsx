@@ -166,10 +166,9 @@ const EditInvoiceForm = ({
       tenantName: formData.tenant,
       invoiceItems: compiledItems,
     };
+    console.log(newInvoice);
 
     onEditInvoice(newInvoice);
-    showSnackbar(`Updated ${userDetails.tenantName} Successfully`, "success");
-
     onClose();
     setFormData({});
     setSelectedInvoice(null);

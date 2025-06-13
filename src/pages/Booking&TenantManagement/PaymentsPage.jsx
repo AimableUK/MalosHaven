@@ -1,10 +1,4 @@
-import {
-  Box,
-  Button,
-  Menu,
-  MenuItem,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Menu, MenuItem, Typography } from "@mui/material";
 import { useState } from "react";
 import ReceiptIcon from "@mui/icons-material/Receipt";
 import MyInvoices from "../../Data/SiteDataComponent/Invoices.js";
@@ -21,6 +15,7 @@ import userAvatar from "../../assets/userAvatar.jpg";
 import { Link } from "react-router-dom";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import AppSnackbar from "../../components/utils/MySnackbar/AppSnackbar.jsx";
+import useInvoiceStore from "../../Store/InvoicesStore/useInvoiceStore.js";
 
 const PaymentsPage = () => {
   const [propertiesState, setPropertiesState] = useState(Properties);
@@ -39,7 +34,11 @@ const PaymentsPage = () => {
     severity: "",
   });
 
-  const deleteInvoice =
+  const editInvoice = useInvoiceStore((state) => state.editInvoice);
+  const deleteInvoice = useInvoiceStore((state) => state.deleteInvoice);
+  const addInvoice = useInvoiceStore((state) => state.addInvoice);
+
+  const deleteAnInvoice =
     "Are you sure you want to Delete this Invoice? If you do so, it will be undone";
 
   const columns = [
@@ -107,7 +106,7 @@ const PaymentsPage = () => {
   };
 
   const handleAddInvoice = (invoice) => {
-    setInvoices((prevInvoices) => [...prevInvoices, invoice]);
+    addInvoice(invoice);
     showSnackbar(
       `Invoice of ${invoice.tenantName} added Successfully`,
       "success"
@@ -126,9 +125,7 @@ const PaymentsPage = () => {
   };
 
   const handleDeleteInvoice = () => {
-    setInvoices((prevInvoice) =>
-      prevInvoice.filter((invoice) => invoice.id !== selectedInvoice.id)
-    );
+    deleteInvoice(selectedInvoice.id);
     setDeleteDialogOpen(false);
     showSnackbar(
       `${selectedInvoice.tenantName}'s Invoice deleted successfully`,
@@ -139,10 +136,15 @@ const PaymentsPage = () => {
   const handleEditDialogOpen = () => {
     setOpenEditModal(true);
     handleCloseMenu();
-    console.log(selectedInvoice);
   };
 
-  const handleEditInvoice = () => {};
+  const handleEditInvoice = (updatedInvoice) => {
+    editInvoice(updatedInvoice);
+    showSnackbar(
+      `Updated ${updatedInvoice.tenantName} Successfully`,
+      "success"
+    );
+  };
 
   const handleCloseMenu = () => {
     setAnchorEl(null);
@@ -231,7 +233,7 @@ const PaymentsPage = () => {
             deleteDialogOpen={deleteDialogOpen}
             setDeleteDialogOpen={setDeleteDialogOpen}
             handleDeleteInvoice={handleDeleteInvoice}
-            deleteInvoice={deleteInvoice}
+            deleteAnInvoice={deleteAnInvoice}
             deleteType="invoice"
           />
 

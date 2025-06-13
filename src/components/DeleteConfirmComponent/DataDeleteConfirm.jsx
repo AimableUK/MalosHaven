@@ -27,7 +27,7 @@ const DataDeleteConfirm = ({
   deleteANotification,
   deleteAnAssistant,
   deleteProperty,
-  deleteInvoice,
+  deleteAnInvoice,
   deleteType,
 }) => {
   const [snackbar, setSnackbar] = useState({
@@ -82,7 +82,7 @@ const DataDeleteConfirm = ({
           <DialogContentText>
             {deleteTenant} {deleteUnitProp}
             {deleteRoomLodge} {deleteANotification}
-            {deleteAnAssistant} {deleteInvoice}
+            {deleteAnAssistant} {deleteAnInvoice}
             {deleteProperty} {deleteLodge}
           </DialogContentText>
         </DialogContent>
