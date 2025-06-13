@@ -164,9 +164,11 @@ const EditInvoiceForm = ({
       id: selectedInvoice?.id,
       invoiceNumber: selectedInvoice?.invoiceNumber,
       tenantName: formData.tenant,
+      email: selectedInvoice?.email,
+      phone: selectedInvoice?.phone,
+      avatar: selectedInvoice?.avatar,
       invoiceItems: compiledItems,
     };
-    console.log(newInvoice);
 
     onEditInvoice(newInvoice);
     onClose();

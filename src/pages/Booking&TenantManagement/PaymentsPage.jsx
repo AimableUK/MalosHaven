@@ -19,14 +19,11 @@ import useInvoiceStore from "../../Store/InvoicesStore/useInvoiceStore.js";
 
 const PaymentsPage = () => {
   const [propertiesState, setPropertiesState] = useState(Properties);
-  const [invoices, setInvoices] = useState(MyInvoices);
   const [openAddModal, setOpenAddModal] = useState(false);
   const [openEditModal, setOpenEditModal] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-  const [editDialogOpen, setEditDialogOpen] = useState(false);
 
   const [selectedInvoice, setSelectedInvoice] = useState(null);
-  const [deleteType, setDeleteType] = useState("invoice");
   const [anchorEl, setAnchorEl] = useState(null);
   const [snackbar, setSnackbar] = useState({
     open: false,
@@ -34,9 +31,10 @@ const PaymentsPage = () => {
     severity: "",
   });
 
+  const invoices = useInvoiceStore((state) => state.invoices);
+  const addInvoice = useInvoiceStore((state) => state.addInvoice);
   const editInvoice = useInvoiceStore((state) => state.editInvoice);
   const deleteInvoice = useInvoiceStore((state) => state.deleteInvoice);
-  const addInvoice = useInvoiceStore((state) => state.addInvoice);
 
   const deleteAnInvoice =
     "Are you sure you want to Delete this Invoice? If you do so, it will be undone";
@@ -210,7 +208,6 @@ const PaymentsPage = () => {
             }}
           />
 
-          {/* Add Unit Modal */}
           <AddInvoiceForm
             open={openAddModal}
             onClose={() => setOpenAddModal(false)}
