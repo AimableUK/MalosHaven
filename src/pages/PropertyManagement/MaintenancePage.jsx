@@ -14,7 +14,6 @@ import userAvatar from "../../assets/userAvatar.jpg";
 import DoneAllIcon from "@mui/icons-material/DoneAll";
 import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
 import ArticleIcon from "@mui/icons-material/Article";
-import propertiesList from "../../Data/SiteDataComponent/Properties";
 import FooterPage from "../Footer/FooterPage";
 import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
 import ClearAllIcon from "@mui/icons-material/ClearAll";
@@ -31,22 +30,16 @@ import AddAssistantForm from "../../components/AssistantComponent/AddAssistantFo
 import EditAssistantForm from "../../components/AssistantComponent/EditAssistantForm";
 import AppSnackbar from "../../components/utils/MySnackbar/AppSnackbar";
 import useAssistantStore from "../../Store/AssistantStore/useAssistantStore";
+import usePropertiesStore from "../../Store/PropertiesStore/usePropertiesStore";
+import useMaintenanceStore from "../../Store/MaintenanceStore/useMaintenanceStore";
 
 const MaintenancePage = () => {
   const [expandedRequestId, setExpandedRequestId] = useState(null);
-  const [filterView, setFilterView] = useState("all");
-
   const [snackbar, setSnackbar] = useState({
     open: false,
     message: "",
     severity: "",
   });
-
-  const [properties, setProperties] = useState(propertiesList);
-
-  const [requests, setRequests] = useState([]);
-  const [pendingRequests, setPendingRequests] = useState([]);
-  const [solvedRequests, setSolvedRequests] = useState([]);
 
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [selectedAssistant, setSelectedAssistant] = useState(null);
@@ -57,20 +50,29 @@ const MaintenancePage = () => {
   const [addOpenModal, setAddOpenModal] = useState(false);
   const [editOpenModal, setEditOpenModal] = useState(false);
 
+  const properties = usePropertiesStore((state) => state.properties);
+
   const assistants = useAssistantStore((state) => state.assistants);
   const addAssistant = useAssistantStore((state) => state.addAssistant);
   const editAssistant = useAssistantStore((state) => state.editAssistant);
   const deleteAssistant = useAssistantStore((state) => state.deleteAssistant);
 
-  const deleteAnAssistant =
-    "Are you sure you want to Delete this Assistant? If you do so, it will be undone";
+  const {
+    requests,
+    pendingRequests,
+    solvedRequests,
+    setRequestsFromProperties,
+    markAsDone,
+    filterView,
+    setFilterView,
+    getDisplayedRequests,
+  } = useMaintenanceStore();
 
-  const displayedRequests =
-    filterView === "all"
-      ? requests
-      : filterView === "pending"
-        ? pendingRequests
-        : solvedRequests;
+  useEffect(() => {
+    setRequestsFromProperties(properties);
+  }, [setRequestsFromProperties, properties]);
+
+  const displayedRequests = getDisplayedRequests();
 
   const showSnackbar = (message, severity = "success") => {
     setSnackbar((prev) => ({ ...prev, open: false }));
@@ -83,6 +85,19 @@ const MaintenancePage = () => {
     }, 100);
   };
 
+  const handleMarkRequest = (request, tenantName) => {
+    markAsDone(request.requestId);
+
+    if (!request) showSnackbar(`Request is Unavailable`, "info");
+
+    request.status === "done"
+      ? showSnackbar(`${tenantName}'s Request marked As Done`, "success")
+      : showSnackbar(`${tenantName}'s Request marked As Pending`, "warning");
+  };
+
+  const deleteAnAssistant =
+    "Are you sure you want to Delete this Assistant? If you do so, it will be undone";
+
   const is1230 = useMediaQuery("(min-width: 1230px)");
 
   const handleCloseSnackbar = () => {
@@ -93,33 +108,6 @@ const MaintenancePage = () => {
     setExpandedRequestId((prevId) => (prevId === requestId ? null : requestId));
   };
 
-  useEffect(() => {
-    const allRequests = [];
-
-    properties.forEach((property) => {
-      property.units.forEach((unit) => {
-        const tenant = unit.tenant;
-        if (tenant?.maintenanceRequests?.length > 0) {
-          tenant.maintenanceRequests.forEach((request) => {
-            allRequests.push({
-              ...request,
-              tenantName: tenant.name,
-              tenantPhone: tenant.phone,
-              tenantImage: tenant.image,
-              propertyTitle: property.title,
-              unit: unit.UnitNumber,
-            });
-          });
-        }
-      });
-    });
-
-    setRequests(allRequests);
-    setPendingRequests(allRequests.filter((r) => r.status === "pending"));
-    setSolvedRequests(allRequests.filter((r) => r.status === "done"));
-  }, [properties]);
-
-  // Filter handlers
   const AllMaintenanceStatus = () => {
     setFilterView("all");
   };
@@ -130,40 +118,6 @@ const MaintenancePage = () => {
 
   const pendingMaintenanceStatus = () => {
     setFilterView("pending");
-  };
-
-  // Mark request as done/pending
-  const markAsDone = (request) => {
-    const updatedProperties = properties.map((property) => ({
-      ...property,
-      units: property.units.map((unit) => {
-        if (!unit.tenant?.maintenanceRequests) return unit;
-
-        const updatedRequests = unit.tenant.maintenanceRequests.map((req) => {
-          if (req.requestId === request.requestId) {
-            const newStatus = req.status === "done" ? "pending" : "done";
-            showSnackbar(
-              `${unit.tenant.name}'s Request Marked as ${
-                newStatus === "done" ? "Pending" : "Done"
-              }`,
-              newStatus === "done" ? "warning" : "success"
-            );
-            return { ...req, status: newStatus };
-          }
-          return req;
-        });
-
-        return {
-          ...unit,
-          tenant: {
-            ...unit.tenant,
-            maintenanceRequests: updatedRequests,
-          },
-        };
-      }),
-    }));
-
-    setProperties(updatedProperties);
   };
 
   const MaintenancesChart = [
@@ -454,7 +408,12 @@ const MaintenancePage = () => {
                                       color: "#FFFFFF",
                                     },
                                   }}
-                                  onClick={() => markAsDone(request)}
+                                  onClick={() =>
+                                    handleMarkRequest(
+                                      request,
+                                      request.tenantName
+                                    )
+                                  }
                                 >
                                   <DoneAllIcon />
                                 </IconButton>
