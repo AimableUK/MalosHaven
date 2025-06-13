@@ -459,17 +459,17 @@ const MaintenancePage = () => {
                         </Box>
                       ))
                     : (filterView === "all" && (
-                        <Typography alignSelf="center">
+                        <Typography alignSelf="center" fontWeight="bold">
                           No Maintainance Request Available
                         </Typography>
                       )) ||
                       (filterView === "pending" && (
-                        <Typography alignSelf="center">
+                        <Typography alignSelf="center" fontWeight="bold">
                           No Maintainance Request Done Yet
                         </Typography>
                       )) ||
                       (filterView === "done" && (
-                        <Typography alignSelf="center">
+                        <Typography alignSelf="center" fontWeight="bold">
                           No Pending Maintainance Request Available
                         </Typography>
                       ))}
