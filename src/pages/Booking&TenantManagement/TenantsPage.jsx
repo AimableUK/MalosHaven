@@ -9,7 +9,7 @@ import {
   MenuItem,
   useMediaQuery,
 } from "@mui/material";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import EditIcon from "@mui/icons-material/Edit";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
@@ -30,10 +30,10 @@ import userAvatar from "../../assets/userAvatar.jpg";
 import MobileTenantDisplay from "./MobileTenantDisplay";
 import FooterPage from "../Footer/FooterPage";
 import AppSnackbar from "../../components/utils/MySnackbar/AppSnackbar";
+import useTenantStore from "../../Store/TenantsStore/useTenantsStore";
 
 const TenantsPage = () => {
   const [properties, setProperties] = useState(MyProperties);
-  const [tenants, setTenants] = useState([]);
 
   const [showClearIcon, setShowClearIcon] = useState("none");
   const [searchTerm, setSearchTerm] = useState("");
@@ -47,24 +47,34 @@ const TenantsPage = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [selectedTenant, setSelectedTenant] = useState(null);
-  const [deleteType, setDeleteType] = useState("tenant");
   const [snackbar, setSnackbar] = useState({
     open: false,
     message: "",
     severity: "",
   });
 
-  const deleteTenant =
+  const tenants = useTenantStore((state) => state.tenants);
+  const deleteTenant = useTenantStore((state) => state.deleteTenant);
+  const { setTenantsFromProperties } = useTenantStore();
+
+  useEffect(() => {
+    setTenantsFromProperties(properties);
+  }, [setTenantsFromProperties, properties]);
+
+  const filteredTenants = useMemo(() => {
+    return tenants.filter(
+      (tenant) =>
+        tenant.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        tenant.phone.includes(searchTerm) ||
+        tenant.paymentStatus.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        tenant.property.toLowerCase().includes(searchTerm)
+    );
+  }, [tenants, searchTerm]);
+
+  const deleteATenant =
     "Are you sure you want to Delete this Tenant? If you do so, it will be undone";
 
   const isTablet = useMediaQuery("(max-width:1200px)");
-
-  useEffect(() => {
-    const allTenants = properties.flatMap((property) =>
-      property.units.map((unit) => unit.tenant).filter((tenant) => tenant)
-    );
-    setTenants(allTenants);
-  }, [properties]);
 
   const showSnackbar = (message, severity = "success") => {
     setSnackbar((prev) => ({ ...prev, open: false }));
@@ -92,11 +102,7 @@ const TenantsPage = () => {
   };
 
   const handleDeleteTenant = () => {
-    setTenants((prevTenants) =>
-      prevTenants.filter(
-        (tenant) => tenant.tenant_id !== selectedTenant.tenant_id
-      )
-    );
+    deleteTenant(selectedTenant.tenant_id);
     setDeleteDialogOpen(false);
     setMobileTenantDisplayOpenModal(false);
     showSnackbar(`${selectedTenant.name} deleted Successfully`, "success");
@@ -225,35 +231,21 @@ const TenantsPage = () => {
 
           {/* Tenants */}
           <Box className="flex flex-wrap">
-            {tenants
-              .filter(
-                (tenant) =>
-                  tenant.name
-                    .toLowerCase()
-                    .includes(searchTerm.toLowerCase()) ||
-                  tenant.phone.includes(searchTerm) ||
-                  tenant.paymentStatus
-                    .toLowerCase()
-                    .includes(searchTerm.toLowerCase()) ||
-                  tenant.property
-                    .toLowerCase()
-                    .includes(searchTerm.toLowerCase())
-              )
-              .map((tenant) => (
-                <Box
-                  key={tenant.tenant_id}
-                  className="flex flex-col md:flex-row gap-3 rounded-b border-t-2 border-t-slate-300 p-3 m-1 shadow-sm shadow-slate-900 w-[calc(30%-1rem)] min-w-[230px] max-w-[300px] cursor-pointer transition duration-50 ease-in-out active:scale-95"
-                  onClick={() => displayTenant(tenant)}
-                >
-                  <Avatar src={tenant.image || userAvatar} />
-                  <Box className="flex flex-col">
-                    <Typography fontWeight="bold">{tenant.name}</Typography>
-                    <Typography sx={{ fontSize: "14px", color: "#D0D0D0" }}>
-                      {tenant.phone}
-                    </Typography>
-                  </Box>
+            {filteredTenants.map((tenant) => (
+              <Box
+                key={tenant.tenant_id}
+                className="flex flex-col md:flex-row gap-3 rounded-b border-t-2 border-t-slate-300 p-3 m-1 shadow-sm shadow-slate-900 w-[calc(30%-1rem)] min-w-[230px] max-w-[300px] cursor-pointer transition duration-50 ease-in-out active:scale-95"
+                onClick={() => displayTenant(tenant)}
+              >
+                <Avatar src={tenant.image || userAvatar} />
+                <Box className="flex flex-col">
+                  <Typography fontWeight="bold">{tenant.name}</Typography>
+                  <Typography sx={{ fontSize: "14px", color: "#D0D0D0" }}>
+                    {tenant.phone}
+                  </Typography>
                 </Box>
-              ))}
+              </Box>
+            ))}
           </Box>
         </Box>
         {!isTablet && (
@@ -510,7 +502,7 @@ const TenantsPage = () => {
         selectedTenant={selectedTenant}
         setSelectedTenant={setSelectedTenant}
         handleDeleteTenant={handleDeleteTenant}
-        deleteTenant={deleteTenant}
+        deleteATenant={deleteATenant}
         deleteType="tenant"
       />
       <FooterPage />
