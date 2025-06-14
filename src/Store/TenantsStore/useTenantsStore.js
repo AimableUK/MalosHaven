@@ -12,6 +12,13 @@ const useTenantStore = create((set) => ({
     });
   },
 
+  updateTenant: (updatedTenant) =>
+    set((state) => ({
+      tenants: state.tenants.map((tenant) =>
+        tenant.tenant_id === updatedTenant.tenant_id ? updatedTenant : tenant
+      ),
+    })),
+
   // delete Tenant:
   deleteTenant: (id) =>
     set((state) => ({

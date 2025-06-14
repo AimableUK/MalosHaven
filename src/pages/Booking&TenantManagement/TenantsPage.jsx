@@ -54,6 +54,7 @@ const TenantsPage = () => {
   });
 
   const tenants = useTenantStore((state) => state.tenants);
+  const updateTenant = useTenantStore((state) => state.updateTenant);
   const deleteTenant = useTenantStore((state) => state.deleteTenant);
   const { setTenantsFromProperties } = useTenantStore();
 
@@ -176,13 +177,7 @@ const TenantsPage = () => {
       })
     );
 
-    // Update tenants
-    setTenants((prev) =>
-      prev.map((tenant) =>
-        tenant.tenant_id === updatedTenant.tenant_id ? updatedTenant : tenant
-      )
-    );
-
+    updateTenant(updatedTenant);
     showSnackbar(`${updatedTenant.name} updated successfully!`, "success");
   };
 
