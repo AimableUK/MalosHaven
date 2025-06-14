@@ -7,7 +7,6 @@ const useTenantStore = create((set) => ({
     const allTenants = properties.flatMap((property) =>
       property.units.map((unit) => unit.tenant).filter((tenant) => tenant)
     );
-    console.log("Extracted tenants:", allTenants);
     set({
       tenants: allTenants,
     });
@@ -15,10 +14,9 @@ const useTenantStore = create((set) => ({
 
   // delete Tenant:
   deleteTenant: (id) =>
-    set((state) => {
-      tenants: state.tenants.filter((tenant) => {
-        tenant.tenant_id !== id;
-      });
-    }),
+    set((state) => ({
+      tenants: state.tenants.filter((tenant) => tenant.tenant_id !== id),
+    })),
 }));
+
 export default useTenantStore;
