@@ -5,11 +5,21 @@ const useTenantStore = create((set) => ({
 
   setTenantsFromProperties: (properties) => {
     const allTenants = properties.flatMap((property) =>
-      property.units.map((unit) => unit.tenant).filter((tenant) => tenant)
+      property.units
+        .map((unit) => {
+          if (!unit.tenant) return null;
+
+          return {
+            ...unit.tenant,
+            unit: unit.UnitNumber,
+            propertyId: property.id,
+            property: property.title,
+          };
+        })
+        .filter(Boolean)
     );
-    set({
-      tenants: allTenants,
-    });
+
+    set({ tenants: allTenants });
   },
 
   updateTenant: (updatedTenant) =>

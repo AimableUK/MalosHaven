@@ -163,7 +163,7 @@ const TenantsPage = () => {
     // Update properties
     setProperties((prev) =>
       prev.map((property) => {
-        if (property.title !== updatedTenant.property) return property;
+        if (property.id !== updatedTenant.propertyId) return property;
 
         return {
           ...property,
