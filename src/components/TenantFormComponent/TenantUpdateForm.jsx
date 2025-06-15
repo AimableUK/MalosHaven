@@ -79,6 +79,17 @@ const TenantUpdateForm = ({
     }
   }, [selectedTenant, properties]);
 
+  const showSnackbar = (message, severity = "success") => {
+    setSnackbar((prev) => ({ ...prev, open: false }));
+    setTimeout(() => {
+      setSnackbar({
+        open: true,
+        message,
+        severity,
+      });
+    }, 100);
+  };
+
   const handleSubmit = () => {
     const {
       name,
@@ -101,11 +112,7 @@ const TenantUpdateForm = ({
       !gender.trim() ||
       !paymentStatus.trim()
     ) {
-      setSnackbar({
-        open: true,
-        message: "Please fill out all fields",
-        severity: "error",
-      });
+      showSnackbar("Please fill out all fields", "error");
       return;
     }
 
@@ -149,11 +156,7 @@ const TenantUpdateForm = ({
       reader.onloadend = () => setImagePreview(reader.result);
       reader.readAsDataURL(file);
     } else {
-      setSnackbar({
-        open: true,
-        message: "Please select a valid image file.",
-        severity: "error",
-      });
+      showSnackbar("Please select a valid image file.", "error");
     }
   };
 

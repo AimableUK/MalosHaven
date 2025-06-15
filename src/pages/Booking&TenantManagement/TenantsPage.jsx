@@ -135,13 +135,10 @@ const TenantsPage = () => {
   };
 
   const handleAddTenant = (newTenant) => {
-    const tenantId = addTenantToProperty(newTenant);
-    addTenant({ ...newTenant, tenant_id: tenantId });
-
+    addTenantToProperty(newTenant);
+    addTenant(newTenant);
     const updatedProperties = usePropertiesStore.getState().properties;
     setTenantsFromProperties(updatedProperties);
-    addTenant(newTenant, properties);
-    console.log("All tenants:", tenants);
     showSnackbar("Tenant added successfully!", "success");
   };
 
