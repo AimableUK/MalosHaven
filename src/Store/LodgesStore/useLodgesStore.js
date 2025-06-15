@@ -10,6 +10,14 @@ const useLodgesStore = create((set) => ({
       lodges: [...state.lodges, newLodge],
     })),
 
+  // Edit Lodge:
+  editLodge: (updatedLodge) =>
+    set((state) => ({
+      lodges: state.lodges.map((lodge) =>
+        lodge.id === updatedLodge.id ? updatedLodge : lodge
+      ),
+    })),
+
   // delete Lodge:
   deleteLodge: (id) =>
     set((state) => ({

@@ -17,8 +17,9 @@ import ChairIcon from "@mui/icons-material/Chair";
 import AddRoomFormModal from "../../components/RoomFormComponent/AddRoomForm";
 import AppSnackbar from "../../components/utils/MySnackbar/AppSnackbar";
 import useLodgesStore from "../../Store/LodgesStore/useLodgesStore";
+import EditLodgeFormModal from "../../components/LodgeFormComponent/EditLodgeForm";
 
-const PropertyDetails = () => {
+const LodgeDetails = () => {
   const [openModal, setOpenModal] = useState(false);
   const [editDialogOpen, setEditDialogOpen] = useState(false);
 
@@ -28,10 +29,11 @@ const PropertyDetails = () => {
   const [selectedRoomId, setSelectedRoomId] = useState(null);
   const [selectedLodge, setSelectedLodge] = useState(null);
 
-  const [editPropertyFormModal, setEditPropertyFormModal] = useState(false);
+  const [editLodgeFormModal, setEditLodgeFormModal] = useState(false);
   const [addLodgeOpenModal, setAddLodgeOpenModal] = useState(false);
 
   const lodges = useLodgesStore((state) => state.lodges);
+  const editLodge = useLodgesStore((state) => state.editLodge);
   const deleteLodge = useLodgesStore((state) => state.deleteLodge);
 
   const [snackbar, setSnackbar] = useState({
@@ -225,20 +227,16 @@ const PropertyDetails = () => {
     setDeleteDialogOpen(false);
   };
 
-  //   const handleEditPropertyDialogOpen = (property) => {
-  //     setEditPropertyFormModal(true);
-  //     setSelectedProperty(property);
-  //   };
+  const handleEditLodgeDialogOpen = (Lodge) => {
+    setEditLodgeFormModal(true);
+    setSelectedLodge(Lodge);
+  };
 
-  //   const handleEditProp = (updatedProperty) => {
-  //     setProperties((prevProperties) =>
-  //       prevProperties.map((property) =>
-  //         property.id === updatedProperty.id ? updatedProperty : property
-  //       )
-  //     );
-  //     setEditPropertyFormModal(false);
-  //     ShowSnackbar(`${updatedProperty.title} Updated Successfully`, "success");
-  //   };
+  const handleEditLodge = (updatedLodge) => {
+    editLodge(updatedLodge);
+    setEditLodgeFormModal(false);
+    showSnackbar(`${updatedLodge.name} Updated Successfully`, "success");
+  };
 
   const handleCloseSnackbar = () => {
     setSnackbar({ ...snackbar, open: false });
@@ -272,7 +270,7 @@ const PropertyDetails = () => {
       </Box>
 
       <Box className="flex flex-col bg-[#2D454D] p-3 border-t-2 border-t-slate-300 rounded-b-md">
-        {/* Property Header */}
+        {/* Lodge Header */}
         <Box className="flex flex-col md:flex-row gap-4">
           <Box>
             <Box>
@@ -288,7 +286,7 @@ const PropertyDetails = () => {
                 variant="contained"
                 startIcon={<EditIcon />}
                 color="success"
-                // onClick={() => handleEditPropertyDialogOpen(property)}
+                onClick={() => handleEditLodgeDialogOpen(lodge)}
               >
                 Edit
               </Button>
@@ -340,7 +338,7 @@ const PropertyDetails = () => {
           </Box>
         </Box>
 
-        {/* Property Info */}
+        {/* Lodge Info */}
         <Box>
           <Box className="flex flex-col md:flex-row items-center justify-between mt-5">
             <Typography fontSize="20px" fontWeight="bold">
@@ -398,7 +396,7 @@ const PropertyDetails = () => {
         </Box>
       </Box>
 
-      {/* Add Unit Modal */}
+      {/* Add Room Modal */}
       <AddRoomFormModal
         open={openModal}
         onClose={() => setOpenModal(false)}
@@ -422,14 +420,12 @@ const PropertyDetails = () => {
         handleDeleteLodge={handleDeleteLodge}
       />
 
-      {/* <EditLodgeFormModal
-        open={editPropertyFormModal}
-        onClose={() => setEditPropertyFormModal(false)}
-        // onEditProperty={handleEditProp}
+      <EditLodgeFormModal
+        open={editLodgeFormModal}
+        onClose={() => setEditLodgeFormModal(false)}
+        onEditLodge={handleEditLodge}
         selectedLodge={selectedLodge}
-      /> */}
-
-      {/* Edit Unit Modal */}
+      />
 
       {/* Snackbar */}
       <AppSnackbar
@@ -443,4 +439,4 @@ const PropertyDetails = () => {
   );
 };
 
-export default PropertyDetails;
+export default LodgeDetails;

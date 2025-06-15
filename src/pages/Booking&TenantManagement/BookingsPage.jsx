@@ -38,6 +38,7 @@ const BookingsPage = () => {
 
   const lodges = useLodgesStore((state) => state.lodges);
   const addLodge = useLodgesStore((state) => state.addLodge);
+  const editLodge = useLodgesStore((state) => state.editLodge);
   const deleteLodge = useLodgesStore((state) => state.deleteLodge);
 
   const isSmallScreen = useMediaQuery("(max-width:767px)");
@@ -102,13 +103,9 @@ const BookingsPage = () => {
   };
 
   const handleEditLodge = (updatedLodge) => {
-    setLodges((prevLodges) =>
-      prevLodges.map((lodge) =>
-        lodge.id === updatedLodge.id ? updatedLodge : lodge
-      )
-    );
+    editLodge(updatedLodge);
     setEditLodgeOpenModal(false);
-    showSnackbar(`${updatedLodge.title} Updated Successfully`, "success");
+    showSnackbar(`${updatedLodge.name} Updated Successfully`, "success");
   };
 
   return (
