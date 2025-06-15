@@ -23,6 +23,16 @@ const useLodgesStore = create((set) => ({
     set((state) => ({
       lodges: state.lodges.filter((lodge) => lodge.id !== id),
     })),
+
+  // add room to lodges:
+  addRoomToLodge: (lodgeId, newRoom) =>
+    set((state) => ({
+      lodges: state.lodges.map((lodge) =>
+        lodge.id === lodgeId
+          ? { ...lodge, rooms: [...lodge.rooms, newRoom] }
+          : lodge
+      ),
+    })),
 }));
 
 export default useLodgesStore;

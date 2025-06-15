@@ -18,6 +18,7 @@ import AddRoomFormModal from "../../components/RoomFormComponent/AddRoomForm";
 import AppSnackbar from "../../components/utils/MySnackbar/AppSnackbar";
 import useLodgesStore from "../../Store/LodgesStore/useLodgesStore";
 import EditLodgeFormModal from "../../components/LodgeFormComponent/EditLodgeForm";
+import useRoomStore from "../../Store/RoomStore/useRoomStore";
 
 const LodgeDetails = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -35,6 +36,11 @@ const LodgeDetails = () => {
   const lodges = useLodgesStore((state) => state.lodges);
   const editLodge = useLodgesStore((state) => state.editLodge);
   const deleteLodge = useLodgesStore((state) => state.deleteLodge);
+  const addRoomToLodge = useLodgesStore((state) => state.addRoomToLodge);
+  const { setRoomsfromLodges } = useRoomStore();
+
+  const rooms = useRoomStore((state) => state.rooms);
+  const addRoom = useRoomStore((state) => state.addRoom);
 
   const [snackbar, setSnackbar] = useState({
     open: false,
@@ -43,8 +49,8 @@ const LodgeDetails = () => {
   });
 
   useEffect(() => {
-    document.title = `${lodge?.name || "View Lodge"}`;
-  });
+    setRoomsfromLodges(lodges);
+  }, [lodges, setRoomsfromLodges]);
 
   const columns = [
     {
@@ -120,6 +126,10 @@ const LodgeDetails = () => {
   const { id } = useParams();
   const lodge = lodges.find((lodge) => lodge.id === parseInt(id));
 
+  useEffect(() => {
+    document.title = `${lodge?.name || "View Lodge"}`;
+  }, [lodge?.name]);
+
   if (!lodge) {
     return (
       <Box className="m-3 flex justify-center p-2 bg-[#2D454D] rounded-md border-t-2 border-t-slate-300">
@@ -142,13 +152,10 @@ const LodgeDetails = () => {
   };
 
   const handleAddRoom = (newRoom) => {
-    setLodges((prevLodges) =>
-      prevLodges.map((lodgeItem) =>
-        lodgeItem.id === parseInt(id)
-          ? { ...lodgeItem, rooms: [...lodgeItem.rooms, newRoom] }
-          : lodgeItem
-      )
-    );
+    addRoom(newRoom);
+    addRoomToLodge(lodgeId, newRoom);
+    setRoomsfromLodges(lodges);
+    showSnackbar(`${newRoom.name} added Successfully`, "success");
   };
 
   const processRowUpdate = (newRow) => {
@@ -356,7 +363,7 @@ const LodgeDetails = () => {
           </Box>
 
           <DataGrid
-            rows={lodge.rooms.filter((room) => room.isAvailable == true)}
+            rows={rooms.filter((room) => room.isAvailable == true)}
             columns={columns}
             showToolbar
             initialState={{
