@@ -11,7 +11,6 @@ const usePropertiesStore = create((set, get) => ({
     })),
 
   addTenantToProperty: (newTenant) => {
-    const tenantId = `TNT-${Date.now()}`;
     const { properties } = get();
 
     const updatedProperties = properties.map((property) => {
@@ -23,7 +22,7 @@ const usePropertiesStore = create((set, get) => ({
           if (unit.UnitNumber === newTenant.unit) {
             return {
               ...unit,
-              tenant: { ...newTenant, tenant_id: tenantId },
+              tenant: newTenant,
             };
           }
           return unit;
@@ -32,7 +31,6 @@ const usePropertiesStore = create((set, get) => ({
     });
 
     set({ properties: updatedProperties });
-    return tenantId;
   },
 }));
 

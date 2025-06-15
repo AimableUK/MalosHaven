@@ -23,7 +23,6 @@ import ApartmentIcon from "@mui/icons-material/Apartment";
 import PaidIcon from "@mui/icons-material/Paid";
 import TenantForm from "../../components/TenantFormComponent/TenantForm";
 import TenantUpdateForm from "../../components/TenantFormComponent/TenantUpdateForm";
-import properties from "../../Data/SiteDataComponent/Properties";
 import DeleteIcon from "@mui/icons-material/Delete";
 import DataDeleteConfirm from "../../components/DeleteConfirmComponent/DataDeleteConfirm";
 import userAvatar from "../../assets/userAvatar.jpg";
@@ -142,6 +141,8 @@ const TenantsPage = () => {
     const updatedProperties = usePropertiesStore.getState().properties;
     setTenantsFromProperties(updatedProperties);
     addTenant(newTenant, properties);
+    console.log("All tenants:", tenants);
+    showSnackbar("Tenant added successfully!", "success");
   };
 
   const handleUpdateTenant = (updatedTenant) => {

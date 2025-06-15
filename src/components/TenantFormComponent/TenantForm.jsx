@@ -16,6 +16,7 @@ import {
 import { useEffect, useState } from "react";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import AppSnackbar from "../utils/MySnackbar/AppSnackbar";
+import { v4 as uuidv4 } from "uuid";
 
 const TenantForm = ({ open, onClose, onAddTenant, properties }) => {
   const [image, setImage] = useState(null);
@@ -73,6 +74,7 @@ const TenantForm = ({ open, onClose, onAddTenant, properties }) => {
 
   const handlePropertyChange = (event) => {
     const selectedPropertyTitle = event.target.value;
+
     const selectedProperty = properties.find(
       (p) =>
         p.title.trim().toLowerCase() ===
@@ -82,6 +84,7 @@ const TenantForm = ({ open, onClose, onAddTenant, properties }) => {
     setFormData((prev) => ({
       ...prev,
       property: selectedPropertyTitle,
+      propertyId: selectedProperty?.id || "",
       unit: "",
     }));
 
@@ -95,6 +98,7 @@ const TenantForm = ({ open, onClose, onAddTenant, properties }) => {
       phone,
       national_id,
       property,
+      propertyId,
       unit,
       gender,
       paymentStatus,
@@ -117,19 +121,18 @@ const TenantForm = ({ open, onClose, onAddTenant, properties }) => {
 
     // Add new tenant
     onAddTenant({
-      tenant_id: `TNT-${Date.now()}`,
+      tenant_id: `TNT-${uuidv4()}`,
       name,
       email,
       phone,
       national_id,
       property,
+      propertyId,
       unit,
       gender,
       paymentStatus,
       image: imagePreview,
     });
-
-    showSnackbar("Tenant added successfully!", "success");
 
     onClose();
     setFormData({
