@@ -22,6 +22,13 @@ const useTenantStore = create((set) => ({
     set({ tenants: allTenants });
   },
 
+  // add Tenant:
+  addTenant: (newTenant) =>
+    set((state) => ({
+      tenants: [...state.tenants, newTenant],
+    })),
+    
+  // update Tenant:
   updateTenant: (updatedTenant) =>
     set((state) => ({
       tenants: state.tenants.map((tenant) =>

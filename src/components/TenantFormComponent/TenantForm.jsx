@@ -52,6 +52,17 @@ const TenantForm = ({ open, onClose, onAddTenant, properties }) => {
     setImagePreview(null);
   }, [properties]);
 
+  const showSnackbar = (message, severity = "success") => {
+    setSnackbar((prev) => ({ ...prev, open: false }));
+    setTimeout(() => {
+      setSnackbar({
+        open: true,
+        message,
+        severity,
+      });
+    }, 100);
+  };
+
   const handleGenderChange = (event) => {
     setFormData((prev) => ({ ...prev, gender: event.target.value }));
   };
@@ -100,11 +111,7 @@ const TenantForm = ({ open, onClose, onAddTenant, properties }) => {
       !paymentStatus.trim() ||
       (!image && !imagePreview)
     ) {
-      setSnackbar({
-        open: true,
-        message: "Please fill out all fields",
-        severity: "error",
-      });
+      showSnackbar("Please fill out all fields", "error");
       return;
     }
 
@@ -122,11 +129,7 @@ const TenantForm = ({ open, onClose, onAddTenant, properties }) => {
       image: imagePreview,
     });
 
-    setSnackbar({
-      open: true,
-      message: "Tenant added successfully!",
-      severity: "success",
-    });
+    showSnackbar("Tenant added successfully!", "success");
 
     onClose();
     setFormData({

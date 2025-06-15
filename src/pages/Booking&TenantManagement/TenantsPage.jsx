@@ -23,7 +23,7 @@ import ApartmentIcon from "@mui/icons-material/Apartment";
 import PaidIcon from "@mui/icons-material/Paid";
 import TenantForm from "../../components/TenantFormComponent/TenantForm";
 import TenantUpdateForm from "../../components/TenantFormComponent/TenantUpdateForm";
-import MyProperties from "../../Data/SiteDataComponent/Properties";
+import properties from "../../Data/SiteDataComponent/Properties";
 import DeleteIcon from "@mui/icons-material/Delete";
 import DataDeleteConfirm from "../../components/DeleteConfirmComponent/DataDeleteConfirm";
 import userAvatar from "../../assets/userAvatar.jpg";
@@ -31,10 +31,9 @@ import MobileTenantDisplay from "./MobileTenantDisplay";
 import FooterPage from "../Footer/FooterPage";
 import AppSnackbar from "../../components/utils/MySnackbar/AppSnackbar";
 import useTenantStore from "../../Store/TenantsStore/useTenantsStore";
+import usePropertiesStore from "../../Store/PropertiesStore/usePropertiesStore";
 
 const TenantsPage = () => {
-  const [properties, setProperties] = useState(MyProperties);
-
   const [showClearIcon, setShowClearIcon] = useState("none");
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -53,7 +52,13 @@ const TenantsPage = () => {
     severity: "",
   });
 
+  const properties = usePropertiesStore((state) => state.properties);
+  const addTenantToProperty = usePropertiesStore(
+    (state) => state.addTenantToProperty
+  );
+
   const tenants = useTenantStore((state) => state.tenants);
+  const addTenant = useTenantStore((state) => state.addTenant);
   const updateTenant = useTenantStore((state) => state.updateTenant);
   const deleteTenant = useTenantStore((state) => state.deleteTenant);
   const { setTenantsFromProperties } = useTenantStore();
@@ -131,32 +136,12 @@ const TenantsPage = () => {
   };
 
   const handleAddTenant = (newTenant) => {
-    const tenantId = `TNT-${Date.now()}`;
+    const tenantId = addTenantToProperty(newTenant);
+    addTenant({ ...newTenant, tenant_id: tenantId });
 
-    setTenants((prevTenants) => [
-      ...prevTenants,
-      { ...newTenant, tenant_id: tenantId },
-    ]);
-
-    setProperties((prevProperties) =>
-      prevProperties.map((property) => {
-        if (property.title === newTenant.property) {
-          return {
-            ...property,
-            units: property.units.map((unit) => {
-              if (unit.UnitNumber === newTenant.unit) {
-                return {
-                  ...unit,
-                  tenant: { ...newTenant, tenant_id: tenantId },
-                };
-              }
-              return unit;
-            }),
-          };
-        }
-        return property;
-      })
-    );
+    const updatedProperties = usePropertiesStore.getState().properties;
+    setTenantsFromProperties(updatedProperties);
+    addTenant(newTenant, properties);
   };
 
   const handleUpdateTenant = (updatedTenant) => {
