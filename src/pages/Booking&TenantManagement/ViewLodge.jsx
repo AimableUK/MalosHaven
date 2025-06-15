@@ -153,8 +153,10 @@ const LodgeDetails = () => {
 
   const handleAddRoom = (newRoom) => {
     addRoom(newRoom);
-    addRoomToLodge(lodgeId, newRoom);
-    setRoomsfromLodges(lodges);
+    addRoomToLodge(lodge.id, newRoom);
+
+    const updatedLodges = useLodgesStore.getState().lodges;
+    setRoomsfromLodges(updatedLodges);
     showSnackbar(`${newRoom.name} added Successfully`, "success");
   };
 
