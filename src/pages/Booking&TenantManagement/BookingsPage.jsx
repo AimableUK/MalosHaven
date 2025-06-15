@@ -20,10 +20,10 @@ import AppSnackbar from "../../components/utils/MySnackbar/AppSnackbar";
 import DataDeleteConfirm from "../../components/DeleteConfirmComponent/DataDeleteConfirm";
 import AddLodgeFormModal from "../../components/LodgeFormComponent/AddLodgeForm";
 import EditLodgeFormModal from "../../components/LodgeFormComponent/EditLodgeForm";
+import useLodgesStore from "../../Store/LodgesStore/useLodgesStore";
 
 const BookingsPage = () => {
   const [hoveredId, setHoveredId] = useState(null);
-  const [lodges, setLodges] = useState(lodgesList);
   const [selectedLodge, setSelectedLodge] = useState(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
@@ -35,6 +35,9 @@ const BookingsPage = () => {
     message: "",
     severity: "",
   });
+
+  const lodges = useLodgesStore((state) => state.lodges);
+  const deleteLodge = useLodgesStore((state) => state.deleteLodge);
 
   const isSmallScreen = useMediaQuery("(max-width:767px)");
   const isTablet = useMediaQuery("(max-width:950px)");
@@ -72,7 +75,7 @@ const BookingsPage = () => {
     setSnackbar({ ...snackbar, open: false });
   };
 
-  const deleteLodge =
+  const deleteALodge =
     "Are you sure you want to Delete this Lodge? If you do so, it will be undone";
 
   const handleDeleteDialogOpen = (lodge) => {
@@ -81,9 +84,7 @@ const BookingsPage = () => {
   };
 
   const handleDeleteLodge = () => {
-    setLodges((prevLodge) =>
-      prevLodge.filter((lodge) => lodge.id !== selectedLodge.id)
-    );
+    deleteLodge(selectedLodge.id);
     setDeleteDialogOpen(false);
     showSnackbar(`${selectedLodge.name} Lodge deleted successfully`, "success");
   };
@@ -242,7 +243,7 @@ const BookingsPage = () => {
         deleteDialogOpen={deleteDialogOpen}
         setDeleteDialogOpen={setDeleteDialogOpen}
         handleDeleteLodge={handleDeleteLodge}
-        deleteLodge={deleteLodge}
+        deleteALodge={deleteALodge}
         deleteType="lodge"
       />
       <FooterPage />
