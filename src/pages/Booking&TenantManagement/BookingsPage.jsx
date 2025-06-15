@@ -37,6 +37,7 @@ const BookingsPage = () => {
   });
 
   const lodges = useLodgesStore((state) => state.lodges);
+  const addLodge = useLodgesStore((state) => state.addLodge);
   const deleteLodge = useLodgesStore((state) => state.deleteLodge);
 
   const isSmallScreen = useMediaQuery("(max-width:767px)");
@@ -90,7 +91,7 @@ const BookingsPage = () => {
   };
 
   const handleAddLodge = (newLodge) => {
-    setLodges((prev) => [...prev, newLodge]);
+    addLodge(newLodge);
     setAddLodgeOpenModal(false);
     showSnackbar("Lodge added successfully!", "success");
   };

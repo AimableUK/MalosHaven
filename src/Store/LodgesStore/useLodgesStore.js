@@ -4,6 +4,12 @@ import LodgesList from "../../Data/SiteDataComponent/Lodges";
 const useLodgesStore = create((set) => ({
   lodges: [...LodgesList],
 
+  // add Lodge:
+  addLodge: (newLodge) =>
+    set((state) => ({
+      lodges: [...state.lodges, newLodge],
+    })),
+
   // delete Lodge:
   deleteLodge: (id) =>
     set((state) => ({
