@@ -32,6 +32,29 @@ const usePropertiesStore = create((set, get) => ({
 
     set({ properties: updatedProperties });
   },
+
+  updateTenantInProperty: (updatedTenant) => {
+    const { properties } = get();
+
+    const updatedProperties = properties.map((property) => {
+      if (property.id !== updatedTenant.propertyId) return property;
+
+      return {
+        ...property,
+        units: property.units.map((unit) => {
+          if (unit.UnitNumber === updatedTenant.unit) {
+            return {
+              ...unit,
+              tenant: updatedTenant,
+            };
+          }
+          return unit;
+        }),
+      };
+    });
+
+    set({ properties: updatedProperties });
+  },
 }));
 
 export default usePropertiesStore;

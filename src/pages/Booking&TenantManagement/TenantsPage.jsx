@@ -55,6 +55,9 @@ const TenantsPage = () => {
   const addTenantToProperty = usePropertiesStore(
     (state) => state.addTenantToProperty
   );
+  const updateTenantInProperty = usePropertiesStore(
+    (state) => state.updateTenantInProperty
+  );
 
   const tenants = useTenantStore((state) => state.tenants);
   const addTenant = useTenantStore((state) => state.addTenant);
@@ -143,24 +146,9 @@ const TenantsPage = () => {
   };
 
   const handleUpdateTenant = (updatedTenant) => {
-    // Update properties
-    setProperties((prev) =>
-      prev.map((property) => {
-        if (property.id !== updatedTenant.propertyId) return property;
-
-        return {
-          ...property,
-          units: property.units.map((unit) => {
-            if (unit.UnitNumber === updatedTenant.unit) {
-              return { ...unit, tenant: updatedTenant };
-            }
-            return unit;
-          }),
-        };
-      })
-    );
-
+    updateTenantInProperty(updatedTenant);
     updateTenant(updatedTenant);
+    setTenantsFromProperties(usePropertiesStore.getState().properties);
     showSnackbar(`${updatedTenant.name} updated successfully!`, "success");
   };
 

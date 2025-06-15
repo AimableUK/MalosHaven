@@ -49,11 +49,14 @@ const TenantUpdateForm = ({
     // Find tenant data
     const foundTenant = properties
       .flatMap((property) =>
-        property.units.map((unit) => ({
-          ...unit.tenant,
-          property: property.title,
-          unit: unit.UnitNumber,
-        }))
+        property.units
+          .filter((unit) => unit.tenant)
+          .map((unit) => ({
+            ...unit.tenant,
+            property: property.title,
+            propertyId: property.id,
+            unit: unit.UnitNumber,
+          }))
       )
       .find(
         (tenant) => tenant && tenant.tenant_id === selectedTenant.tenant_id
@@ -66,6 +69,7 @@ const TenantUpdateForm = ({
         phone: foundTenant.phone || "",
         national_id: foundTenant.national_id || "",
         property: foundTenant.property || "",
+        propertyId: foundTenant.propertyId || "",
         unit: foundTenant.unit || "",
         gender: foundTenant.gender || "",
         paymentStatus: foundTenant.paymentStatus || "",
@@ -97,6 +101,7 @@ const TenantUpdateForm = ({
       phone,
       national_id,
       property,
+      propertyId,
       unit,
       gender,
       paymentStatus,
@@ -123,6 +128,7 @@ const TenantUpdateForm = ({
       phone,
       national_id,
       property,
+      propertyId,
       unit,
       gender,
       paymentStatus,
