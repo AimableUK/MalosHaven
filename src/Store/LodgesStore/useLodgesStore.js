@@ -3,6 +3,8 @@ import LodgesList from "../../Data/SiteDataComponent/Lodges";
 
 const useLodgesStore = create((set) => ({
   Lodges: [...LodgesList],
+
+  
 }));
 
 export default useLodgesStore;

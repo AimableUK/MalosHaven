@@ -17,6 +17,8 @@ const AnalyticsPage = () => {
   const [pendingRequests, setPendingRequests] = useState([]);
   const [solvedRequests, setSolvedRequests] = useState([]);
 
+  const is1230 = useMediaQuery("(min-width: 1230px)");
+
   const handleChange = (event) => {
     setValue(event.target.value);
   };
@@ -71,16 +73,13 @@ const AnalyticsPage = () => {
   ];
 
   return (
-    <Box className="m-1 md:m-5">
+    <Box className="m-1 md:m-3">
       {/* first extended row */}
-      <Box className="flex flex-col md:grid grid-cols-12 gap-[2px] font-roboto">
+      <Box className={`flex ${is1230 ? "flex-row" : "flex-col"} gap-1 w-full`}>
         {/* boxes */}
-        <Box
-          sx={{ gridColumn: "span 6" }}
-          className="flex flex-col md:grid h-full"
-        >
+        <Box className="flex flex-col w-full">
           {/* first 2 boxes */}
-          <Box sx={{ gridColumn: "span 3" }} display="flex" flexDirection="row">
+          <Box display="flex" flexDirection="row">
             <Box
               className="flex flex-col border-t-2 border-t-slate-300 gap-y-1 justify-center"
               sx={{
@@ -130,7 +129,7 @@ const AnalyticsPage = () => {
           </Box>
 
           {/* second 2 boxes */}
-          <Box sx={{ gridColumn: "span 3" }} display="flex" flexDirection="row">
+          <Box display="flex" flexDirection="row">
             <Box
               className="flex flex-col border-t-2 border-t-slate-300 justify-center"
               sx={{
@@ -180,7 +179,7 @@ const AnalyticsPage = () => {
           </Box>
 
           {/* third 1 box */}
-          <Box sx={{ gridColumn: "span 3" }} display="flex" flexDirection="row">
+          <Box display="flex" flexDirection="row">
             <Box
               className="flex flex-col border-t-2 border-t-slate-300 h-full justify-center"
               sx={{
@@ -207,11 +206,11 @@ const AnalyticsPage = () => {
               </Typography>
             </Box>
           </Box>
+          
         </Box>
         {/* chart */}
         <Box
           sx={{
-            gridColumn: "span 6",
             display: "flex",
             flexDirection: "column",
             borderRadius: "8px",
@@ -219,9 +218,8 @@ const AnalyticsPage = () => {
             background: "#2D454D",
             overflow: "hidden",
             my: "7px",
-            ml: 1,
           }}
-          className="border-t-2 border-t-slate-300 h-full"
+          className="border-t-2 border-t-slate-300 w-full"
         >
           <Box
             display="flex"
@@ -263,7 +261,9 @@ const AnalyticsPage = () => {
       </Box>
 
       {/* second extended row */}
-      <Box className="flex flex-col md:grid grid-cols-12 mt-2 md:mt-5 mb-5 gap-3 ml-2 font-roboto">
+      <Box
+        className={`flex ${is1230 ? "flex-row" : "flex-col"} m-2 mb-5 gap-3 font-roboto`}
+      >
         {/* line chart */}
         <Box
           sx={{
@@ -275,7 +275,7 @@ const AnalyticsPage = () => {
             background: "#2D454D",
             overflow: "hidden",
           }}
-          className="border-t-2 border-t-slate-300 h-full"
+          className="border-t-2 border-t-slate-300 h-full w-full"
         >
           <Box
             display="flex"
@@ -327,7 +327,7 @@ const AnalyticsPage = () => {
             background: "#2D454D",
             overflow: "hidden",
           }}
-          className="border-t-2 border-t-slate-300 h-full"
+          className="border-t-2 border-t-slate-300 h-full w-full"
         >
           <Typography
             sx={{ color: "#fff", mb: 1, textAlign: "center" }}
