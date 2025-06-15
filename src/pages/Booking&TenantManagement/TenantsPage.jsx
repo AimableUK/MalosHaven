@@ -157,7 +157,7 @@ const TenantsPage = () => {
   };
 
   return (
-    <Box m="20px" display="flex" flexDirection="column">
+    <Box className="flex flex-col m-2 md:m-5">
       <Box className="flex flex-col lg:grid grid-cols-12 gap-4">
         <Box
           className={`bg-[#2D454D] ${isTablet ? "col-span-12" : "col-span-8"}  rounded-l-lg p-5`}

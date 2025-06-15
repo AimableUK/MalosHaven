@@ -63,7 +63,7 @@ const PrintableInvoice = () => {
   };
 
   return (
-    <Box className="m-5">
+    <Box className="m-2 md:m-5">
       <Box className="flex items-center justify-center relative bg-[#24383E] mb-2 rounded-b-md border-t-2 border-t-slate-300 h-[47px] md:h-[42px] px-1 md:px-6">
         <Box
           sx={{

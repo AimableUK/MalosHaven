@@ -71,7 +71,7 @@ const AnalyticsPage = () => {
   ];
 
   return (
-    <Box m="20px">
+    <Box className="m-1 md:m-5">
       {/* first extended row */}
       <Box className="flex flex-col md:grid grid-cols-12 gap-[2px] font-roboto">
         {/* boxes */}

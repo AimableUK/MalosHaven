@@ -154,7 +154,7 @@ const PaymentsPage = () => {
 
   return (
     <>
-      <Box m="20px" className="bg-[#24383E] rounded-md p-5">
+      <Box className="bg-[#24383E] rounded-md p-5 m-2 md:m-5">
         <Box className="flex flex-col md:flex-row items-center justify-between">
           <Typography sx={{ fontWeight: "bold" }}>
             <ReceiptIcon sx={{ fontSize: "30px", mr: 1 }} />

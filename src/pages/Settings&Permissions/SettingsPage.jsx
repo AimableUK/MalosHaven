@@ -93,7 +93,7 @@ const SettingsPage = () => {
 
   return (
     <>
-      <Box m="20px">
+      <Box className="m-1 md:m-5">
         <Box
           sx={{ background: "#24383E", px: 2 }}
           className="border-t-2 rounded-b-md"
