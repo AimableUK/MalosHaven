@@ -21,7 +21,6 @@ const NotificationsPage = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [selectedNotificationId, setSelectedNotificationId] = useState(null);
-  const [deleteType, setDeleteType] = useState("notification");
   const [filterView, setFilterView] = useState("all");
   const [readState, setReadState] = useState();
 
@@ -68,7 +67,7 @@ const NotificationsPage = () => {
   };
 
   return (
-    <Box className="m-5 gap-3">
+    <Box className="m-2 md:m-5 gap-3">
       <Box className="flex flex-col md:flex-row gap-1 bg-[#22363d] border-t-2 border-t-slate-300 rounded-t-md p-2 mb-2">
         <Button
           sx={{ borderRadius: "30px" }}

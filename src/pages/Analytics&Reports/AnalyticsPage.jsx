@@ -329,7 +329,10 @@ const AnalyticsPage = () => {
           }}
           className="border-t-2 border-t-slate-300 h-full"
         >
-          <Typography sx={{ color: "#fff", mb: 1, textAlign: "center" }} fontWeight="bold">
+          <Typography
+            sx={{ color: "#fff", mb: 1, textAlign: "center" }}
+            fontWeight="bold"
+          >
             Maintainence Overview
           </Typography>
           <Box sx={{ minHeight: 240, width: "100%" }}>
