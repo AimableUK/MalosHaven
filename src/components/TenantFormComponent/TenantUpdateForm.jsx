@@ -71,7 +71,7 @@ const TenantUpdateForm = ({
         property: foundTenant.property || "",
         propertyId: foundTenant.propertyId || "",
         unit: foundTenant.unit || "",
-        gender: foundTenant.gender || "",
+        gender: (foundTenant.gender || "").toUpperCase() || "",
         paymentStatus: foundTenant.paymentStatus || "",
       });
       setImagePreview(foundTenant.image || null);
