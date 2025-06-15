@@ -11,16 +11,14 @@ import AddIcon from "@mui/icons-material/Add";
 import PlaceIcon from "@mui/icons-material/Place";
 import EditRoomFormModal from "../../components/RoomFormComponent/EditRoomForm";
 import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
-import MyLodges from "../../Data/SiteDataComponent/Lodges";
 import HolidayVillageIcon from "@mui/icons-material/HolidayVillage";
 import ConfirmationNumberIcon from "@mui/icons-material/ConfirmationNumber";
 import ChairIcon from "@mui/icons-material/Chair";
 import AddRoomFormModal from "../../components/RoomFormComponent/AddRoomForm";
 import AppSnackbar from "../../components/utils/MySnackbar/AppSnackbar";
+import useLodgesStore from "../../Store/LodgesStore/useLodgesStore";
 
 const PropertyDetails = () => {
-  const [lodges, setLodges] = useState(MyLodges);
-
   const [openModal, setOpenModal] = useState(false);
   const [editDialogOpen, setEditDialogOpen] = useState(false);
 
@@ -32,6 +30,9 @@ const PropertyDetails = () => {
 
   const [editPropertyFormModal, setEditPropertyFormModal] = useState(false);
   const [addLodgeOpenModal, setAddLodgeOpenModal] = useState(false);
+
+  const lodges = useLodgesStore((state) => state.lodges);
+  const deleteLodge = useLodgesStore((state) => state.deleteLodge);
 
   const [snackbar, setSnackbar] = useState({
     open: false,
@@ -217,14 +218,11 @@ const PropertyDetails = () => {
         snackbar: `${selectedLodge.name} deleted successfully`,
       },
     });
+    setTimeout(() => {
+      deleteLodge(selectedLodge.id);
+    }, 1000);
 
     setDeleteDialogOpen(false);
-
-    setTimeout(() => {
-      setLodges((prev) =>
-        prev.filter((lodge) => lodge.id !== selectedLodge.id)
-      );
-    }, 1000);
   };
 
   //   const handleEditPropertyDialogOpen = (property) => {
