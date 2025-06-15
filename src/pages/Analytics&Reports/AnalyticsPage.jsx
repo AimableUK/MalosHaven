@@ -75,9 +75,12 @@ const AnalyticsPage = () => {
   return (
     <Box className="m-1 md:m-3">
       {/* first extended row */}
-      <Box className={`flex ${is1230 ? "flex-row" : "flex-col"} gap-1 w-full`}>
+      <Box
+        className={`flex ${is1230 ? "flex-row" : "flex-col"} gap-1 w-full my-2`}
+        sx={{ alignItems: "stretch" }}
+      >
         {/* boxes */}
-        <Box className="flex flex-col w-full">
+        <Box className="flex flex-col w-full h-full">
           {/* first 2 boxes */}
           <Box display="flex" flexDirection="row">
             <Box
@@ -156,11 +159,11 @@ const AnalyticsPage = () => {
             <Box
               className="flex flex-col border-t-2 border-t-slate-300 justify-center"
               sx={{
+                width: "100%",
                 display: "flex",
                 borderRadius: "8px",
                 p: "16px",
                 background: "#2D454D",
-                width: "100%",
                 margin: "5px",
               }}
             >
@@ -184,13 +187,13 @@ const AnalyticsPage = () => {
               className="flex flex-col border-t-2 border-t-slate-300 h-full justify-center"
               sx={{
                 width: "100%",
+                height: "100%",
                 display: "flex",
                 borderRadius: "8px",
                 p: "16px",
                 background: "#2D454D",
-                m: "5px",
-                ml: "8px",
-                mt: "5px",
+                mx: "5px",
+                mt: "2px",
               }}
             >
               <Typography fontSize="14px" color="#BDBDBD">
@@ -204,9 +207,22 @@ const AnalyticsPage = () => {
               >
                 $1,000
               </Typography>
+              <Typography fontSize="14px" color="#BDBDBD">
+                Average Order value
+              </Typography>
+              <Typography
+                sx={{
+                  fontSize: { xs: "1.4rem", md: "2.1rem", lg: "2.1rem" },
+                }}
+                fontWeight="bold"
+              >
+                $1,000
+              </Typography>
+              <Typography fontSize="14px" color="#BDBDBD">
+                Average Order value
+              </Typography>
             </Box>
           </Box>
-          
         </Box>
         {/* chart */}
         <Box
@@ -217,7 +233,7 @@ const AnalyticsPage = () => {
             p: 2,
             background: "#2D454D",
             overflow: "hidden",
-            my: "7px",
+            mt: "5px",
           }}
           className="border-t-2 border-t-slate-300 w-full"
         >
@@ -262,7 +278,7 @@ const AnalyticsPage = () => {
 
       {/* second extended row */}
       <Box
-        className={`flex ${is1230 ? "flex-row" : "flex-col"} m-2 mb-5 gap-3 font-roboto`}
+        className={`flex ${is1230 ? "flex-row" : "flex-col"} gap-3 font-roboto`}
       >
         {/* line chart */}
         <Box
