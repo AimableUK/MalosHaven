@@ -27,7 +27,7 @@ const LodgeDetails = () => {
   const [deleteType, setDeleteType] = useState(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
-  const [selectedRoomId, setSelectedRoomId] = useState(null);
+  const [selectedRoom, setSelectedRoom] = useState(null);
   const [selectedLodge, setSelectedLodge] = useState(null);
 
   const [editLodgeFormModal, setEditLodgeFormModal] = useState(false);
@@ -42,6 +42,7 @@ const LodgeDetails = () => {
   const rooms = useRoomStore((state) => state.rooms);
   const addRoom = useRoomStore((state) => state.addRoom);
   const editRoom = useRoomStore((state) => state.editRoom);
+  const deleteRoom = useRoomStore((state) => state.deleteRoom);
 
   const [snackbar, setSnackbar] = useState({
     open: false,
@@ -80,8 +81,8 @@ const LodgeDetails = () => {
           variant="contained"
           color="success"
           onClick={() => {
-            setSelectedRoomId(params.row.id);
-            setEditDialogOpen(true);
+            setSelectedRoom(params.row);
+            setEditRoomFormModal(true);
           }}
           startIcon={<EditIcon />}
         >
@@ -97,7 +98,7 @@ const LodgeDetails = () => {
         <Button
           variant="contained"
           color="error"
-          onClick={() => handleDelete(params.row.id, "room")}
+          onClick={() => handleDelete(params.row, "room")}
           startIcon={<DeleteIcon />}
         >
           Delete
@@ -139,8 +140,6 @@ const LodgeDetails = () => {
     );
   }
 
-  const selectedRoom = lodge.rooms.find((room) => room.id === selectedRoomId);
-
   const showSnackbar = (message, severity = "success") => {
     setSnackbar((prev) => ({ ...prev, open: false }));
     setTimeout(() => {
@@ -162,24 +161,15 @@ const LodgeDetails = () => {
   };
 
   const processRowUpdate = (newRow) => {
-    const updatedLodge = lodges.map((lodge) =>
-      lodge.id === parseInt(id)
-        ? {
-            ...lodge,
-            rooms: lodge.rooms.map((room) =>
-              room.id === newRow.id ? newRow : room
-            ),
-          }
-        : lodge
-    );
-    setLodges(updatedLodge);
+    updateRoomInLodge(newRow);
+    editRoom(newRow);
     showSnackbar(`${newRow.name} updated successfully!`, "success");
     return newRow;
   };
 
   const handleEditRoom = (updatedRoom) => {
     updateRoomInLodge(updatedRoom);
-    editRoom(updatedRoom)
+    editRoom(updatedRoom);
     showSnackbar(`Room ${updatedRoom.name} updated successfully!`, "success");
   };
 
@@ -188,7 +178,7 @@ const LodgeDetails = () => {
   const handleDelete = (id, type) => {
     if (type === "room") {
       setDeleteType(type);
-      setSelectedRoomId(id);
+      setSelectedRoom(id);
       setDeleteDialogOpen(true);
     } else {
       setDeleteType(type);
@@ -198,20 +188,10 @@ const LodgeDetails = () => {
   };
 
   const handleDeleteRoom = () => {
-    setLodges((prevLodges) =>
-      prevLodges.map((lodge) =>
-        lodge.id === parseInt(id)
-          ? {
-              ...lodge,
-              rooms: lodge.rooms.filter((room) => room.id !== selectedRoomId),
-            }
-          : lodge
-      )
-    );
-
-    showSnackbar("Room deleted successfully!", "success");
+    deleteRoom(selectedRoom.id);
+    showSnackbar(`${selectedRoom.name} deleted successfully!`, "success");
     setDeleteDialogOpen(false);
-    setSelectedRoomId(null);
+    setSelectedRoom(null);
   };
 
   const handleDeleteLodge = () => {
@@ -356,7 +336,9 @@ const LodgeDetails = () => {
           </Box>
 
           <DataGrid
-            rows={rooms.filter((room) => room.isAvailable == true)}
+            rows={
+              lodge?.rooms.filter((room) => room.isAvailable === true) || []
+            }
             columns={columns}
             showToolbar
             initialState={{

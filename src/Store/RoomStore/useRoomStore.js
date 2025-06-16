@@ -28,6 +28,12 @@ const useRoomStore = create((set) => ({
         room.id === updatedRoom.id ? updatedRoom : room
       ),
     })),
+
+  // delete Room:
+  deleteRoom: (id) =>
+    set((state) => ({
+      rooms: state.rooms.filter((room) => room.id !== id),
+    })),
 }));
 
 export default useRoomStore;

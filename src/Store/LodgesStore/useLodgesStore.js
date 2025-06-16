@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import LodgesList from "../../Data/SiteDataComponent/Lodges";
 
-const useLodgesStore = create((set, get) => ({
+const useLodgesStore = create((set) => ({
   lodges: [...LodgesList],
 
   // add Lodge:
@@ -36,22 +36,14 @@ const useLodgesStore = create((set, get) => ({
 
   // update room in lodge:
   updateRoomInLodge: (updatedRoom) => {
-    const { lodges } = get();
-
-    const updatedLodges = lodges.map((lodge) => {
-      if (lodge.id === updatedRoom.id) return lodge;
-
-      return {
+    set((state) => ({
+      lodges: state.lodges.map((lodge) => ({
         ...lodge,
-        rooms: lodge.rooms.map((room) => {
-          if (room.id === updatedRoom.id) {
-            return room;
-          }
-        }),
-      };
-    });
-
-    set({ lodges: updatedLodges });
+        rooms: lodge.rooms.map((room) =>
+          room.id === updatedRoom.id ? updatedRoom : room
+        ),
+      })),
+    }));
   },
 }));
 
