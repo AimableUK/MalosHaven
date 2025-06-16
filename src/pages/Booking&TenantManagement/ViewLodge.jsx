@@ -22,7 +22,7 @@ import useRoomStore from "../../Store/RoomStore/useRoomStore";
 
 const LodgeDetails = () => {
   const [openModal, setOpenModal] = useState(false);
-  const [editDialogOpen, setEditDialogOpen] = useState(false);
+  const [editRoomFormModal, setEditRoomFormModal] = useState(false);
 
   const [deleteType, setDeleteType] = useState(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
@@ -31,16 +31,17 @@ const LodgeDetails = () => {
   const [selectedLodge, setSelectedLodge] = useState(null);
 
   const [editLodgeFormModal, setEditLodgeFormModal] = useState(false);
-  const [addLodgeOpenModal, setAddLodgeOpenModal] = useState(false);
 
   const lodges = useLodgesStore((state) => state.lodges);
   const editLodge = useLodgesStore((state) => state.editLodge);
   const deleteLodge = useLodgesStore((state) => state.deleteLodge);
   const addRoomToLodge = useLodgesStore((state) => state.addRoomToLodge);
+  const updateRoomInLodge = useLodgesStore((state) => state.updateRoomInLodge);
   const { setRoomsfromLodges } = useRoomStore();
 
   const rooms = useRoomStore((state) => state.rooms);
   const addRoom = useRoomStore((state) => state.addRoom);
+  const editRoom = useRoomStore((state) => state.editRoom);
 
   const [snackbar, setSnackbar] = useState({
     open: false,
@@ -177,18 +178,8 @@ const LodgeDetails = () => {
   };
 
   const handleEditRoom = (updatedRoom) => {
-    setLodges((prevLodges) =>
-      prevLodges.map((lodge) =>
-        lodge.id === parseInt(id)
-          ? {
-              ...lodge,
-              rooms: lodge.rooms.map((room) =>
-                room.id === updatedRoom.id ? updatedRoom : room
-              ),
-            }
-          : lodge
-      )
-    );
+    updateRoomInLodge(updatedRoom);
+    editRoom(updatedRoom)
     showSnackbar(`Room ${updatedRoom.name} updated successfully!`, "success");
   };
 
@@ -413,8 +404,8 @@ const LodgeDetails = () => {
       />
 
       <EditRoomFormModal
-        open={editDialogOpen}
-        onClose={() => setEditDialogOpen(false)}
+        open={editRoomFormModal}
+        onClose={() => setEditRoomFormModal(false)}
         onEditRoom={handleEditRoom}
         selectedRoom={selectedRoom}
       />

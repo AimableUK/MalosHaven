@@ -20,6 +20,14 @@ const useRoomStore = create((set) => ({
     set((state) => ({
       rooms: [...state.rooms, newRoom],
     })),
+
+  // edit Room:
+  editRoom: (updatedRoom) =>
+    set((state) => ({
+      rooms: state.rooms.map((room) =>
+        room.id === updatedRoom.id ? updatedRoom : room
+      ),
+    })),
 }));
 
 export default useRoomStore;
