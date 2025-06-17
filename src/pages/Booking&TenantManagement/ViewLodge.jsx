@@ -37,6 +37,9 @@ const LodgeDetails = () => {
   const deleteLodge = useLodgesStore((state) => state.deleteLodge);
   const addRoomToLodge = useLodgesStore((state) => state.addRoomToLodge);
   const updateRoomInLodge = useLodgesStore((state) => state.updateRoomInLodge);
+  const deleteRoomFromLodge = useLodgesStore(
+    (state) => state.deleteRoomFromLodge
+  );
   const { setRoomsfromLodges } = useRoomStore();
 
   const rooms = useRoomStore((state) => state.rooms);
@@ -155,8 +158,8 @@ const LodgeDetails = () => {
     addRoom(newRoom);
     addRoomToLodge(lodge.id, newRoom);
 
-    const updatedLodges = useLodgesStore.getState().lodges;
-    setRoomsfromLodges(updatedLodges);
+    // const updatedLodges = useLodgesStore.getState().lodges;
+    // setRoomsfromLodges(updatedLodges);
     showSnackbar(`${newRoom.name} added Successfully`, "success");
   };
 
@@ -189,6 +192,11 @@ const LodgeDetails = () => {
 
   const handleDeleteRoom = () => {
     deleteRoom(selectedRoom.id);
+    deleteRoomFromLodge(selectedRoom.id);
+
+    const updatedLodges = useLodgesStore.getState().lodges;
+    setRoomsfromLodges(updatedLodges);
+
     showSnackbar(`${selectedRoom.name} deleted successfully!`, "success");
     setDeleteDialogOpen(false);
     setSelectedRoom(null);
@@ -336,9 +344,9 @@ const LodgeDetails = () => {
           </Box>
 
           <DataGrid
-            rows={
-              lodge?.rooms.filter((room) => room.isAvailable === true) || []
-            }
+            rows={rooms.filter(
+              (room) => room.lodgeId === parseInt(id) && room.isAvailable
+            )}
             columns={columns}
             showToolbar
             initialState={{

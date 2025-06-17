@@ -45,6 +45,16 @@ const useLodgesStore = create((set) => ({
       })),
     }));
   },
+
+  // Delete room in lodge:
+  deleteRoomFromLodge: (roomId) => {
+    set((state) => ({
+      lodges: state.lodges.map((lodge) => ({
+        ...lodge,
+        rooms: lodge.rooms.filter((room) => room.id !== roomId),
+      })),
+    }));
+  },
 }));
 
 export default useLodgesStore;

@@ -70,14 +70,14 @@ const AddRoomFormModal = ({ open, onClose, onAddRoom }) => {
     <>
       <Dialog open={open} onClose={onClose}>
         <DialogTitle sx={{ fontWeight: "bold" }}>Add New Room</DialogTitle>
-        <DialogContent sx={{ gap: 2, mt: "10px" }}>
+        <DialogContent sx={{ gap: 2 }}>
           <TextField
             label="Lodge Name"
             name="lodgename"
             fullWidth
             value={formData.lodgename}
             onChange={handleChange}
-            sx={{ mb: 1 }}
+            sx={{ my :1 }}
           />
           <TextField
             label="Room Price"
