@@ -157,9 +157,6 @@ const LodgeDetails = () => {
   const handleAddRoom = (newRoom) => {
     addRoom(newRoom);
     addRoomToLodge(lodge.id, newRoom);
-
-    // const updatedLodges = useLodgesStore.getState().lodges;
-    // setRoomsfromLodges(updatedLodges);
     showSnackbar(`${newRoom.name} added Successfully`, "success");
   };
 
@@ -192,7 +189,7 @@ const LodgeDetails = () => {
 
   const handleDeleteRoom = () => {
     deleteRoom(selectedRoom.id);
-    deleteRoomFromLodge(selectedRoom.id);
+    useLodgesStore.getState().deleteRoomFromLodge(selectedRoom.id);
 
     const updatedLodges = useLodgesStore.getState().lodges;
     setRoomsfromLodges(updatedLodges);
@@ -311,7 +308,7 @@ const LodgeDetails = () => {
               />
               &nbsp;
               {lodge.rooms.length}
-              &nbsp;Rooms
+              &nbsp;Room{lodge.rooms.length > 1 && "s"}
             </Typography>
 
             <Typography fontWeight="bold">
