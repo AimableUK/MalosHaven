@@ -17,16 +17,18 @@ import {
 } from "@mui/material";
 import { useReactToPrint } from "react-to-print";
 import { Link, useParams } from "react-router-dom";
-import MyInvoices from "../../Data/SiteDataComponent/Invoices";
 import Logo from "../../assets/Logo.svg";
 import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
+import useInvoiceStore from "../../Store/InvoicesStore/useInvoiceStore";
 
 const PrintableInvoice = () => {
-  const [invoices, setInvoices] = useState(MyInvoices);
   const [scrollX, setScrollX] = useState(true);
+
+  const invoices = useInvoiceStore((state) => state.invoices);
 
   const { id } = useParams();
   const invoice = invoices.find((invoice) => invoice.id === parseInt(id));
+
   useEffect(() => {
     document.title = `${invoice?.tenantName || "Tenant"}'s Invoice`;
   });

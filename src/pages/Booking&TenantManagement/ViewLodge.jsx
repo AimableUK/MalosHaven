@@ -37,9 +37,6 @@ const LodgeDetails = () => {
   const deleteLodge = useLodgesStore((state) => state.deleteLodge);
   const addRoomToLodge = useLodgesStore((state) => state.addRoomToLodge);
   const updateRoomInLodge = useLodgesStore((state) => state.updateRoomInLodge);
-  const deleteRoomFromLodge = useLodgesStore(
-    (state) => state.deleteRoomFromLodge
-  );
   const { setRoomsfromLodges } = useRoomStore();
 
   const rooms = useRoomStore((state) => state.rooms);
