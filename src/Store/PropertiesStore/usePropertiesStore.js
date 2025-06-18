@@ -36,7 +36,7 @@ const usePropertiesStore = create((set, get) => ({
 
   // -------- Tenant --------
 
-  // adding a tenant ~ useTenantStore
+  // adding a tenant:
   addTenantToProperty: (newTenant) => {
     const { properties } = get();
 
@@ -60,7 +60,7 @@ const usePropertiesStore = create((set, get) => ({
     set({ properties: updatedProperties });
   },
 
-  // editting a tenant ~ useTenantStore
+  // editting a tenant:
   updateTenantInProperty: (updatedTenant) => {
     const { properties } = get();
 
@@ -80,6 +80,26 @@ const usePropertiesStore = create((set, get) => ({
         }),
       };
     });
+
+    set({ properties: updatedProperties });
+  },
+
+  // deleting a tenant
+  deleteTenantFromProperty: (tenantId) => {
+    const { properties } = get();
+
+    const updatedProperties = properties.map((property) => ({
+      ...property,
+      units: property.units.map((unit) => {
+        if (unit.tenant?.tenant_id === tenantId) {
+          return {
+            ...unit,
+            tenant: null,
+          };
+        }
+        return unit;
+      }),
+    }));
 
     set({ properties: updatedProperties });
   },

@@ -29,7 +29,6 @@ import userAvatar from "../../assets/userAvatar.jpg";
 import MobileTenantDisplay from "./MobileTenantDisplay";
 import FooterPage from "../Footer/FooterPage";
 import AppSnackbar from "../../components/utils/MySnackbar/AppSnackbar";
-import useTenantStore from "../../Store/TenantsStore/useTenantsStore";
 import usePropertiesStore from "../../Store/PropertiesStore/usePropertiesStore";
 
 const TenantsPage = () => {
@@ -58,16 +57,24 @@ const TenantsPage = () => {
   const updateTenantInProperty = usePropertiesStore(
     (state) => state.updateTenantInProperty
   );
+  const deleteTenantFromProperty = usePropertiesStore(
+    (state) => state.deleteTenantFromProperty
+  );
 
-  const tenants = useTenantStore((state) => state.tenants);
-  const addTenant = useTenantStore((state) => state.addTenant);
-  const updateTenant = useTenantStore((state) => state.updateTenant);
-  const deleteTenant = useTenantStore((state) => state.deleteTenant);
-  const { setTenantsFromProperties } = useTenantStore();
+  const tenants = properties.flatMap((property) =>
+    property.units
+      .map((unit) => {
+        if (!unit.tenant) return null;
 
-  useEffect(() => {
-    setTenantsFromProperties(properties);
-  }, [setTenantsFromProperties, properties]);
+        return {
+          ...unit.tenant,
+          unit: unit.UnitNumber,
+          propertyId: property.id,
+          property: property.title,
+        };
+      })
+      .filter(Boolean)
+  );
 
   const filteredTenants = useMemo(() => {
     return tenants.filter(
@@ -110,7 +117,7 @@ const TenantsPage = () => {
   };
 
   const handleDeleteTenant = () => {
-    deleteTenant(selectedTenant.tenant_id);
+    deleteTenantFromProperty(selectedTenant.tenant_id);
     setDeleteDialogOpen(false);
     setMobileTenantDisplayOpenModal(false);
     showSnackbar(`${selectedTenant.name} deleted Successfully`, "success");
@@ -139,10 +146,10 @@ const TenantsPage = () => {
 
   const handleAddTenant = (newTenant) => {
     addTenantToProperty(newTenant);
-    addTenant(newTenant);
-    const updatedProperties = usePropertiesStore.getState().properties;
-    setTenantsFromProperties(updatedProperties);
-    showSnackbar("Tenant added successfully!", "success");
+    // addTenant(newTenant);
+    // const updatedProperties = usePropertiesStore.getState().properties;
+    // setTenantsFromProperties(updatedProperties);
+    showSnackbar(`${newTenant.name} Tenant added successfully!`, "success");
   };
 
   const handleUpdateTenant = (updatedTenant) => {
