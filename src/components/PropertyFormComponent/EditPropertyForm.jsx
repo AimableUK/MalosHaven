@@ -86,10 +86,15 @@ const EditPropertyFormModal = ({
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
-    if (file) {
+    if (file && file.type.startsWith("image/")) {
       setImage(file);
-      setImagePreview(URL.createObjectURL(file));
-      setPreview(URL.createObjectURL(file));
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    } else {
+      setSnackbar("Please select a valid image file.", "error");
     }
   };
 

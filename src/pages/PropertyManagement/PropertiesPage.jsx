@@ -13,10 +13,11 @@ import { useMediaQuery } from "@mui/material";
 import DataDeleteConfirm from "../../components/DeleteConfirmComponent/DataDeleteConfirm";
 import EditPropertyFormModal from "../../components/PropertyFormComponent/EditPropertyForm";
 import AppSnackbar from "../../components/utils/MySnackbar/AppSnackbar";
+import usePropertiesStore from "../../Store/PropertiesStore/usePropertiesStore";
 
 const PropertiesPage = () => {
   const [addPropertyOpenModal, setAddPropertyOpenModal] = useState(false);
-  const [properties, setProperties] = useState(MyProperties);
+  // const [properties, setProperties] = useState(MyProperties);
 
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [editPropertyFormModal, setEditPropertyFormModal] = useState(false);
@@ -27,6 +28,9 @@ const PropertiesPage = () => {
     message: "",
     severity: "",
   });
+
+  const properties = usePropertiesStore((state) => state.properties);
+  const addProperties = usePropertiesStore((state) => state.addProperties);
 
   const deleteProperty =
     "Are you sure you want to Delete this Property? If you do so, it will be undone";
@@ -55,7 +59,7 @@ const PropertiesPage = () => {
   };
 
   const handleAddProp = (newProp) => {
-    setProperties((prev) => [...prev, newProp]);
+    addProperties(newProp);
     setAddPropertyOpenModal(false);
     showSnackbar("Property added successfully!", "success");
   };

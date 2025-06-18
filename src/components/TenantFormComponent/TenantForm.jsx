@@ -163,11 +163,7 @@ const TenantForm = ({ open, onClose, onAddTenant, properties }) => {
       };
       reader.readAsDataURL(file);
     } else {
-      setSnackbar({
-        open: true,
-        message: "Please select a valid image file.",
-        severity: "error",
-      });
+      setSnackbar("Please select a valid image file.", "error");
     }
   };
 
