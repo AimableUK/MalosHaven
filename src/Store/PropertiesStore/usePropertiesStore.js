@@ -9,7 +9,6 @@ const usePropertiesStore = create((set, get) => ({
       properties: [...state.properties, newProp]
     })),
 
-
   // setting properties - Maintenance Page - Mark As Done
   setProperties: (updatedProperties) =>
     set(() => ({

@@ -102,6 +102,12 @@ const EditPropertyFormModal = ({
     setSnackbar({ ...snackbar, open: false });
   };
 
+  const onCancel = () => {
+    setFormData({ name: "", desc: "", loc: "" });
+    setImagePreview(null);
+    setImage(null);
+  };
+
   return (
     <>
       <Dialog open={open} onClose={onClose}>
@@ -118,7 +124,8 @@ const EditPropertyFormModal = ({
             <img
               src={typeof image === "string" ? image : imagePreview}
               alt="Property Image"
-              style={{ maxWidth: "100%", marginTop: 8 }}
+              style={{ marginTop: 8 }}
+              width="50%"
             />
             {preview}
           </Box>
@@ -165,7 +172,13 @@ const EditPropertyFormModal = ({
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={onClose} color="secondary">
+          <Button
+            onClick={() => {
+              onClose();
+              onCancel();
+            }}
+            color="secondary"
+          >
             Cancel
           </Button>
           <Button onClick={handleSubmit} variant="contained">

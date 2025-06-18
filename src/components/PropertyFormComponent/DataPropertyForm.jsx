@@ -63,20 +63,20 @@ const DataPropertyFormModal = ({ open, onClose, onAddProperty }) => {
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
-    if (file && file.type.startsWith("image/")) {
+    if (file) {
       setImage(file);
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result);
-      };
-      reader.readAsDataURL(file);
-    } else {
-      setSnackbar("Please select a valid image file.", "error");
+      setImagePreview(URL.createObjectURL(file));
     }
   };
 
   const handleCloseSnackbar = () => {
     setSnackbar({ ...snackbar, open: false });
+  };
+
+  const onCancel = () => {
+    setFormData({ name: "", desc: "", loc: "" });
+    setImagePreview(null);
+    setImage(null);
   };
 
   return (
@@ -131,7 +131,13 @@ const DataPropertyFormModal = ({ open, onClose, onAddProperty }) => {
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={onClose} color="secondary">
+          <Button
+            onClick={() => {
+              onClose();
+              onCancel();
+            }}
+            color="secondary"
+          >
             Cancel
           </Button>
           <Button onClick={handleSubmit} variant="contained">
