@@ -4,6 +4,8 @@ import propertiesList from "../../Data/SiteDataComponent/Properties";
 const usePropertiesStore = create((set, get) => ({
   properties: [...propertiesList],
 
+  // -------- Property --------
+
   // add Property:
   addProperty: (newProp) =>
     set((state) => ({
@@ -24,11 +26,15 @@ const usePropertiesStore = create((set, get) => ({
       properties: state.properties.filter((property) => property.id !== id),
     })),
 
+  // -------- Maintenance --------
+
   // setting properties - Maintenance Page - Mark As Done
   setProperties: (updatedProperties) =>
     set(() => ({
       properties: updatedProperties,
     })),
+
+  // -------- Tenant --------
 
   // adding a tenant ~ useTenantStore
   addTenantToProperty: (newTenant) => {
@@ -78,6 +84,8 @@ const usePropertiesStore = create((set, get) => ({
     set({ properties: updatedProperties });
   },
 
+  // -------- unit --------
+
   // add unit to properties:
   addUnitToProperty: (propertyId, newUnit) =>
     set((state) => ({
@@ -88,7 +96,33 @@ const usePropertiesStore = create((set, get) => ({
       ),
     })),
 
-  //
+  // edit Unit in properties:
+  editUnitInProperty: (propertyId, updatedUnit) =>
+    set((state) => ({
+      properties: state.properties.map((property) =>
+        property.id === propertyId
+          ? {
+              ...property,
+              units: property.units.map((unit) =>
+                unit.id === updatedUnit.id ? updatedUnit : unit
+              ),
+            }
+          : property
+      ),
+    })),
+
+  // delete unit from properties:
+  deleteUnitFromProperty: (propertyId, id) =>
+    set((state) => ({
+      properties: state.properties.map((property) =>
+        property.id === propertyId
+          ? {
+              ...property,
+              units: property.units.filter((unit) => unit.id !== id),
+            }
+          : property
+      ),
+    })),
 }));
 
 export default usePropertiesStore;

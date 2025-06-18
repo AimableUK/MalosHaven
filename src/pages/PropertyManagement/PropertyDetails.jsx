@@ -42,8 +42,11 @@ const PropertyDetails = () => {
   const addUnitToProperty = usePropertiesStore(
     (state) => state.addUnitToProperty
   );
-  const updateUnitInProperty = usePropertiesStore(
-    (state) => state.updateUnitInProperty
+  const editUnitInProperty = usePropertiesStore(
+    (state) => state.editUnitInProperty
+  );
+  const deleteUnitFromProperty = usePropertiesStore(
+    (state) => state.deleteUnitFromProperty
   );
 
   const columns = [
@@ -120,7 +123,7 @@ const PropertyDetails = () => {
   const { id } = useParams();
   const property = properties.find((property) => property.id === parseInt(id));
   const units = property?.units || [];
-  
+
   if (!property) {
     return (
       <Box className="m-3 flex justify-center p-2 bg-[#2D454D] rounded-md border-t-2 border-t-slate-300">
@@ -154,37 +157,13 @@ const PropertyDetails = () => {
   };
 
   const processRowUpdate = (newRow) => {
-    const updatedProperty = properties.map((property) =>
-      property.id === parseInt(id)
-        ? {
-            ...property,
-            units: property.units.map((unit) =>
-              unit.id === newRow.id ? newRow : unit
-            ),
-          }
-        : property
-    );
-
-    setProperties(updatedProperty);
-
+    editUnitInProperty(property.id, newRow);
     showSnackbar(`Unit ${newRow.UnitNumber} updated successfully!`, "success");
-
     return newRow;
   };
 
   const handleEditUnit = (updatedUnit) => {
-    setProperties((prevProperties) =>
-      prevProperties.map((property) =>
-        property.id === parseInt(id)
-          ? {
-              ...property,
-              units: property.units.map((unit) =>
-                unit.id === updatedUnit.id ? updatedUnit : unit
-              ),
-            }
-          : property
-      )
-    );
+    editUnitInProperty(property.id, updatedUnit);
     showSnackbar(
       `Unit ${updatedUnit.UnitNumber} updated successfully!`,
       "success"
@@ -206,19 +185,7 @@ const PropertyDetails = () => {
   };
 
   const handleDeleteUnit = () => {
-    setProperties((prevProperties) =>
-      prevProperties.map((property) =>
-        property.id === parseInt(id)
-          ? {
-              ...property,
-              units: property.units.filter(
-                (unit) => unit.id !== selectedUnitId
-              ),
-            }
-          : property
-      )
-    );
-
+    deleteUnitFromProperty(property.id, selectedUnitId);
     showSnackbar(`Unit deleted successfully!`, "success");
     setDeleteDialogOpen(false);
     setSelectedUnitId(null);
