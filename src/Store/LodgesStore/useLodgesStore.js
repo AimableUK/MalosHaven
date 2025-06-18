@@ -4,6 +4,8 @@ import LodgesList from "../../Data/SiteDataComponent/Lodges";
 const useLodgesStore = create((set) => ({
   lodges: [...LodgesList],
 
+  // ---------- Lodge ----------
+
   // add Lodge:
   addLodge: (newLodge) =>
     set((state) => ({
@@ -23,6 +25,8 @@ const useLodgesStore = create((set) => ({
     set((state) => ({
       lodges: state.lodges.filter((lodge) => lodge.id !== id),
     })),
+
+  // ---------- rooms ----------
 
   // add room to lodges:
   addRoomToLodge: (lodgeId, newRoom) =>

@@ -65,15 +65,14 @@ const EditUnitFormModal = ({ open, onClose, onEditUnit, selectedUnit }) => {
     <>
       <Dialog open={open} onClose={onClose}>
         <DialogTitle sx={{ fontWeight: "bold" }}>Edit Unit</DialogTitle>
-        <DialogContent
-          sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 1 }}
-        >
+        <DialogContent>
           <TextField
             label="Unit Number"
             name="unit"
             fullWidth
             value={formData.unit}
             onChange={handleChange}
+            sx={{ my: 1 }}
           />
           <TextField
             label="Unit Value"
@@ -82,6 +81,7 @@ const EditUnitFormModal = ({ open, onClose, onEditUnit, selectedUnit }) => {
             type="number"
             value={formData.value}
             onChange={handleChange}
+            sx={{ mt: 1 }}
           />
         </DialogContent>
         <DialogActions>
