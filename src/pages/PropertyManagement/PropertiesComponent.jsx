@@ -146,6 +146,7 @@ const PropertiesComponent = () => {
                   <Link
                     to={`/propertydetails/${property.id}`}
                     key={property.id}
+                    state={{ from: location.pathname }}
                   >
                     <Typography fontWeight="bold" m="5px">
                       {property.title}

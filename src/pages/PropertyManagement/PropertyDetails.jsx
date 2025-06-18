@@ -8,7 +8,6 @@ import DataDeleteConfirm from "../../components/DeleteConfirmComponent/DataDelet
 import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 import EditUnitFormModal from "../../components/UnitFormComponent/EditUnitForm";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
-import MyProperties from "../../Data/SiteDataComponent/Properties";
 import FooterPage from "../Footer/FooterPage";
 import AddIcon from "@mui/icons-material/Add";
 import PlaceIcon from "@mui/icons-material/Place";
@@ -18,9 +17,9 @@ import HolidayVillageIcon from "@mui/icons-material/HolidayVillage";
 import ConfirmationNumberIcon from "@mui/icons-material/ConfirmationNumber";
 import ChairIcon from "@mui/icons-material/Chair";
 import AppSnackbar from "../../components/utils/MySnackbar/AppSnackbar";
+import usePropertiesStore from "../../Store/PropertiesStore/usePropertiesStore";
 
 const PropertyDetails = () => {
-  const [properties, setProperties] = useState(MyProperties);
   const [openModal, setOpenModal] = useState(false);
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
@@ -35,6 +34,10 @@ const PropertyDetails = () => {
     message: "",
     severity: "",
   });
+
+  const properties = usePropertiesStore((state) => state.properties);
+  const editProperty = usePropertiesStore((state) => state.editProperty);
+  const deleteProperty = usePropertiesStore((state) => state.deleteProperty);
 
   const columns = [
     {
@@ -226,13 +229,9 @@ const PropertyDetails = () => {
         snackbar: `${selectedProperty.title} deleted successfully`,
       },
     });
-
     setDeleteDialogOpen(false);
-
     setTimeout(() => {
-      setProperties((prev) =>
-        prev.filter((property) => property.id !== selectedProperty.id)
-      );
+      deleteProperty(selectedProperty.id);
     }, 1000);
   };
 
@@ -242,11 +241,7 @@ const PropertyDetails = () => {
   };
 
   const handleEditProp = (updatedProperty) => {
-    setProperties((prevProperties) =>
-      prevProperties.map((property) =>
-        property.id === updatedProperty.id ? updatedProperty : property
-      )
-    );
+    editProperty(updatedProperty);
     setEditPropertyFormModal(false);
     showSnackbar(`${updatedProperty.title} Updated Successfully`, "success");
   };
@@ -268,8 +263,10 @@ const PropertyDetails = () => {
         className="m-2 md:m-5 md:mt-10 border-t-2 border-t-slate-300"
       >
         <Box className="bg-[#1b2c31] md:pr-5 w-fit right-0 top-0 self-end rounded-full group">
-          <Link to="/properties" className="group">
-            <Tooltip title="Return to Properties">
+          <Link to={backPath} className="group">
+            <Tooltip
+              title={`Return to ${backPath === "/" ? "Dashboard" : "Profile"}`}
+            >
               <IconButton sx={{ bgcolor: "#1b2c31" }}>
                 <ArrowCircleLeftIcon
                   fontSize="medium"
