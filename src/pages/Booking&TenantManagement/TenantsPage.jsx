@@ -146,16 +146,11 @@ const TenantsPage = () => {
 
   const handleAddTenant = (newTenant) => {
     addTenantToProperty(newTenant);
-    // addTenant(newTenant);
-    // const updatedProperties = usePropertiesStore.getState().properties;
-    // setTenantsFromProperties(updatedProperties);
     showSnackbar(`${newTenant.name} Tenant added successfully!`, "success");
   };
 
   const handleUpdateTenant = (updatedTenant) => {
     updateTenantInProperty(updatedTenant);
-    updateTenant(updatedTenant);
-    setTenantsFromProperties(usePropertiesStore.getState().properties);
     showSnackbar(`${updatedTenant.name} updated successfully!`, "success");
   };
 
@@ -416,14 +411,14 @@ const TenantsPage = () => {
 
       <TenantForm
         open={addTenantOpenModal}
-        onClose={() => setAddTenantOpenModal(false)}
+        onClose={() => setAddTenantOpenModal(null)}
         onAddTenant={handleAddTenant}
         properties={properties}
       />
 
       <TenantUpdateForm
         open={updateTenantOpenModal}
-        onClose={() => setUpdateTenantOpenModal(false)}
+        onClose={() => setUpdateTenantOpenModal(null)}
         onUpdateTenant={handleUpdateTenant}
         properties={properties}
         selectedTenant={selectedTenant}
