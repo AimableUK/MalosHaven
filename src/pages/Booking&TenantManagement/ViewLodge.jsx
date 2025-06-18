@@ -18,7 +18,6 @@ import AddRoomFormModal from "../../components/RoomFormComponent/AddRoomForm";
 import AppSnackbar from "../../components/utils/MySnackbar/AppSnackbar";
 import useLodgesStore from "../../Store/LodgesStore/useLodgesStore";
 import EditLodgeFormModal from "../../components/LodgeFormComponent/EditLodgeForm";
-import useRoomStore from "../../Store/RoomStore/useRoomStore";
 
 const LodgeDetails = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -37,22 +36,15 @@ const LodgeDetails = () => {
   const deleteLodge = useLodgesStore((state) => state.deleteLodge);
   const addRoomToLodge = useLodgesStore((state) => state.addRoomToLodge);
   const updateRoomInLodge = useLodgesStore((state) => state.updateRoomInLodge);
-  
-  const { setRoomsfromLodges } = useRoomStore();
-  const rooms = useRoomStore((state) => state.rooms);
-  const addRoom = useRoomStore((state) => state.addRoom);
-  const editRoom = useRoomStore((state) => state.editRoom);
-  const deleteRoom = useRoomStore((state) => state.deleteRoom);
+  const deleteRoomFromLodge = useLodgesStore(
+    (state) => state.deleteRoomFromLodge
+  );
 
   const [snackbar, setSnackbar] = useState({
     open: false,
     message: "",
     severity: "",
   });
-
-  useEffect(() => {
-    setRoomsfromLodges(lodges);
-  }, [lodges, setRoomsfromLodges]);
 
   const columns = [
     {
@@ -127,6 +119,7 @@ const LodgeDetails = () => {
 
   const { id } = useParams();
   const lodge = lodges.find((lodge) => lodge.id === parseInt(id));
+  const rooms = lodge?.rooms || [];
 
   useEffect(() => {
     document.title = `${lodge?.name || "View Lodge"}`;
@@ -152,21 +145,18 @@ const LodgeDetails = () => {
   };
 
   const handleAddRoom = (newRoom) => {
-    addRoom(newRoom);
     addRoomToLodge(lodge.id, newRoom);
     showSnackbar(`${newRoom.name} added Successfully`, "success");
   };
 
   const processRowUpdate = (newRow) => {
     updateRoomInLodge(newRow);
-    editRoom(newRow);
     showSnackbar(`${newRow.name} updated successfully!`, "success");
     return newRow;
   };
 
   const handleEditRoom = (updatedRoom) => {
     updateRoomInLodge(updatedRoom);
-    editRoom(updatedRoom);
     showSnackbar(`Room ${updatedRoom.name} updated successfully!`, "success");
   };
 
@@ -185,12 +175,7 @@ const LodgeDetails = () => {
   };
 
   const handleDeleteRoom = () => {
-    deleteRoom(selectedRoom.id);
-    useLodgesStore.getState().deleteRoomFromLodge(selectedRoom.id);
-
-    const updatedLodges = useLodgesStore.getState().lodges;
-    setRoomsfromLodges(updatedLodges);
-
+    deleteRoomFromLodge(selectedRoom.id);
     showSnackbar(`${selectedRoom.name} deleted successfully!`, "success");
     setDeleteDialogOpen(false);
     setSelectedRoom(null);
@@ -338,9 +323,7 @@ const LodgeDetails = () => {
           </Box>
 
           <DataGrid
-            rows={rooms.filter(
-              (room) => room.lodgeId === parseInt(id) && room.isAvailable
-            )}
+            rows={rooms.filter((room) => room.isAvailable)}
             columns={columns}
             showToolbar
             initialState={{
