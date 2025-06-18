@@ -26,7 +26,7 @@ const DataDeleteConfirm = ({
   deleteALodge,
   deleteANotification,
   deleteAnAssistant,
-  deleteProperty,
+  deleteAProperty,
   deleteAnInvoice,
   deleteType,
 }) => {
@@ -83,7 +83,7 @@ const DataDeleteConfirm = ({
             {deleteATenant} {deleteUnitProp}
             {deleteRoomLodge} {deleteANotification}
             {deleteAnAssistant} {deleteAnInvoice}
-            {deleteProperty} {deleteALodge}
+            {deleteAProperty} {deleteALodge}
           </DialogContentText>
         </DialogContent>
         <DialogActions>

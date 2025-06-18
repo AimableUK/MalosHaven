@@ -4,9 +4,24 @@ import propertiesList from "../../Data/SiteDataComponent/Properties";
 const usePropertiesStore = create((set, get) => ({
   properties: [...propertiesList],
 
-  addProperties: (newProp) => 
+  // add Property:
+  addProperty: (newProp) =>
     set((state) => ({
-      properties: [...state.properties, newProp]
+      properties: [...state.properties, newProp],
+    })),
+
+  // edit Property:
+  editProperty: (updatedProperty) =>
+    set((state) => ({
+      properties: state.properties.map((property) =>
+        property.id === updatedProperty.id ? updatedProperty : property
+      ),
+    })),
+
+  // delete Property:
+  deleteProperty: (id) =>
+    set((state) => ({
+      properties: state.properties.filter((property) => property.id !== id),
     })),
 
   // setting properties - Maintenance Page - Mark As Done
@@ -15,6 +30,7 @@ const usePropertiesStore = create((set, get) => ({
       properties: updatedProperties,
     })),
 
+  // adding a tenant ~ useTenantStore
   addTenantToProperty: (newTenant) => {
     const { properties } = get();
 
@@ -38,6 +54,7 @@ const usePropertiesStore = create((set, get) => ({
     set({ properties: updatedProperties });
   },
 
+  // editting a tenant ~ useTenantStore
   updateTenantInProperty: (updatedTenant) => {
     const { properties } = get();
 

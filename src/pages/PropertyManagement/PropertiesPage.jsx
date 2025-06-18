@@ -7,7 +7,6 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import AddIcon from "@mui/icons-material/Add";
 import DataPropertyFormModal from "../../components/PropertyFormComponent/DataPropertyForm";
-import MyProperties from "../../Data/SiteDataComponent/Properties";
 import FooterPage from "../Footer/FooterPage";
 import { useMediaQuery } from "@mui/material";
 import DataDeleteConfirm from "../../components/DeleteConfirmComponent/DataDeleteConfirm";
@@ -17,7 +16,6 @@ import usePropertiesStore from "../../Store/PropertiesStore/usePropertiesStore";
 
 const PropertiesPage = () => {
   const [addPropertyOpenModal, setAddPropertyOpenModal] = useState(false);
-  // const [properties, setProperties] = useState(MyProperties);
 
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [editPropertyFormModal, setEditPropertyFormModal] = useState(false);
@@ -30,9 +28,11 @@ const PropertiesPage = () => {
   });
 
   const properties = usePropertiesStore((state) => state.properties);
-  const addProperties = usePropertiesStore((state) => state.addProperties);
+  const addProperty = usePropertiesStore((state) => state.addProperty);
+  const editProperty = usePropertiesStore((state) => state.editProperty);
+  const deleteProperty = usePropertiesStore((state) => state.deleteProperty);
 
-  const deleteProperty =
+  const deleteAProperty =
     "Are you sure you want to Delete this Property? If you do so, it will be undone";
 
   const isSmallScreen = useMediaQuery("(max-width:380px)");
@@ -59,9 +59,9 @@ const PropertiesPage = () => {
   };
 
   const handleAddProp = (newProp) => {
-    addProperties(newProp);
+    addProperty(newProp);
     setAddPropertyOpenModal(false);
-    showSnackbar("Property added successfully!", "success");
+    showSnackbar(`${newProp.title} Property added successfully!`, "success");
   };
 
   const handleDeleteDialogOpen = (property) => {
@@ -70,9 +70,7 @@ const PropertiesPage = () => {
   };
 
   const handleDeleteProperty = () => {
-    setProperties((prevProperty) =>
-      prevProperty.filter((property) => property.id !== selectedProperty.id)
-    );
+    deleteProperty(selectedProperty.id);
     setDeleteDialogOpen(false);
     showSnackbar(`${selectedProperty.title} deleted successfully`, "success");
   };
@@ -83,11 +81,7 @@ const PropertiesPage = () => {
   };
 
   const handleEditProp = (updatedProperty) => {
-    setProperties((prevProperties) =>
-      prevProperties.map((property) =>
-        property.id === updatedProperty.id ? updatedProperty : property
-      )
-    );
+    editProperty(updatedProperty);
     setEditPropertyFormModal(false);
     showSnackbar(`${updatedProperty.title} Updated Successfully`, "success");
   };
@@ -242,7 +236,7 @@ const PropertiesPage = () => {
         deleteDialogOpen={deleteDialogOpen}
         setDeleteDialogOpen={setDeleteDialogOpen}
         handleDeleteProperty={handleDeleteProperty}
-        deleteProperty={deleteProperty}
+        deleteAProperty={deleteAProperty}
         deleteType="property"
       />
       <AppSnackbar
