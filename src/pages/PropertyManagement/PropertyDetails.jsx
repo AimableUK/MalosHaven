@@ -18,7 +18,6 @@ import ConfirmationNumberIcon from "@mui/icons-material/ConfirmationNumber";
 import ChairIcon from "@mui/icons-material/Chair";
 import AppSnackbar from "../../components/utils/MySnackbar/AppSnackbar";
 import usePropertiesStore from "../../Store/PropertiesStore/usePropertiesStore";
-import useUnitStore from "../../Store/UnitStore/useUnitStore";
 
 const PropertyDetails = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -39,17 +38,13 @@ const PropertyDetails = () => {
   const properties = usePropertiesStore((state) => state.properties);
   const editProperty = usePropertiesStore((state) => state.editProperty);
   const deleteProperty = usePropertiesStore((state) => state.deleteProperty);
+
   const addUnitToProperty = usePropertiesStore(
     (state) => state.addUnitToProperty
   );
   const updateUnitInProperty = usePropertiesStore(
     (state) => state.updateUnitInProperty
   );
-
-  const { setUnitsfromProperties } = useUnitStore();
-  const units = useUnitStore((state) => state.units);
-  const editUnit = useUnitStore((state) => state.editUnit);
-  const deleteUnit = useUnitStore((state) => state.deleteUnit);
 
   const columns = [
     {
@@ -118,17 +113,14 @@ const PropertyDetails = () => {
     document.title = `${property?.title || "View Property"}`;
   });
 
-  useEffect(() => {
-    setUnitsfromProperties(properties);
-  }, [setUnitsfromProperties, properties]);
-
   const location = useLocation();
   const [backPath] = useState(location.state?.from || "/properties");
   const navigate = useNavigate();
 
   const { id } = useParams();
   const property = properties.find((property) => property.id === parseInt(id));
-
+  const units = property?.units || [];
+  
   if (!property) {
     return (
       <Box className="m-3 flex justify-center p-2 bg-[#2D454D] rounded-md border-t-2 border-t-slate-300">
@@ -375,9 +367,7 @@ const PropertyDetails = () => {
           </Box>
 
           <DataGrid
-            rows={units.filter(
-              (unit) => Number(unit.propertyId) === Number(id) && !unit.tenant
-            )}
+            rows={units.filter((unit) => unit.tenant === null)}
             columns={columns}
             showToolbar
             initialState={{

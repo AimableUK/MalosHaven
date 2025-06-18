@@ -8,6 +8,7 @@ import {
   TextField,
 } from "@mui/material";
 import AppSnackbar from "../utils/MySnackbar/AppSnackbar";
+import { v4 as uuidv4 } from "uuid";
 
 const DataUnitFormModal = ({ open, onClose, onAddUnit }) => {
   const [formData, setFormData] = useState({ unit: "", value: "" });
@@ -40,9 +41,10 @@ const DataUnitFormModal = ({ open, onClose, onAddUnit }) => {
     }
 
     onAddUnit({
-      id: `UNT-${Date.now()}`,
+      id: `UNT-${uuidv4()}`,
       UnitNumber: unit,
       UnitValue: Number(value),
+      tenant: null,
     });
 
     onClose();

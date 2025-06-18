@@ -87,6 +87,8 @@ const usePropertiesStore = create((set, get) => ({
           : property
       ),
     })),
+
+  //
 }));
 
 export default usePropertiesStore;
