@@ -191,7 +191,7 @@ const PropertiesComponent = () => {
           ))
         ) : (
           <Box className="flex justify-center p-2 bg-[#2D454D] rounded-md border-t-2 border-t-slate-300">
-            <Typography>No Properties Available</Typography>
+            <Typography fontWeight="bold">No Properties Available</Typography>
           </Box>
         )}
       </Box>

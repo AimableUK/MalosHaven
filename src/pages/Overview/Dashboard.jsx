@@ -2,36 +2,39 @@ import { Box, Divider, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import PieChart from "../../components/DataCharts/PieChart.jsx";
 import LineChart from "../../components/DataCharts/LineChart.jsx";
-import propertiesList from "../../Data/SiteDataComponent/Properties.js";
 import FooterPage from "../Footer/FooterPage.jsx";
 import ApartmentIcon from "@mui/icons-material/Apartment";
 import HomeIcon from "@mui/icons-material/Home";
 import Groups2Icon from "@mui/icons-material/Groups2";
-import PersonIcon from "@mui/icons-material/Person";
 import ClearAllIcon from "@mui/icons-material/ClearAll";
 import ChecklistIcon from "@mui/icons-material/Checklist";
 import PeopleIcon from "@mui/icons-material/People";
 import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
-import assistantsList from "../../Data/SiteDataComponent/Assistants.js";
 import PropertiesComponent from "../PropertyManagement/PropertiesComponent.jsx";
 import { useLocation, useNavigate } from "react-router-dom";
 import AppSnackbar from "../../components/utils/MySnackbar/AppSnackbar.jsx";
-import lodgesList from "../../Data/SiteDataComponent/Lodges.js";
 import HolidayVillageIcon from "@mui/icons-material/HolidayVillage";
 import ChairIcon from "@mui/icons-material/Chair";
 import ConfirmationNumberIcon from "@mui/icons-material/ConfirmationNumber";
 import lodgelisting from "../../assets/lodgelisting.svg";
 import LayersClearIcon from "@mui/icons-material/LayersClear";
 import checklist from "../../assets/checklist.png";
+import usePropertiesStore from "../../Store/PropertiesStore/usePropertiesStore.js";
+import useAssistantStore from "../../Store/AssistantStore/useAssistantStore.js";
+import useLodgeStore from "../../Store/LodgesStore/useLodgesStore.js";
+import useMaintenanceStore from "../../Store/MaintenanceStore/useMaintenanceStore.js";
 
 const Dashboard = () => {
-  const [properties, setProperties] = useState(propertiesList);
-  const [assistants, setAssistants] = useState(assistantsList);
-  const [lodges, setLodges] = useState(lodgesList);
+  const properties = usePropertiesStore((state) => state.properties);
+  const assistants = useAssistantStore((state) => state.assistants);
+  const lodges = useLodgeStore((state) => state.lodges);
+  const setRequestsFromProperties = useMaintenanceStore(
+    (state) => state.setRequestsFromProperties
+  );
 
-  const [requests, setRequests] = useState([]);
-  const [pendingRequests, setPendingRequests] = useState([]);
-  const [solvedRequests, setSolvedRequests] = useState([]);
+  const requests = useMaintenanceStore((state) => state.requests);
+  const pendingRequests = useMaintenanceStore((state) => state.pendingRequests);
+  const solvedRequests = useMaintenanceStore((state) => state.solvedRequests);
 
   const [totalUnits, setTotalUnits] = useState(0);
   const [totalTenants, setTotalTenants] = useState(0);
@@ -79,14 +82,13 @@ const Dashboard = () => {
       });
     });
 
-    setRequests(allRequests);
-    setPendingRequests(allRequests.filter((r) => r.status === "pending"));
-    setSolvedRequests(allRequests.filter((r) => r.status === "done"));
+    setRequestsFromProperties(properties);
+
     setTotalUnits(unitCount);
     setTotalTenants(tenantCount);
     setTotalRooms(roomCount);
     setRoomsAvailable(availableRoomCount);
-  }, [properties, lodges]);
+  }, [setRequestsFromProperties, properties, lodges]);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -109,7 +111,7 @@ const Dashboard = () => {
     }, 100);
   };
 
-    const handleCloseSnackbar = () => {
+  const handleCloseSnackbar = () => {
     setSnackbar({ ...snackbar, open: false });
   };
 
@@ -357,7 +359,7 @@ const Dashboard = () => {
                 <Typography
                   sx={{ color: "#fff", fontSize: "24px", fontWeight: "bold" }}
                 >
-                  {pendingRequests?.length}
+                  {solvedRequests?.length}
                 </Typography>
                 <Typography sx={{ color: "#fff" }}>
                   Pending Maintenances
@@ -400,7 +402,7 @@ const Dashboard = () => {
               <Typography
                 sx={{ color: "#fff", fontSize: "24px", fontWeight: "bold" }}
               >
-                {solvedRequests?.length}
+                {pendingRequests?.length}
               </Typography>
               <Typography sx={{ color: "#fff" }}>
                 Solved Maintenances
