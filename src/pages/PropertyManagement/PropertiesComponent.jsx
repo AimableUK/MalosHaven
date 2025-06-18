@@ -1,6 +1,5 @@
 import { Box, useMediaQuery, Button, Typography } from "@mui/material";
 import { useState } from "react";
-import MyProperties from "../../Data/SiteDataComponent/Properties";
 import { Link, useLocation } from "react-router-dom";
 import PlaceIcon from "@mui/icons-material/Place";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -9,10 +8,9 @@ import EditIcon from "@mui/icons-material/Edit";
 import DataDeleteConfirm from "../../components/DeleteConfirmComponent/DataDeleteConfirm";
 import EditPropertyFormModal from "../../components/PropertyFormComponent/EditPropertyForm";
 import AppSnackbar from "../../components/utils/MySnackbar/AppSnackbar";
+import usePropertiesStore from "../../Store/PropertiesStore/usePropertiesStore";
 
 const PropertiesComponent = () => {
-  const [properties, setProperties] = useState(MyProperties);
-
   const [editPropertyFormModal, setEditPropertyFormModal] = useState(false);
 
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
@@ -24,17 +22,16 @@ const PropertiesComponent = () => {
     severity: "",
   });
 
+  const properties = usePropertiesStore((state) => state.properties);
+  const editProperty = usePropertiesStore((state) => state.editProperty);
+  const deleteProperty = usePropertiesStore((state) => state.deleteProperty);
+
   const location = useLocation();
 
-  const deleteProperty =
+  const deleteAProperty =
     "Are you sure you want to Delete this Property? If you do so, it will be undone";
 
   const isSmallScreen = useMediaQuery("(max-width:768px)");
-
-  const handleDeleteDialogOpen = (property) => {
-    setDeleteDialogOpen(true);
-    setSelectedProperty(property);
-  };
 
   const showSnackbar = (message, severity = "success") => {
     setSnackbar((prev) => ({ ...prev, open: false }));
@@ -47,10 +44,13 @@ const PropertiesComponent = () => {
     }, 100);
   };
 
+  const handleDeleteDialogOpen = (property) => {
+    setDeleteDialogOpen(true);
+    setSelectedProperty(property);
+  };
+
   const handleDeleteProperty = () => {
-    setProperties((prevProperty) =>
-      prevProperty.filter((property) => property.id !== selectedProperty.id)
-    );
+    deleteProperty(selectedProperty.id);
     setDeleteDialogOpen(false);
     showSnackbar(`${selectedProperty.title} deleted successfully`, "success");
   };
@@ -65,15 +65,9 @@ const PropertiesComponent = () => {
   };
 
   const handleEditProp = (updatedProperty) => {
-    setProperties((prevProperties) =>
-      prevProperties.map((property) =>
-        property.id === updatedProperty.id ? updatedProperty : property
-      )
-    );
+    editProperty(updatedProperty);
     setEditPropertyFormModal(false);
     showSnackbar(`${updatedProperty.title} Updated Successfully`, "success");
-    console.log(updatedProperty);
-    console.log(updatedProperty.image);
   };
 
   return (
@@ -204,7 +198,7 @@ const PropertiesComponent = () => {
         deleteDialogOpen={deleteDialogOpen}
         setDeleteDialogOpen={setDeleteDialogOpen}
         handleDeleteProperty={handleDeleteProperty}
-        deleteProperty={deleteProperty}
+        deleteAProperty={deleteAProperty}
         deleteType="property"
       />
 
