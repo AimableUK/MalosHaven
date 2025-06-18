@@ -59,7 +59,7 @@ const DataUnitFormModal = ({ open, onClose, onAddUnit }) => {
     <>
       <Dialog open={open} onClose={onClose}>
         <DialogTitle sx={{ fontWeight: "bold" }}>Add New Unit</DialogTitle>
-        <DialogContent sx={{ gap: 2 }}>
+        <DialogContent>
           <TextField
             label="Unit Number"
             name="unit"
