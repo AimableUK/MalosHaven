@@ -35,11 +35,7 @@ const DataUnitFormModal = ({ open, onClose, onAddUnit }) => {
   const handleSubmit = () => {
     const { unit, value } = formData;
     if (!unit.trim() || !value.toString().trim()) {
-      showSnackbar({
-        open: true,
-        message: "Please fill out all fields",
-        severity: "error",
-      });
+      showSnackbar("Please fill out all fields", "error");
       return;
     }
 
@@ -51,11 +47,6 @@ const DataUnitFormModal = ({ open, onClose, onAddUnit }) => {
 
     onClose();
     setFormData({ unit: "", value: "" });
-    setSnackbar({
-      open: true,
-      message: "Unit added successfully!",
-      severity: "success",
-    });
   };
 
   const handleCloseSnackbar = () => {
@@ -93,7 +84,7 @@ const DataUnitFormModal = ({ open, onClose, onAddUnit }) => {
           </Button>
         </DialogActions>
       </Dialog>
-      
+
       <AppSnackbar
         open={snackbar.open}
         message={snackbar.message}

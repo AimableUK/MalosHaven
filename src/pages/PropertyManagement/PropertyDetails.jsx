@@ -18,6 +18,7 @@ import ConfirmationNumberIcon from "@mui/icons-material/ConfirmationNumber";
 import ChairIcon from "@mui/icons-material/Chair";
 import AppSnackbar from "../../components/utils/MySnackbar/AppSnackbar";
 import usePropertiesStore from "../../Store/PropertiesStore/usePropertiesStore";
+import useUnitStore from "../../Store/UnitStore/useUnitStore";
 
 const PropertyDetails = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -38,6 +39,17 @@ const PropertyDetails = () => {
   const properties = usePropertiesStore((state) => state.properties);
   const editProperty = usePropertiesStore((state) => state.editProperty);
   const deleteProperty = usePropertiesStore((state) => state.deleteProperty);
+  const addUnitToProperty = usePropertiesStore(
+    (state) => state.addUnitToProperty
+  );
+  const updateUnitInProperty = usePropertiesStore(
+    (state) => state.updateUnitInProperty
+  );
+
+  const { setUnitsfromProperties } = useUnitStore();
+  const units = useUnitStore((state) => state.units);
+  const editUnit = useUnitStore((state) => state.editUnit);
+  const deleteUnit = useUnitStore((state) => state.deleteUnit);
 
   const columns = [
     {
@@ -106,6 +118,10 @@ const PropertyDetails = () => {
     document.title = `${property?.title || "View Property"}`;
   });
 
+  useEffect(() => {
+    setUnitsfromProperties(properties);
+  }, [setUnitsfromProperties, properties]);
+
   const location = useLocation();
   const [backPath] = useState(location.state?.from || "/properties");
   const navigate = useNavigate();
@@ -140,16 +156,9 @@ const PropertyDetails = () => {
     console.log("Booked unit ID:", id);
   };
 
-  const handleAddUnit = (unit) => {
-    setProperties((prevProperties) =>
-      prevProperties.map((property) =>
-        property.id === parseInt(id)
-          ? { ...property, units: [...property.units, unit] }
-          : property
-      )
-    );
-
-    showSnackbar(`Added new unit: ${unit.UnitNumber}`, "success");
+  const handleAddUnit = (newUnit) => {
+    addUnitToProperty(property.id, newUnit);
+    showSnackbar(`${newUnit.UnitNumber} added successfully`, "success");
   };
 
   const processRowUpdate = (newRow) => {
@@ -366,7 +375,9 @@ const PropertyDetails = () => {
           </Box>
 
           <DataGrid
-            rows={property.units.filter((unit) => unit.tenant == null)}
+            rows={units.filter(
+              (unit) => Number(unit.propertyId) === Number(id) && !unit.tenant
+            )}
             columns={columns}
             showToolbar
             initialState={{

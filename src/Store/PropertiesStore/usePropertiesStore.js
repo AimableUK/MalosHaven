@@ -77,6 +77,16 @@ const usePropertiesStore = create((set, get) => ({
 
     set({ properties: updatedProperties });
   },
+
+  // add unit to properties:
+  addUnitToProperty: (propertyId, newUnit) =>
+    set((state) => ({
+      properties: state.properties.map((property) =>
+        property.id === propertyId
+          ? { ...property, units: [...property.units, newUnit] }
+          : property
+      ),
+    })),
 }));
 
 export default usePropertiesStore;
