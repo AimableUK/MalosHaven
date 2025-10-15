@@ -1,4 +1,4 @@
-# MALOS Panel
+# MALOS Haven
 
 ### Property Management System 🏠
 
