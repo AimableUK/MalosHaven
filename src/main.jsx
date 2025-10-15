@@ -5,6 +5,7 @@ import App from "./App.jsx";
 import { BrowserRouter } from "react-router-dom";
 import { CssBaseline } from "@mui/material";
 
+// eslint-disable-next-line react-refresh/only-export-components
 const Root = () => {
   return (
     <>
