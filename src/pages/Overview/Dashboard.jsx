@@ -119,6 +119,8 @@ const Dashboard = () => {
 
   return (
     <Box display="flex" flexDirection="column">
+
+    {/* Return to this Project for setting up the convex as the backend */}
       {/* Top Grid - 4 Cards */}
       <Box className="flex flex-col lg:flex-row gap-[10px] p-[10px] font-roboto">
         <Box className="flex flex-col md:flex-row gap-3 w-full">
