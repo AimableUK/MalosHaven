@@ -122,6 +122,7 @@ const Dashboard = () => {
 
     {/* 1. Return to this Project for setting up the convex as the backend */}
     {/* 2. Setted Up the arrangement of the flow of code aside */}
+    {/* 3. Aside Convex setup for later use */}
       {/* Top Grid - 4 Cards */}
       <Box className="flex flex-col lg:flex-row gap-[10px] p-[10px] font-roboto">
         <Box className="flex flex-col md:flex-row gap-3 w-full">
